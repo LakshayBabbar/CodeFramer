@@ -1,0 +1,29 @@
+.wrapper{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin-top: 4rem;
+    background-color: aliceblue;
+}
+
+.editor{
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    justify-content: space-between;
+    background-color: black;
+}
+
+.status{
+    height: 15px;
+    width: 100vw;
+    background: black;
+    border: 1px solid rgb(24, 23, 23)e1e;
+}
+
+@media(max-width: 720px) {
+    .wrapper{
+        flex-direction: column-reverse;
+    }
+}
+

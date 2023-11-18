@@ -1,0 +1,41 @@
+:root{
+    --btn-primary: #0091ff;
+}
+
+html{
+    overflow-x: hidden;
+}
+
+body{
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: black;
+    color: aliceblue;
+    overflow-x: hidden;
+}
+
+.absolute{
+    top: 0;
+    left: -10rem;
+    height: 11rem;
+    width: 50rem;
+    position: absolute;
+    z-index: -1;
+}
+
+.absolute::before{
+    content: '';
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);
+    filter: blur(110px);
+    position: absolute;
+    rotate: -15deg;
+    height: 100%;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .absolute{
+        height: 20vh;
+        width: 30rem;
+    }
+}

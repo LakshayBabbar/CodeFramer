@@ -1,0 +1,24 @@
+.divider{
+    width: 90vw;
+    height: 2px;
+    background: var(--btn-primary);
+    border: 1px solid var(--btn-primary);
+    border-radius: 50%;
+    margin: 0 5vw;
+}
+.wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+}
+
+@media (max-width: 768px) {
+    .wrapper{
+        flex-direction: column;
+        padding: 1.5rem 0;
+    }
+    .wrapper h1{
+        margin: 0;
+    }
+}
