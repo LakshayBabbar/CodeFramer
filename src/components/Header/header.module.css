@@ -48,9 +48,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        width: 100vw;
-        height: 100vh;
-        padding: 0;
+        padding: 30vh 0 10vh;
     }
     .wrapper{
         width: fit-content;

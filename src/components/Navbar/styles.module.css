@@ -54,6 +54,7 @@
         z-index: -1;
         padding: 5rem 0;
         transform: translateY(-25rem);
+        transition: 0.4s;
     }
     .active .list{
         transform: translateX(0);

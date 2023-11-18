@@ -1,10 +1,90 @@
-.wrapper{
-    display: flex;
-    flex-direction: column;
-    padding: 10vh 0;
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5vw;
+  padding: 10vh 0;
 }
 
-.wrapper h1{
-    color: aliceblue;
-    text-align: center;
+.form h1 {
+  color: aliceblue;
+  font-size: 4rem;
+}
+.form form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-right: 5rem;
+}
+
+.form form input,
+.form textarea {
+  width: 20rem;
+  height: 2.5rem;
+  border: 2px solid var(--btn-primary);
+  border-radius: 5px;
+  background: transparent;
+}
+
+.form form input::placeholder,
+.form input,
+.form textarea,
+.form textarea::placeholder {
+  font-size: 1.5rem;
+  padding: 0 1rem;
+  color: white;
+}
+
+.form textarea {
+  height: 15rem;
+  padding: 1rem;
+  resize: vertical;
+}
+.img {
+  width: 35rem;
+  height: 35rem;
+  aspect-ratio: 1/1;
+}
+
+.absolute, .absolute2{
+  height: 7rem;
+  width: 8rem;
+  position: absolute;
+  z-index: -1;
+}
+.absolute2{
+  margin: 10rem 0 0 10rem;
+  padding: 1rem;
+}
+.absolute::before, .absolute2::before{
+  content: '';
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background: blue;
+  filter: blur(100px);
+}
+
+@media (max-width: 1000px) {
+  .wrapper {
+    flex-direction: column;
+    gap: 0;
+    padding: 10vh 0;
+  }
+
+  .form form {
+    margin: 0;
+  }
+  .img {
+    width: 60vw;
+    height: 60vw;
+  }
+}
+@media (max-width: 768px) {
+  .img {
+    width: 85vw;
+    height: 85vw;
+  }
 }

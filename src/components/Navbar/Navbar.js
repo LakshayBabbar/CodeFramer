@@ -37,18 +37,18 @@ export default function Navbar() {
         />
       </div>
       <div className={styles.list}>
-        <Link href="/" >
-          <Button onClick={nav_toggle}>
+        <Link href="/" onClick={nav_toggle}>
+          <Button >
             Home
           </Button>
         </Link>
-        <Link href="/webeditor">
-          <Button onClick={nav_toggle}>
+        <Link href="/webeditor" onClick={nav_toggle}>
+          <Button>
             Web Editor
           </Button>
         </Link>
-        <Link href="/feedback">
-          <Button onClick={nav_toggle}>
+        <Link href="/feedback" onClick={nav_toggle}>
+          <Button>
             Feedback
           </Button>
         </Link>
