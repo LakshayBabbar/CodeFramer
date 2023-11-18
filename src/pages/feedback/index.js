@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import styles from "./styles.module.css";
 import Button from "@/components/UI/Button";
 import Image from "next/image";
-import img from "../../assests/contact.png";
+import img from "../../assests/contact.webp";
 import { useRef } from "react";
 
 function index() {
@@ -17,7 +17,7 @@ function index() {
 
   const sendMail = (event) => {
     event.preventDefault();
-    console.log(name.current.value);
+    console.log(name.current.value,email.current.value,mssg.current.value);
   };
 
   return (
