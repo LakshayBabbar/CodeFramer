@@ -7,7 +7,7 @@ function Card(props) {
   return (
     <motion.div className={styles.wrapper} initial={{y: "15vh"}} whileInView={{y: 0}}>
       {props.img}
-      <h1>{props.title}</h1>
+      <h2>{props.title}</h2>
       <h3>{props.desc}</h3>
       <Button>
         <Link href={props.link} className={styles.link}>{props.linkT}</Link>
