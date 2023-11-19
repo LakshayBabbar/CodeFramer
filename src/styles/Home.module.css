@@ -55,10 +55,17 @@
 .gs h1{
     font-size: 4rem;
     font-weight: 800;
+    margin: 0;
     text-align: center;
 }
 .gs h1 span{
     color: var(--btn-primary);
+}
+
+.gs p{
+    font-size: 1.2rem;
+    text-align: center;
+    padding: 2rem 25vw;
 }
 
 .cards{
@@ -80,9 +87,18 @@
     filter: blur(80px);
 }
 
+@media(max-width: 1000px){
+    .gs p{
+        padding: 2rem 20vw;
+    }
+}
+
 @media(max-width: 768px) {
     .gs{
         margin: 10vh 0;
+    }
+    .gs p{
+        padding: 2rem 10vw;
     }
     .cards{
         flex-direction: column;

@@ -5,12 +5,20 @@ import { motion } from "framer-motion";
 
 function Card(props) {
   return (
-    <motion.div className={styles.wrapper} initial={{y: "15vh"}} whileInView={{y: 0}}>
+    <motion.div
+      className={styles.wrapper}
+      initial={{ y: "15vh" }}
+      whileInView={{ y: 0 }}
+      whileHover={{ scale: 1.03 }}
+      transition={{ type: "spring", stiffness: 250, damping: 15 }}
+    >
       {props.img}
       <h2>{props.title}</h2>
       <h3>{props.desc}</h3>
       <Button>
-        <Link href={props.link} className={styles.link}>{props.linkT}</Link>
+        <Link href={props.link} className={styles.link}>
+          {props.linkT}
+        </Link>
       </Button>
     </motion.div>
   );

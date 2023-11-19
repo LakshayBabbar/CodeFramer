@@ -7,7 +7,7 @@ import { useRef } from "react";
 
 function index() {
   const variants = {
-    onclick: { scale: 1.08 },
+    onclick: { scale: 1.04 },
     transition: { scale: { type: "spring", stiffness: 250 } },
   };
 

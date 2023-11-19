@@ -37,6 +37,14 @@ export default function Home() {
           <h1>
             Getting <span>Started!</span>
           </h1>
+          <p>
+            Ready to start coding? Getting going with CodeFramer is a snap! Our
+            user-friendly platform gives you instant code suggestions and
+            auto-completion to make your coding journey smoother. Whether you're
+            a pro or a beginner, CodeFramer's got your back. Start coding
+            effortlessly and explore the joy of collaborating in real-time. It's
+            easy, it's fast - let's code together with CodeFramer!
+          </p>
           <div className={styles.cards}>
             <Card
               img=<SiTestrail style={style} />
