@@ -7,7 +7,7 @@
 }
 
 .form h1 {
-  color: aliceblue;
+  color: var(--text);
   font-size: 4rem;
 }
 .form form {
@@ -34,7 +34,7 @@
 .form textarea::placeholder {
   font-size: 1.5rem;
   padding: 0 1rem;
-  color: white;
+  color: var(--text);
 }
 
 .form textarea {

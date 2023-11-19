@@ -12,6 +12,9 @@
     justify-content: space-between;
     padding: 0 2rem;
 }
+.wrapper h1, .wrapper p{
+    color: var(--text);
+}
 
 @media (max-width: 768px) {
     .wrapper{

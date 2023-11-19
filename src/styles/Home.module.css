@@ -11,7 +11,7 @@
 }
 .link{
     text-decoration: none;
-    color: aliceblue;
+    color: var(--text);
 }
 
 .scroller{
@@ -57,6 +57,7 @@
     font-weight: 800;
     margin: 0;
     text-align: center;
+    color: var(--text);
 }
 .gs h1 span{
     color: var(--btn-primary);
@@ -66,6 +67,7 @@
     font-size: 1.2rem;
     text-align: center;
     padding: 2rem 25vw;
+    color: var(--para);
 }
 
 .cards{

@@ -2,7 +2,7 @@
     width: 20rem;
     height: 15rem;
     border-radius: 10px;
-    background: #24212c;
+    background: var(--card);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -12,10 +12,12 @@
 .wrapper h2{
     margin: 0;
     font-size: 2rem;
+    color: var(--text);
 }
 
 .wrapper h3{
     margin: 1rem;
+    color: var(--text);
 }
 
 .link{

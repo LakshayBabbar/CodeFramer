@@ -1,5 +1,18 @@
 :root{
     --btn-primary: #0091ff;
+    --para: #bababa;
+    --text: #f0f8ff;
+    --bg: #000000;
+    --card: #24212c;
+    --nav: #0000007e;
+}
+
+.lightMode{
+    --para: #2e2e2e;
+    --text: rgb(46, 42, 42);
+    --bg: #f0f8ff;
+    --card: #ffffffa3;
+    --nav: #d7eeff89;
 }
 
 html{
@@ -9,8 +22,7 @@ html{
 body{
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: black;
-    color: aliceblue;
+    background: var(--bg);
     overflow-x: hidden;
 }
 

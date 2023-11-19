@@ -13,18 +13,20 @@
 .wrapper h3{
     margin: 0;
     font-size: clamp(1.5rem, 3vw, 2rem);
+    color: var(--text);
 }
 .wrapper h1{
     margin: 0;
     font-size: 7vw;
     font-weight: 800;
+    color: var(--text);
 }
 .wrapper h1 span{
     color: var(--btn-primary);
 }
 .wrapper p{
     text-align: center;
-    color: rgb(194, 192, 192);
+    color: var(--para);
     font-size: 1.5vw;
 }
 .imageWrapper{

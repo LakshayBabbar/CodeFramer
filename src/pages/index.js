@@ -13,6 +13,7 @@ export default function Home() {
   const style = {
     fontSize: "5rem",
     marginBottom: "1rem",
+    color: "var(--text)"
   };
   return (
     <>

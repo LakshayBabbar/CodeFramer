@@ -1,14 +1,14 @@
 .wrapper{
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    background: black;
-    border-bottom: 1px solid rgb(84, 82, 82);
+    justify-content: center;
+    background: var(--nav);
     top: 0;
     position: fixed;
     width: 100%;
     height: 4rem;
     z-index: 9;
+    backdrop-filter: blur(20px);
 }
 
 .navLogo{
@@ -20,8 +20,9 @@
 
 .logo{
     text-decoration: none;
-    color: aliceblue;
+    color: var(--text);
     font-size: 2rem;
+    font-weight: 600;
 }
 
 .list{
@@ -31,23 +32,42 @@
     gap: 1rem;
     padding: 0 1.5rem;
 }
+
+.sideBar{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
 .controller{
     display: none;
     padding: 0 1.5rem 0 0;
     font-size: 2.5rem;
+    color: var(--text);
 }
 
 .controller[name="close-btn"] {
     display: none;
 }
 
+.btn{
+    border: none;
+    background: transparent;
+    color: var(--text);
+    font-size: 1.8rem;
+    padding: 0.5rem 0 0;
+}
+
 @media (max-width: 1000px) {
+    .wrapper{
+        justify-content: space-between;
+    }
     .list{
         display: flex;
         flex-direction: column;
         width: 100vw;
         height: 15rem;
-        background-color: rgb(0, 0, 0);
+        background-color: var(--bg);
         position: absolute;
         padding: 0;
         top: 0;
