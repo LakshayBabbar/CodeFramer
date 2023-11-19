@@ -1,11 +1,11 @@
 .container{
     display: flex;
     justify-content: space-around;
-    padding: 20vh 0 0;
+    padding: 20vh 0 10vh;
 }
 
 .wrapper{
-    width: 40vw;
+    width: 45vw;
     display: flex;
     flex-direction: column;
 }
@@ -25,22 +25,31 @@
 .wrapper p{
     text-align: center;
     color: rgb(194, 192, 192);
-    font-size: 1.5rem;
+    font-size: 1.5vw;
 }
-
-.img{
-    width: 40vw;
-    height: 40vw;
+.imageWrapper{
+    position: relative;
+    width: 38vw;
+}
+.img, .img2{
+    width: 30vw;
+    height: 30vw;
     aspect-ratio: 1/1;
-    filter: drop-shadow(0.5rem 0.5rem 5px#38304f);
-}
-.grid{
-    top: 21vh;
-    left: 5vw;
     position: absolute;
-    width: 45vw;
-    filter: brightness(25%);
-    z-index: -1;
+}
+.img2{
+    margin: 10vw 0 0 10vw;
+}
+        
+.imageWrapper::before{
+    content: '';
+    background: rgb(0, 123, 255);
+    margin: 10vw 0 0 10vw;
+    width: 40%;
+    height: 70%;
+    rotate: 10deg;
+    position: absolute;
+    filter: blur(100px);
 }
 
 @media (max-width: 1000px) {
@@ -48,7 +57,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding: 30vh 0 10vh;
+        padding: 10rem 0 0;
     }
     .wrapper{
         width: fit-content;
@@ -57,23 +66,27 @@
         justify-content: center;
     }
     .wrapper h1{
-        font-size: 4rem;
+        font-size: 12vw;
     }
     .wrapper h3{
         font-size: 2rem;
     }
     .wrapper p{
         font-size: 1.25rem;
+        width: 60vw;
     }
-    .img{
+    .imageWrapper{
         display: none;
     }
-    .grid{
-        top: 30vh;
-        left: 0;
-        width: 100vw;
-        height: auto;
-        filter: brightness(50%);
-        z-index: -1;
+}
+@media (max-width: 768px) {
+    .wrapper h1{
+        font-size: 15vw;
+    }
+    .wrapper h3{
+        font-size: 6vw;
+    }
+    .wrapper p{
+        width: fit-content;
     }
 }

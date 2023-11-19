@@ -29,12 +29,13 @@ function index() {
     >
       <div>
         <Image
+          className={styles.img}
           priority
           src={img}
           alt="contact image"
-          className={styles.img}
           width="auto"
           height="auto"
+          placeholder="blur"
         />
       </div>
 

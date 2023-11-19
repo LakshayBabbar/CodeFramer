@@ -14,8 +14,42 @@
     color: aliceblue;
 }
 
+.scroller{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 7rem 0 8rem;
+}
+
+.outer{
+    border-radius: 20px;
+    height: 4rem;
+    width: 2rem;
+    background: transparent;
+    border: 3px solid var(--btn-primary);
+    display: flex;
+    justify-content: center;
+}
+.inner{
+    border-radius: 50%;
+    background: var(--btn-primary);
+    width: 1rem;
+    height: 1rem;
+    animation: scrolling 2s infinite;
+}
+
+@keyframes scrolling {
+    0%, 100%{
+        margin: 0.5rem;
+    }
+    50%{
+        margin: 2.5rem 0 0;
+    }
+}
+
+
 .gs{
-    margin: 15vh 0;
+    margin: 10vh 0;
 }
 
 .gs h1{
@@ -46,11 +80,11 @@
     filter: blur(80px);
 }
 
-@media (max-width: 720px) {
+@media(max-width: 768px) {
+    .gs{
+        margin: 10vh 0;
+    }
     .cards{
         flex-direction: column;
-    }
-    .gs{
-       margin: 0 0 10vh 0; 
     }
 }

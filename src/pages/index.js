@@ -28,6 +28,11 @@ export default function Home() {
         transition={{ x: { type: "spring", stiffness: 200 } }}
       >
         <Intro />
+        <section className={styles.scroller}>
+          <div className={styles.outer}>
+            <div className={styles.inner} />
+          </div>
+        </section>
         <section className={styles.gs}>
           <h1>
             Getting <span>Started!</span>

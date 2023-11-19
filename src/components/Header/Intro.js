@@ -1,14 +1,13 @@
 import styles from "./header.module.css";
 import { TypeAnimation } from "react-type-animation";
 import Image from "next/image";
-import img from "../../assests/code.png";
-import grid from "../../assests/grid.png";
+import img from "../../assests/css.png";
+import img2 from "../../assests/js.png";
 
 function Intro() {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <Image priority src={grid} alt="grid" className={styles.grid} />
         <h3>Welcome to</h3>
         <h1>
           Code<span>Framer</span>
@@ -39,8 +38,21 @@ function Intro() {
           with HTML, CSS, JavaScript, and Python.
         </p>
       </div>
-      <div className={styles.img}>
-        <Image src={img} className={styles.img} alt="image" />
+      <div className={styles.imageWrapper}>
+        <Image
+          priority
+          src={img}
+          className={styles.img}
+          alt="image"
+          placeholder="blur"
+        />
+        <Image
+          priority
+          src={img2}
+          className={styles.img2}
+          alt="image"
+          placeholder="blur"
+        />
       </div>
     </div>
   );
