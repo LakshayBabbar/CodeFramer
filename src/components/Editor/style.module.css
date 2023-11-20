@@ -12,10 +12,8 @@
     width: 7rem;
     background-color: #000000;
     border: none;
-    border-right: 3px solid black;
     color: aliceblue;
     font-size: 1.2rem;
-    border-top: 0;
 }
 .btn:disabled{
     background-color: #1e1e1e;

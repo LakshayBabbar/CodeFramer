@@ -6,12 +6,13 @@
     --para: #bababa;
     --card-bg: #24212ccf;
     --card-bg2: #000000;
+    --gradient: linear-gradient(90deg, rgb(12, 8, 81) 0%, rgb(18, 18, 187)35%, rgba(0,212,255,1) 100%);
 }
 
 .lightMode{
     --para: #2e2e2e;
     --text: rgb(46, 42, 42);
-    --bg: #ffffff;
+    --bg: #f0f8ff;
     --card-bg: #edf6ffa9;
     --card-bg2: #a6a6a6;
     --nav: #d7eeff89;
@@ -39,7 +40,7 @@ body{
 
 .absolute::before{
     content: '';
-    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);
+    background: var(--gradient);
     filter: blur(110px);
     position: absolute;
     rotate: -15deg;

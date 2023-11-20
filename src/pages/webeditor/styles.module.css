@@ -15,10 +15,10 @@
 }
 
 .status{
-    height: 15px;
+    height: 10px;
     width: 100vw;
     background: black;
-    border: 1px solid rgb(24, 23, 23)e1e;
+    border: 1px solid rgb(24, 23, 23);
 }
 
 @media(max-width: 720px) {

@@ -12,7 +12,7 @@
 
 .wrapper h3{
     margin: 0;
-    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-size: 2rem;
     color: var(--text);
 }
 .wrapper h1{
@@ -69,9 +69,6 @@
     }
     .wrapper h1{
         font-size: 12vw;
-    }
-    .wrapper h3{
-        font-size: 2rem;
     }
     .wrapper p{
         font-size: 1.25rem;

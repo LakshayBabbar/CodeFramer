@@ -85,7 +85,7 @@
     rotate: -4deg;
     position: absolute;
     z-index: -1;
-    background: linear-gradient(90deg, rgb(12, 8, 81) 0%, rgb(18, 18, 187)35%, rgba(0,212,255,1) 100%);
+    background: var(--gradient);
     filter: blur(80px);
 }
 
