@@ -10,8 +10,6 @@
   },
   "dependencies": {
     "@monaco-editor/react": "^4.6.0",
-    "@uiw/react-codemirror": "^4.21.20",
-    "codemirror": "^5.65.15",
     "framer-motion": "^10.16.5",
     "next": "14.0.2",
     "react": "^18",
