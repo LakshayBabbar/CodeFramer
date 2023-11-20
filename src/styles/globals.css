@@ -1,17 +1,19 @@
 :root{
     --btn-primary: #0091ff;
-    --para: #bababa;
-    --text: #f0f8ff;
-    --bg: #000000;
-    --card: #24212c;
     --nav: #0000007e;
+    --bg: #000000;
+    --text: #f0f8ff;
+    --para: #bababa;
+    --card-bg: #24212ccf;
+    --card-bg2: #000000;
 }
 
 .lightMode{
     --para: #2e2e2e;
     --text: rgb(46, 42, 42);
-    --bg: #f0f8ff;
-    --card: #ffffffa3;
+    --bg: #ffffff;
+    --card-bg: #edf6ffa9;
+    --card-bg2: #a6a6a6;
     --nav: #d7eeff89;
 }
 

@@ -2,11 +2,12 @@
     width: 20rem;
     height: 15rem;
     border-radius: 10px;
-    background: var(--card);
+    background: var(--card-bg);
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 2rem 1rem;
+    box-shadow: 0.7rem 0.7rem 25px var(--card-bg2);
 }
 
 .wrapper h2{

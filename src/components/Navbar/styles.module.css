@@ -15,7 +15,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 1.5rem;
+    padding: 0 1.2rem 0.3rem;
 }
 
 .logo{
@@ -30,7 +30,6 @@
     justify-content: center;
     align-items: center;
     gap: 1rem;
-    padding: 0 1.5rem;
 }
 
 .sideBar{
@@ -52,10 +51,29 @@
 
 .btn{
     border: none;
-    background: transparent;
+    background: var(--text);
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50px;
+    color: var(--bg);
+    font-size: 1.25rem;
+    padding: 0.3rem 0 0;
+}
+
+.link, .navLinkIco{
     color: var(--text);
-    font-size: 1.8rem;
-    padding: 0.5rem 0 0;
+    text-decoration: none;
+    font-size: 1.25rem;
+    display: flex;
+    transition: 0.1s ease-out;
+}
+.navLinkIco{
+    font-size: 1.5rem;
+}
+
+.link:hover{
+    scale: 1.05;
+    transition: 0.1s ease-in;
 }
 
 @media (max-width: 1000px) {
@@ -66,19 +84,30 @@
         display: flex;
         flex-direction: column;
         width: 100vw;
-        height: 15rem;
+        height: 20vh;
         background-color: var(--bg);
         position: absolute;
-        padding: 0;
         top: 0;
-        z-index: -1;
         padding: 5rem 0;
         transform: translateY(-25rem);
         transition: 0.3s;
+        gap: 1.5rem;
     }
     .active .list{
         transform: translateX(0);
-        border-bottom: 1px solid rgb(84,82,82);
+        border-bottom: 1px solid #afafaf;
+    }
+    .link{
+        width: 100vw;
+        justify-content: center;
+    }
+    .link::after{
+        content: '';
+        height: 1px;
+        width: 70%;
+        background: #afafaf;
+        position: absolute;
+        margin: 2rem 0 0;
     }
     .controller{
         display: block;
@@ -88,6 +117,7 @@
     }
     .active .controller[name="close-btn"]{
         display: block;
-        z-index: 10;
+        position: relative;
+        z-index: 11;
     }
 }

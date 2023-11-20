@@ -1,12 +1,14 @@
 import styles from "./styles.module.css";
 import Link from "next/link";
-import Button from "../UI/Button";
 import Socials from "../UI/Socials";
 import { RiMenu3Fill } from "react-icons/ri";
 import { IoMdClose } from "react-icons/io";
 import { MdSunny } from "react-icons/md";
 import { BsFillMoonStarsFill } from "react-icons/bs";
 import { useState, useEffect } from "react";
+import { GoHome } from "react-icons/go";
+import { FaCode } from "react-icons/fa6";
+import { VscFeedback } from "react-icons/vsc";
 
 export default function Navbar() {
   const [toggle, setToggle] = useState("");
@@ -61,14 +63,17 @@ export default function Navbar() {
         </div>
       </div>
       <div className={styles.list}>
-        <Link href="/" onClick={nav_toggle}>
-          <Button>Home</Button>
+        <Link href="/" onClick={nav_toggle} className={styles.link}>
+          <GoHome className={styles.navLinkIco} />
+          &nbsp;Home
         </Link>
-        <Link href="/webeditor" onClick={nav_toggle}>
-          <Button>Web Editor</Button>
+        <Link href="/webeditor" onClick={nav_toggle} className={styles.link}>
+          <FaCode className={styles.navLinkIco} />
+          &nbsp;Web Editor
         </Link>
-        <Link href="/feedback" onClick={nav_toggle}>
-          <Button>Feedback</Button>
+        <Link href="/feedback" onClick={nav_toggle} className={styles.link}>
+          <VscFeedback className={styles.navLinkIco} />
+          &nbsp;Feedback
         </Link>
         <Socials />
       </div>
