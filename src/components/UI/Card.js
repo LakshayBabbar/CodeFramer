@@ -7,8 +7,8 @@ function Card(props) {
   return (
     <motion.div
       className={styles.wrapper}
-      initial={{ y: "15vh" }}
-      whileInView={{ y: 0 }}
+      initial={{ y: "15vh", opacity: 0 }}
+      whileInView={{ y: 0, opacity: 1 }}
       whileHover={{ scale: 1.03 }}
       transition={{ type: "spring", stiffness: 250, damping: 15 }}
     >
