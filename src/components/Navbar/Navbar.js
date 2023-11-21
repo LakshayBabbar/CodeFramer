@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import { GoHome } from "react-icons/go";
 import { FaCode } from "react-icons/fa6";
 import { VscFeedback } from "react-icons/vsc";
+import { motion } from "framer-motion";
 
 export default function Navbar() {
   const [toggle, setToggle] = useState("");
@@ -63,19 +64,27 @@ export default function Navbar() {
         </div>
       </div>
       <div className={styles.list}>
-        <Link href="/" onClick={nav_toggle} className={styles.link}>
-          <GoHome className={styles.navLinkIco} />
-          &nbsp;Home
-        </Link>
-        <Link href="/webeditor" onClick={nav_toggle} className={styles.link}>
-          <FaCode className={styles.navLinkIco} />
-          &nbsp;Web Editor
-        </Link>
-        <Link href="/feedback" onClick={nav_toggle} className={styles.link}>
-          <VscFeedback className={styles.navLinkIco} />
-          &nbsp;Feedback
-        </Link>
-        <Socials />
+        <motion.div
+          className={styles.listItems}
+          initial={{ opacity: 0, x: -100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          whileTap={{ scale: 0.8 }}
+          transition={{ type: "spring", stiffness: 300 }}
+        >
+          <Link href="/" onClick={nav_toggle} className={styles.link}>
+            <GoHome className={styles.navLinkIco} />
+            &nbsp;Home
+          </Link>
+          <Link href="/webeditor" onClick={nav_toggle} className={styles.link}>
+            <FaCode className={styles.navLinkIco} />
+            &nbsp;Web Editor
+          </Link>
+          <Link href="/feedback" onClick={nav_toggle} className={styles.link}>
+            <VscFeedback className={styles.navLinkIco} />
+            &nbsp;Feedback
+          </Link>
+          <Socials />
+        </motion.div>
       </div>
     </div>
   );

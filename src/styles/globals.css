@@ -7,6 +7,7 @@
     --card-bg: #24212ccf;
     --card-bg2: #000000;
     --gradient: linear-gradient(90deg, rgb(12, 8, 81) 0%, rgb(18, 18, 187)35%, rgba(0,212,255,1) 100%);
+    --gradient2:linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 100%);;
 }
 
 .lightMode{
