@@ -40,7 +40,7 @@
   height: 30vw;
   aspect-ratio: 1/1;
   position: absolute;
-  filter: drop-shadow(-0.5rem -0.5rem 20px rgb(41, 40, 40));
+  filter: drop-shadow(-0.5rem -0.5rem 20px rgb(24, 24, 24));
 }
 .img2 {
   margin: 10% 0 0 10vw;
