@@ -13,15 +13,21 @@ export default function Home() {
   const style = {
     fontSize: "5rem",
     marginBottom: "1rem",
-    color: "var(--text)"
+    color: "var(--text)",
   };
   return (
     <>
       <Head>
         <title>CodeFramer</title>
-        <meta name="description" content="Online Code Editor - HTML, CSS & JS." />
+        <meta
+          name="description"
+          content="Online Code Editor - HTML, CSS & JS."
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="google-site-verification" content="v6jtGEEF0E0XMHMdaK06gyxXy9mpQfE0-3yuSLik4iw" />
+        <meta
+          name="google-site-verification"
+          content="v6jtGEEF0E0XMHMdaK06gyxXy9mpQfE0-3yuSLik4iw"
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <motion.main
@@ -29,10 +35,12 @@ export default function Home() {
         whileInView={{ x: 0 }}
         transition={{ x: { type: "spring", stiffness: 200 } }}
       >
-        <Hero />
-        <section className={styles.scroller}>
-          <div className={styles.outer}>
-            <div className={styles.inner} />
+        <section className={styles.hero}>
+          <Hero />
+          <div className={styles.scroller}>
+            <div className={styles.outer}>
+              <div className={styles.inner} />
+            </div>
           </div>
         </section>
         <section className={styles.gs}>

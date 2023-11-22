@@ -98,7 +98,7 @@
     border-radius: 15px;
     margin-left: 4vw;
     align-items: baseline;
-    filter: drop-shadow(4vw 4vw var(--text));
+    box-shadow: 4vw 4vw var(--text);
   }
   .link,
   .navLinkIco {

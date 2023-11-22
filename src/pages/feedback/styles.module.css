@@ -25,7 +25,8 @@
   height: 2.5rem;
   border: 2px solid var(--btn-primary);
   border-radius: 5px;
-  background: transparent;
+  background-color: var(--nav);
+  backdrop-filter: blur(10px);
 }
 
 .form form input::placeholder,

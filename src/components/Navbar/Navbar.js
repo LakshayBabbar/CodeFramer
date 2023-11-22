@@ -68,8 +68,7 @@ export default function Navbar() {
           className={styles.listItems}
           initial={{ opacity: 0, x: -100 }}
           whileInView={{ opacity: 1, x: 0 }}
-          whileTap={{ scale: 0.8 }}
-          transition={{ type: "spring", stiffness: 300 }}
+          transition={{ type: "spring", stiffness: 200 }}
         >
           <Link href="/" onClick={nav_toggle} className={styles.link}>
             <GoHome className={styles.navLinkIco} />

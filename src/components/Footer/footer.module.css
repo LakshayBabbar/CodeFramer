@@ -4,7 +4,7 @@
     background: var(--btn-primary);
     border: 1px solid var(--btn-primary);
     border-radius: 50%;
-    margin: 0 5vw;
+    margin: 10vh 5vw 0;
 }
 .wrapper{
     display: flex;
