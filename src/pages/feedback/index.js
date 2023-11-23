@@ -11,14 +11,9 @@ function index() {
     transition: { scale: { type: "spring", stiffness: 250 } },
   };
 
-  const name = useRef();
-  const email = useRef();
-  const mssg = useRef();
-
-  const sendMail = (event) => {
-    event.preventDefault();
-    console.log(name.current.value,email.current.value,mssg.current.value);
-  };
+  const name = useRef("");
+  const email = useRef("");
+  const mssg = useRef("");
 
   return (
     <motion.div
@@ -40,9 +35,9 @@ function index() {
       </div>
 
       <div className={styles.form}>
-      <div className={styles.absolute} />
+        <div className={styles.absolute} />
         <h1>Feedback!</h1>
-        <form onSubmit={sendMail}>
+        <form>
           <motion.input
             type="text"
             placeholder="Name"
@@ -71,7 +66,7 @@ function index() {
             Send
           </Button>
           <div className={styles.absolute2} />
-          </form>
+        </form>
       </div>
     </motion.div>
   );
