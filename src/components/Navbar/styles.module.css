@@ -129,3 +129,16 @@
     backdrop-filter: none;
   }
 }
+
+.btn_animate:active{
+  animation: animate 1s linear;
+}
+@keyframes animate {
+  0%, 100% {
+    scale: 1;
+  }
+  50%{
+    rotate: 360deg;
+    scale: 0.2
+  }
+}

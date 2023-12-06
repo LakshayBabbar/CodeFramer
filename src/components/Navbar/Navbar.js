@@ -48,7 +48,11 @@ export default function Navbar() {
       </div>
       <div className={styles.sideBar}>
         <button onClick={modeHandler} className={styles.btn}>
-          {mode === "lightMode" ? <MdSunny /> : <BsFillMoonStarsFill />}
+          {mode === "lightMode" ? (
+            <MdSunny className={styles.btn_animate} />
+          ) : (
+            <BsFillMoonStarsFill className={styles.btn_animate} />
+          )}
         </button>
         <div className={styles.menu}>
           <RiMenu3Fill
