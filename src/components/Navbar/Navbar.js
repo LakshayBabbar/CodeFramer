@@ -14,6 +14,7 @@ import { motion } from "framer-motion";
 export default function Navbar() {
   const [toggle, setToggle] = useState("");
   const [mode, setLight] = useState("dark");
+  const [btnStyle, setbtnStyle] = useState({});
 
   const nav_toggle = () => {
     if (toggle === "") {
@@ -24,11 +25,21 @@ export default function Navbar() {
   };
 
   const modeHandler = () => {
+    setbtnStyle({
+      background: "var(--nav)",
+      scale: "0.8",
+      rotate: "0deg",
+    });
     if (mode === "dark") {
       setLight("lightMode");
     } else {
       setLight("dark");
     }
+    setTimeout(() => {
+      setbtnStyle({
+        background: "var(--text)",
+      });
+    }, 400);
   };
 
   useEffect(() => {
@@ -47,12 +58,8 @@ export default function Navbar() {
         </Link>
       </div>
       <div className={styles.sideBar}>
-        <button onClick={modeHandler} className={styles.btn}>
-          {mode === "lightMode" ? (
-            <MdSunny className={styles.btn_animate} />
-          ) : (
-            <BsFillMoonStarsFill className={styles.btn_animate} />
-          )}
+        <button onClick={modeHandler} className={styles.btn} style={btnStyle}>
+          {mode === "lightMode" ? <MdSunny /> : <BsFillMoonStarsFill />}
         </button>
         <div className={styles.menu}>
           <RiMenu3Fill

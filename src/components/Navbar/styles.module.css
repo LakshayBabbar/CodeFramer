@@ -49,6 +49,8 @@
   font-size: 1.25rem;
   padding: 0.3rem 0 0;
   margin: 0 1.5rem;
+  rotate: -90deg;
+  transition: 0.4s;
 }
 .link,
 .navLinkIco {
@@ -127,18 +129,5 @@
   }
   .active.wrapper {
     backdrop-filter: none;
-  }
-}
-
-.btn_animate:active{
-  animation: animate 1s linear;
-}
-@keyframes animate {
-  0%, 100% {
-    scale: 1;
-  }
-  50%{
-    rotate: 360deg;
-    scale: 0.2
   }
 }
