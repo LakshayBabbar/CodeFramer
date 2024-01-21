@@ -1,0 +1,34 @@
+.form h1 {
+  color: var(--text);
+  font-size: 4rem;
+}
+.form form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+
+}
+
+.form form input {
+  width: 20rem;
+  height: 2.5rem;
+  border: 2px solid var(--btn-primary);
+  border-radius: 5px;
+  background-color: var(--nav);
+  backdrop-filter: blur(10px);
+}
+
+.form form input::placeholder,
+.form input {
+  font-size: 1.5rem;
+  padding: 0 1rem;
+  color: var(--text);
+}
+
+@media (max-width: 1000px) {
+  .form form {
+    margin: 0;
+  }
+}

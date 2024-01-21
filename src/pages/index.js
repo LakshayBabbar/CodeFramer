@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import Hero from "@/components/Header/Hero";
 import { SiTestrail } from "react-icons/si";
-import { VscFeedback } from "react-icons/vsc";
+import { MdOutlineSnippetFolder } from "react-icons/md";
 import Card from "@/components/UI/Card";
 import Footer from "@/components/Footer/Footer";
 import { motion } from "framer-motion";
@@ -57,18 +57,18 @@ export default function Home() {
           </p>
           <div className={styles.cards}>
             <Card
+              img=<MdOutlineSnippetFolder style={style} />
+              title="Sign In"
+              desc="To save your work"
+              linkT="Sign In"
+              link="/signin"
+              />
+              <Card
               img=<SiTestrail style={style} />
-              title="Web Editor"
-              desc="Build & Test"
+              title="Try Editor"
+              desc="Your work will not be saved."
+              linkT="Go to Editor"
               link="/webeditor"
-              linkT="Try the Editor"
-            />
-            <Card
-              img=<VscFeedback style={style} />
-              title="Feedback"
-              desc="Your Feedback Matters"
-              link="/feedback"
-              linkT="Go to Feedback"
             />
           </div>
         </section>

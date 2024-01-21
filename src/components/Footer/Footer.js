@@ -7,7 +7,7 @@ function Footer() {
     <div className={styles.divider}></div>
     <div className={styles.wrapper}>
         <h1>CodeFramer</h1>
-        <p>Built with Love by Lakshay Babbar</p>
+        <p>Copyright © 2024 CodeFramer. All rights reserved.</p>
         <Socials />
     </div>
     </>

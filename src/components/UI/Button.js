@@ -8,10 +8,6 @@ function Button({ children, style, type }) {
       className={styles.btn}
       style={style}
       type={type}
-      whileHover={{
-        scale: 1.1,
-        transition: { type: "spring", stiffness: 300 },
-      }}
     >
       {children}
     </motion.button>

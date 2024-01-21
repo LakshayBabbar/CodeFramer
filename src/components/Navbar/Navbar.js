@@ -89,9 +89,9 @@ export default function Navbar() {
             <FaCode className={styles.navLinkIco} />
             &nbsp;Web Editor
           </Link>
-          <Link href="/feedback" onClick={nav_toggle} className={styles.link}>
+          <Link href="/signin" onClick={nav_toggle} className={styles.link}>
             <VscFeedback className={styles.navLinkIco} />
-            &nbsp;Feedback
+            &nbsp;Sign In
           </Link>
           <Socials />
         </motion.div>

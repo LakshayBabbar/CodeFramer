@@ -1,0 +1,13 @@
+.wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+}
+.fallback{
+    font-weight: 100;
+    color: var(--text);
+    text-align: center;
+    max-width: 40rem;
+}
