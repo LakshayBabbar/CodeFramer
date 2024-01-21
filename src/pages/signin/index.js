@@ -1,13 +1,16 @@
 import { motion } from "framer-motion";
 import styles from "./styles.module.css";
-import SignIn from "@/components/auth/SignIn";
-import SignUp from "@/components/auth/SignUp";
+import SignIn from "@/components/SignIn/SignIn";
 import Image from "next/image";
 import img from "../../assests/contact.webp";
 import { useState } from "react";
 
 function index() {
-  const [active, setActive] = useState(<SignIn />);
+  const [data, setData] = useState({})
+  const dataLiftingHandler = (formData) => {
+    setData(formData);
+  }
+
   return (
     <motion.section
       initial={{ x: 100 }}
@@ -27,20 +30,7 @@ function index() {
         />
       </div>
       <div className={styles.choose}>
-        {active}
-        <p>
-          {active.type === SignIn ? (
-            <>
-              Need an account?{" "}
-              <span onClick={() => setActive(<SignUp />)}>Sign Up</span>
-            </>
-          ) : (
-            <>
-              Already have an account?{" "}
-              <span onClick={() => setActive(<SignIn />)}>Sign In</span>
-            </>
-          )}
-        </p>
+        <SignIn formDataLifting={dataLiftingHandler}/>
       </div>
     </motion.section>
   );
