@@ -58,7 +58,7 @@ export default function Navbar() {
         </Link>
       </div>
       <div className={styles.sideBar}>
-        <button onClick={modeHandler} className={styles.btn} style={btnStyle}>
+        <button onClick={modeHandler} className={styles.btn} style={btnStyle} name="Color Theme">
           {mode === "lightMode" ? <MdSunny /> : <BsFillMoonStarsFill />}
         </button>
         <div className={styles.menu}>
