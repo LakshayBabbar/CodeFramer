@@ -31,7 +31,6 @@ function index() {
     >
       <div className={styles.editor}>
         <Editor onChange={activeHandler} />
-        <span className={styles.status}></span>
       </div>
       <iframe title="output" srcDoc={srcDoc} width="100%" height="100%" />
     </motion.div>

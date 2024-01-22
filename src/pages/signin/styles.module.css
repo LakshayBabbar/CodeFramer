@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10vh 0;
+  padding: 15vh 0;
 }
 
 .img {
@@ -11,42 +11,23 @@
   height: 35rem;
   aspect-ratio: 1/1;
 }
-
-.absolute,
-.absolute2 {
-  height: 7rem;
-  width: 8rem;
-  position: absolute;
-  z-index: -1;
-}
-.absolute2 {
-  margin: 10rem 0 0 10rem;
-  padding: 1rem;
-}
-.absolute::before,
-.absolute2::before {
-  content: "";
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  background: blue;
-  filter: blur(100px);
-}
-
 @media (max-width: 1000px) {
   .wrapper {
     flex-direction: column;
     gap: 0;
-    padding: 10vh 0;
+    padding: 5vh 0 0;
   }
   .img {
     width: 60vw;
     height: 60vw;
   }
 }
-@media (max-width: 768px) {
+@media (max-width: 800px) {
+  .wrapper{
+    padding: 0;
+  }
   .img {
-    width: 85vw;
-    height: 85vw;
+    width: 25rem;
+    height: 25rem;
   }
 }

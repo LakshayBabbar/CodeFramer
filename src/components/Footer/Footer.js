@@ -3,14 +3,14 @@ import Socials from "../UI/Socials";
 
 function Footer() {
   return (
-    <>
-    <div className={styles.divider}></div>
-    <div className={styles.wrapper}>
+    <footer className={styles.footer}>
+      <div className={styles.divider} />
+      <div className={styles.wrapper}>
         <h1>CodeFramer</h1>
         <p>Copyright © 2024 CodeFramer. All rights reserved.</p>
         <Socials />
-    </div>
-    </>
+      </div>
+    </footer>
   );
 }
 

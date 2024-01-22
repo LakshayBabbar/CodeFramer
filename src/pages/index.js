@@ -5,7 +5,6 @@ import Hero from "@/components/Header/Hero";
 import { SiTestrail } from "react-icons/si";
 import { MdOutlineSnippetFolder } from "react-icons/md";
 import Card from "@/components/UI/Card";
-import Footer from "@/components/Footer/Footer";
 import { motion } from "framer-motion";
 const inter = Inter({ subsets: ["latin"] });
 
@@ -70,7 +69,6 @@ export default function Home() {
             />
           </div>
         </section>
-        <Footer />
       </motion.main>
     </>
   );

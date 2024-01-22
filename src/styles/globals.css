@@ -1,11 +1,11 @@
 :root{
     --btn-primary: #0091ff;
-    --nav: #0000007e;
     --bg: #000000;
     --text: #f0f8ff;
     --para: #bababa;
     --card-bg: #24212ccf;
     --card-bg2: #000000;
+    --nav-shadow: rgba(255, 255, 255, 0.2);
     --gradient: linear-gradient(90deg, rgb(12, 8, 81) 0%, rgb(18, 18, 187)35%, rgba(0,212,255,1) 100%);
     --gradient2:linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 100%);;
 }
@@ -16,7 +16,7 @@
     --bg: #ffffff;
     --card-bg: #edf6ffa9;
     --card-bg2: #a6a6a6;
-    --nav: #d7eeff89;
+    --nav-shadow: rgba(0,0,0,.2);
 }
 
 html{
@@ -36,7 +36,7 @@ body{
     height: 11rem;
     width: 50rem;
     position: absolute;
-    z-index: 10;
+    z-index: -1;
 }
 
 .absolute::before{

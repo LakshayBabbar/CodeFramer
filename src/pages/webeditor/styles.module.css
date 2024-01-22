@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: column;
     margin-top: 4rem;
-    background-color: aliceblue;
+    background-color: #fff;
 }
 
 .editor{
@@ -14,15 +14,9 @@
     background-color: black;
 }
 
-.status{
-    height: 10px;
-    width: 100vw;
-    background: black;
-    border: 1px solid rgb(24, 23, 23);
-}
-
-@media(max-width: 720px) {
+@media(max-width: 800px) {
     .wrapper{
+        margin-top: 0;
         flex-direction: column-reverse;
     }
 }
