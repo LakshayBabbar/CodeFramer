@@ -1,8 +1,8 @@
 import styles from "./hero.module.css";
 import { TypeAnimation } from "react-type-animation";
 import Image from "next/image";
-import img from "../../assests/css.png";
-import img2 from "../../assests/js.png";
+import img from "../../assests/css.webp";
+import img2 from "../../assests/js.webp";
 
 function Intro() {
   return (

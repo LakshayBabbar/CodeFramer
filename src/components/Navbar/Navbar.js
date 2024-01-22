@@ -10,18 +10,27 @@ import { FaSignInAlt } from "react-icons/fa";
 import { motion } from "framer-motion";
 
 export default function Navbar() {
-  const [mode, setLight] = useState("dark");
+  const [mode, setLight] = useState("darkMode");
 
   const modeHandler = () => {
-    if (mode === "dark") {
+    if (mode === "darkMode") {
       setLight("lightMode");
+      localStorage.setItem("theme","lightMode")
     } else {
-      setLight("dark");
+      setLight("darkMode");
+      localStorage.setItem("theme","darkMode")
     }
   };
 
   useEffect(() => {
-    document.body.className = mode;
+    const theme = localStorage.getItem("theme");
+    if(theme === "lightMode") {
+      setLight(theme);
+      document.body.className = theme;
+    }else{
+      document.body.className = mode;
+    }
+
   }, [mode]);
 
   return (
