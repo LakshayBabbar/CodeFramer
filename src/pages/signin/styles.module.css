@@ -33,16 +33,6 @@
   filter: blur(100px);
 }
 
-.choose p{
-  text-align: center;
-  color: var(--text);
-}
-
-.choose span {
-  color: var(--btn-primary);
-  cursor: pointer;
-}
-
 @media (max-width: 1000px) {
   .wrapper {
     flex-direction: column;

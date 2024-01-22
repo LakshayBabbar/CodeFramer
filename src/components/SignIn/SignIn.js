@@ -3,23 +3,54 @@ import Button from "@/components/UI/Button";
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
+import { BiSolidError } from "react-icons/bi";
+import { auth } from "@/pages/api/firebase";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
-const SignIn = ({formDataLifting}) => {
+const SignIn = () => {
   const [isSignUp, setIsSignUp] = useState(false);
   const redirect = useRouter();
   const username = useRef("");
   const email = useRef("");
   const password = useRef("");
+  const [error, setError] = useState(false);
+  const [errorMssg, setErrorMssg] = useState("Error Occured!!");
 
   const submitHandler = (event) => {
     event.preventDefault();
-    const data = {
-      username: username.current.value,
-      email: email.current.value,
-      password: password.current.value,
-    };
-    formDataLifting(data);
-    redirect.push("/dashboard");
+    setError(false);
+    if (isSignUp) {
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then(() => {
+          localStorage.setItem("username", username.current.value);
+          redirect.push("/signin");
+        })
+        .catch((error) => {
+          setError(true);
+          setErrorMssg(error.message);
+        });
+    } else {
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then(() => {
+          localStorage.setItem("username", username.current.value);
+          !error && redirect.push("/dashboard");
+        })
+        .catch((error) => {
+          setError(true);
+          setErrorMssg(error.message);
+        });
+    }
   };
 
   const variants = {
@@ -32,24 +63,28 @@ const SignIn = ({formDataLifting}) => {
       <div className={styles.absolute} />
       <h1>{isSignUp ? "Sign Up" : "Sign In"}</h1>
       <form onSubmit={submitHandler}>
-        <motion.input
-          type="text"
-          placeholder="Username"
-          whileTap={variants.onclick}
-          transition={variants.transition}
-          ref={username}
-          required
-        />
         {isSignUp && (
           <motion.input
-            type="email"
-            placeholder="Email Id"
+            type="text"
+            placeholder="Username"
+            name="username"
             whileTap={variants.onclick}
             transition={variants.transition}
-            ref={email}
+            ref={username}
+            autoComplete="on"
             required
           />
         )}
+        <motion.input
+          type="email"
+          placeholder="Email Id"
+          name="email"
+          whileTap={variants.onclick}
+          transition={variants.transition}
+          ref={email}
+          autoComplete="on"
+          required
+        />
         <motion.input
           type="password"
           name="Password"
@@ -59,16 +94,22 @@ const SignIn = ({formDataLifting}) => {
           ref={password}
           required
         />
+        {error && (
+          <p className={styles.errorMssg}>
+            <BiSolidError />
+            {errorMssg}
+          </p>
+        )}
         <Button style={{ width: "8rem" }} type="submit">
           {isSignUp ? "Sign Up" : "Sign In"}
         </Button>
         {isSignUp ? (
-          <p>
+          <p className={styles.choose}>
             Already have an account?{" "}
             <span onClick={() => setIsSignUp(false)}>Sign In</span>
           </p>
         ) : (
-          <p>
+          <p className={styles.choose}>
             Need an account?{" "}
             <span onClick={() => setIsSignUp(true)}>Sign Up</span>
           </p>

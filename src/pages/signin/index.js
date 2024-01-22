@@ -3,13 +3,20 @@ import styles from "./styles.module.css";
 import SignIn from "@/components/SignIn/SignIn";
 import Image from "next/image";
 import img from "../../assests/contact.webp";
-import { useState } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../api/firebase";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 function index() {
-  const [data, setData] = useState({})
-  const dataLiftingHandler = (formData) => {
-    setData(formData);
-  }
+  const redirect = useRouter();
+useEffect(()=>{
+  onAuthStateChanged(auth,(user)=>{
+    if(user) {
+      redirect.push('/dashboard');
+    }
+  })
+},[])
 
   return (
     <motion.section
@@ -29,9 +36,7 @@ function index() {
           placeholder="blur"
         />
       </div>
-      <div className={styles.choose}>
-        <SignIn formDataLifting={dataLiftingHandler}/>
-      </div>
+      <SignIn />
     </motion.section>
   );
 }

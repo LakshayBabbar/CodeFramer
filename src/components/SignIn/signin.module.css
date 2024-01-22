@@ -1,6 +1,7 @@
 .form h1 {
   color: var(--text);
   font-size: 4rem;
+  margin: 1.5rem 0;
 }
 .form form {
   display: flex;
@@ -10,7 +11,6 @@
   gap: 1rem;
 
 }
-
 .form form input {
   width: 20rem;
   height: 2.5rem;
@@ -19,12 +19,28 @@
   background-color: var(--nav);
   backdrop-filter: blur(10px);
 }
-
 .form form input::placeholder,
 .form input {
   font-size: 1.5rem;
   padding: 0 1rem;
   color: var(--text);
+}
+.errorMssg{
+  color: #ff3232;
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.choose{
+  text-align: center;
+  color: var(--text);
+}
+.choose span {
+  color: var(--btn-primary);
+  cursor: pointer;
 }
 
 @media (max-width: 1000px) {
