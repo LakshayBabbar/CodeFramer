@@ -1,63 +1,34 @@
 .wrapper {
   display: flex;
   align-items: center;
-  justify-content: center;
-  background: var(--nav);
+  justify-content: space-around;
+  background: var(--bg);
   top: 0;
   position: fixed;
   width: 100%;
-  height: 4rem;
+  height: 3.5rem;
   z-index: 9;
-  backdrop-filter: blur(20px);
 }
 .navLogo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.logo {
   text-decoration: none;
   color: var(--text);
-  font-size: 2rem;
-  font-weight: 600;
+  font-size: 1.5rem;
+  font-weight: 500;
 }
-.listItems {
+.list {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
-}
-.sideBar {
-  display: flex;
-  align-items: center;
-}
-.controller {
-  display: none;
-  padding: 0 1.5rem 0 0;
-  font-size: 2.5rem;
-  color: var(--text);
-}
-.controller[name="close-btn"] {
-  display: none;
-}
-.btn {
-  border: none;
-  background: var(--text);
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50px;
-  color: var(--bg);
-  font-size: 1.25rem;
-  padding: 0.3rem 0 0;
-  margin: 0 1.5rem;
-  rotate: -90deg;
-  transition: 0.4s;
+  gap: 2rem;
 }
 .link,
 .navLinkIco {
   color: var(--text);
   text-decoration: none;
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   transition: 0.1s ease-out;
 }
 .navLinkIco {
@@ -68,66 +39,39 @@
   transition: 0.1s ease-in;
   color: var(--btn-primary);
 }
-
+.btna {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background-color: transparent;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 100;
+  gap: 6px;
+  color: var(--text);
+  border-radius: 10px;
+}
+.btna:active {
+  background: rgba(128, 128, 128, 0.336);
+}
 @media (max-width: 800px) {
   .wrapper {
-    justify-content: space-between;
+    justify-content: center;
+    top: auto;
+    bottom: 0;
+    height: 5rem;
   }
   .navLogo {
-    padding-left: 1.5rem;
+    display: none;
   }
   .list {
-    display: none;
+    gap: 5vw;
   }
-  .active .list {
-    display: flex;
-    width: 100vw;
-    height: 100vh;
-    background-image: var(--bg);
-    -webkit-backdrop-filter: blur(30px);
-    backdrop-filter: blur(30px);
-    position: absolute;
-    top: 0;
-    padding: 5rem 0;
-    transition: 0.3s;
-  }
-  .listItems {
+  .link {
     flex-direction: column;
-    width: 15rem;
-    height: fit-content;
-    padding: 15vw 10vw;
-    background: rgba(27, 141, 255, 0.85);
-    border-radius: 15px;
-    margin-left: 4vw;
-    align-items: baseline;
-    box-shadow: 4vw 4vw var(--text);
   }
-  .link,
-  .navLinkIco {
-    font-size: 1.5rem;
-    color: aliceblue;
-  }
-  .navLinkIco {
-    font-size: 1.75rem;
-  }
-  .btn {
-    margin: 0;
-  }
-  .controller {
-    display: block;
-  }
-  .active .controller[name="menu-btn"] {
-    display: none;
-  }
-  .active .controller[name="close-btn"] {
-    display: block;
-    position: relative;
-    z-index: 11;
-  }
-  .sideBar {
-    gap: 1rem;
-  }
-  .active.wrapper {
-    backdrop-filter: none;
+  .btna {
+    flex-direction: column;
   }
 }

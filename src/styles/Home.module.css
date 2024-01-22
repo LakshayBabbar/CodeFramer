@@ -1,34 +1,8 @@
-.hero{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100vh;
-    overflow: hidden;
-}
-
-.editorLink {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.btn{
-    display: flex;
-    gap: 1rem;
-}
-.link{
-    text-decoration: none;
-    color: var(--text);
-}
-
 .scroller{
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 5rem;
 }
-
 .outer{
     border-radius: 20px;
     height: 4rem;
@@ -58,7 +32,6 @@
 .gs h1{
     font-size: 4rem;
     font-weight: 800;
-    margin: 0;
     text-align: center;
     color: var(--text);
 }
@@ -69,11 +42,12 @@
 .gs p{
     font-size: 1.2rem;
     text-align: center;
-    padding: 2rem 25vw;
+    padding: 0 25vw;
     color: var(--para);
 }
 
 .cards{
+    margin-top: 4rem;
     width: 100%;
     display: flex;
     align-items: center;

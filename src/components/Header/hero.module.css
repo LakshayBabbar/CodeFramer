@@ -1,6 +1,7 @@
 .container {
   display: flex;
   justify-content: center;
+  padding: 10rem 0;
 }
 
 .wrapper {
@@ -64,7 +65,7 @@
     align-items: center;
   }
   .wrapper {
-    width: fit-content;
+    width: 100vw;
     align-items: center;
     justify-content: center;
   }
@@ -77,6 +78,11 @@
   }
   .imageWrapper {
     display: none;
+  }
+}
+@media (max-width: 800px) {
+  .container{
+    padding: 15vh 0;
   }
 }
 @media (max-width: 768px) {

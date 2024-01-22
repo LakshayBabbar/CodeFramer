@@ -35,14 +35,12 @@ export default function Home() {
         whileInView={{ x: 0 }}
         transition={{ x: { type: "spring", stiffness: 200 } }}
       >
-        <section className={styles.hero}>
-          <Hero />
-          <div className={styles.scroller}>
-            <div className={styles.outer}>
-              <div className={styles.inner} />
-            </div>
+        <Hero />
+        <div className={styles.scroller}>
+          <div className={styles.outer}>
+            <div className={styles.inner} />
           </div>
-        </section>
+        </div>
         <section className={styles.gs}>
           <h1>
             Getting <span>Started!</span>
@@ -62,8 +60,8 @@ export default function Home() {
               desc="To save your work"
               linkT="Sign In"
               link="/signin"
-              />
-              <Card
+            />
+            <Card
               img=<SiTestrail style={style} />
               title="Try Editor"
               desc="Your work will not be saved."

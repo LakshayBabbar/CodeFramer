@@ -27,7 +27,7 @@ function Intro() {
             fontSize: "2rem",
             textAlign: "center",
             color: "#0091ff",
-            fontWeight: "800",
+            fontWeight: "500",
           }}
         />
         <p>
