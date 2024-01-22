@@ -33,13 +33,9 @@ export default function Home() {
         initial={{ x: -100 }}
         whileInView={{ x: 0 }}
         transition={{ x: { type: "spring", stiffness: 200 } }}
+        className={styles.main}
       >
         <Hero />
-        <div className={styles.scroller}>
-          <div className={styles.outer}>
-            <div className={styles.inner} />
-          </div>
-        </div>
         <section className={styles.gs}>
           <h1>
             Getting <span>Started!</span>

@@ -1,7 +1,7 @@
 .container {
   display: flex;
   justify-content: center;
-  padding: 10rem 0;
+  padding: 25vh 0;
 }
 
 .wrapper {
@@ -80,12 +80,10 @@
     display: none;
   }
 }
-@media (max-width: 800px) {
-  .container{
-    padding: 15vh 0;
-  }
-}
 @media (max-width: 768px) {
+  .container{
+    padding: 20vh 0;
+  }
   .wrapper h1 {
     font-size: 15vw;
   }
@@ -95,5 +93,15 @@
   .wrapper p {
     width: fit-content;
     padding: 0 1rem;
+  }
+}
+@media (max-height: 800px) {
+  .container{
+    padding: 18vh 0;
+  }
+}
+@media (max-width: 900px) and (min-height: 1000px) {
+  .container{
+    padding: 10vh 0 0;
   }
 }

@@ -1,32 +1,5 @@
-.scroller{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.outer{
-    border-radius: 20px;
-    height: 4rem;
-    width: 2rem;
-    background: transparent;
-    border: 3px solid var(--btn-primary);
-    display: flex;
-    justify-content: center;
-}
-.inner{
-    border-radius: 50%;
-    background: var(--btn-primary);
-    width: 1rem;
-    height: 1rem;
-    animation: scrolling 2s infinite;
-}
-
-@keyframes scrolling {
-    0%, 100%{
-        margin: 0.5rem;
-    }
-    50%{
-        margin: 2.5rem 0 0;
-    }
+.main{
+    overflow: hidden;
 }
 
 .gs h1{
@@ -34,15 +7,16 @@
     font-weight: 800;
     text-align: center;
     color: var(--text);
+    padding: 0 1rem;
 }
 .gs h1 span{
     color: var(--btn-primary);
 }
 
 .gs p{
+    padding: 0 25vw;
     font-size: 1.2rem;
     text-align: center;
-    padding: 0 25vw;
     color: var(--para);
 }
 
@@ -68,13 +42,16 @@
 
 @media(max-width: 1000px){
     .gs p{
-        padding: 2rem 20vw;
+        padding: 0 20vw;
     }
 }
 
 @media(max-width: 768px) {
+    .gs h1{
+        font-size: 3rem;
+    }
     .gs p{
-        padding: 2rem 10vw;
+        padding: 0 10vw;
     }
     .cards{
         flex-direction: column;

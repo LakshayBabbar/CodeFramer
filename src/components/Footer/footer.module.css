@@ -1,6 +1,7 @@
 .footer{
     display: flex;
     flex-direction: column;
+    margin: 2rem 0 0;
 }
 .divider{
     width: 90vw;
@@ -18,11 +19,12 @@
 }
 .wrapper h1, .wrapper p{
     color: var(--text);
+    text-align: center;
 }
 
 @media (max-width: 800px) {
     .footer{
-        margin: 0 0 10vh 0;
+        margin: 2rem 0 10vh;
     }
     .wrapper{
         flex-direction: column;

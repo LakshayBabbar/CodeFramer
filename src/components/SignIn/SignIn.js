@@ -114,7 +114,6 @@ const SignIn = () => {
             <span onClick={() => setIsSignUp(true)}>Sign Up</span>
           </p>
         )}
-        <div className={styles.absolute2} />
       </form>
     </div>
   );

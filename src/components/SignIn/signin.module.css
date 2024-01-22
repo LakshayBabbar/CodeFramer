@@ -37,6 +37,7 @@
 .choose{
   text-align: center;
   color: var(--text);
+  margin: 0 0 1rem;
 }
 .choose span {
   color: var(--btn-primary);
