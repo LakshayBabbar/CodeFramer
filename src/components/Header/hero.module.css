@@ -27,7 +27,7 @@
 .wrapper p {
   text-align: center;
   color: var(--para);
-  font-size: 1.5vw;
+  font-size: 1.2rem;
 }
 .imageWrapper {
   display: flex;
@@ -65,7 +65,7 @@
     align-items: center;
   }
   .wrapper {
-    width: 100vw;
+    width: fit-content;
     align-items: center;
     justify-content: center;
   }
@@ -73,7 +73,6 @@
     font-size: 12vw;
   }
   .wrapper p {
-    font-size: 1.2rem;
     width: 60vw;
   }
   .imageWrapper {
