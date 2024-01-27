@@ -10,7 +10,7 @@
   flex-direction: column;
 }
 
-.wrapper h3 {
+.wrapper .span1 {
   margin: 0;
   font-size: 2rem;
   color: var(--text);
@@ -73,7 +73,7 @@
     font-size: 12vw;
   }
   .wrapper p {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     width: 60vw;
   }
   .imageWrapper {
@@ -87,7 +87,7 @@
   .wrapper h1 {
     font-size: 15vw;
   }
-  .wrapper h3 {
+  .wrapper .span1 {
     font-size: 6vw;
   }
   .wrapper p {

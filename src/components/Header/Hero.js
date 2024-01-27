@@ -8,7 +8,7 @@ function Intro() {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <h3>Welcome to</h3>
+        <span className={styles.span1}>Welcome&nbsp;to</span>
         <h1>
           Code<span>Framer</span>
         </h1>

@@ -10,7 +10,7 @@ import { FaSignInAlt } from "react-icons/fa";
 import { motion } from "framer-motion";
 
 export default function Navbar() {
-  const [mode, setLight] = useState("darkMode");
+  const [mode, setLight] = useState("");
 
   const modeHandler = () => {
     if (mode === "darkMode") {
@@ -24,7 +24,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const theme = localStorage.getItem("theme");
-    if(theme === "lightMode") {
+    if(theme === "darkMode") {
       setLight(theme);
       document.body.className = theme;
     }else{
