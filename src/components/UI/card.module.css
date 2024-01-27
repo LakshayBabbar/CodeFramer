@@ -13,12 +13,10 @@
 .wrapper h2{
     margin: 0;
     font-size: 2rem;
-    color: var(--text);
 }
 
 .wrapper h3{
     margin: 1rem;
-    color: var(--text);
 }
 
 .link{

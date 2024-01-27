@@ -27,6 +27,7 @@ body{
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: var(--bg);
+    color: var(--text);
     overflow-x: hidden;
 }
 

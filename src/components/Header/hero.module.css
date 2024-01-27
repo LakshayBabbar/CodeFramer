@@ -13,13 +13,11 @@
 .wrapper .span1 {
   margin: 0;
   font-size: 2rem;
-  color: var(--text);
 }
 .wrapper h1 {
   margin: 0;
   font-size: 7vw;
   font-weight: 800;
-  color: var(--text);
 }
 .wrapper h1 span {
   color: var(--btn-primary);

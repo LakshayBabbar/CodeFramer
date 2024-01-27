@@ -18,7 +18,6 @@
     padding: 0 2rem;
 }
 .wrapper h1, .wrapper p{
-    color: var(--text);
     text-align: center;
 }
 

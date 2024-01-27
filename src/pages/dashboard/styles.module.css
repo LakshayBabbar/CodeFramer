@@ -6,9 +6,6 @@
     height: 100vh;
     width: 100vw;
 }
-.name{
-    color: var(--text);
-}
 .btn{
     font-size: 1rem;
     font-weight: 500;
@@ -16,12 +13,11 @@
     width: 5rem;
     border: none;
     border-radius: 5px;
-    color: var(--text);
     background-color: var(--btn-primary);
 }
 .fallback{
     font-weight: 100;
-    color: var(--text);
+    color: var(--para);
     text-align: center;
     max-width: 40rem;
 }

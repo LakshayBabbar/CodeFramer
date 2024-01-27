@@ -1,5 +1,4 @@
 .form h1 {
-  color: var(--text);
   font-size: 4rem;
   margin: 1.5rem 0;
 }
@@ -36,7 +35,6 @@
 }
 .choose{
   text-align: center;
-  color: var(--text);
   margin: 0 0 1rem;
 }
 .choose span {
