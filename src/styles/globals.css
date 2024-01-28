@@ -3,6 +3,7 @@
     --para: #2e2e2e;
     --text: rgb(46, 42, 42);
     --bg: #ffffff;
+    --side-bar: #ffffff;
     --card-bg: #edf6ffa9;
     --card-bg2: #a6a6a6;
     --nav-shadow: rgba(0,0,0,.2);
@@ -12,6 +13,7 @@
 
 .darkMode{
     --bg: #000000;
+    --side-bar: #071a2b;
     --text: #f0f8ff;
     --para: #bababa;
     --card-bg: #24212ccf;

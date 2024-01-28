@@ -6,6 +6,7 @@ import { SiTestrail } from "react-icons/si";
 import { MdOutlineSnippetFolder } from "react-icons/md";
 import Card from "@/components/UI/Card";
 import { motion } from "framer-motion";
+import Footer from "@/components/Footer/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
@@ -66,6 +67,7 @@ export default function Home() {
           </div>
         </section>
       </motion.main>
+      <Footer />
     </>
   );
 }

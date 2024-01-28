@@ -1,7 +1,5 @@
 import styles from "./styles.module.css";
 import Link from "next/link";
-/* import { RiMenu3Fill } from "react-icons/ri";
-import { IoMdClose } from "react-icons/io"; */
 import { BsNintendoSwitch } from "react-icons/bs";
 import { useState, useEffect } from "react";
 import { FaHome } from "react-icons/fa";
@@ -48,7 +46,7 @@ export default function Navbar() {
           <FaHome className={styles.navLinkIco} />
           &nbsp;Home
         </Link>
-        <Link href="/webeditor" className={styles.link}>
+        <Link href="/try_editor" className={styles.link}>
           <FaLaptopCode className={styles.navLinkIco} />
           &nbsp;Try Editor
         </Link>

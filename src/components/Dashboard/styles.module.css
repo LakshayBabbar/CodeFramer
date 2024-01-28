@@ -1,0 +1,14 @@
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+.fallback{
+    font-weight: 100;
+    color: var(--para);
+    text-align: center;
+    max-width: 40rem;
+}

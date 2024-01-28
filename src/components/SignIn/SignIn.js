@@ -5,10 +5,12 @@ import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { BiSolidError } from "react-icons/bi";
 import { auth } from "@/pages/api/firebase";
+import { db } from "@/pages/api/firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
 
 const SignIn = () => {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -30,7 +32,10 @@ const SignIn = () => {
       )
         .then(() => {
           localStorage.setItem("username", username.current.value);
-          redirect.push("/signin");
+          const docRef = addDoc(collection(db, "users"), {
+            username: username.current.value,
+            email: email.current.value,
+          });
         })
         .catch((error) => {
           setError(true);
@@ -42,8 +47,13 @@ const SignIn = () => {
         email.current.value,
         password.current.value
       )
-        .then(() => {
-          localStorage.setItem("username", username.current.value);
+        .then(async() => {
+          const ref = collection(db, "users");
+          const q = query(ref, where("email", "==", email.current.value));
+          const querySnapshot = await getDocs(q);
+          querySnapshot.forEach((doc) => {
+            localStorage.setItem("username", doc.data().username)
+          });
           !error && redirect.push("/dashboard");
         })
         .catch((error) => {
@@ -62,7 +72,7 @@ const SignIn = () => {
     <div className={styles.form}>
       <div className={styles.absolute} />
       <h1>{isSignUp ? "Sign Up" : "Sign In"}</h1>
-      <form onSubmit={submitHandler}>
+      <form action="POST" onSubmit={submitHandler}>
         {isSignUp && (
           <motion.input
             type="text"

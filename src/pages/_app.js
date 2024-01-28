@@ -8,7 +8,6 @@ export default function App({ Component, pageProps }) {
       <div className="absolute" />
       <Navbar />
       <Component {...pageProps} />
-      <Footer />
     </>
   );
 }

@@ -1,75 +1,40 @@
-import { Editor } from "@monaco-editor/react";
-import style from "./style.module.css";
 import { useState } from "react";
+import styles from "./web.module.css";
+import EditorCom from "./EditorCom";
+import { motion } from "framer-motion";
 
-export default function WebEditor({ onChange }) {
+function WebEditor() {
+  const [html, setHtml] = useState("");
+  const [css, setcss] = useState("");
+  const [js, setjs] = useState("");
 
-  const handleEditorDidMount = (value, event) => {
-    onChange(fileName, value);
-  };
+  function activeHandler(fileName, value) {
+    fileName === "index.html"
+      ? setHtml(value)
+      : fileName === "style.css"
+      ? setcss(value)
+      : setjs(value);
+  }
 
-  const files = {
-    "script.js": {
-      name: "script.js",
-      language: "javascript",
-      value: "document.getElementById('h1').style.fontSize = '3rem';",
-    },
-    "style.css": {
-      name: "style.css",
-      language: "css",
-      value: "h1{color: rgb(255, 69, 69);}",
-    },
-    "index.html": {
-      name: "index.html",
-      language: "html",
-      value: "<h1 id='h1'>Welcome to CodeFramer</h1>",
-    },
-  };
-  const [fileName, setFileName] = useState("index.html");
-  const file = files[fileName];
+  const srcDoc = `
+  <body>${html}</body>
+  <style>${css}</style>
+  <script>${js}</script>
+`;
+
   return (
-    <>
-      <div className={style.btnWrapper}>
-        <button
-          disabled={fileName === "index.html"}
-          onClick={() => setFileName("index.html")}
-          className={style.btn}
-        >
-          HTML
-        </button>
-
-        <button
-          disabled={fileName === "style.css"}
-          onClick={() => setFileName("style.css")}
-          className={style.btn}
-        >
-          CSS
-        </button>
-        <button
-          disabled={fileName === "script.js"}
-          onClick={() => setFileName("script.js")}
-          className={style.btn}
-        >
-          JS
-        </button>
+    <motion.div
+      className={styles.wrapper}
+      initial={{ x: 100 }}
+      whileInView={{ x: 0 }}
+      transition={{ x: { type: "spring", stiffness: 200 } }}
+    >
+      <div className={styles.editor}>
+        <EditorCom onChange={activeHandler} />
       </div>
-      <div className={style.editor}>
-        <Editor
-          width="100%"
-          height="100%"
-          theme="vs-dark"
-          onChange={handleEditorDidMount}
-          path={file.name}
-          defaultValue={file.value}
-          defaultLanguage={file.language}
-          options={{
-            fontSize: "18px",
-            minimap: {
-              enabled: false
-            },
-          }}
-        />
-      </div>
-    </>
+      <iframe title="output" srcDoc={srcDoc} width="100%" height="100%" />
+    </motion.div>
   );
 }
+
+export default WebEditor;
