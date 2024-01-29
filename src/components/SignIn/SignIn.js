@@ -12,6 +12,8 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
+import { useContext } from "react";
+import {UserContext} from "@/context/index";
 
 const SignIn = () => {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -20,6 +22,7 @@ const SignIn = () => {
   const password = useRef("");
   const [error, setError] = useState(false);
   const [errorMssg, setErrorMssg] = useState("Error Occured!!");
+  const { setData } = useContext(UserContext);
   const redirect = useRouter();
 
   const submitHandler = (event) => {
@@ -32,11 +35,11 @@ const SignIn = () => {
         password.current.value
       )
         .then(() => {
-          localStorage.setItem("username", username.current.value);
           const docRef = addDoc(collection(db, "users"), {
             username: username.current.value,
             email: email.current.value,
           });
+          setData({username: username.current.value});
         })
         .catch((error) => {
           setError(true);
@@ -53,7 +56,7 @@ const SignIn = () => {
           const q = query(ref, where("email", "==", email.current.value));
           const querySnapshot = await getDocs(q);
           querySnapshot.forEach((doc) => {
-            localStorage.setItem("username", doc.data().username)
+            setData({username: doc.data().username});
           });
           !error && redirect.push("/dashboard");
         })

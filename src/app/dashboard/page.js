@@ -5,12 +5,15 @@ import Sidebar from "@/components/Sidebar/Sidebar";
 import Dashboard from "../../components/Dashboard/Dashboard";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../../../lib/firebase';
+import { useContext } from "react";
+import { UserContext } from "@/context";
 import { useRouter } from "next/navigation";
 
 const index = () => {
-  const [username, setUserName] = useState("");
   const [isLogin, setLogin] = useState(false);
+  const {data} = useContext(UserContext);
   const redirect = useRouter();
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (!user) {
@@ -20,15 +23,14 @@ const index = () => {
         setLogin(true);
       }
     });
-    setUserName(localStorage.getItem("username"));
-  }, [username]);
+  }, [isLogin]);
 
   return (
     <>
       {isLogin && (
         <div className={styles.wrapper}>
-          <Sidebar username={username} />
-          <Dashboard username={username} />
+          <Sidebar username={data.username} />
+          <Dashboard username={data.username} />
         </div>
       )}
     </>

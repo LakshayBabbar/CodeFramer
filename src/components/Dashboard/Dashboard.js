@@ -1,6 +1,6 @@
 import styles from "./styles.module.css";
 
-const Dashboard = ({ username }) => {
+const Dashboard = ({username}) => {
   return (
     <>
       <div className={styles.wrapper}>

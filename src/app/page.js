@@ -1,3 +1,4 @@
+'use client';
 import styles from "./page.module.css";
 import Hero from "@/components/Header/Hero";
 import { SiTestrail } from "react-icons/si";
