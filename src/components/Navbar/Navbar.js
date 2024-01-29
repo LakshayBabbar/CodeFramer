@@ -6,7 +6,6 @@ import { useState, useEffect } from "react";
 import { FaHome } from "react-icons/fa";
 import { FaLaptopCode } from "react-icons/fa6";
 import { FaSignInAlt } from "react-icons/fa";
-import { motion } from "framer-motion";
 
 export default function Navbar() {
   const [mode, setLight] = useState("");
@@ -14,22 +13,21 @@ export default function Navbar() {
   const modeHandler = () => {
     if (mode === "darkMode") {
       setLight("lightMode");
-      localStorage.setItem("theme","lightMode")
+      localStorage.setItem("theme", "lightMode");
     } else {
       setLight("darkMode");
-      localStorage.setItem("theme","darkMode")
+      localStorage.setItem("theme", "darkMode");
     }
   };
 
   useEffect(() => {
     const theme = localStorage.getItem("theme");
-    if(theme === "darkMode") {
+    if (theme === "darkMode") {
       setLight(theme);
       document.body.className = theme;
-    }else{
+    } else {
       document.body.className = mode;
     }
-
   }, [mode]);
 
   return (
@@ -37,12 +35,7 @@ export default function Navbar() {
       <Link href="/" className={styles.navLogo}>
         CodeFramer
       </Link>
-      <motion.div
-        className={styles.list}
-        initial={{ opacity: 0, x: -100 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        transition={{ type: "spring", stiffness: 200 }}
-      >
+      <div className={styles.list}>
         <Link href="/" className={styles.link}>
           <FaHome className={styles.navLinkIco} />
           &nbsp;Home
@@ -59,7 +52,7 @@ export default function Navbar() {
           <BsNintendoSwitch />
           Theme
         </button>
-      </motion.div>
+      </div>
     </div>
   );
 }

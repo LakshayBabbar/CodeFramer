@@ -2,7 +2,6 @@
 import styles from "./signin.module.css";
 import Button from "@/components/UI/Button";
 import { useRef, useState } from "react";
-import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { BiSolidError } from "react-icons/bi";
 import { auth } from '../../../lib/firebase';
@@ -67,44 +66,33 @@ const SignIn = () => {
     }
   };
 
-  const variants = {
-    onclick: { scale: 1.04 },
-    transition: { scale: { type: "spring", stiffness: 250 } },
-  };
-
   return (
     <div className={styles.form}>
       <div className={styles.absolute} />
       <h1>{isSignUp ? "Sign Up" : "Sign In"}</h1>
       <form action="POST" onSubmit={submitHandler}>
         {isSignUp && (
-          <motion.input
+          <input
             type="text"
             placeholder="Username"
             name="username"
-            whileTap={variants.onclick}
-            transition={variants.transition}
             ref={username}
             autoComplete="on"
             required
           />
         )}
-        <motion.input
+        <input
           type="email"
           placeholder="Email Id"
           name="email"
-          whileTap={variants.onclick}
-          transition={variants.transition}
           ref={email}
           autoComplete="on"
           required
         />
-        <motion.input
+        <input
           type="password"
           name="Password"
           placeholder="Password"
-          whileTap={variants.onclick}
-          transition={variants.transition}
           ref={password}
           required
         />

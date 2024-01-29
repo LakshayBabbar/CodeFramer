@@ -5,12 +5,10 @@
 .form form {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   gap: 1rem;
 
 }
-.form form input {
+.form input {
   width: 20rem;
   height: 2.5rem;
   border: 2px solid var(--btn-primary);
@@ -18,9 +16,9 @@
   background-color: var(--nav);
   backdrop-filter: blur(10px);
 }
-.form form input::placeholder,
+.form input::placeholder,
 .form input {
-  font-size: 1.5rem;
+  font-size: 1rem;
   padding: 0 1rem;
   color: var(--text);
 }
