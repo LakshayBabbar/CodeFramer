@@ -1,5 +1,5 @@
 .btn{
-    font-size: 1.2rem;
+    font-size: 1rem;
     border: none;
     background: var(--btn-primary);
     width: fit-content;
@@ -7,4 +7,7 @@
     height: 2.5rem;
     border-radius: 5px;
     color: aliceblue;
+}
+.btn:hover{
+    background: #27a1ff;
 }

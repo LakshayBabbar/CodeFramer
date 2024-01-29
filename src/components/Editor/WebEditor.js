@@ -1,3 +1,4 @@
+'use client';
 import { useState } from "react";
 import styles from "./web.module.css";
 import EditorCom from "./EditorCom";

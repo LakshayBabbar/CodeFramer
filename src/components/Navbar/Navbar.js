@@ -1,3 +1,4 @@
+"use client";
 import styles from "./styles.module.css";
 import Link from "next/link";
 import { BsNintendoSwitch } from "react-icons/bs";

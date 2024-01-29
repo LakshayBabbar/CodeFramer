@@ -1,26 +1,20 @@
+"use client";
 import styles from "./card.module.css";
 import Link from "next/link";
 import Button from "@/components/UI/Button";
-import { motion } from "framer-motion";
 
 function Card(props) {
   return (
-    <motion.div
-      className={styles.wrapper}
-      initial={{ y: "15vh", opacity: 0}}
-      whileInView={{ y: 0, opacity: 1 }}
-      whileHover={{ scale: 1.03 }}
-      transition={{ type: "spring", stiffness: 250, damping: 15 }}
-    >
+    <div className={styles.wrapper}>
       {props.img}
       <h2>{props.title}</h2>
-      <h3>{props.desc}</h3>
+      <p className={styles.desc}>{props.desc}</p>
       <Button>
         <Link href={props.link} className={styles.link}>
           {props.linkT}
         </Link>
       </Button>
-    </motion.div>
+    </div>
   );
 }
 

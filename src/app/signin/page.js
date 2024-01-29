@@ -1,12 +1,13 @@
+"use client";
 import { motion } from "framer-motion";
 import styles from "./styles.module.css";
 import SignIn from "@/components/SignIn/SignIn";
 import Image from "next/image";
 import img from "../../assests/contact.webp";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../api/firebase";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { auth } from '../../../lib/firebase';
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 function index() {
   const redirect = useRouter();

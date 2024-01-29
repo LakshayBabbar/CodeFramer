@@ -99,6 +99,6 @@
 }
 @media (max-width: 900px) and (min-height: 1000px) {
   .container{
-    padding: 10vh 0 0;
+    padding: 10vh 0;
   }
 }

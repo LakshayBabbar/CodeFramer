@@ -1,10 +1,11 @@
+'use client';
 import { useEffect, useState } from "react";
 import styles from './styles.module.css';
 import Sidebar from "@/components/Sidebar/Sidebar";
 import Dashboard from "../../components/Dashboard/Dashboard";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../api/firebase";
-import { useRouter } from "next/router";
+import { auth } from '../../../lib/firebase';
+import { useRouter } from "next/navigation";
 
 const index = () => {
   const [username, setUserName] = useState("");

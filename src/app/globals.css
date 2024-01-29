@@ -1,0 +1,79 @@
+:root{
+    --btn-primary: #0091ff;
+    --para: #2e2e2e;
+    --text: rgb(46, 42, 42);
+    --bg: #ffffff;
+    --side-bar: #f3f9ff;
+    --card-bg: #edf6ffa9;
+    --card-bg2: #a6a6a6;
+    --nav-shadow: rgba(0,0,0,.2);
+    --gradient: linear-gradient(90deg, rgb(12, 8, 81) 0%, rgb(18, 18, 187)35%, rgba(0,212,255,1) 100%);
+    --gradient2:linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 100%);;
+}
+
+.darkMode{
+    --bg: #000000;
+    --side-bar: #071a2b;
+    --text: #f0f8ff;
+    --para: #bababa;
+    --card-bg: #24212ccf;
+    --card-bg2: #000000;
+    --nav-shadow: rgba(255, 255, 255, 0.2);
+}
+
+html{
+    overflow-x: hidden;
+}
+
+body{
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+}
+
+.absolute{
+    top: 0;
+    left: -10rem;
+    height: 11rem;
+    width: 50rem;
+    position: absolute;
+    z-index: -1;
+}
+
+.absolute::before{
+    content: '';
+    background: var(--gradient);
+    filter: blur(110px);
+    position: absolute;
+    rotate: -15deg;
+    height: 100%;
+    width: 100%;
+}
+
+/* ===== Scrollbar CSS ===== */
+  * {
+    scrollbar-width: auto;
+    scrollbar-color: var(--btn-primary) #ffffff;
+}
+
+*::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: var(--btn-primary);
+    border-radius: 10px;
+  }
+
+@media (max-width: 768px) {
+    .absolute{
+        height: 20vh;
+        width: 30rem;
+    }
+}

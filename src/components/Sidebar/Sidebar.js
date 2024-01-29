@@ -1,6 +1,6 @@
 import styles from "./styles.module.css";
 import { signOut } from "firebase/auth";
-import { auth } from "../../pages/api/firebase";
+import { auth } from '../../../lib/firebase';
 import { MdAddCircle } from "react-icons/md";
 import { RiMenu3Fill } from "react-icons/ri";
 import { IoMdClose } from "react-icons/io";

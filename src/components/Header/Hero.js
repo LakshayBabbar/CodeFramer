@@ -1,3 +1,4 @@
+'use client';
 import styles from "./hero.module.css";
 import { TypeAnimation } from "react-type-animation";
 import Image from "next/image";
@@ -44,14 +45,12 @@ function Intro() {
           src={img}
           className={styles.img}
           alt="image"
-          placeholder="blur"
         />
         <Image
           priority
           src={img2}
           className={styles.img2}
           alt="image"
-          placeholder="blur"
         />
       </div>
     </div>

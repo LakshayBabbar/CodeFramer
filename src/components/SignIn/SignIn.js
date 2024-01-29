@@ -1,11 +1,12 @@
+"use client";
 import styles from "./signin.module.css";
 import Button from "@/components/UI/Button";
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { BiSolidError } from "react-icons/bi";
-import { auth } from "@/pages/api/firebase";
-import { db } from "@/pages/api/firebase";
+import { auth } from '../../../lib/firebase';
+import { db } from '../../../lib/firebase';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -14,12 +15,12 @@ import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
 
 const SignIn = () => {
   const [isSignUp, setIsSignUp] = useState(false);
-  const redirect = useRouter();
   const username = useRef("");
   const email = useRef("");
   const password = useRef("");
   const [error, setError] = useState(false);
   const [errorMssg, setErrorMssg] = useState("Error Occured!!");
+  const redirect = useRouter();
 
   const submitHandler = (event) => {
     event.preventDefault();
