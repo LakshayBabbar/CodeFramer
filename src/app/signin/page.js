@@ -2,7 +2,7 @@
 import styles from "./styles.module.css";
 import SignIn from "@/components/SignIn/SignIn";
 import Image from "next/image";
-import img from "../../assests/contact.webp";
+import img from "../../../public/contact.webp";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../../lib/firebase";
 import { useEffect } from "react";

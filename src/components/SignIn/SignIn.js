@@ -1,63 +1,57 @@
 "use client";
 import styles from "./signin.module.css";
 import Button from "@/components/UI/Button";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { BiSolidError } from "react-icons/bi";
-import { auth } from '../../../lib/firebase';
-import { db } from '../../../lib/firebase';
+import { auth } from "../../../lib/firebase";
+import { db } from "../../../lib/firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
-import { useContext } from "react";
-import {UserContext} from "@/context/index";
 
 const SignIn = () => {
   const [isSignUp, setIsSignUp] = useState(false);
-  const username = useRef("");
-  const email = useRef("");
-  const password = useRef("");
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
   const [error, setError] = useState(false);
   const [errorMssg, setErrorMssg] = useState("Error Occured!!");
-  const { setData } = useContext(UserContext);
   const redirect = useRouter();
 
+  const formDataHandler = (event) => {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
+  };
   const submitHandler = (event) => {
     event.preventDefault();
     setError(false);
     if (isSignUp) {
-      createUserWithEmailAndPassword(
-        auth,
-        email.current.value,
-        password.current.value
-      )
+      createUserWithEmailAndPassword(auth, formData.email, formData.password)
         .then(() => {
           const docRef = addDoc(collection(db, "users"), {
-            username: username.current.value,
-            email: email.current.value,
+            username: formData.username,
+            email: formData.email,
           });
-          setData({username: username.current.value});
+          localStorage.setItem("username", formData.username);
         })
         .catch((error) => {
           setError(true);
           setErrorMssg(error.message);
         });
     } else {
-      signInWithEmailAndPassword(
-        auth,
-        email.current.value,
-        password.current.value
-      )
-        .then(async() => {
+      signInWithEmailAndPassword(auth, formData.email, formData.password)
+        .then(async () => {
           const ref = collection(db, "users");
-          const q = query(ref, where("email", "==", email.current.value));
+          const q = query(ref, where("email", "==", formData.email));
           const querySnapshot = await getDocs(q);
           querySnapshot.forEach((doc) => {
-            setData({username: doc.data().username});
+            localStorage.setItem("username", doc.data().username);
+            !error && redirect.push("/dashboard");
           });
-          !error && redirect.push("/dashboard");
         })
         .catch((error) => {
           setError(true);
@@ -76,7 +70,7 @@ const SignIn = () => {
             type="text"
             placeholder="Username"
             name="username"
-            ref={username}
+            onChange={formDataHandler}
             autoComplete="on"
             required
           />
@@ -85,15 +79,15 @@ const SignIn = () => {
           type="email"
           placeholder="Email Id"
           name="email"
-          ref={email}
+          onChange={formDataHandler}
           autoComplete="on"
           required
         />
         <input
           type="password"
-          name="Password"
+          name="password"
+          onChange={formDataHandler}
           placeholder="Password"
-          ref={password}
           required
         />
         {error && (
