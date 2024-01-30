@@ -6,7 +6,7 @@ import { RiMenu3Fill } from "react-icons/ri";
 import { IoMdClose } from "react-icons/io";
 import { useState } from "react";
 
-const Sidebar = ({ username }) => {
+const Sidebar = ({ username, projectsList }) => {
   const [active, setActive] = useState("");
   const signOutHandler = () => {
     signOut(auth);
@@ -17,21 +17,6 @@ const Sidebar = ({ username }) => {
     active === "" ? setActive("active") : setActive("");
   };
 
-  const data = [
-    {
-      name: "todo-list",
-    },
-    {
-      name: "tic-tak-toe",
-    },
-    {
-      name: "calculator",
-    },
-    {
-      name: "World Clock",
-    },
-  ];
-
   return (
     <>
       <div
@@ -41,9 +26,9 @@ const Sidebar = ({ username }) => {
         <div className={styles.projects}>
           <h2>Projects</h2>
           <ul className={styles.list}>
-            {data.map((items) => {
+            {projectsList.map((items) => {
               return (
-                <li className={styles.listItems} key={Math.random()}>
+                <li className={styles.listItems} key={items.id}>
                   {items.name}
                 </li>
               );

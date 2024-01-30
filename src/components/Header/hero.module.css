@@ -1,7 +1,9 @@
 .container {
   display: flex;
+  align-items: center;
   justify-content: center;
-  padding: 25vh 0;
+  height: 100vh;
+  width: 100vw;
 }
 
 .wrapper {
@@ -78,9 +80,6 @@
   }
 }
 @media (max-width: 768px) {
-  .container{
-    padding: 20vh 0;
-  }
   .wrapper h1 {
     font-size: 15vw;
   }
@@ -90,15 +89,5 @@
   .wrapper p {
     width: fit-content;
     padding: 0 1rem;
-  }
-}
-@media (max-height: 800px) {
-  .container{
-    padding: 18vh 0;
-  }
-}
-@media (max-width: 900px) and (min-height: 1000px) {
-  .container{
-    padding: 10vh 0;
   }
 }
