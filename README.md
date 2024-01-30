@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+CodeFramer
 
-## Getting Started
+CodeFramer is a free and open-source online code editor that allows you to write and edit HTML, CSS, and JavaScript code. It is a Single-Page Application (SPA) built with modern web technologies like Next.js 14 for the front-end and Firebase for the back-end, offering seamless performance and robust functionality.
 
-First, run the development server:
+<img src="./public/CodeFramer.png" width="500px">
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Syntax highlighting for HTML, CSS, and JavaScript
+Live code preview
+Autocompletion for HTML tags and CSS properties
+Error checking and linting
+Code collaboration features (coming soon)
+Theme support
+Getting Started
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Clone the repository:
+git clone https://github.com/your-username/codeframer.git
+Install the dependencies:
+npm install
+Start the development server:
+npm start
+Open http://localhost:3000 in your web browser.
+Deployment
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+CodeFramer can be deployed to any static hosting platform, such as Netlify or Heroku. Once you have deployed your code, you can share the URL with others to collaborate on your projects.
 
-## Learn More
+Roadmap
 
-To learn more about Next.js, take a look at the following resources:
+Add support for more programming languages
+Implement real-time collaboration features
+Add a plugin system for extending CodeFramer's functionality
+Contributing
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+We welcome contributions from the community! If you find a bug or have a feature request, please create an issue on the GitHub repository. You can also contribute by pull requesting code changes.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+License
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+CodeFramer is licensed under the MIT License.
