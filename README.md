@@ -17,7 +17,7 @@ CodeFramer is a free and open-source online code editor that allows you to write
 <h1>Getting Started</h1>
 
 Clone the repository:
-git clone https://github.com/your-username/codeframer.git
+git clone https://github.com/lakshaybabbar/codeframer.git
 Install the dependencies:
 npm install
 Start the development server:
