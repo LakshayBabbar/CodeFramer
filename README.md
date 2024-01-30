@@ -5,13 +5,14 @@ CodeFramer is a free and open-source online code editor that allows you to write
 <img src="./public/CodeFramer.png" width="500px">
 
 <h1>Features</h1>
-
-Syntax highlighting for HTML, CSS, and JavaScript
-Autocompletion for HTML tags and CSS properties
-Seamless Access & Save: Sign in to store your code snippets and projects securely in the cloud. Access them from any device, anywhere, for uninterrupted coding sessions.
-Live code preview
-Error checking and linting
-Code collaboration features (coming soon)
+<ul>
+<li>Syntax highlighting for HTML, CSS, and JavaScript</li>
+<li>Autocompletion for HTML tags and CSS properties</li>
+<li>Seamless Access & Save: Sign in to store your code snippets and projects securely in the cloud. Access them from any device, anywhere, for uninterrupted coding sessions.</li>
+<li>Live code preview</li>
+<li>Error checking and linting</li>
+<li>Code collaboration features (coming soon)</li>
+</ul>
 
 <h1>Getting Started</h1>
 
