@@ -2,7 +2,7 @@ import { Editor } from "@monaco-editor/react";
 import style from "./editor.module.css";
 import { useState } from "react";
 
-export default function EditorCom({ onChange }) {
+export default function EditorCom({ onChange, data }) {
 
   const handleEditorDidMount = (value, event) => {
     onChange(fileName, value);
@@ -12,23 +12,23 @@ export default function EditorCom({ onChange }) {
     "script.js": {
       name: "script.js",
       language: "javascript",
-      value: "document.getElementById('h1').style.fontSize = '3rem';",
+      value: data.js,
     },
     "style.css": {
       name: "style.css",
       language: "css",
-      value: "h1{color: rgb(255, 69, 69);}",
+      value: data.css,
     },
     "index.html": {
       name: "index.html",
       language: "html",
-      value: "<h1 id='h1'>Welcome to CodeFramer</h1>",
+      value: data.html,
     },
   };
   const [fileName, setFileName] = useState("index.html");
   const file = files[fileName];
   return (
-    <>
+    <div>
       <div className={style.btnWrapper}>
         <button
           disabled={fileName === "index.html"}
@@ -67,9 +67,14 @@ export default function EditorCom({ onChange }) {
             minimap: {
               enabled: false
             },
+            formatOnPaste: true,
+            formatOnType: true,
+            autoIndent: true,
+            autoClosingBrackets: true,
+            autoClosingQuotes: true,
           }}
         />
       </div>
-    </>
+    </div>
   );
 }

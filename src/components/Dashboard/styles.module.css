@@ -1,16 +1,25 @@
 .wrapper{
     display: flex;
-    
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    gap: 10vw;
 }
-.container{
+.inActive{
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
 }
 .fallback{
     font-weight: 100;
     color: var(--para);
     text-align: center;
     max-width: 40rem;
+}
+
+@media (max-width: 1000px) {
+    .container{
+        width: 100vw;
+    }
 }

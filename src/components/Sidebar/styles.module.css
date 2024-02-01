@@ -1,13 +1,12 @@
 .wrapper{
-    width: fit-content;
-    height: calc(100vh - 3rem);
-    margin-top: 3rem;
+    width: 15vw;
+    height: 100vh;
     padding: 0 2.5rem;
     background: var(--side-bar);
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-around;
     box-shadow: 10px 10px 14px -6px rgba(0,0,0,0.52);
     transition: 0.5s ease-out;
     z-index: 9;
@@ -18,9 +17,6 @@
 .menuIco{
     cursor: pointer;
     font-size: 1.5rem;
-}
-.projects h2{
-    margin: 0;
 }
 .list{
     display: flex;
@@ -33,15 +29,17 @@
 .listItems{
     list-style: none;
     padding: 1rem;
-    background: #70859b57;
-    border-radius: 10px;
+    border-radius: 25px;
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
     font-size: 1.1rem;
+    cursor: pointer;
 }
 .listItems:hover{
+    border-left: 5px solid var(--btn-primary);
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
     background: #7b9cc065;
 }
 .btn{
@@ -54,10 +52,11 @@
     background-color: var(--btn-primary);
     color: var(--text);
 }
-@media (max-width: 800px) {
+@media (max-width: 1000px) {
     .wrapper {
         transform: translateX(-20rem);
         position: absolute;
+        width: fit-content;
         margin: 0;
     }
     .active.wrapper{

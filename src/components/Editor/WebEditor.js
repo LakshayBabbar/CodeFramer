@@ -1,9 +1,11 @@
 "use client";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styles from "./web.module.css";
-import EditorCom from "./EditorCom";
+import EditorCom from "@/components/Editor/EditorCom";
+import { UserContext } from "@/context";
 
-function WebEditor() {
+function WebEditor({ style}) {
+  const {data} = useContext(UserContext);
   const [html, setHtml] = useState("");
   const [css, setcss] = useState("");
   const [js, setjs] = useState("");
@@ -21,11 +23,10 @@ function WebEditor() {
   <style>${css}</style>
   <script>${js}</script>
 `;
-
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} style={style}>
       <div className={styles.editor}>
-        <EditorCom onChange={activeHandler} />
+        <EditorCom onChange={activeHandler} data={data} />
       </div>
       <iframe title="output" srcDoc={srcDoc} width="100%" height="100%" />
     </div>

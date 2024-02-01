@@ -1,12 +1,10 @@
 .editor{
     height: 40vh;
-    width: 100vw;
+    width: 100%;
 }
-
 .btnWrapper{
     display: flex;
 }
-
 .btn{
     height: 3rem;
     width: 7rem;

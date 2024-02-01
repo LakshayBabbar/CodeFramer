@@ -6,9 +6,15 @@ import { useState, useEffect } from "react";
 import { FaHome } from "react-icons/fa";
 import { FaLaptopCode } from "react-icons/fa6";
 import { FaSignInAlt } from "react-icons/fa";
+import { MdAccountCircle } from "react-icons/md";
+import { MdSpaceDashboard } from "react-icons/md";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "../../../lib/firebase";
 
 export default function Navbar() {
   const [mode, setLight] = useState("");
+  const [isLogin, setLogin] = useState(false);
+  const [name, setUserName] = useState("");
 
   const modeHandler = () => {
     if (mode === "darkMode") {
@@ -21,6 +27,17 @@ export default function Navbar() {
   };
 
   useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        setLogin(false);
+      } else {
+        setLogin(true);
+        setUserName(user.displayName);
+      }
+    });
+  }, [isLogin]);
+
+  useEffect(() => {
     const theme = localStorage.getItem("theme");
     if (theme === "darkMode") {
       setLight(theme);
@@ -29,6 +46,10 @@ export default function Navbar() {
       document.body.className = mode;
     }
   }, [mode]);
+
+  const signOutHandler = () => {
+    signOut(auth);
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -44,10 +65,29 @@ export default function Navbar() {
           <FaLaptopCode className={styles.navLinkIco} />
           &nbsp;Try Editor
         </Link>
-        <Link href="/signin" className={styles.link}>
-          <FaSignInAlt className={styles.navLinkIco} />
-          &nbsp;Sign In
-        </Link>
+        {isLogin ? (
+          <div className={styles.dropdown}>
+            <button className={styles.btna}>
+              <MdAccountCircle className={styles.navLinkIco} />
+              Profile
+            </button>
+            <div className={styles.dropdownContent}>
+              <Link href="/dashboard" className={styles.link}>
+                <MdSpaceDashboard className={styles.navLinkIco} />
+                &nbsp;Dashboard
+              </Link>
+              <button onClick={signOutHandler} className={styles.btna}>
+                <FaSignInAlt />
+                Log Out
+              </button>
+            </div>
+          </div>
+        ) : (
+          <Link href="/signin" className={styles.link}>
+            <FaSignInAlt className={styles.navLinkIco} />
+            &nbsp;Sign In
+          </Link>
+        )}
         <button onClick={modeHandler} className={styles.btna}>
           <BsNintendoSwitch />
           Theme

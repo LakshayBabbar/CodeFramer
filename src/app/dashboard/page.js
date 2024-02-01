@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 
 const index = () => {
   const [isLogin, setLogin] = useState(false);
+  const [username, setUserName] = useState("");
   const redirect = useRouter();
 
   useEffect(() => {
@@ -16,11 +17,12 @@ const index = () => {
         redirect.push("/signin");
       } else {
         setLogin(true);
+        setUserName(user.displayName);
       }
     });
   }, [isLogin]);
 
-  return <>{isLogin && <Dashboard />}</>;
+  return <>{isLogin && <Dashboard username={username} />}</>;
 };
 
 export default index;

@@ -31,14 +31,10 @@
   justify-content: center;
   text-align: center;
   transition: 0.1s ease-out;
+  z-index: 1;
 }
 .navLinkIco {
   font-size: 1.5rem;
-}
-.link:hover {
-  scale: 1.05;
-  transition: 0.1s ease-in;
-  color: var(--btn-primary);
 }
 .btna {
   display: flex;
@@ -46,15 +42,31 @@
   justify-content: center;
   border: none;
   background-color: transparent;
-  padding: 0.5rem;
+  padding: 1rem 0;
   font-size: 1.2rem;
   font-weight: 400;
   gap: 6px;
   color: var(--text);
   border-radius: 10px;
+  cursor: pointer;
 }
 .btna:active {
   background: rgba(128, 128, 128, 0.336);
+}
+.dropdownContent {
+  display: none;
+  position: absolute;
+  background-color: var(--side-bar);
+  flex-direction: column;
+  gap: 5px;
+  padding: 1rem;
+  border-radius: 20px;
+  width: fit-content;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.dropdown:hover .dropdownContent {
+  display: flex;
 }
 @media (max-width: 800px) {
   .wrapper {
@@ -69,8 +81,12 @@
   .list {
     gap: 5vw;
   }
-  .link {
+  .link, .profileTab {
     flex-direction: column;
+  }
+  .dropdown:hover .dropdownContent {
+    margin: 0;
+    bottom: 4.4rem;
   }
   .btna {
     flex-direction: column;

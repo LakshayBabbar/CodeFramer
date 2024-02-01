@@ -9,8 +9,9 @@ import { db } from "../../../lib/firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile
 } from "firebase/auth";
-import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 
 const SignIn = () => {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -31,12 +32,14 @@ const SignIn = () => {
     setError(false);
     if (isSignUp) {
       createUserWithEmailAndPassword(auth, formData.email, formData.password)
-        .then(() => {
+        .then(async(res) => {
+          await updateProfile(res.user, {
+            displayName: formData.username
+          });
           const docRef = addDoc(collection(db, "users"), {
             username: formData.username,
             email: formData.email,
           });
-          localStorage.setItem("username", formData.username);
         })
         .catch((error) => {
           setError(true);
@@ -44,15 +47,9 @@ const SignIn = () => {
         });
     } else {
       signInWithEmailAndPassword(auth, formData.email, formData.password)
-        .then(async () => {
-          const ref = collection(db, "users");
-          const q = query(ref, where("email", "==", formData.email));
-          const querySnapshot = await getDocs(q);
-          querySnapshot.forEach((doc) => {
-            localStorage.setItem("username", doc.data().username);
+        .then( () => {
             !error && redirect.push("/dashboard");
-          });
-        })
+          })
         .catch((error) => {
           setError(true);
           setErrorMssg(error.message);
