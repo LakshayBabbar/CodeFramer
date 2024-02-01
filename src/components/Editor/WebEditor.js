@@ -1,11 +1,9 @@
 "use client";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import styles from "./web.module.css";
 import EditorCom from "@/components/Editor/EditorCom";
-import { UserContext } from "@/context";
 
-function WebEditor({ style}) {
-  const {data} = useContext(UserContext);
+function WebEditor({ data, style}) {
   const [html, setHtml] = useState("");
   const [css, setcss] = useState("");
   const [js, setjs] = useState("");

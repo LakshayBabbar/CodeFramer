@@ -5,7 +5,6 @@ import { db } from "../../../lib/firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { UserContext } from "@/context";
 import Link from "next/link";
-import Button from "../UI/Button";
 import { FaCode } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
 import { MdOutlineDelete } from "react-icons/md";
@@ -34,8 +33,8 @@ const Dashboard = ({ username }) => {
 
       const userDataArray = await Promise.all(userDataPromises);
       const flattenedUserData = userDataArray.flat();
-      setData(flattenedUserData[0]);
       setUserData(flattenedUserData);
+      setData(flattenedUserData)
     };
     fetchData();
   }, []);
@@ -54,10 +53,10 @@ const Dashboard = ({ username }) => {
 
       <section className={styles.project}>
         <h1>Projects</h1>
-        <div className={styles.addProject}>
+        <button className={styles.btn}>
           <IoMdAdd />
           Add Project
-        </div>
+        </button>
         {userData.length > 0 ? (
           <div className={styles.container}>
             {userData.map((elements) => {
@@ -69,15 +68,11 @@ const Dashboard = ({ username }) => {
                   </h2>
                   <p>{elements.desc}</p>
                   <div className={styles.projectButtons}>
-                    <Link href={`/dashboard/${elements.id}`}>
-                      <Button
-                        style={{
-                          background: "var(--text)",
-                          color: "var(--bg)",
-                        }}
-                      >
-                        Go to Editor
-                      </Button>
+                    <Link
+                      href={`/dashboard/${elements.id}`}
+                      style={{ textDecoration: "none" }}
+                    >
+                      <button className={styles.btn}>Go to Editor</button>
                     </Link>
                     <MdOutlineDelete
                       style={{ color: "red", fontSize: "1.5rem" }}
