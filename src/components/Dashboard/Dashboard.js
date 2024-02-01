@@ -58,31 +58,38 @@ const Dashboard = ({ username }) => {
           <IoMdAdd />
           Add Project
         </div>
-        <div className={styles.container}>
-          {userData.map((elements) => {
-            return (
-              <div className={styles.allProjects} key={elements.id}>
-                <h2>
-                  <FaCode />
-                  {elements.name}
-                </h2>
-                <p>{elements.desc}</p>
-                <div className={styles.projectButtons}>
-                  <Link href={`/dashboard/${elements.id}`}>
-                    <Button
-                      style={{ background: "var(--text)", color: "var(--bg)" }}
-                    >
-                      Go to Editor
-                    </Button>
-                  </Link>
-                  <MdOutlineDelete
-                    style={{ color: "red", fontSize: "1.5rem" }}
-                  />
+        {userData.length > 0 ? (
+          <div className={styles.container}>
+            {userData.map((elements) => {
+              return (
+                <div className={styles.allProjects} key={elements.id}>
+                  <h2>
+                    <FaCode />
+                    {elements.name}
+                  </h2>
+                  <p>{elements.desc}</p>
+                  <div className={styles.projectButtons}>
+                    <Link href={`/dashboard/${elements.id}`}>
+                      <Button
+                        style={{
+                          background: "var(--text)",
+                          color: "var(--bg)",
+                        }}
+                      >
+                        Go to Editor
+                      </Button>
+                    </Link>
+                    <MdOutlineDelete
+                      style={{ color: "red", fontSize: "1.5rem" }}
+                    />
+                  </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        ) : (
+          <p>Project list is empty!!</p>
+        )}
       </section>
     </>
   );
