@@ -3,8 +3,9 @@
     border: none;
     background: var(--btn-primary);
     width: fit-content;
-    padding: 0 0.5rem;
-    height: 2.5rem;
+    font-weight: 600;
+    height: 2.2rem;
+    padding: 0.5rem;
     border-radius: 5px;
     color: aliceblue;
 }
