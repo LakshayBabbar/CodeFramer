@@ -9,9 +9,9 @@ import { db } from "../../../lib/firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  updateProfile
+  updateProfile,
 } from "firebase/auth";
-import { collection, addDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 
 const SignIn = () => {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -32,11 +32,12 @@ const SignIn = () => {
     setError(false);
     if (isSignUp) {
       createUserWithEmailAndPassword(auth, formData.email, formData.password)
-        .then(async(res) => {
+        .then(async (res) => {
           await updateProfile(res.user, {
-            displayName: formData.username
+            displayName: formData.username,
           });
-          const docRef = addDoc(collection(db, "users"), {
+          const ref = doc(db, `users/${formData.username}`);
+          await setDoc(ref, {
             username: formData.username,
             email: formData.email,
           });
@@ -47,9 +48,9 @@ const SignIn = () => {
         });
     } else {
       signInWithEmailAndPassword(auth, formData.email, formData.password)
-        .then( () => {
-            !error && redirect.push("/dashboard");
-          })
+        .then(() => {
+          !error && redirect.push("/dashboard");
+        })
         .catch((error) => {
           setError(true);
           setErrorMssg(error.message);
