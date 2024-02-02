@@ -1,14 +1,7 @@
-import styles from "./loading.module.css";
+import Loading from "@/components/Loading/Loading"
 
 const loading = () => {
-  return (
-    <div className={styles.wrapper}>
-      <div className={styles.outer}>
-        <div className={styles.inner} />
-      </div>
-      <h1>Loading...Please Wait</h1>
-    </div>
-  );
-};
+  return <Loading />
+}
 
-export default loading;
+export default loading

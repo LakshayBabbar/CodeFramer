@@ -2,8 +2,7 @@
 import styles from "./hero.module.css";
 import { TypeAnimation } from "react-type-animation";
 import Image from "next/image";
-import img from "../../../public/css.webp";
-import img2 from "../../../public/js.webp";
+import img from '../../../public/code.webp'
 
 function Intro() {
   return (
@@ -45,12 +44,8 @@ function Intro() {
           src={img}
           className={styles.img}
           alt="image"
-        />
-        <Image
-          priority
-          src={img2}
-          className={styles.img2}
-          alt="image"
+          width={550}
+          height={550}
         />
       </div>
     </div>

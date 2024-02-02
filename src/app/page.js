@@ -4,7 +4,6 @@ import Hero from "@/components/Header/Hero";
 import { SiTestrail } from "react-icons/si";
 import { MdOutlineSnippetFolder } from "react-icons/md";
 import Card from "@/components/UI/Card";
-/* import { motion } from "framer-motion"; */
 import Footer from "@/components/Footer/Footer";
 
 export default function Home() {
