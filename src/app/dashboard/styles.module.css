@@ -83,6 +83,7 @@
   }
   .container {
     grid-template-columns: auto;
+    margin-bottom: 8rem;
   }
   .allProjects {
     width: 70vw;

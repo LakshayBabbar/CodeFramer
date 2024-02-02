@@ -43,11 +43,12 @@
 .imageWrapper::before {
   content: "";
   background: #007bff;
-  width: 30%;
-  height: 50%;
-  rotate: 0;
   position: absolute;
-  filter: blur(250px);
+  right: 0;
+  width: 35%;
+  height: 60%;
+  rotate: 0;
+  filter: blur(300px);
 }
 
 @media (max-width: 1200px) {

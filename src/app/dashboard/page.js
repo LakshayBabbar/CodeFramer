@@ -12,18 +12,18 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../../lib/firebase";
 
 const Dashboard = () => {
-  const {data} = useContext(UserContext);
+  const { data } = useContext(UserContext);
   const [userData, setUserData] = useState([]);
-  const [username, setUserName] = useState('user')
+  const [username, setUserName] = useState("user");
 
-  useEffect(()=>{
-    onAuthStateChanged(auth, (user)=>{
-      if(user) {
-        setUserName(user.displayName)
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUserName(user.displayName);
       }
-    })
-    setUserData(data)
-  },[data])
+    });
+    setUserData(data);
+  }, [data]);
 
   return (
     <>
