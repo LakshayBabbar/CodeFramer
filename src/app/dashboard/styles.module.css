@@ -1,16 +1,23 @@
 .user {
   width: 100vw;
-  height: 20rem;
+  height: 12rem;
   margin-top: 4rem;
-  background: url("../../../public/aa.jpg");
+  background: url("../../../public/c.webp");
   background-size: cover;
+  border-bottom-left-radius: 300px;
+  border-bottom-right-radius: 300px;
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .usersDetails {
   display: flex;
   height: fit-content;
   width: fit-content;
   align-items: center;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgb(202, 227, 255);
   padding: 1rem;
 }
 .userRight {
@@ -19,7 +26,7 @@
 .userRight h1,
 .userRight h2 {
   margin: 0;
-  color: rgb(51, 49, 49);
+  color: rgb(255, 255, 255);
 }
 
 .project {
@@ -52,8 +59,8 @@
   gap: 2rem;
 }
 .allProjects {
-  height: 10rem;
-  width: 20rem;
+  height: 8rem;
+  width: 18rem;
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
@@ -81,6 +88,7 @@
   .user{
     margin-top: 0;
     height: 15rem;
+    border-radius: 0;
   }
   .container {
     grid-template-columns: auto;

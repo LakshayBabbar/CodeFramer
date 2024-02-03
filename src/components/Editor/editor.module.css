@@ -16,7 +16,6 @@
 
 .saveBtn{
     background-color: var(--btn-primary);
-    border-radius: 10px;
 }
 
 .editor{

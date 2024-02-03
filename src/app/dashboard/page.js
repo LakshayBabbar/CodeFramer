@@ -2,7 +2,7 @@
 import styles from "./styles.module.css";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/context";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FaCode } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
 import { MdOutlineDelete } from "react-icons/md";
@@ -22,6 +22,7 @@ const Dashboard = () => {
   const [username, setUserName] = useState("user");
   const [isOpen, setIsOpen] = useState(false);
   const { setRefresh } = useContext(RefreshContext);
+  const redirect = useRouter();
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -77,12 +78,12 @@ const Dashboard = () => {
                   </h2>
                   <p>{elements.desc}</p>
                   <div className={styles.projectButtons}>
-                    <Link
-                      href={`/dashboard/${elements.id}`}
-                      style={{ textDecoration: "none" }}
+                    <button
+                      className={styles.btn}
+                      onClick={() => redirect.push(`/dashboard/${elements.id}`)}
                     >
-                      <button className={styles.btn}>Go to Editor</button>
-                    </Link>
+                      Go to Editor
+                    </button>
                     <MdOutlineDelete
                       style={{ color: "red", fontSize: "1.5rem" }}
                       onClick={() => deleteHandler(elements.name)}
@@ -93,7 +94,7 @@ const Dashboard = () => {
             })}
           </div>
         ) : (
-          <p>
+          <p style={{textAlign: "center", padding: "0 2rem"}}>
             Your project list is empty. Click on "New Project" to create one.
           </p>
         )}
