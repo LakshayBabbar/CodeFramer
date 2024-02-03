@@ -14,12 +14,14 @@ import CreateProject from "@/components/Modals/CreateProject";
 import { AnimatePresence } from "framer-motion";
 import { doc, deleteDoc } from "firebase/firestore";
 import { db } from "../../../lib/firebase";
+import { RefreshContext } from "@/context";
 
 const Dashboard = () => {
   const { data } = useContext(UserContext);
   const [userData, setUserData] = useState([]);
   const [username, setUserName] = useState("user");
   const [isOpen, setIsOpen] = useState(false);
+  const {setRefresh} = useContext(RefreshContext);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -39,7 +41,7 @@ const Dashboard = () => {
     if (sure) {
       const ref = doc(db, `users/${username}/projects/${name}`);
       await deleteDoc(ref);
-      location.reload();
+      setRefresh(true);
     }
   };
 

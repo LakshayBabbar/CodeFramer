@@ -1,14 +1,17 @@
 import { createPortal } from "react-dom";
 import styles from "./pModal.module.css";
 import { motion } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef, useState, useContext } from "react";
 import { db } from "../../../lib/firebase";
 import { doc, setDoc } from "firebase/firestore";
+import { useRouter } from "next/navigation";
+import { RefreshContext } from "@/context";
 
 const CreateProject = ({ isOpen, username }) => {
   const nameRef = useRef();
   const descRef = useRef();
-  const [id, setId] = useState("");
+  const redirect = useRouter();
+  const {setRefresh} = useContext(RefreshContext);
 
   function generateString(length) {
     const characters =
@@ -21,23 +24,25 @@ const CreateProject = ({ isOpen, username }) => {
     return result;
   }
 
-  const submitHandler = async () => {
+  const submitHandler = async (e) => {
+    e.preventDefault()
     const key = generateString(20);
-    setId(key.trim());
-    console.log(id);
+    const id = key.trim()
     try {
       const ref = doc(
         db,
         `users/${username}/projects/${nameRef.current.value}`
       );
       await setDoc(ref, {
-        id: key.trim(),
+        id: id,
         name: nameRef.current.value,
         desc: descRef.current.value,
         html: "<h1></h1>",
         css: "*{margin: 0}",
         js: "console.log()",
       });
+      setRefresh(true);
+      redirect.push(`/dashboard/${id}`);
     } catch (error) {
       console.error("Error setting document:", error.message);
     }
@@ -55,8 +60,6 @@ const CreateProject = ({ isOpen, username }) => {
         <form
           className={styles.form}
           onSubmit={submitHandler}
-          method="POST"
-          action={`/dashboard/${id}`}
         >
           <div className={styles.input}>
             <label>Name</label>
