@@ -1,20 +1,32 @@
 "use client";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styles from "./web.module.css";
 import EditorCom from "@/components/Editor/EditorCom";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../lib/firebase";
 import { RefreshContext } from "@/context";
+import { auth } from "../../../lib/firebase";
+import { onAuthStateChanged } from "firebase/auth";
 
 function WebEditor({ data, style, tryEditor }) {
   const [html, setHtml] = useState("");
   const [css, setcss] = useState("");
   const [js, setjs] = useState("");
   const {setRefresh} = useContext(RefreshContext);
+  const [username,setUserName] = useState();
+
+  useEffect(()=>{
+    onAuthStateChanged(auth, (user)=>{
+      if(user) {
+        setUserName(user.displayName);
+      }
+    })
+  },[])
+
 
   const updateHandler = async(val) => {
     if (val) {
-      const ref = doc(db, `users/lakshaybabbar/projects/${data.name}`);
+      const ref = doc(db, `users/${username}/projects/${data.name}`);
       await updateDoc(ref, {
         html: html,
         css: css,
