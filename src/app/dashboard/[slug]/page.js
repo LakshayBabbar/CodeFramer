@@ -17,7 +17,7 @@ const page = ({ params }) => {
     }
   }, [editorData, data]);
 
-  return data.length <= 0 ? (
+  return data.length === 0 ? (
     <Loading />
   ) : (
     <WebEditor data={editorData} tryEditor={false} />

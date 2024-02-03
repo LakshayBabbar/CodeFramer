@@ -21,7 +21,7 @@ const Dashboard = () => {
   const [userData, setUserData] = useState([]);
   const [username, setUserName] = useState("user");
   const [isOpen, setIsOpen] = useState(false);
-  const {setRefresh} = useContext(RefreshContext);
+  const { setRefresh } = useContext(RefreshContext);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -37,7 +37,7 @@ const Dashboard = () => {
   };
 
   const deleteHandler = async (name) => {
-    const sure = confirm("Are you sure!!");
+    const sure = confirm("Are you sure you want to delete this project?");
     if (sure) {
       const ref = doc(db, `users/${username}/projects/${name}`);
       await deleteDoc(ref);
@@ -64,7 +64,7 @@ const Dashboard = () => {
           onClick={() => setIsOpen(true)}
         >
           <IoMdAdd />
-          Add Project
+          New Project
         </button>
         {userData.length > 0 ? (
           <div className={styles.container}>
@@ -93,7 +93,9 @@ const Dashboard = () => {
             })}
           </div>
         ) : (
-          <p>Project list is empty!!</p>
+          <p>
+            Your project list is empty. Click on "New Project" to create one.
+          </p>
         )}
       </section>
 

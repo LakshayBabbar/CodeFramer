@@ -1,16 +1,14 @@
 import { createPortal } from "react-dom";
 import styles from "./pModal.module.css";
 import { motion } from "framer-motion";
-import { useRef, useState, useContext } from "react";
+import { useRef, useContext } from "react";
 import { db } from "../../../lib/firebase";
 import { doc, setDoc } from "firebase/firestore";
-import { useRouter } from "next/navigation";
 import { RefreshContext } from "@/context";
 
 const CreateProject = ({ isOpen, username }) => {
   const nameRef = useRef();
   const descRef = useRef();
-  const redirect = useRouter();
   const {setRefresh} = useContext(RefreshContext);
 
   function generateString(length) {
@@ -42,7 +40,7 @@ const CreateProject = ({ isOpen, username }) => {
         js: "console.log()",
       });
       setRefresh(true);
-      redirect.push(`/dashboard/${id}`);
+      isOpen(false)
     } catch (error) {
       console.error("Error setting document:", error.message);
     }
