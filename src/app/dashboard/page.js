@@ -12,12 +12,14 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../../lib/firebase";
 import CreateProject from "@/components/Modals/CreateProject";
 import { AnimatePresence } from "framer-motion";
+import { doc, deleteDoc } from "firebase/firestore";
+import { db } from "../../../lib/firebase";
 
 const Dashboard = () => {
   const { data } = useContext(UserContext);
   const [userData, setUserData] = useState([]);
   const [username, setUserName] = useState("user");
-  const [open, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -30,6 +32,15 @@ const Dashboard = () => {
 
   const modalHandler = (val) => {
     val === false && setIsOpen(false);
+  };
+
+  const deleteHandler = async (name) => {
+    const sure = confirm("Are you sure!!");
+    if (sure) {
+      const ref = doc(db, `users/${username}/projects/${name}`);
+      await deleteDoc(ref);
+      location.reload();
+    }
   };
 
   return (
@@ -46,7 +57,10 @@ const Dashboard = () => {
 
       <section className={styles.project}>
         <h1>Projects</h1>
-        <button className={`${styles.btn} btnDesign`} onClick={() => setIsOpen(true)}>
+        <button
+          className={`${styles.btn} btnDesign`}
+          onClick={() => setIsOpen(true)}
+        >
           <IoMdAdd />
           Add Project
         </button>
@@ -69,6 +83,7 @@ const Dashboard = () => {
                     </Link>
                     <MdOutlineDelete
                       style={{ color: "red", fontSize: "1.5rem" }}
+                      onClick={() => deleteHandler(elements.name)}
                     />
                   </div>
                 </div>
@@ -79,9 +94,9 @@ const Dashboard = () => {
           <p>Project list is empty!!</p>
         )}
       </section>
-      
+
       <AnimatePresence>
-        {open && <CreateProject isOpen={modalHandler} username={username}/>}
+        {isOpen && <CreateProject isOpen={modalHandler} username={username} />}
       </AnimatePresence>
     </>
   );

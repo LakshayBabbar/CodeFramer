@@ -15,8 +15,6 @@ const page = ({ params }) => {
       });
       setEditorData(selectedData);
     }
-    console.log(params.slug)
-    console.log(data)
   }, [editorData, data]);
 
   return data.length <= 0 ? <Loading /> : <WebEditor data={editorData} />;
