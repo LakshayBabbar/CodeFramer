@@ -1,5 +1,5 @@
 .backdrop{
-    position: absolute;
+    position: fixed;
     height: 100%;
     width: 100vw;
     background: #7ea0be5d;
@@ -7,7 +7,6 @@
     align-items: center;
     justify-content: center;
     backdrop-filter: blur(10px);
-    overflow: hidden;
 }
 .wrapper{
     width: fit-content;
@@ -38,7 +37,7 @@
     font-size: 1.1rem;
 }
 .input input{
-    border-radius: 10px;
+    border-radius: 5px;
     border: none;
     border-bottom: 1px solid var(--btn-primary);
     background: transparent;
@@ -52,17 +51,18 @@
     outline: none;
 }
 .button{
+    margin-top: 2rem;
     display: flex;
     gap: 1rem;
 }
 .button button{
-    border: none;
     width: 5rem;
     padding: 0.6rem;
     font-size: 1rem;
     border-radius: 10px;
     background: var(--text);;
     color: var(--bg);
+    border: none;
 }
 
 @media (max-width: 400px) {

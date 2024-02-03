@@ -9,9 +9,10 @@ const CreateProject = ({ isOpen, username }) => {
   const nameRef = useRef();
   const descRef = useRef();
   const [id, setId] = useState("");
-  
+
   function generateString(length) {
-    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     let result = " ";
     const charactersLength = characters.length;
     for (let i = 0; i < length; i++) {
@@ -78,10 +79,16 @@ const CreateProject = ({ isOpen, username }) => {
             />
           </div>
           <div className={styles.button}>
-            <button onClick={() => isOpen(false)} type="button">
+            <button
+              onClick={() => isOpen(false)}
+              type="button"
+              className="btnDesign"
+            >
               Cancel
             </button>
-            <button type="submit">Create</button>
+            <button type="submit" className="btnDesign">
+              Create
+            </button>
           </div>
         </form>
       </motion.div>

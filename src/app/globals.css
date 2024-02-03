@@ -1,79 +1,100 @@
-:root{
-    --btn-primary: #0091ff;
-    --para: #2e2e2e;
-    --text: rgb(46, 42, 42);
-    --bg: #ffffff;
-    --side-bar: #edf4fc;
-    --card-bg: #edf6ffa9;
-    --border: #cac9c9;
-    --nav-shadow: rgba(0,0,0,.2);
-    --gradient: linear-gradient(90deg, rgb(12, 8, 81) 0%, rgb(18, 18, 187)35%, rgba(0,212,255,1) 100%);
-    --gradient2:linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 100%);;
+:root {
+  --btn-primary: #0091ff;
+  --para: #2e2e2e;
+  --text: rgb(46, 42, 42);
+  --bg: #ffffff;
+  --side-bar: #edf4fc;
+  --btn-shadow: #353535b6;
+  --card-bg: #edf6ffa9;
+  --border: #cac9c9;
+  --nav-shadow: rgba(0, 0, 0, 0.2);
+  --gradient: linear-gradient(
+    90deg,
+    rgb(12, 8, 81) 0%,
+    rgb(18, 18, 187) 35%,
+    rgba(0, 212, 255, 1) 100%
+  );
+  --gradient2: linear-gradient(
+    0deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(9, 9, 121, 1) 0%,
+    rgba(0, 212, 255, 1) 100%
+  );
 }
 
-.darkMode{
-    --bg: #000000;
-    --border: #413c3c;
-    --side-bar: #071a2b;
-    --text: #f0f8ff;
-    --para: #bababa;
-    --card-bg: #24212ccf;
-    --nav-shadow: rgba(255, 255, 255, 0.2);
+.darkMode {
+  --bg: #000000;
+  --border: #413c3c;
+  --side-bar: #071a2b;
+  --btn-shadow: #8d8d8db6;
+  --text: #f0f8ff;
+  --para: #bababa;
+  --card-bg: #24212ccf;
+  --nav-shadow: rgba(255, 255, 255, 0.2);
 }
 
-html{
-    overflow-x: hidden;
+html {
+  overflow-x: hidden;
 }
 
-body{
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    overflow-x: hidden;
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
 }
 
-.absolute{
-    top: 0;
-    left: -10rem;
-    height: 11rem;
-    width: 50rem;
-    position: absolute;
-    z-index: -1;
+.absolute {
+  top: 0;
+  left: -10rem;
+  height: 11rem;
+  width: 50rem;
+  position: absolute;
+  z-index: -1;
 }
 
-.absolute::before{
-    content: '';
-    background: var(--gradient);
-    filter: blur(110px);
-    position: absolute;
-    rotate: -15deg;
-    height: 100%;
-    width: 100%;
+.absolute::before {
+  content: "";
+  background: var(--gradient);
+  filter: blur(110px);
+  position: absolute;
+  rotate: -15deg;
+  height: 100%;
+  width: 100%;
 }
 
 /* ===== Scrollbar CSS ===== */
-  * {
-    scrollbar-width: auto;
-    scrollbar-color: var(--btn-primary) #ffffff;
+* {
+  scrollbar-width: auto;
+  scrollbar-color: var(--btn-primary) #ffffff;
 }
 
 *::-webkit-scrollbar {
-    width: 10px;
-  }
+  width: 10px;
+}
 
-  *::-webkit-scrollbar-track {
-    background: transparent;
-  }
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
 
-  *::-webkit-scrollbar-thumb {
-    background-color: var(--btn-primary);
-    border-radius: 10px;
-  }
+*::-webkit-scrollbar-thumb {
+  background-color: var(--btn-primary);
+  border-radius: 10px;
+}
 
+.btnDesign {
+  cursor: pointer;
+  box-shadow: 6px 6px 0px 0px var(--btn-shadow);
+}
+.btnDesign:active{
+  box-shadow: none;
+  transform: translate(6px,6px);
+
+}
 @media (max-width: 768px) {
-    .absolute{
-        height: 20vh;
-        width: 30rem;
-    }
+  .absolute {
+    height: 20vh;
+    width: 30rem;
+  }
 }

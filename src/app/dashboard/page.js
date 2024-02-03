@@ -46,7 +46,7 @@ const Dashboard = () => {
 
       <section className={styles.project}>
         <h1>Projects</h1>
-        <button className={styles.btn} onClick={() => setIsOpen(true)}>
+        <button className={`${styles.btn} btnDesign`} onClick={() => setIsOpen(true)}>
           <IoMdAdd />
           Add Project
         </button>
