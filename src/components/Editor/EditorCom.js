@@ -2,8 +2,7 @@ import { Editor } from "@monaco-editor/react";
 import style from "./editor.module.css";
 import { useState } from "react";
 
-export default function EditorCom({ onChange, data }) {
-
+export default function EditorCom({ onChange, data, tryEditor, isUpdate }) {
   const handleEditorDidMount = (value, event) => {
     onChange(fileName, value);
   };
@@ -52,6 +51,12 @@ export default function EditorCom({ onChange, data }) {
         >
           JS
         </button>
+        {!tryEditor && <button
+          onClick={() => isUpdate(true)}
+          className={`${style.btn} ${style.saveBtn}`}
+        >
+          Save
+        </button>}
       </div>
       <div className={style.editor}>
         <Editor

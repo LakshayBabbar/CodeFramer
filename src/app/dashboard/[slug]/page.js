@@ -17,7 +17,11 @@ const page = ({ params }) => {
     }
   }, [editorData, data]);
 
-  return data.length <= 0 ? <Loading /> : <WebEditor data={editorData} />;
+  return data.length <= 0 ? (
+    <Loading />
+  ) : (
+    <WebEditor data={editorData} tryEditor={false} />
+  );
 };
 
 export default page;

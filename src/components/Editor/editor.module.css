@@ -1,7 +1,3 @@
-.editor{
-    height: 40vh;
-    width: 100%;
-}
 .btnWrapper{
     display: flex;
 }
@@ -16,4 +12,14 @@
 .btn:disabled{
     background-color: #1e1e1e;
     border-top: 3px solid red;
+}
+
+.saveBtn{
+    background-color: var(--btn-primary);
+    border-radius: 10px;
+}
+
+.editor{
+    height: 40vh;
+    width: 100%;
 }

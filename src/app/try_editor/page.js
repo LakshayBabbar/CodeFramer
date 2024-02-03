@@ -6,6 +6,6 @@ const index = () => {
     css: "h1{color: red}",
     js: "document.getElementsByTagName('h1').color = 'green'",
   };
-  return <WebEditor data={data} />;
+  return <WebEditor data={data} tryEditor={true}/>;
 };
 export default index;

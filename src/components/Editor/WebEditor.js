@@ -2,11 +2,24 @@
 import { useState } from "react";
 import styles from "./web.module.css";
 import EditorCom from "@/components/Editor/EditorCom";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../../../lib/firebase";
 
-function WebEditor({ data, style}) {
+function WebEditor({ data, style, tryEditor }) {
   const [html, setHtml] = useState("");
   const [css, setcss] = useState("");
   const [js, setjs] = useState("");
+
+  const updateHandler = async(val) => {
+    if (val) {
+      const ref = doc(db, `users/lakshaybabbar/projects/${data.name}`);
+      await updateDoc(ref, {
+        html: html,
+        css: css,
+        js: js,
+      });
+    }
+  };
 
   function activeHandler(fileName, value) {
     fileName === "index.html"
@@ -24,7 +37,12 @@ function WebEditor({ data, style}) {
   return (
     <div className={styles.wrapper} style={style}>
       <div className={styles.editor}>
-        <EditorCom onChange={activeHandler} data={data} />
+        <EditorCom
+          onChange={activeHandler}
+          data={data}
+          tryEditor={tryEditor}
+          isUpdate={updateHandler}
+        />
       </div>
       <iframe title="output" srcDoc={srcDoc} width="100%" height="100%" />
     </div>
