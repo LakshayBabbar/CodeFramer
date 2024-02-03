@@ -10,11 +10,14 @@ import Image from "next/image";
 import avatar from "../../../public/avatar.svg";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../../lib/firebase";
+import CreateProject from "@/components/Modals/CreateProject";
+import { AnimatePresence } from "framer-motion";
 
 const Dashboard = () => {
   const { data } = useContext(UserContext);
   const [userData, setUserData] = useState([]);
   const [username, setUserName] = useState("user");
+  const [open, setIsOpen] = useState(false);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -24,6 +27,10 @@ const Dashboard = () => {
     });
     setUserData(data);
   }, [data]);
+
+  const modalHandler = (val) => {
+    val === false && setIsOpen(false);
+  };
 
   return (
     <>
@@ -39,7 +46,7 @@ const Dashboard = () => {
 
       <section className={styles.project}>
         <h1>Projects</h1>
-        <button className={styles.btn}>
+        <button className={styles.btn} onClick={() => setIsOpen(true)}>
           <IoMdAdd />
           Add Project
         </button>
@@ -72,6 +79,10 @@ const Dashboard = () => {
           <p>Project list is empty!!</p>
         )}
       </section>
+      
+      <AnimatePresence>
+        {open && <CreateProject isOpen={modalHandler} username={username}/>}
+      </AnimatePresence>
     </>
   );
 };

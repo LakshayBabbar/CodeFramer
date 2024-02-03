@@ -18,6 +18,7 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <UserData>
           <div className="absolute" />
+          <div id="modal" />
           <Navbar />
           {children}
         </UserData>

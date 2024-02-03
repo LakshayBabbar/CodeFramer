@@ -23,7 +23,7 @@
 }
 
 .project {
-  margin-top: 2rem;
+  margin: 2.5rem 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -44,6 +44,7 @@
   background: var(--text);
   color: var(--bg);
   border-radius: 10px;
+  cursor: pointer;
 }
 .container {
   display: grid;
