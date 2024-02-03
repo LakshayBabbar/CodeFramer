@@ -1,14 +1,16 @@
 "use client";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styles from "./web.module.css";
 import EditorCom from "@/components/Editor/EditorCom";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../lib/firebase";
+import { RefreshContext } from "@/context";
 
 function WebEditor({ data, style, tryEditor }) {
   const [html, setHtml] = useState("");
   const [css, setcss] = useState("");
   const [js, setjs] = useState("");
+  const {setRefresh} = useContext(RefreshContext);
 
   const updateHandler = async(val) => {
     if (val) {
@@ -18,6 +20,7 @@ function WebEditor({ data, style, tryEditor }) {
         css: css,
         js: js,
       });
+      setRefresh(true);
     }
   };
 
