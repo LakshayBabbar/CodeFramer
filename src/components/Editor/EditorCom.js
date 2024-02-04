@@ -1,10 +1,21 @@
 import { Editor } from "@monaco-editor/react";
 import style from "./editor.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function EditorCom({ onChange, data, tryEditor, isUpdate }) {
+
   const handleEditorDidMount = (value, event) => {
-    onChange(fileName, value);
+    fileName === "index.html"
+      ? onChange((values)=>{
+        return {...values,html:value}
+      })
+      : fileName === "style.css"
+      ? onChange((values)=>{
+        return {...values,css:value}
+      })
+      : onChange((values)=>{
+        return {...values,js:value}
+      })
   };
 
   const files = {
@@ -26,6 +37,7 @@ export default function EditorCom({ onChange, data, tryEditor, isUpdate }) {
   };
   const [fileName, setFileName] = useState("index.html");
   const file = files[fileName];
+
   return (
     <div>
       <div className={style.btnWrapper}>
@@ -51,12 +63,14 @@ export default function EditorCom({ onChange, data, tryEditor, isUpdate }) {
         >
           JS
         </button>
-        {!tryEditor && <button
-          onClick={() => isUpdate(true)}
-          className={`${style.btn} ${style.saveBtn}`}
-        >
-          Save
-        </button>}
+        {!tryEditor && (
+          <button
+            onClick={() => isUpdate(true)}
+            className={`${style.btn} ${style.saveBtn}`}
+          >
+            Save
+          </button>
+        )}
       </div>
       <div className={style.editor}>
         <Editor
@@ -70,7 +84,7 @@ export default function EditorCom({ onChange, data, tryEditor, isUpdate }) {
           options={{
             fontSize: "18px",
             minimap: {
-              enabled: false
+              enabled: false,
             },
             formatOnPaste: true,
             formatOnType: true,

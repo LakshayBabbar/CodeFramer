@@ -8,12 +8,10 @@ import { RefreshContext } from "@/context";
 import { auth } from "../../../lib/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
-function WebEditor({ data, style, tryEditor }) {
-  const [html, setHtml] = useState("");
-  const [css, setcss] = useState("");
-  const [js, setjs] = useState("");
+function WebEditor({ data, tryEditor }) {
   const {setRefresh} = useContext(RefreshContext);
   const [username,setUserName] = useState();
+  const [values, setValues] = useState({});
 
   useEffect(()=>{
     onAuthStateChanged(auth, (user)=>{
@@ -23,34 +21,30 @@ function WebEditor({ data, style, tryEditor }) {
     })
   },[])
 
-
+  function activeHandler(values) {
+    setValues(values)
+  }
+  
   const updateHandler = async(val) => {
     if (val) {
       const ref = doc(db, `users/${username}/projects/${data.name}`);
       await updateDoc(ref, {
-        html: html,
-        css: css,
-        js: js,
+        html: values.html,
+        css: values.css,
+        js: values.js,
       });
       setRefresh(true);
+      alert("Your data is saved successfully!!")
     }
   };
-
-  function activeHandler(fileName, value) {
-    fileName === "index.html"
-      ? setHtml(value)
-      : fileName === "style.css"
-      ? setcss(value)
-      : setjs(value);
-  }
-
   const srcDoc = `
-  <body>${html}</body>
-  <style>${css}</style>
-  <script>${js}</script>
-`;
+    <body>${values.html}</body>
+    <style>${values.css}</style>
+    <script>${values.js}</script>
+  `;
+
   return (
-    <div className={styles.wrapper} style={style}>
+    <div className={styles.wrapper}>
       <div className={styles.editor}>
         <EditorCom
           onChange={activeHandler}
