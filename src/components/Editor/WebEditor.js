@@ -11,7 +11,16 @@ import { onAuthStateChanged } from "firebase/auth";
 function WebEditor({ data, tryEditor }) {
   const {setRefresh} = useContext(RefreshContext);
   const [username,setUserName] = useState();
-  const [values, setValues] = useState({});
+  const [values, setValues] = useState({
+    html: data.html,
+    css: data.css,
+    js: data.js
+  });
+
+  useEffect(()=>{
+    setValues(data);
+  },[data])
+
 
   useEffect(()=>{
     onAuthStateChanged(auth, (user)=>{

@@ -54,7 +54,7 @@ const CreateProject = ({ isOpen, username, data }) => {
       try {
         const ref = doc(
           db,
-          `users/${username}/projects/${nameRef.current.value}`
+          `users/${username}/projects/${nameRef.current.value.trim()}`
         );
         await setDoc(ref, {
           id: id,
