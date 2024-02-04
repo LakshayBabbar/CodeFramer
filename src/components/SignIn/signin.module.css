@@ -5,6 +5,7 @@
 .form form {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 1rem;
 }
 .form input {
@@ -26,9 +27,8 @@
   margin: 0;
   font-size: 1.1rem;
   font-weight: 400;
-  display: flex;
-  align-items: center;
-  gap: 5px;
+  width: 22rem;
+  text-align: center;
 }
 .choose{
   text-align: center;
@@ -42,5 +42,10 @@
 @media (max-width: 1000px) {
   .form form {
     margin: 0;
+  }
+}
+@media (max-width: 800px) {
+  .form {
+    margin-bottom: 5rem;
   }
 }

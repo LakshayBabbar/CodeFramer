@@ -3,7 +3,6 @@ import styles from "./signin.module.css";
 import Button from "@/components/UI/Button";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { BiSolidError } from "react-icons/bi";
 import { auth } from "../../../lib/firebase";
 import { db } from "../../../lib/firebase";
 import {
@@ -25,36 +24,71 @@ const SignIn = () => {
   const redirect = useRouter();
 
   const formDataHandler = (event) => {
-    setFormData({ ...formData, [event.target.name]: event.target.value });
+    const { name, value } = event.target;
+    if (name === "username") {
+      const isValidUsername = /^[a-z0-9;]+$/.test(value);
+      if (!isValidUsername) {
+        setError(true);
+        setErrorMssg(
+          "Invalid characters in username. Only small alphabets, numbers, and semicolons are allowed."
+        );
+      } else {
+        setError(false);
+        setFormData({ ...formData, [name]: value });
+      }
+    } else if (name === "email") {
+      const allowedProviders = [
+        "gmail.com",
+        "yahoo.com",
+        "outlook.com",
+        "hotmail.com",
+      ];
+      const emailParts = value.split("@");
+      const domain = emailParts[1];
+
+      if (!allowedProviders.includes(domain)) {
+        setError(true);
+        setErrorMssg(
+          "Invalid email provider. Only Gmail, Yahoo, Outlook, and Hotmail are allowed."
+        );
+      } else {
+        setError(false);
+        setFormData({ ...formData, [name]: value });
+      }
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
+
   const submitHandler = (event) => {
     event.preventDefault();
-    setError(false);
-    if (isSignUp) {
-      createUserWithEmailAndPassword(auth, formData.email, formData.password)
-        .then(async (res) => {
-          await updateProfile(res.user, {
-            displayName: formData.username,
+    if (!error) {
+      if (isSignUp) {
+        createUserWithEmailAndPassword(auth, formData.email, formData.password)
+          .then(async (res) => {
+            await updateProfile(res.user, {
+              displayName: formData.username,
+            });
+            const ref = doc(db, `users/${formData.username}`);
+            await setDoc(ref, {
+              username: formData.username,
+              email: formData.email,
+            });
+          })
+          .catch((error) => {
+            setError(true);
+            setErrorMssg(error.message);
           });
-          const ref = doc(db, `users/${formData.username}`);
-          await setDoc(ref, {
-            username: formData.username,
-            email: formData.email,
+      } else {
+        signInWithEmailAndPassword(auth, formData.email, formData.password)
+          .then(() => {
+            !error && redirect.push("/dashboard");
+          })
+          .catch((error) => {
+            setError(true);
+            setErrorMssg(error.message);
           });
-        })
-        .catch((error) => {
-          setError(true);
-          setErrorMssg(error.message);
-        });
-    } else {
-      signInWithEmailAndPassword(auth, formData.email, formData.password)
-        .then(() => {
-          !error && redirect.push("/dashboard");
-        })
-        .catch((error) => {
-          setError(true);
-          setErrorMssg(error.message);
-        });
+      }
     }
   };
 
@@ -88,12 +122,7 @@ const SignIn = () => {
           placeholder="Password"
           required
         />
-        {error && (
-          <p className={styles.errorMssg}>
-            <BiSolidError />
-            {errorMssg}
-          </p>
-        )}
+        {error && <p className={styles.errorMssg}>{errorMssg}</p>}
         <Button style={{ width: "8rem" }} type="submit">
           {isSignUp ? "Sign Up" : "Sign In"}
         </Button>
