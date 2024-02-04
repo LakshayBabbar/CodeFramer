@@ -66,6 +66,14 @@
     border: none;
 }
 
+.fallBack{
+    font-size: 1rem;
+    margin: 0;
+    text-align: center;
+    color: red;
+    width: 15rem;
+}
+
 @media (max-width: 400px) {
     .wrapper{
         width: fit-content;

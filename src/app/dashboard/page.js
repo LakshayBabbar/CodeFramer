@@ -2,7 +2,7 @@
 import styles from "./styles.module.css";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/context";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { FaCode } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
 import { MdOutlineDelete } from "react-icons/md";
@@ -22,7 +22,6 @@ const Dashboard = () => {
   const [username, setUserName] = useState("user");
   const [isOpen, setIsOpen] = useState(false);
   const { setRefresh } = useContext(RefreshContext);
-  const redirect = useRouter();
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -59,11 +58,8 @@ const Dashboard = () => {
       </section>
 
       <section className={styles.project}>
-        <h1>Projects</h1>
-        <button
-          className={`${styles.btn} btnDesign`}
-          onClick={() => setIsOpen(true)}
-        >
+        <h1>Your Project's</h1>
+        <button className={`${styles.btn}`} onClick={() => setIsOpen(true)}>
           <IoMdAdd />
           New Project
         </button>
@@ -77,13 +73,16 @@ const Dashboard = () => {
                     {elements.name}
                   </h2>
                   <p>{elements.desc}</p>
+                  <p>
+                    <span>Created on:</span> {elements.date}
+                  </p>
                   <div className={styles.projectButtons}>
-                    <button
-                      className={styles.btn}
-                      onClick={() => redirect.push(`/dashboard/${elements.id}`)}
+                    <Link
+                      href={`/dashboard/${elements.id}`}
+                      style={{ textDecoration: "none" }}
                     >
-                      Go to Editor
-                    </button>
+                      <button className={styles.btn}>Go to Editor</button>
+                    </Link>
                     <MdOutlineDelete
                       style={{ color: "red", fontSize: "1.5rem" }}
                       onClick={() => deleteHandler(elements.name)}
@@ -94,14 +93,14 @@ const Dashboard = () => {
             })}
           </div>
         ) : (
-          <p style={{textAlign: "center", padding: "0 2rem"}}>
+          <p style={{ textAlign: "center", padding: "0 2rem" }}>
             Your project list is empty. Click on "New Project" to create one.
           </p>
         )}
       </section>
 
       <AnimatePresence>
-        {isOpen && <CreateProject isOpen={modalHandler} username={username} />}
+        {isOpen && <CreateProject isOpen={modalHandler} username={username} data={data}/>}
       </AnimatePresence>
     </>
   );

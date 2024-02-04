@@ -1,15 +1,19 @@
 import { createPortal } from "react-dom";
 import styles from "./pModal.module.css";
-import { motion } from "framer-motion";
-import { useRef, useContext } from "react";
+import { motion, sync } from "framer-motion";
+import { useRef, useContext, useState } from "react";
 import { db } from "../../../lib/firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { RefreshContext } from "@/context";
 
-const CreateProject = ({ isOpen, username }) => {
+const CreateProject = ({ isOpen, username, data }) => {
   const nameRef = useRef();
   const descRef = useRef();
-  const {setRefresh} = useContext(RefreshContext);
+  const { setRefresh } = useContext(RefreshContext);
+  const [error, setError] = useState(false);
+  const [errorMssg, setErrorMssg] = useState(
+    "Please select a different name as the project with this name already exists."
+  );
 
   function generateString(length) {
     const characters =
@@ -22,27 +26,47 @@ const CreateProject = ({ isOpen, username }) => {
     return result;
   }
 
+  function generateDate() {
+    const date = new Date();
+    let day = date.getDate();
+    let month = date.getMonth();
+    let year = date.getFullYear();
+    let fullDate = `${day}-${month}-${year}`;
+    return fullDate;
+  }
+
   const submitHandler = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const key = generateString(20);
-    const id = key.trim()
-    try {
-      const ref = doc(
-        db,
-        `users/${username}/projects/${nameRef.current.value}`
-      );
-      await setDoc(ref, {
-        id: id,
-        name: nameRef.current.value,
-        desc: descRef.current.value,
-        html: "<h1></h1>",
-        css: "*{margin: 0}",
-        js: "console.log()",
-      });
-      setRefresh(true);
-      isOpen(false)
-    } catch (error) {
-      console.error("Error setting document:", error.message);
+    const id = key.trim();
+    const date = generateDate();
+    const isExists = data.find((item) => {
+      return item.name === nameRef.current.value;
+    });
+    if (isExists === undefined) {
+      setError(false);
+      try {
+        const ref = doc(
+          db,
+          `users/${username}/projects/${nameRef.current.value}`
+        );
+        await setDoc(ref, {
+          id: id,
+          name: nameRef.current.value,
+          desc: descRef.current.value,
+          html: "<h1></h1>",
+          css: "*{margin: 0}",
+          js: "console.log()",
+          date: date,
+        });
+        setRefresh(true);
+        isOpen(false);
+      } catch (error) {
+        setError(true);
+        setErrorMssg(error.message);
+      }
+    } else {
+      setError(true);
     }
   };
 
@@ -55,10 +79,7 @@ const CreateProject = ({ isOpen, username }) => {
         exit={{ y: 30, opacity: 0 }}
       >
         <h1>Enter Details</h1>
-        <form
-          className={styles.form}
-          onSubmit={submitHandler}
-        >
+        <form className={styles.form} onSubmit={submitHandler}>
           <div className={styles.input}>
             <label>Name</label>
             <input
@@ -92,6 +113,7 @@ const CreateProject = ({ isOpen, username }) => {
             </button>
           </div>
         </form>
+        {error && <p className={styles.fallBack}>{errorMssg}</p>}
       </motion.div>
     </div>,
     document.getElementById("modal")

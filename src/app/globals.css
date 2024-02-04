@@ -6,7 +6,7 @@
   --side-bar: #edf4fc;
   --btn-shadow: #353535b6;
   --card-bg: #edf6ffa9;
-  --border: #dfdfdf;
+  --border: #b6b6b6;
   --nav-shadow: rgba(0, 0, 0, 0.2);
   --gradient: linear-gradient(
     90deg,
@@ -24,7 +24,7 @@
 
 .darkMode {
   --bg: #000000;
-  --border: #413c3c;
+  --border: #3d3d3d;
   --side-bar: #071a2b;
   --btn-shadow: #8d8d8db6;
   --text: #f0f8ff;

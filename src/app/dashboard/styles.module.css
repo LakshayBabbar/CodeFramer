@@ -57,7 +57,7 @@
   gap: 2rem;
 }
 .allProjects {
-  height: 8rem;
+  height: 10rem;
   width: 18rem;
   padding: 1.5rem;
   display: flex;
@@ -72,6 +72,12 @@
   display: flex;
   gap: 10px;
   align-items: center;
+}
+.allProjects p{
+  margin: 2px 0;
+}
+.allProjects p span{
+  font-weight: 600;
 }
 .projectButtons {
   display: flex;
@@ -94,7 +100,6 @@
   .allProjects {
     width: 70vw;
     padding: 1.5rem;
-    border: 1px solid rgb(37, 36, 36);
     border-radius: 10px;
     transition: 0.2s ease-out;
   }
