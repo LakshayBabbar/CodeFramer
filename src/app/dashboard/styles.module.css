@@ -4,8 +4,6 @@
   margin-top: 4rem;
   background: url("../../../public/c.webp");
   background-size: cover;
-  border-bottom-left-radius: 300px;
-  border-bottom-right-radius: 300px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -88,7 +86,6 @@
   .user{
     margin-top: 0;
     height: 15rem;
-    border-radius: 0;
   }
   .container {
     grid-template-columns: auto;
