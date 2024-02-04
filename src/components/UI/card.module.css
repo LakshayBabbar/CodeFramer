@@ -30,6 +30,6 @@
 @media (max-width: 900px) {
     .wrapper{
         width: 70vw;
-        height: fit-content;
+        height: 18rem;
     }
 }

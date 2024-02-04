@@ -30,7 +30,7 @@ export default function Home() {
           <Card
             img=<MdOutlineSnippetFolder style={style} />
             title="Sign In"
-            desc="Sign in to save your projects and enjoy access from any device, anywhere. Experience the ease of seamlessly continuing your creative journey - sign in now and unlock the flexibility to work on your projects wherever inspiration finds you."
+            desc="Sign in to save and access your projects from any device, anywhere. Enjoy the flexibility to continue your creative work seamlessly, unlocking the ability to collaborate from wherever inspiration strikes."
             linkT="Sign In"
             link="/signin"
           />

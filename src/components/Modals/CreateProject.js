@@ -1,6 +1,6 @@
 import { createPortal } from "react-dom";
 import styles from "./pModal.module.css";
-import { motion, sync } from "framer-motion";
+import { motion } from "framer-motion";
 import { useRef, useContext, useState } from "react";
 import { db } from "../../../lib/firebase";
 import { doc, setDoc } from "firebase/firestore";
@@ -11,9 +11,7 @@ const CreateProject = ({ isOpen, username, data }) => {
   const descRef = useRef();
   const { setRefresh } = useContext(RefreshContext);
   const [error, setError] = useState(false);
-  const [errorMssg, setErrorMssg] = useState(
-    "Please select a different name as the project with this name already exists."
-  );
+  const [errorMssg, setErrorMssg] = useState("An error occured!");
 
   function generateString(length) {
     const characters =
@@ -43,7 +41,15 @@ const CreateProject = ({ isOpen, username, data }) => {
     const isExists = data.find((item) => {
       return item.name === nameRef.current.value;
     });
-    if (isExists === undefined) {
+    if (isExists !== undefined) {
+      setError(true);
+      setErrorMssg(
+        "Please select a different name as the project with this name already exists."
+      );
+    } else if (descRef.current.value.length > 100) {
+      setError(true);
+      setErrorMssg("Description limited to 100 characters.");
+    } else {
       setError(false);
       try {
         const ref = doc(
@@ -65,8 +71,6 @@ const CreateProject = ({ isOpen, username, data }) => {
         setError(true);
         setErrorMssg(error.message);
       }
-    } else {
-      setError(true);
     }
   };
 
