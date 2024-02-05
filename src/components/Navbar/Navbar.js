@@ -14,7 +14,6 @@ import { auth } from "../../../lib/firebase";
 export default function Navbar() {
   const [mode, setLight] = useState("");
   const [isLogin, setLogin] = useState(false);
-  const [name, setUserName] = useState("");
 
   const modeHandler = () => {
     if (mode === "darkMode") {
@@ -32,7 +31,6 @@ export default function Navbar() {
         setLogin(false);
       } else {
         setLogin(true);
-        setUserName(user.displayName);
       }
     });
   }, [isLogin]);

@@ -103,7 +103,6 @@ const SignIn = () => {
             placeholder="Username"
             name="username"
             onChange={formDataHandler}
-            autoComplete="on"
             required
           />
         )}
@@ -112,7 +111,6 @@ const SignIn = () => {
           placeholder="Email Id"
           name="email"
           onChange={formDataHandler}
-          autoComplete="on"
           required
         />
         <input

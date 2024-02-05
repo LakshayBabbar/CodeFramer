@@ -84,7 +84,7 @@ const Dashboard = () => {
                       <button className={styles.btn}>Go to Editor</button>
                     </a>
                     <MdOutlineDelete
-                      style={{ color: "red", fontSize: "1.5rem" }}
+                      style={{ color: "red", fontSize: "1.5rem", cursor: "pointer" }}
                       onClick={() => deleteHandler(elements.name)}
                     />
                   </div>
