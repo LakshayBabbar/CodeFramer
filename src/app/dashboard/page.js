@@ -2,7 +2,6 @@
 import styles from "./styles.module.css";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/context";
-import Link from "next/link";
 import { FaCode } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
 import { MdOutlineDelete } from "react-icons/md";
@@ -59,7 +58,7 @@ const Dashboard = () => {
 
       <section className={styles.project}>
         <h1>Your Project's</h1>
-        <button className={`${styles.btn}`} onClick={() => setIsOpen(true)}>
+        <button className={`${styles.btn} btnDesign`} onClick={() => setIsOpen(true)}>
           <IoMdAdd />
           New Project
         </button>
@@ -77,12 +76,13 @@ const Dashboard = () => {
                     <span>Created on:</span> {elements.date}
                   </p>
                   <div className={styles.projectButtons}>
-                    <Link
+                    <a
                       href={`/dashboard/${elements.id}`}
                       style={{ textDecoration: "none" }}
+                      target="_blank"
                     >
                       <button className={styles.btn}>Go to Editor</button>
-                    </Link>
+                    </a>
                     <MdOutlineDelete
                       style={{ color: "red", fontSize: "1.5rem" }}
                       onClick={() => deleteHandler(elements.name)}

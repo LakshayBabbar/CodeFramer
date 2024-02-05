@@ -60,9 +60,9 @@ const CreateProject = ({ isOpen, username, data }) => {
           id: id,
           name: nameRef.current.value,
           desc: descRef.current.value,
-          html: "<h1></h1>",
-          css: "*{margin: 0}",
-          js: "console.log()",
+          html: "<h1>Hello</h1>",
+          css: "* {\n\tmargin: 0\n}",
+          js: "/* javascript */",
           date: date,
         });
         setRefresh(true);

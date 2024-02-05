@@ -1,6 +1,6 @@
 import { Editor } from "@monaco-editor/react";
 import style from "./editor.module.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function EditorCom({ onChange, data, tryEditor, isUpdate }) {
 
