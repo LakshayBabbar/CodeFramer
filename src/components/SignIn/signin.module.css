@@ -49,3 +49,8 @@
     margin-bottom: 5rem;
   }
 }
+@media (max-width: 500px) {
+  .form input {
+    width: 80vw;
+  }
+}

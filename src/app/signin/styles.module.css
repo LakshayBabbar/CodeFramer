@@ -18,8 +18,8 @@
     padding: 5vh 0 0;
   }
   .img {
-    width: 60vw;
-    height: 60vw;
+    width: 50vw;
+    height: 50vw;
   }
 }
 @media (max-width: 800px) {
