@@ -7,7 +7,12 @@ import { IoMdAdd } from "react-icons/io";
 import { MdOutlineDelete } from "react-icons/md";
 import Image from "next/image";
 import avatar from "../../../public/avatar.svg";
-import { onAuthStateChanged } from "firebase/auth";
+import {
+  EmailAuthProvider,
+  deleteUser,
+  onAuthStateChanged,
+  reauthenticateWithCredential,
+} from "firebase/auth";
 import { auth } from "../../../lib/firebase";
 import CreateProject from "@/components/Modals/CreateProject";
 import { AnimatePresence } from "framer-motion";
@@ -21,6 +26,11 @@ const Dashboard = () => {
   const [username, setUserName] = useState("user");
   const [isOpen, setIsOpen] = useState(false);
   const { setRefresh } = useContext(RefreshContext);
+  const style = {
+    color: "red",
+    fontSize: "1.5rem",
+    cursor: "pointer",
+  };
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -44,6 +54,33 @@ const Dashboard = () => {
     }
   };
 
+  const userDeleteHandler = () => {
+    const user = auth.currentUser;
+    const sure = confirm(
+      "Proceeding with the deletion of your account will result in the permanent removal of all associated projects. Please confirm your decision, as recovery will not be possible once completed."
+    );
+    if (sure) {
+      const input = prompt("Confirm your password");
+      const ref = doc(db, `users/${username}`);
+      const credentials = EmailAuthProvider.credential(user.email, input);
+      reauthenticateWithCredential(user, credentials)
+        .then(() => {
+          deleteUser(user)
+            .then(async () => {
+              sessionStorage.removeItem("user-creds");
+              sessionStorage.removeItem("user-info");
+              await deleteDoc(ref);
+            })
+            .catch((error) => {
+              alert(error.message);
+            });
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    }
+  };
+
   return (
     <>
       <section className={styles.user}>
@@ -51,14 +88,20 @@ const Dashboard = () => {
           <Image src={avatar} alt="avatar pic" width="80" />
           <div className={styles.userRight}>
             <h1>Hello,</h1>
-            <h2>@{username}</h2>
+            <h2>
+              @{username}{" "}
+              <MdOutlineDelete style={style} onClick={userDeleteHandler} />
+            </h2>
           </div>
         </div>
       </section>
 
       <section className={styles.project}>
         <h1>Your Project's</h1>
-        <button className={`${styles.btn} btnDesign`} onClick={() => setIsOpen(true)}>
+        <button
+          className={`${styles.btn} btnDesign`}
+          onClick={() => setIsOpen(true)}
+        >
           <IoMdAdd />
           New Project
         </button>
@@ -84,7 +127,7 @@ const Dashboard = () => {
                       <button className={styles.btn}>Go to Editor</button>
                     </a>
                     <MdOutlineDelete
-                      style={{ color: "red", fontSize: "1.5rem", cursor: "pointer" }}
+                      style={style}
                       onClick={() => deleteHandler(elements.name)}
                     />
                   </div>
@@ -100,7 +143,13 @@ const Dashboard = () => {
       </section>
 
       <AnimatePresence>
-        {isOpen && <CreateProject isOpen={modalHandler} username={username} data={data}/>}
+        {isOpen && (
+          <CreateProject
+            isOpen={modalHandler}
+            username={username}
+            data={data}
+          />
+        )}
       </AnimatePresence>
     </>
   );
