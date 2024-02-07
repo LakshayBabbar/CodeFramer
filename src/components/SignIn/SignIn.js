@@ -26,11 +26,11 @@ const SignIn = () => {
   const formDataHandler = (event) => {
     const { name, value } = event.target;
     if (name === "username") {
-      const isValidUsername = /^[a-z0-9;]+$/.test(value);
+      const isValidUsername = /^[a-zA-Z0-9;]+$/.test(value);
       if (!isValidUsername) {
         setError(true);
         setErrorMssg(
-          "Invalid characters in username. Only small alphabets, numbers, and semicolons are allowed."
+          "Invalid characters in username. Only alphabets, numbers, and semicolons are allowed."
         );
       } else {
         setError(false);
@@ -67,11 +67,11 @@ const SignIn = () => {
         createUserWithEmailAndPassword(auth, formData.email, formData.password)
           .then(async (res) => {
             await updateProfile(res.user, {
-              displayName: formData.username,
+              displayName: formData.username.toLowerCase(),
             });
-            const ref = doc(db, `users/${formData.username}`);
+            const ref = doc(db, `users/${formData.username.toLowerCase()}`);
             await setDoc(ref, {
-              username: formData.username,
+              username: formData.username.toLowerCase(),
               email: formData.email,
             });
           })
