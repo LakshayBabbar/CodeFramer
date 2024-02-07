@@ -26,7 +26,7 @@ const SignIn = () => {
   const formDataHandler = (event) => {
     const { name, value } = event.target;
     if (name === "username") {
-      const isValidUsername = /^[a-zA-Z0-9;]+$/.test(value);
+      const isValidUsername = /^[a-zA-Z0-9_]+$/.test(value);
       if (!isValidUsername) {
         setError(true);
         setErrorMssg(
