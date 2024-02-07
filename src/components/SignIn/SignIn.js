@@ -27,10 +27,11 @@ const SignIn = () => {
     const { name, value } = event.target;
     if (name === "username") {
       const isValidUsername = /^[a-zA-Z0-9_]+$/.test(value);
-      if (!isValidUsername) {
+      const len = value.length <= 3;
+      if (!isValidUsername || len) {
         setError(true);
         setErrorMssg(
-          "Invalid characters in username. Only alphabets, numbers, and semicolons are allowed."
+          "Invalid username. Only letters, numbers, and semicolons allowed. Length must be 3+ characters."
         );
       } else {
         setError(false);
