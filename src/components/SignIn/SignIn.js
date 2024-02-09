@@ -97,7 +97,7 @@ const SignIn = () => {
     <div className={styles.form}>
       <div className={styles.absolute} />
       <h1>{isSignUp ? "Sign Up" : "Sign In"}</h1>
-      <form action="POST" onSubmit={submitHandler}>
+      <form onSubmit={submitHandler}>
         {isSignUp && (
           <input
             type="text"

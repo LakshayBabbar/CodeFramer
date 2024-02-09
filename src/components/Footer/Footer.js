@@ -18,7 +18,7 @@ function Footer() {
           <Link href="/signin" className={styles.link}>
             Sign In
           </Link>
-          <Link href="/" className={styles.link}>
+          <Link href="/feedback" className={styles.link}>
             Feedback
           </Link>
         </div>

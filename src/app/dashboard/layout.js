@@ -7,10 +7,11 @@ import { auth } from "../../../lib/firebase";
 import { useRouter } from "next/navigation";
 import { RefreshContext } from "@/context";
 import { UserContext } from "@/context";
+import Loading from "@/components/Loading/Loading";
 
 const layout = ({ children }) => {
   const [isLogin, setLogin] = useState(false);
-  const { setData } = useContext(UserContext);
+  const { setData, data } = useContext(UserContext);
   const { isRefresh, setRefresh } = useContext(RefreshContext);
   const redirect = useRouter();
 
@@ -50,7 +51,7 @@ const layout = ({ children }) => {
     });
   }, [isRefresh]);
 
-  return isLogin && <>{children}</>;
+  return isLogin && data.length > 0 ? <>{children}</> : <Loading />;
 };
 
 export default layout;
