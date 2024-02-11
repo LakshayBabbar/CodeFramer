@@ -11,7 +11,7 @@ import Loading from "@/components/Loading/Loading";
 
 const layout = ({ children }) => {
   const [isLogin, setLogin] = useState(false);
-  const { setData, data } = useContext(UserContext);
+  const { setData } = useContext(UserContext);
   const { isRefresh, setRefresh } = useContext(RefreshContext);
   const redirect = useRouter();
 
@@ -51,7 +51,7 @@ const layout = ({ children }) => {
     });
   }, [isRefresh]);
 
-  return isLogin && data.length > 0 ? <>{children}</> : <Loading />;
+  return isLogin && <>{children}</>;
 };
 
 export default layout;
