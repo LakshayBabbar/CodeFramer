@@ -28,7 +28,6 @@ const layout = ({ children }) => {
   }, [docs]);
 
   return isLogin && <>{children}</>;
-  return isLogin && <>{children}</>;
 };
 
 export default layout;
