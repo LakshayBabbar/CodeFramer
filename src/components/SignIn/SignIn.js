@@ -1,7 +1,7 @@
 "use client";
 import styles from "./signin.module.css";
 import Button from "@/components/UI/Button";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 import { auth } from "../../../lib/firebase";
 import { db } from "../../../lib/firebase";
@@ -11,6 +11,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
+import { UserContext } from "@/context";
 
 const SignIn = () => {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -22,6 +23,7 @@ const SignIn = () => {
   const [error, setError] = useState(false);
   const [errorMssg, setErrorMssg] = useState("Error Occured!!");
   const redirect = useRouter();
+  const { setUserName } = useContext(UserContext);
 
   const formDataHandler = (event) => {
     const { name, value } = event.target;
@@ -63,18 +65,21 @@ const SignIn = () => {
 
   const submitHandler = (event) => {
     event.preventDefault();
+    const username = formData.username.toLowerCase();
     if (!error) {
       if (isSignUp) {
         createUserWithEmailAndPassword(auth, formData.email, formData.password)
           .then(async (res) => {
             await updateProfile(res.user, {
-              displayName: formData.username.toLowerCase(),
+              displayName: username,
             });
-            const ref = doc(db, `users/${formData.username.toLowerCase()}`);
+            const ref = doc(db, `users/${res.user.uid}`);
             await setDoc(ref, {
-              username: formData.username.toLowerCase(),
+              userId: res.user.uid,
+              username: username,
               email: formData.email,
             });
+            setUserName(username);
           })
           .catch((error) => {
             setError(true);

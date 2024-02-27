@@ -2,18 +2,19 @@
 import styles from "./styles.module.css";
 import Link from "next/link";
 import { BsNintendoSwitch } from "react-icons/bs";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { FaHome } from "react-icons/fa";
 import { FaLaptopCode } from "react-icons/fa6";
 import { FaSignInAlt } from "react-icons/fa";
 import { MdAccountCircle } from "react-icons/md";
 import { MdSpaceDashboard } from "react-icons/md";
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { signOut } from "firebase/auth";
 import { auth } from "../../../lib/firebase";
+import { UserContext } from "@/context";
 
 export default function Navbar() {
   const [mode, setLight] = useState("");
-  const [isLogin, setLogin] = useState(false);
+  const { isLogin, setIsLogin } = useContext(UserContext);
 
   const modeHandler = () => {
     if (mode === "darkMode") {
@@ -24,16 +25,6 @@ export default function Navbar() {
       localStorage.setItem("theme", "darkMode");
     }
   };
-
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        setLogin(false);
-      } else {
-        setLogin(true);
-      }
-    });
-  }, [isLogin]);
 
   useEffect(() => {
     const theme = localStorage.getItem("theme");
@@ -47,6 +38,7 @@ export default function Navbar() {
 
   const signOutHandler = () => {
     signOut(auth);
+    setIsLogin(false);
   };
 
   return (

@@ -4,12 +4,12 @@ import { motion } from "framer-motion";
 import { useRef, useContext, useState } from "react";
 import { db } from "../../../lib/firebase";
 import { doc, setDoc } from "firebase/firestore";
-import { RefreshContext } from "@/context";
+import { UserContext } from "@/context";
 
-const CreateProject = ({ isOpen, username, data }) => {
+const CreateProject = ({ isOpen, data }) => {
   const nameRef = useRef();
   const descRef = useRef();
-  const { setRefresh } = useContext(RefreshContext);
+  const { uid } = useContext(UserContext);
   const [error, setError] = useState(false);
   const [errorMssg, setErrorMssg] = useState("An error occured!");
 
@@ -54,7 +54,7 @@ const CreateProject = ({ isOpen, username, data }) => {
       try {
         const ref = doc(
           db,
-          `users/${username}/projects/${nameRef.current.value.trim()}`
+          `users/${uid}/projects/${nameRef.current.value.trim()}`
         );
         await setDoc(ref, {
           id: id,
@@ -65,7 +65,6 @@ const CreateProject = ({ isOpen, username, data }) => {
           js: "/* javascript */",
           date: date,
         });
-        setRefresh(true);
         isOpen(false);
       } catch (error) {
         setError(true);

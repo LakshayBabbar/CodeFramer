@@ -22,7 +22,7 @@ export default function Home() {
             collaborative coding experiences! At CodeFramer, we understand the
             dynamic nature of web development and the importance of having a
             versatile online editor that caters to the needs of developers
-            working with HTML, CSS, JavaScript, and Python.
+            working with HTML, CSS, JavaScript.
           </p>
         </div>
         <div className={styles.imageWrapper}>

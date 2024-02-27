@@ -1,6 +1,6 @@
 "use client";
 import styles from "./styles.module.css";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "@/context";
 import { FaCode } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
@@ -10,7 +10,6 @@ import avatar from "../../../public/avatar.svg";
 import {
   EmailAuthProvider,
   deleteUser,
-  onAuthStateChanged,
   reauthenticateWithCredential,
 } from "firebase/auth";
 import { auth } from "../../../lib/firebase";
@@ -18,28 +17,16 @@ import CreateProject from "@/components/Modals/CreateProject";
 import { AnimatePresence } from "framer-motion";
 import { doc, deleteDoc } from "firebase/firestore";
 import { db } from "../../../lib/firebase";
-import { RefreshContext } from "@/context";
+
 
 const Dashboard = () => {
-  const { data } = useContext(UserContext);
-  const [userData, setUserData] = useState([]);
-  const [username, setUserName] = useState("user");
+  const { data, uid, username } = useContext(UserContext);
   const [isOpen, setIsOpen] = useState(false);
-  const { setRefresh } = useContext(RefreshContext);
   const style = {
     color: "red",
     fontSize: "1.5rem",
     cursor: "pointer",
   };
-
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUserName(user.displayName);
-      }
-    });
-    setUserData(data);
-  }, [data]);
 
   const modalHandler = (val) => {
     val === false && setIsOpen(false);
@@ -48,9 +35,8 @@ const Dashboard = () => {
   const deleteHandler = async (name) => {
     const sure = confirm("Are you sure you want to delete this project?");
     if (sure) {
-      const ref = doc(db, `users/${username}/projects/${name}`);
+      const ref = doc(db, `users/${uid}/projects/${name}`);
       await deleteDoc(ref);
-      setRefresh(true);
     }
   };
 
@@ -61,15 +47,15 @@ const Dashboard = () => {
     );
     if (sure) {
       const input = prompt("Confirm your password");
-      const ref = doc(db, `users/${username}`);
+      const ref = doc(db, `users/${uid}`);
       const credentials = EmailAuthProvider.credential(user.email, input);
       reauthenticateWithCredential(user, credentials)
-        .then(() => {
+        .then(async() => {
+          await deleteDoc(ref);
           deleteUser(user)
-            .then(async () => {
+            .then(() => {
               sessionStorage.removeItem("user-creds");
               sessionStorage.removeItem("user-info");
-              await deleteDoc(ref);
             })
             .catch((error) => {
               alert(error.message);
@@ -105,9 +91,9 @@ const Dashboard = () => {
           <IoMdAdd />
           New Project
         </button>
-        {userData.length > 0 ? (
+        {data.length > 0 ? (
           <div className={styles.container}>
-            {userData.map((elements) => {
+            {data.map((elements) => {
               return (
                 <div className={styles.allProjects} key={elements.id}>
                   <h2>

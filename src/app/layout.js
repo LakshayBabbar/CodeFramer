@@ -2,7 +2,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar/Navbar";
 import UserData from "@/context/UserData";
-import Refresh from "@/context/Refresh";
 const inter = Inter({ subsets: ["latin"], preload: true });
 
 export const metadata = {
@@ -18,12 +17,10 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <UserData>
-          <Refresh>
-            <div className="absolute" />
-            <div id="modal" />
-            <Navbar />
-            {children}
-          </Refresh>
+          <div className="absolute" />
+          <div id="modal" />
+          <Navbar />
+          {children}
         </UserData>
       </body>
     </html>
