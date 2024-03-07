@@ -54,7 +54,6 @@ function WebEditor({ data, tryEditor }) {
         srcDoc={srcDoc}
         width="100%"
         height="100%"
-        sandbox="allow-scripts"
       />
     </div>
   );
