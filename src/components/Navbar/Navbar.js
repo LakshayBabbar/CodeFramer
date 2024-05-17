@@ -57,7 +57,7 @@ export default function Navbar() {
       })
     );
     setActive(false);
-    navigate.push("/");
+    res && navigate.push("/");
     const date = new Date().toString();
     toast({
       title: res.message,
