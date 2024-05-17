@@ -7,7 +7,7 @@ import useSend from "@/hooks/useSend";
 function WebEditor({ data }) {
   const [values, setValues] = useState({ html: "", css: "", js: "" });
   const { toast } = useToast();
-  const { fetchData, error, isError, loading } = useSend();
+  const { fetchData, error, isError } = useSend();
 
   useEffect(() => {
     setValues(data);
@@ -31,7 +31,11 @@ function WebEditor({ data }) {
   return (
     <div className="flex flex-col mt-14 h-screen bg-white">
       <div className="bg-[#1e1e1e]">
-        <EditorCom onChange={setValues} data={data} setUpdate={updateHandler} />
+        <EditorCom
+          onChange={setValues}
+          data={values}
+          setUpdate={updateHandler}
+        />
       </div>
       <iframe title="output" srcDoc={srcDoc} width="100%" height="100%" />
     </div>

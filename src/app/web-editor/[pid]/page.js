@@ -10,7 +10,7 @@ const page = ({ params }) => {
     data: fetchedData,
     isError,
     loading,
-  } = useFetch(`/api/projects/${pid}`, "projectId");
+  } = useFetch(`/api/projects/${pid}`, pid);
 
   useEffect(() => {
     if (!loading && !isError) {
