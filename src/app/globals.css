@@ -1,100 +1,102 @@
-:root {
-  --btn-primary: #0091ff;
-  --para: #2e2e2e;
-  --text: rgb(46, 42, 42);
-  --bg: #ffffff;
-  --side-bar: #edf4fc;
-  --btn-shadow: #353535b6;
-  --card-bg: #edf6ffa9;
-  --border: #b6b6b6;
-  --nav-shadow: rgba(0, 0, 0, 0.2);
-  --gradient: linear-gradient(
-    90deg,
-    rgb(12, 8, 81) 0%,
-    rgb(18, 18, 187) 35%,
-    rgba(0, 212, 255, 1) 100%
-  );
-  --gradient2: linear-gradient(
-    0deg,
-    rgba(2, 0, 36, 1) 0%,
-    rgba(9, 9, 121, 1) 0%,
-    rgba(0, 212, 255, 1) 100%
-  );
-}
+@tailwind base;
+  @tailwind components;
+  @tailwind utilities;
 
-.darkMode {
-  --bg: #000000;
-  --border: #3d3d3d;
-  --side-bar: #071a2b;
-  --btn-shadow: #8d8d8db6;
-  --text: #f0f8ff;
-  --para: #bababa;
-  --card-bg: #24212ccf;
-  --nav-shadow: rgba(255, 255, 255, 0.2);
-}
+  @layer base {
+    :root {
+      --background: 0 0% 100%;
+      --foreground: 0 0% 3.9%;
 
-html {
-  overflow-x: hidden;
-}
+      --card: 0 0% 100%;
+      --card-foreground: 0 0% 3.9%;
 
-body {
-  margin: 0;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  overflow-x: hidden;
-}
+      --popover: 0 0% 100%;
+      --popover-foreground: 0 0% 3.9%;
 
-.absolute {
-  top: 0;
-  left: -10rem;
-  height: 11rem;
-  width: 50rem;
-  position: absolute;
-  z-index: -1;
-}
+      --primary: 0 0% 9%;
+      --primary-foreground: 0 0% 98%;
 
-.absolute::before {
-  content: "";
-  background: var(--gradient);
-  filter: blur(110px);
-  position: absolute;
-  rotate: -15deg;
-  height: 100%;
-  width: 100%;
-}
+      --secondary: 0 0% 96.1%;
+      --secondary-foreground: 0 0% 9%;
 
-/* ===== Scrollbar CSS ===== */
-* {
-  scrollbar-width: auto;
-  scrollbar-color: var(--btn-primary) #ffffff;
-}
+      --muted: 0 0% 96.1%;
+      --muted-foreground: 0 0% 45.1%;
 
-*::-webkit-scrollbar {
-  width: 10px;
-}
+      --accent: 0 0% 96.1%;
+      --accent-foreground: 0 0% 9%;
 
-*::-webkit-scrollbar-track {
-  background: transparent;
-}
+      --destructive: 0 84.2% 60.2%;
+      --destructive-foreground: 0 0% 98%;
 
-*::-webkit-scrollbar-thumb {
-  background-color: var(--btn-primary);
-  border-radius: 10px;
-}
+      --border: 0 0% 89.8%;
+      --input: 0 0% 89.8%;
+      --ring: 0 0% 3.9%;
 
-.btnDesign {
-  cursor: pointer;
-  box-shadow: 6px 6px 0px 0px var(--btn-shadow);
-}
-.btnDesign:active{
-  box-shadow: none;
-  transform: translate(6px,6px);
+      --radius: 0.5rem;
+    }
 
-}
-@media (max-width: 768px) {
-  .absolute {
-    height: 20vh;
-    width: 30rem;
+    .dark {
+      --background: 0 0% 3.9%;
+      --foreground: 0 0% 98%;
+
+      --card: 0 0% 3.9%;
+      --card-foreground: 0 0% 98%;
+
+      --popover: 0 0% 3.9%;
+      --popover-foreground: 0 0% 98%;
+
+      --primary: 0 0% 98%;
+      --primary-foreground: 0 0% 9%;
+
+      --secondary: 0 0% 14.9%;
+      --secondary-foreground: 0 0% 98%;
+
+      --muted: 0 0% 14.9%;
+      --muted-foreground: 0 0% 63.9%;
+
+      --accent: 0 0% 14.9%;
+      --accent-foreground: 0 0% 98%;
+
+      --destructive: 0 62.8% 30.6%;
+      --destructive-foreground: 0 0% 98%;
+
+      --border: 0 0% 14.9%;
+      --input: 0 0% 14.9%;
+      --ring: 0 0% 83.1%;
+    }
   }
-}
+
+  @layer base {
+    * {
+      @apply border-border;
+    }
+    body {
+      @apply bg-background text-foreground;
+    }
+  }
+    * {
+      scrollbar-width: auto;
+    }
+  
+    *::-webkit-scrollbar {
+      width: 8px;
+    }
+  
+    *::-webkit-scrollbar-track {
+      background: rgb(107, 106, 106);
+    }
+  
+    *::-webkit-scrollbar-thumb {
+      background-color: #424242;
+      border-radius: 20px;
+    }
+  
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: #ffffff;
+      transition: background-color 5000s ease-in-out 0s;
+      box-shadow: inset 0 0 20px 20px #00000042;
+    }

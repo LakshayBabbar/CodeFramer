@@ -1,9 +1,20 @@
 "use client";
 
-import Loading from "@/components/Loading/Loading"
+import * as React from "react";
 
-const loading = () => {
-  return <Loading />
+import { Progress } from "@/components/ui/progress";
+
+export default function ProgressDemo() {
+  const [progress, setProgress] = React.useState(13);
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => setProgress(100), 500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <div className="flex w-full h-screen items-center justify-center ">
+      <Progress value={progress} className="w-80 md:w-96" />
+    </div>
+  );
 }
-
-export default loading

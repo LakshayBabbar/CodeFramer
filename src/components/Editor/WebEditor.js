@@ -1,38 +1,27 @@
 "use client";
-import { useContext, useEffect, useState } from "react";
-import styles from "./web.module.css";
+import { useEffect, useState } from "react";
 import EditorCom from "@/components/Editor/EditorCom";
-import { doc, updateDoc } from "firebase/firestore";
-import { db } from "../../../lib/firebase";
-import { UserContext } from "@/context";
+import { useToast } from "../ui/use-toast";
+import useSend from "@/hooks/useSend";
 
-function WebEditor({ data, tryEditor }) {
-  const { uid } = useContext(UserContext);
-  const [values, setValues] = useState({
-    html: data.html,
-    css: data.css,
-    js: data.js,
-  });
+function WebEditor({ data }) {
+  const [values, setValues] = useState({ html: "", css: "", js: "" });
+  const { toast } = useToast();
+  const { fetchData, error, isError, loading } = useSend();
 
   useEffect(() => {
     setValues(data);
   }, [data]);
 
-  function activeHandler(values) {
-    setValues(values);
-  }
-
-  const updateHandler = async (val) => {
-    if (val) {
-      const ref = doc(db, `users/${uid}/projects/${data.name}`);
-      await updateDoc(ref, {
-        html: values.html,
-        css: values.css,
-        js: values.js,
-      });
-      alert("Your data is saved successfully!!");
-    }
+  const updateHandler = async () => {
+    const res = await fetchData(`/api/projects/${data._id}`, "PUT", values);
+    const date = new Date().toString();
+    toast({
+      title: !isError ? res.message : error,
+      description: date,
+    });
   };
+
   const srcDoc = `
     <body>${values.html}</body>
     <style>${values.css}</style>
@@ -40,21 +29,11 @@ function WebEditor({ data, tryEditor }) {
   `;
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.editor}>
-        <EditorCom
-          onChange={activeHandler}
-          data={data}
-          tryEditor={tryEditor}
-          isUpdate={updateHandler}
-        />
+    <div className="flex flex-col mt-14 h-screen bg-white">
+      <div className="bg-[#1e1e1e]">
+        <EditorCom onChange={setValues} data={data} setUpdate={updateHandler} />
       </div>
-      <iframe
-        title="output"
-        srcDoc={srcDoc}
-        width="100%"
-        height="100%"
-      />
+      <iframe title="output" srcDoc={srcDoc} width="100%" height="100%" />
     </div>
   );
 }

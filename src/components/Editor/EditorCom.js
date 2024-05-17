@@ -1,22 +1,10 @@
 import { Editor } from "@monaco-editor/react";
-import style from "./editor.module.css";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { Button } from "../ui/button";
 
-export default function EditorCom({ onChange, data, tryEditor, isUpdate }) {
-
-  const handleEditorDidMount = (value, event) => {
-    fileName === "index.html"
-      ? onChange((values)=>{
-        return {...values,html:value}
-      })
-      : fileName === "style.css"
-      ? onChange((values)=>{
-        return {...values,css:value}
-      })
-      : onChange((values)=>{
-        return {...values,js:value}
-      })
-  };
+export default function EditorCom({ onChange, data, setUpdate }) {
+  const editorRef = useRef();
+  const [fileName, setFileName] = useState("index.html");
 
   const files = {
     "script.js": {
@@ -35,54 +23,79 @@ export default function EditorCom({ onChange, data, tryEditor, isUpdate }) {
       value: data.html,
     },
   };
-  const [fileName, setFileName] = useState("index.html");
+
   const file = files[fileName];
 
+  const handleEditorDidMount = (editor) => {
+    editorRef.current = editor;
+    editor.focus();
+  };
+
+  const handleEditorChange = (value) => {
+    onChange((values) => {
+      return {
+        ...values,
+        [fileName.split(".")[1]]: value,
+      };
+    });
+  };
   return (
     <div>
-      <div className={style.btnWrapper}>
-        <button
-          disabled={fileName === "index.html"}
+      <div className="flex items-center gap-4 p-2">
+        <Button
           onClick={() => setFileName("index.html")}
-          className={style.btn}
+          className={`${
+            fileName === "index.html"
+              ? "bg-[#262626]"
+              : "bg-transparent border border-neutral-700"
+          }
+          text-white hover:bg-[#262626]`}
+          size="sm"
         >
           HTML
-        </button>
-
-        <button
-          disabled={fileName === "style.css"}
+        </Button>
+        <Button
           onClick={() => setFileName("style.css")}
-          className={style.btn}
+          className={`${
+            fileName === "style.css"
+              ? "bg-[#262626]"
+              : "bg-transparent border border-neutral-700"
+          }
+          text-white hover:bg-[#262626]`}
+          size="sm"
         >
           CSS
-        </button>
-        <button
-          disabled={fileName === "script.js"}
+        </Button>
+        <Button
           onClick={() => setFileName("script.js")}
-          className={style.btn}
+          className={`${
+            fileName === "script.js"
+              ? "bg-[#262626]"
+              : "bg-transparent border border-neutral-700"
+          }
+          text-white hover:bg-[#262626]`}
+          size="sm"
         >
           JS
-        </button>
-        {!tryEditor && (
-          <button
-            onClick={() => isUpdate(true)}
-            className={`${style.btn} ${style.saveBtn}`}
-          >
+        </Button>
+        {data && data._id && (
+          <Button onClick={setUpdate} size="sm">
             Save
-          </button>
+          </Button>
         )}
       </div>
-      <div className={style.editor}>
+      <div className="w-full h-[40vh]">
         <Editor
           width="100%"
           height="100%"
           theme="vs-dark"
-          onChange={handleEditorDidMount}
           path={file.name}
-          defaultValue={file.value}
-          defaultLanguage={file.language}
+          value={file.value}
+          language={file.language}
+          onMount={handleEditorDidMount}
+          onChange={handleEditorChange}
           options={{
-            fontSize: "18px",
+            fontSize: "14px",
             minimap: {
               enabled: false,
             },

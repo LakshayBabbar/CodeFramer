@@ -1,87 +1,130 @@
 "use client";
-import styles from "./styles.module.css";
 import Link from "next/link";
-import { BsNintendoSwitch } from "react-icons/bs";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { FaHome } from "react-icons/fa";
 import { FaLaptopCode } from "react-icons/fa6";
 import { FaSignInAlt } from "react-icons/fa";
-import { MdAccountCircle } from "react-icons/md";
 import { MdSpaceDashboard } from "react-icons/md";
-import { signOut } from "firebase/auth";
-import { auth } from "../../../lib/firebase";
-import { UserContext } from "@/context";
+import { RiMenu4Fill } from "react-icons/ri";
+import { IoMdClose } from "react-icons/io";
+import {
+  Select,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+} from "../ui/select";
+import { useSelector, useDispatch } from "react-redux";
+import { authState } from "@/store/features/Auth/authSlice";
+import { useToast } from "../ui/use-toast";
+import { useRouter } from "next/navigation";
+import useFetch from "@/hooks/useFetch";
 
 export default function Navbar() {
-  const [mode, setLight] = useState("");
-  const { isLogin, setIsLogin } = useContext(UserContext);
+  const [mode, setMode] = useState("");
+  const { isAuth } = useSelector((state) => state.auth);
+  const [active, setActive] = useState(false);
+  const dispatch = useDispatch();
+  const { data } = useFetch("/api", "auth");
+  const { toast } = useToast();
+  const navigate = useRouter();
+  const pre = "-translate-x-[100vw]";
+  const post = "-translate-x-0";
 
-  const modeHandler = () => {
-    if (mode === "darkMode") {
-      setLight("lightMode");
-      localStorage.setItem("theme", "lightMode");
-    } else {
-      setLight("darkMode");
-      localStorage.setItem("theme", "darkMode");
+  useEffect(() => {
+    if (data && data.isAuth) {
+      dispatch(
+        authState({
+          isAuth: true,
+          username: data.username,
+        })
+      );
     }
+  }, [data]);
+
+  const modeHandler = (val) => {
+    setMode(val);
+    localStorage.setItem("theme", val);
+  };
+
+  const logoutHandler = async () => {
+    const req = await fetch("/api/auth/logout");
+    const res = await req.json();
+    dispatch(
+      authState({
+        isAuth: false,
+        username: undefined,
+      })
+    );
+    navigate.push("/");
+    const date = new Date().toString();
+    toast({
+      title: res.message,
+      description: date,
+    });
   };
 
   useEffect(() => {
     const theme = localStorage.getItem("theme");
-    if (theme === "darkMode") {
-      setLight(theme);
-      document.body.className = theme;
+    if (theme === "dark" || !theme) {
+      setMode("dark");
+      document.documentElement.classList.add("dark");
     } else {
-      document.body.className = mode;
+      document.documentElement.classList.remove("dark");
     }
   }, [mode]);
 
-  const signOutHandler = () => {
-    signOut(auth);
-    setIsLogin(false);
-  };
-
+  const linkStyle = "flex items-center gap-2 sm:text-sm ";
   return (
-    <div className={styles.wrapper}>
-      <Link href="/" className={styles.navLogo}>
-        CodeFramer
-      </Link>
-      <div className={styles.list}>
-        <Link href="/" className={styles.link}>
-          <FaHome className={styles.navLinkIco} />
-          &nbsp;Home
+    <div className="h-14 w-full flex justify-between px-10 sm:px-0 sm:justify-around items-center fixed top-0 left-0 backdrop-blur-md z-[999] border-b">
+      <Link href="/">CodeFramer</Link>
+      <div
+        className={`${
+          active ? post : pre
+        } sm:translate-x-0 top-0 left-0 h-screen w-full p-14 sm:p-0 bg-card  sm:h-auto sm:w-auto flex sm:bg-auto absolute sm:relative flex-col sm:flex-row gap-4 sm:items-center transition-all duration-400`}
+      >
+        <Link href="/" className={linkStyle}>
+          <FaHome />
+          Home
         </Link>
-        <Link href="/try_editor" className={styles.link}>
-          <FaLaptopCode className={styles.navLinkIco} />
-          &nbsp;Try Editor
+        <Link href="/web-editor" className={linkStyle}>
+          <FaLaptopCode />
+          Web Editor
         </Link>
-        {isLogin ? (
-          <div className={styles.dropdown}>
-            <button className={styles.btna}>
-              <MdAccountCircle className={styles.navLinkIco} />
-              Profile
-            </button>
-            <div className={styles.dropdownContent}>
-              <Link href="/dashboard" className={styles.link}>
-                <MdSpaceDashboard className={styles.navLinkIco} />
-                &nbsp;Dashboard
-              </Link>
-              <button onClick={signOutHandler} className={styles.btna}>
-                <FaSignInAlt />
-                Log Out
-              </button>
-            </div>
-          </div>
-        ) : (
-          <Link href="/signin" className={styles.link}>
-            <FaSignInAlt className={styles.navLinkIco} />
-            &nbsp;Sign In
+        {isAuth && (
+          <Link href="/dashboard" className={linkStyle}>
+            <MdSpaceDashboard />
+            Dashboard
           </Link>
         )}
-        <button onClick={modeHandler} className={styles.btna}>
-          <BsNintendoSwitch />
-          Theme
-        </button>
+        {!isAuth && (
+          <Link href="/auth?mode=login" className={linkStyle}>
+            <FaSignInAlt />
+            Sign In
+          </Link>
+        )}
+        {isAuth && (
+          <button className={linkStyle} onClick={logoutHandler}>
+            <FaSignInAlt />
+            Logout
+          </button>
+        )}
+        <Select onValueChange={modeHandler}>
+          <SelectTrigger className="w-[fit-content] gap-2">
+            <SelectValue placeholder="Theme" />
+          </SelectTrigger>
+          <SelectContent className="z-[1000]">
+            <SelectItem value="dark">Dark</SelectItem>
+            <SelectItem value="light">Light</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+      <div className="sm:hidden flex z-[1000] text-2xl">
+        {!active ? (
+          <RiMenu4Fill onClick={() => setActive(true)} />
+        ) : (
+          <IoMdClose onClick={() => setActive(false)} />
+        )}
       </div>
     </div>
   );

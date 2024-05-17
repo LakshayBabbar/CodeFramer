@@ -1,8 +1,11 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar/Navbar";
-import UserData from "@/context/UserData";
+import Footer from "@/components/Footer/Footer";
 const inter = Inter({ subsets: ["latin"], preload: true });
+import { Toaster } from "@/components/ui/toaster";
+import StoreProvider from "./StoreProvider";
+import ReactQueryProvider from "./ReactQueryProvider";
 
 export const metadata = {
   title: "CodeFramer",
@@ -14,14 +17,17 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <UserData>
-          <div className="absolute" />
-          <div id="modal" />
-          <Navbar />
-          {children}
-        </UserData>
+    <html lang="en" className="dark overflow-x-hidden">
+      <body className={`${inter.className} overflow-x-hidden`}>
+        <StoreProvider>
+          <ReactQueryProvider>
+            <Navbar />
+            {children}
+            <div id="modal" />
+          </ReactQueryProvider>
+          <Footer />
+          <Toaster />
+        </StoreProvider>
       </body>
     </html>
   );

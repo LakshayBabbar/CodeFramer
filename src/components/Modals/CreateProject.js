@@ -1,126 +1,86 @@
+import { useState, useEffect, useRef } from "react";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 import { createPortal } from "react-dom";
-import styles from "./pModal.module.css";
-import { motion } from "framer-motion";
-import { useRef, useContext, useState } from "react";
-import { db } from "../../../lib/firebase";
-import { doc, setDoc } from "firebase/firestore";
-import { UserContext } from "@/context";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
+import useSend from "@/hooks/useSend";
 
-const CreateProject = ({ isOpen, data }) => {
-  const nameRef = useRef();
-  const descRef = useRef();
-  const { uid } = useContext(UserContext);
-  const [error, setError] = useState(false);
-  const [errorMssg, setErrorMssg] = useState("An error occured!");
+const CreateProject = ({ isOpen, setIsOpen }) => {
+  const ref = useRef(null);
+  const [data, setData] = useState({
+    name: "",
+    description: "",
+  });
+  const { isAuth } = useSelector((state) => state.auth);
+  const navigate = useRouter();
+  const { fetchData, isError, error, loading, setIsError } = useSend();
 
-  function generateString(length) {
-    const characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    let result = " ";
-    const charactersLength = characters.length;
-    for (let i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
-  }
-
-  function generateDate() {
-    const date = new Date();
-    let day = date.getDate();
-    let month = date.getMonth();
-    let year = date.getFullYear();
-    let fullDate = `${day}-${month}-${year}`;
-    return fullDate;
-  }
-
-  const submitHandler = async (e) => {
-    e.preventDefault();
-    const key = generateString(20);
-    const id = key.trim();
-    const date = generateDate();
-    const isExists = data.find((item) => {
-      return item.name === nameRef.current.value;
-    });
-    if (isExists !== undefined) {
-      setError(true);
-      setErrorMssg(
-        "Please select a different name as the project with this name already exists."
-      );
-    } else if (descRef.current.value.length > 100) {
-      setError(true);
-      setErrorMssg("Description limited to 100 characters.");
+  useEffect(() => {
+    if (!isAuth && isOpen) {
+      setIsOpen(false);
+      navigate.push("/auth?mode=login");
     } else {
-      setError(false);
-      try {
-        const ref = doc(
-          db,
-          `users/${uid}/projects/${nameRef.current.value.trim()}`
-        );
-        await setDoc(ref, {
-          id: id,
-          name: nameRef.current.value,
-          desc: descRef.current.value,
-          html: "<h1>Hello</h1>",
-          css: "* {\n\tmargin: 0\n}",
-          js: "/* javascript */",
-          date: date,
-        });
-        isOpen(false);
-      } catch (error) {
-        setError(true);
-        setErrorMssg(error.message);
-      }
+      ref.current = document.getElementById("modal");
     }
-  };
+    !isOpen && setIsError(false);
+  }, [isOpen, isAuth]);
 
-  return createPortal(
-    <div className={styles.backdrop}>
-      <motion.div
-        className={styles.wrapper}
-        initial={{ y: -30, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        exit={{ y: 30, opacity: 0 }}
-      >
-        <h1>Enter Details</h1>
-        <form className={styles.form} onSubmit={submitHandler}>
-          <div className={styles.input}>
-            <label>Name</label>
-            <input
-              type="text"
-              name="name"
-              autoComplete="off"
-              ref={nameRef}
-              required
-            />
+  const dataHandler = (e) => {
+    const { name, value } = e.target;
+    setData((prev) => {
+      return { ...prev, [name]: value };
+    });
+    setIsError(false);
+  };
+  const projectHandler = async (e) => {
+    e.preventDefault();
+    const res = await fetchData("/api/projects/create", "POST", data);
+    if (res && !isError) {
+      setIsOpen(false);
+    }
+    setData({
+      name: "",
+      description: "",
+    });
+    navigate.push(`/web-editor/${res.pid}`);
+  };
+  return isOpen && isAuth && ref.current
+    ? createPortal(
+        <div className="fixed top-0 left-0 w-full h-screen flex items-center justify-center backdrop-blur-xl z-[1000]">
+          <div className="w-[30rem] border p-6 rounded-xl bg-card space-y-2 shadow-2xl">
+            <h1 className="font-bold">Create New</h1>
+            <p className="text-sm">Web Environment</p>
+            <form onSubmit={projectHandler} className="space-y-4">
+              <Input
+                name="name"
+                value={data.name}
+                placeholder="Name"
+                onChange={dataHandler}
+                required
+              />
+              <Input
+                name="description"
+                value={data.description}
+                placeholder="Description"
+                onChange={dataHandler}
+                required
+              />
+              <p className="text-sm text-red-500">{isError && error}</p>
+              <div className="flex gap-4 justify-end">
+                <Button variant="outline" onClick={() => setIsOpen(false)}>
+                  Cancel
+                </Button>
+                <Button type="submit" disabled={loading}>
+                  Create
+                </Button>
+              </div>
+            </form>
           </div>
-          <div className={styles.input}>
-            <label>Description</label>
-            <input
-              type="text"
-              name="description"
-              autoComplete="off"
-              ref={descRef}
-              required
-            />
-          </div>
-          <div className={styles.button}>
-            <button
-              onClick={() => isOpen(false)}
-              type="button"
-              className="btnDesign"
-            >
-              Cancel
-            </button>
-            <button type="submit" className="btnDesign">
-              Create
-            </button>
-          </div>
-        </form>
-        {error && <p className={styles.fallBack}>{errorMssg}</p>}
-      </motion.div>
-    </div>,
-    document.getElementById("modal")
-  );
+        </div>,
+        ref.current
+      )
+    : null;
 };
 
 export default CreateProject;

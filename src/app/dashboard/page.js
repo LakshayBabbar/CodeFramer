@@ -1,143 +1,75 @@
 "use client";
-import styles from "./styles.module.css";
-import { useContext, useState } from "react";
-import { UserContext } from "@/context";
-import { FaCode } from "react-icons/fa";
-import { IoMdAdd } from "react-icons/io";
-import { MdOutlineDelete } from "react-icons/md";
-import Image from "next/image";
-import avatar from "../../../public/avatar.svg";
-import {
-  EmailAuthProvider,
-  deleteUser,
-  reauthenticateWithCredential,
-} from "firebase/auth";
-import { auth } from "../../../lib/firebase";
+import { useEffect, useState } from "react";
 import CreateProject from "@/components/Modals/CreateProject";
-import { AnimatePresence } from "framer-motion";
-import { doc, deleteDoc } from "firebase/firestore";
-import { db } from "../../../lib/firebase";
+import { useSelector } from "react-redux";
+import ProjectCard from "@/components/ui/ProjectCard";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import img from "@/../public/user.jpeg";
+import useFetch from "@/hooks/useFetch";
 
-
-const Dashboard = () => {
-  const { data, uid, username } = useContext(UserContext);
+const page = () => {
+  const { username } = useSelector((state) => state.auth);
+  const [data, setData] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-  const style = {
-    color: "red",
-    fontSize: "1.5rem",
-    cursor: "pointer",
-  };
-
-  const modalHandler = (val) => {
-    val === false && setIsOpen(false);
-  };
-
-  const deleteHandler = async (name) => {
-    const sure = confirm("Are you sure you want to delete this project?");
-    if (sure) {
-      const ref = doc(db, `users/${uid}/projects/${name}`);
-      await deleteDoc(ref);
+  const {
+    data: fetchedData,
+    error,
+    isError,
+    loading,
+    refetch,
+  } = useFetch("/api/projects/all", "All_Projects");
+  useEffect(() => {
+    if (!isError) {
+      setData(fetchedData);
     }
-  };
-
-  const userDeleteHandler = () => {
-    const user = auth.currentUser;
-    const sure = confirm(
-      "Proceeding with the deletion of your account will result in the permanent removal of all associated projects. Please confirm your decision, as recovery will not be possible once completed."
-    );
-    if (sure) {
-      const input = prompt("Confirm your password");
-      const ref = doc(db, `users/${uid}`);
-      const credentials = EmailAuthProvider.credential(user.email, input);
-      reauthenticateWithCredential(user, credentials)
-        .then(async() => {
-          await deleteDoc(ref);
-          deleteUser(user)
-            .then(() => {
-              sessionStorage.removeItem("user-creds");
-              sessionStorage.removeItem("user-info");
-            })
-            .catch((error) => {
-              alert(error.message);
-            });
-        })
-        .catch((error) => {
-          alert(error.message);
-        });
-    }
-  };
-
+  }, [fetchedData]);
   return (
-    <>
-      <section className={styles.user}>
-        <div className={styles.usersDetails}>
-          <Image src={avatar} alt="avatar pic" width="80" />
-          <div className={styles.userRight}>
-            <h1>Hello,</h1>
-            <h2>
-              @{username}{" "}
-              <MdOutlineDelete style={style} onClick={userDeleteHandler} />
-            </h2>
-          </div>
-        </div>
+    <main className="flex flex-col w-full justify-center items-center gap-10">
+      <section className="h-60 flex flex-col w-full sm:w-3/4 bg-dot-black dark:bg-dot-white/[0.8] relative items-center">
+        <Image
+          src={img}
+          width={120}
+          height={120}
+          className="rounded-full absolute -bottom-10"
+          alt="user image"
+        />
       </section>
-
-      <section className={styles.project}>
-        <h1>Your Project's</h1>
-        <button
-          className={`${styles.btn} btnDesign`}
-          onClick={() => setIsOpen(true)}
-        >
-          <IoMdAdd />
-          New Project
-        </button>
-        {data.length > 0 ? (
-          <div className={styles.container}>
-            {data.map((elements) => {
-              return (
-                <div className={styles.allProjects} key={elements.id}>
-                  <h2>
-                    <FaCode />
-                    {elements.name}
-                  </h2>
-                  <p>{elements.desc}</p>
-                  <p>
-                    <span>Created on:</span> {elements.date}
-                  </p>
-                  <div className={styles.projectButtons}>
-                    <a
-                      href={`/dashboard/${elements.id}`}
-                      style={{ textDecoration: "none" }}
-                      target="_blank"
-                    >
-                      <button className={styles.btn}>Go to Editor</button>
-                    </a>
-                    <MdOutlineDelete
-                      style={style}
-                      onClick={() => deleteHandler(elements.name)}
-                    />
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        ) : (
-          <p style={{ textAlign: "center", padding: "0 2rem" }}>
-            Your project list is empty. Click on "New Project" to create one.
+      <section className="w-4/5 xl:w-3/4 space-y-10 mt-5">
+        <div className="flex flex-col items-center justify-center gap-2">
+          <h1 className="text-xl font-bold">Hello @{username}</h1>
+          <p className="max-w-96 text-sm text-center">
+            A comprehensive hub for project management, collaboration, and
+            tracking progress seamlessly.
           </p>
+        </div>
+        <hr className="border w-full" />
+        <div className="flex w-full justify-between items-center">
+          <h2 className="text-xl font-bold">Your Project&apos;s</h2>
+          <Button variant="outline" onClick={() => setIsOpen(true)}>
+            Create New
+          </Button>
+        </div>
+        {!loading ? (
+          <>
+            <div className="w-full grid xl:grid-cols-2 2xl:grid-cols-3 gap-5 justify-items-center xl:justify-items-start">
+              {!isError &&
+                data &&
+                data.map((item) => {
+                  return (
+                    <ProjectCard key={item._id} data={{ ...item, refetch }} />
+                  );
+                })}
+            </div>
+            <p className="text-center">{isError && error.message}</p>
+          </>
+        ) : (
+          <p className="text-center">Loading...</p>
         )}
       </section>
-
-      <AnimatePresence>
-        {isOpen && (
-          <CreateProject
-            isOpen={modalHandler}
-            username={username}
-            data={data}
-          />
-        )}
-      </AnimatePresence>
-    </>
+      <CreateProject isOpen={isOpen} setIsOpen={setIsOpen} />
+    </main>
   );
 };
-export default Dashboard;
+
+export default page;
