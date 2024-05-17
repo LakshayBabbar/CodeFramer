@@ -9,9 +9,7 @@ export async function GET() {
       },
       { status: 200 }
     );
-    res.cookies.set("token", " ", {
-      httpOnly: true,
-      secure: true,
+    res.cookies.set("token", "", {
       maxAge: 0,
     });
     return res;
