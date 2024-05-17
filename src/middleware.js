@@ -37,6 +37,14 @@ export async function middleware(request) {
       return NextResponse.next();
     }
     return NextResponse.redirect(new URL("/dashboard", request.url));
+  } else if (request.nextUrl.pathname.startsWith("/api/auth/logout")) {
+    const res = NextResponse.next();
+    res.cookies.set("token", " ", {
+      httpOnly: true,
+      secure: true,
+      maxAge: 0,
+    });
+    return res;
   }
 
   return NextResponse.next();

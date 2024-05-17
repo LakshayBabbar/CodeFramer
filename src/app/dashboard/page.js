@@ -7,9 +7,10 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import img from "@/../public/user.jpeg";
 import useFetch from "@/hooks/useFetch";
+import { useRouter } from "next/navigation";
 
 const page = () => {
-  const { username } = useSelector((state) => state.auth);
+  const { username, isAuth } = useSelector((state) => state.auth);
   const [data, setData] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const {
@@ -19,11 +20,15 @@ const page = () => {
     loading,
     refetch,
   } = useFetch("/api/projects/all", "All_Projects");
+  const router = useRouter();
   useEffect(() => {
     if (!isError) {
       setData(fetchedData);
     }
-  }, [fetchedData]);
+    if (!isAuth) {
+      router.push("/auth?mode=login");
+    }
+  }, [fetchedData, isAuth]);
   return (
     <main className="flex flex-col w-full justify-center items-center gap-10">
       <section className="h-60 flex flex-col w-full sm:w-3/4 bg-dot-black dark:bg-dot-white/[0.8] relative items-center">
