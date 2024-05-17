@@ -42,7 +42,6 @@ function Auth() {
       data
     );
     const date = new Date().toString();
-    console.log(res);
     if (res && !isError) {
       if (!isLogin) {
         toast({

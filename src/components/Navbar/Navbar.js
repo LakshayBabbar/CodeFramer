@@ -56,6 +56,7 @@ export default function Navbar() {
         username: undefined,
       })
     );
+    setActive(false);
     navigate.push("/");
     const date = new Date().toString();
     toast({
@@ -73,6 +74,9 @@ export default function Navbar() {
       document.documentElement.classList.remove("dark");
     }
   }, [mode]);
+  function linkHandler() {
+    setActive(false);
+  }
 
   const linkStyle = "flex items-center gap-2 sm:text-sm ";
   return (
@@ -83,22 +87,26 @@ export default function Navbar() {
           active ? post : pre
         } sm:translate-x-0 top-0 left-0 h-screen w-full p-14 sm:p-0 bg-card  sm:h-auto sm:w-auto flex sm:bg-auto absolute sm:relative flex-col sm:flex-row gap-4 sm:items-center transition-all duration-400`}
       >
-        <Link href="/" className={linkStyle}>
+        <Link href="/" className={linkStyle} onClick={linkHandler}>
           <FaHome />
           Home
         </Link>
-        <Link href="/web-editor" className={linkStyle}>
+        <Link href="/web-editor" className={linkStyle} onClick={linkHandler}>
           <FaLaptopCode />
           Web Editor
         </Link>
         {isAuth && (
-          <Link href="/dashboard" className={linkStyle}>
+          <Link href="/dashboard" className={linkStyle} onClick={linkHandler}>
             <MdSpaceDashboard />
             Dashboard
           </Link>
         )}
         {!isAuth && (
-          <Link href="/auth?mode=login" className={linkStyle}>
+          <Link
+            href="/auth?mode=login"
+            className={linkStyle}
+            onClick={linkHandler}
+          >
             <FaSignInAlt />
             Sign In
           </Link>

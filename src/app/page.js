@@ -65,10 +65,7 @@ export default function Home() {
               secure storage of your creative projects, accessible from any
               device.
             </p>
-            <Button
-              onClick={() => router.push("/web-editor")}
-              className="bg-neutral-500 hover:bg-neutral-500 cursor-not-allowed"
-            >
+            <Button className="bg-neutral-500 hover:bg-neutral-500 cursor-not-allowed">
               Start Collaboration
             </Button>
           </div>
@@ -83,10 +80,7 @@ export default function Home() {
               secure storage of your creative projects, accessible from any
               device.
             </p>
-            <Button
-              onClick={() => router.push("/web-editor")}
-              className="bg-neutral-500 hover:bg-neutral-500 cursor-not-allowed"
-            >
+            <Button className="bg-neutral-500 hover:bg-neutral-500 cursor-not-allowed">
               Try Compilers
             </Button>
           </div>
