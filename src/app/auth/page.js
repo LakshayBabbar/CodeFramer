@@ -152,7 +152,7 @@ function Auth() {
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         title="Email Verification"
-        description="Check your Email for verification"
+        description="Please check your email for the verification mail. If you don't see it in your inbox, be sure to check your spam folder as well."
       />
     </section>
   );

@@ -9,10 +9,11 @@ export async function GET() {
       },
       { status: 200 }
     );
-    res.cookies.set("token", "", {
+    const expires = new Date(0);
+    res.cookies.set("token", "undefined", {
       httpOnly: true,
       secure: true,
-      maxAge: 0,
+      expires: expires,
     });
     return res;
   } catch (error) {

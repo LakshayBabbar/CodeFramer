@@ -19,16 +19,16 @@ export async function POST(request) {
         { status: 404 }
       );
     }
-    if (!user.isVerified) {
-      return NextResponse.json(
-        {
-          message: "User is not verified, check your email for verification",
-        },
-        { status: 401 }
-      );
-    }
     const isValid = await bcryptjs.compare(password, user.password);
     if (isValid) {
+      if (!user.isVerified) {
+        return NextResponse.json(
+          {
+            message: "User is not verified, check your email for verification",
+          },
+          { status: 401 }
+        );
+      }
       const authToken = await generateToken(
         {
           id: user._id,
@@ -41,12 +41,13 @@ export async function POST(request) {
           message: "Logged in successfully",
           username: user.username,
         },
-        { status: 201 }
+        { status: 200 }
       );
-      response.cookies.set("token", authToken, {
+      const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+      response.cookies.set("token", authToken.toString(), {
         httpOnly: true,
         secure: true,
-        maxAge: 8 * 24 * 60 * 60,
+        expires: expires,
       });
       return response;
     } else {

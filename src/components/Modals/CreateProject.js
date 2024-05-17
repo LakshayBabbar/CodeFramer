@@ -48,7 +48,7 @@ const CreateProject = ({ isOpen, setIsOpen }) => {
   return isOpen && isAuth && ref.current
     ? createPortal(
         <div className="fixed top-0 left-0 w-full h-screen flex items-center justify-center backdrop-blur-xl z-[1000]">
-          <div className="w-[30rem] border p-6 rounded-xl bg-card space-y-2 shadow-2xl">
+          <div className="w-11/12 sm:w-[30rem] border p-6 rounded-xl bg-card space-y-2 shadow-2xl">
             <h1 className="font-bold">Create New</h1>
             <p className="text-sm">Web Environment</p>
             <form onSubmit={projectHandler} className="space-y-4">
