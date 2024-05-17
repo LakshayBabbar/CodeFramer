@@ -8,6 +8,7 @@ const useSend = () => {
   const fetchData = async (url, method, body) => {
     setLoading(true);
     setIsError(false);
+    setError("");
     try {
       const options = {
         method: method,

@@ -8,6 +8,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useDispatch } from "react-redux";
 import { authState } from "@/store/features/Auth/authSlice";
 import useSend from "@/hooks/useSend";
+import Alert from "@/components/Modals/Alert";
 
 function Auth() {
   const [data, setData] = useState({ username: "", email: "", password: "" });
@@ -19,10 +20,12 @@ function Auth() {
     setIsError(false);
   };
   const { toast } = useToast();
+  const [isOpen, setIsOpen] = useState(false);
   const searchParams = useSearchParams();
   const navigate = useRouter();
   const dispatch = useDispatch();
   const { fetchData, isError, error, loading, setIsError } = useSend();
+  const { fetchData: fd, isError: isE, error: err } = useSend();
 
   useEffect(() => {
     const mode = searchParams.get("mode");
@@ -44,10 +47,7 @@ function Auth() {
     const date = new Date().toString();
     if (res && !isError) {
       if (!isLogin) {
-        toast({
-          title: "Check your Email for verification",
-          description: date,
-        });
+        setIsOpen(true);
       } else {
         toast({
           title: res.message,
@@ -62,11 +62,21 @@ function Auth() {
       }
       navigate.push("/dashboard");
     }
-    setData({
-      username: "",
-      email: "",
-      password: "",
+  };
+
+  const resendHandler = async () => {
+    await fd("/api/auth/verification/resend", "POST", {
+      email: data.email,
     });
+    const date = new Date().toString();
+    if (isE) {
+      toast({
+        title: err,
+        description: date,
+      });
+    } else {
+      setIsOpen(true);
+    }
   };
 
   return (
@@ -115,16 +125,35 @@ function Auth() {
           <p className="text-red-500 text-sm">{isError && error}</p>
         </form>
         <div>
-          <Link
-            href={isLogin ? "?mode=signup" : "?mode=login"}
-            className="hover:underline hover:underline-offset-4 text-blue-500"
-          >
-            {!isLogin
-              ? "Already have an account? Login"
-              : "Need an account? Sign Up"}
-          </Link>
+          {!isError && (
+            <Link
+              href={isLogin ? "?mode=signup" : "?mode=login"}
+              className="hover:underline hover:underline-offset-4 text-blue-500"
+            >
+              {!isLogin
+                ? "Already have an account? Login"
+                : "Need an account? Sign Up"}
+            </Link>
+          )}
+          {isError && (
+            <Button
+              size="sm"
+              variant="link"
+              className="text-blue-500 p-0"
+              type="button"
+              onClick={resendHandler}
+            >
+              Resend verifiaction email?
+            </Button>
+          )}
         </div>
       </div>
+      <Alert
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        title="Email Verification"
+        description="Check your Email for verification"
+      />
     </section>
   );
 }

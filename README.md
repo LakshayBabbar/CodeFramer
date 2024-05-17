@@ -14,6 +14,14 @@ CodeFramer is a free and open-source online code editor that allows you to write
 <li>Code collaboration features (coming soon)</li>
 </ul>
 
+## Tech Stack
+
+- **FullStack Framework:** Next.js 14
+- **Database:** MongoDB
+- **Authentication:** JSON Web Tokens (JWT)
+- **Styling:** Tailwind CSS, ShadCn
+- **Libraries:** Redux-Toolkit, Mongoose, Nodemailer, React Query
+
 <h1>Getting Started</h1>
 
 Clone the repository:

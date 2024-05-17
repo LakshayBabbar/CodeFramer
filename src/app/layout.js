@@ -24,6 +24,7 @@ export default function RootLayout({ children }) {
             <Navbar />
             {children}
             <div id="modal" />
+            <div id="alert" />
           </ReactQueryProvider>
           <Footer />
           <Toaster />
