@@ -17,9 +17,12 @@ export async function GET() {
     });
     return res;
   } catch (error) {
-    return NextResponse.json({
-      message: error.message,
-      success: false,
-    });
+    return NextResponse.json(
+      {
+        message: error.message,
+        succss: false,
+      },
+      { status: 500 }
+    );
   }
 }

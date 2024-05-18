@@ -27,7 +27,7 @@ const page = () => {
       const date = new Date().toString();
       !isError && router.push("/auth?mode=login");
       toast({
-        title: !isError ? res.message : error,
+        title: res.message,
         description: date,
       });
     }

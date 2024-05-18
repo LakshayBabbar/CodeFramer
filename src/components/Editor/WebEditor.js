@@ -7,7 +7,7 @@ import useSend from "@/hooks/useSend";
 function WebEditor({ data }) {
   const [values, setValues] = useState({ html: "", css: "", js: "" });
   const { toast } = useToast();
-  const { fetchData, error, isError } = useSend();
+  const { fetchData } = useSend();
 
   useEffect(() => {
     setValues(data);
@@ -17,7 +17,7 @@ function WebEditor({ data }) {
     const res = await fetchData(`/api/projects/${data._id}`, "PUT", values);
     const date = new Date().toString();
     toast({
-      title: !isError ? res.message : error,
+      title: res.message,
       description: date,
     });
   };

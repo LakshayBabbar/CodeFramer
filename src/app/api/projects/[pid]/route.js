@@ -83,8 +83,12 @@ export async function PUT(req, { params }) {
       success: true,
     });
   } catch (error) {
-    return NextResponse.json({
-      message: error.message,
-    });
+    return NextResponse.json(
+      {
+        message: error.message,
+        succss: false,
+      },
+      { status: 500 }
+    );
   }
 }

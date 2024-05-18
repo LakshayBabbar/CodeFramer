@@ -35,10 +35,16 @@ export async function POST(request) {
         username,
       }));
     return NextResponse.json({
-      message: "user is created!",
+      message: "check your email for verification",
       userId: savedUser._id,
     });
   } catch (error) {
-    console.log(error.message);
+    return NextResponse.json(
+      {
+        message: error.message,
+        success: false,
+      },
+      { status: 500 }
+    );
   }
 }

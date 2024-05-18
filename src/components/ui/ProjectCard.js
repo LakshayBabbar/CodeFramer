@@ -7,12 +7,12 @@ import useSend from "@/hooks/useSend";
 
 const ProjectCard = ({ data }) => {
   const { toast } = useToast();
-  const { fetchData, isError, error } = useSend();
+  const { fetchData } = useSend();
   const deleteHandler = async () => {
     const res = await fetchData(`/api/projects/${data._id}`, "DELETE");
     const date = new Date().toString();
     toast({
-      title: !isError ? res.message : error,
+      title: res.message,
       description: date,
     });
     data.refetch(true);

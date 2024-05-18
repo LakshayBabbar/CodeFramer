@@ -36,14 +36,14 @@ const CreateProject = ({ isOpen, setIsOpen }) => {
   const projectHandler = async (e) => {
     e.preventDefault();
     const res = await fetchData("/api/projects/create", "POST", data);
-    if (res && !isError) {
+    if (res && res.success) {
       setIsOpen(false);
     }
     setData({
       name: "",
       description: "",
     });
-    navigate.push(`/web-editor/${res.pid}`);
+    res.success && navigate.push(`/web-editor/${res.pid}`);
   };
   return isOpen && isAuth && ref.current
     ? createPortal(

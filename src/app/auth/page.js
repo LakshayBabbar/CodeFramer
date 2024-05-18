@@ -1,77 +1,81 @@
 "use client";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { useToast } from "@/components/ui/use-toast";
 import { useDispatch } from "react-redux";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 import { authState } from "@/store/features/Auth/authSlice";
 import useSend from "@/hooks/useSend";
 import Alert from "@/components/Modals/Alert";
 
 function Auth() {
   const [data, setData] = useState({ username: "", email: "", password: "" });
-  const valueHandler = (e) => {
-    const { name, value } = e.target;
-    setData((prev) => {
-      return { ...prev, [name]: value };
-    });
-    setIsError(false);
-  };
-  const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
+  const [isEmailNotVerified, setIsEmailNotVerified] = useState(false);
   const searchParams = useSearchParams();
   const navigate = useRouter();
   const dispatch = useDispatch();
+  const { toast } = useToast();
   const { fetchData, isError, error, loading, setIsError } = useSend();
-  const { fetchData: fd, isError: isE, error: err } = useSend();
+  const { fetchData: fd } = useSend();
 
   useEffect(() => {
     const mode = searchParams.get("mode");
-    if (mode === null || mode !== "login") {
+    if (!mode || mode !== "login") {
       navigate.push("/auth?mode=signup");
     }
   }, [navigate, searchParams]);
 
   const isLogin = searchParams.get("mode") === "login";
 
+  const valueHandler = (e) => {
+    const { name, value } = e.target;
+    setData((prev) => ({ ...prev, [name]: value }));
+    setIsError(false);
+    setIsEmailNotVerified(false);
+  };
+
   const submitHandler = async (e) => {
     e.preventDefault();
-    setIsError(false);
+    setIsEmailNotVerified(false);
     const res = await fetchData(
       `/api/auth/${isLogin ? "login" : "signup"}`,
       "POST",
       data
     );
     const date = new Date().toString();
-    if (res && !isError) {
+    if (res && res.success) {
       if (!isLogin) {
-        setIsOpen(true);
+        return setIsOpen(true);
       } else {
         toast({
           title: res.message,
           description: date,
         });
-        dispatch(
-          authState({
-            isAuth: true,
-            username: res.username,
-          })
-        );
+        dispatch(authState({ isAuth: true, username: res.username }));
       }
-      navigate.push("/dashboard");
+      return navigate.push("/dashboard");
+    } else {
+      if (
+        res.message ===
+        "User is not verified, check your email for verification"
+      ) {
+        setIsEmailNotVerified(true);
+      }
     }
   };
 
   const resendHandler = async () => {
-    await fd("/api/auth/verification/resend", "POST", {
+    const res = await fd("/api/auth/verification/resend", "POST", {
       email: data.email,
+      password: data.password,
     });
     const date = new Date().toString();
-    if (isE) {
+    if (res && !res.success) {
       toast({
-        title: err,
+        title: res.message,
         description: date,
       });
     } else {
@@ -84,7 +88,7 @@ function Auth() {
       <div className="space-y-4">
         <div className="space-y-1">
           <h1 className="text-xl font-bold">
-            {!isLogin ? "Sign Up" : "Login"} in to CodeFramer
+            {!isLogin ? "Sign Up" : "Login"} to CodeFramer
           </h1>
           <p className="text-sm dark:text-neutral-200">
             {!isLogin
@@ -125,7 +129,7 @@ function Auth() {
           <p className="text-red-500 text-sm">{isError && error}</p>
         </form>
         <div>
-          {!isError && (
+          {!isEmailNotVerified && (
             <Link
               href={isLogin ? "?mode=signup" : "?mode=login"}
               className="hover:underline hover:underline-offset-4 text-blue-500"
@@ -135,7 +139,7 @@ function Auth() {
                 : "Need an account? Sign Up"}
             </Link>
           )}
-          {isError && (
+          {isEmailNotVerified && (
             <Button
               size="sm"
               variant="link"
@@ -143,7 +147,7 @@ function Auth() {
               type="button"
               onClick={resendHandler}
             >
-              Resend verifiaction email?
+              Resend verification email?
             </Button>
           )}
         </div>

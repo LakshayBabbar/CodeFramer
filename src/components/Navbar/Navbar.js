@@ -56,8 +56,8 @@ export default function Navbar() {
         username: undefined,
       })
     );
+    navigate.push("/");
     setActive(false);
-    res && navigate.push("/");
     const date = new Date().toString();
     toast({
       title: res.message,

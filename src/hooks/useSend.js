@@ -26,11 +26,12 @@ const useSend = () => {
         throw new Error(res.message);
       }
       setLoading(false);
-      return res;
+      return { ...res, success: true };
     } catch (error) {
       setIsError(true);
       setError(error.message);
       setLoading(false);
+      return { success: false, message: error.message };
     }
   };
 

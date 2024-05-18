@@ -2,12 +2,23 @@ import { NextResponse } from "next/server";
 import { sendEmail } from "@/utils/mailer";
 import { connectDB } from "@/config/db";
 import User from "@/models/users";
+import bcryptjs from "bcryptjs";
 connectDB();
 
 export async function POST(request) {
   try {
     const reqBody = await request.json();
-    const { email } = await reqBody;
+    const { email, password } = reqBody;
+
+    if (!email || !password) {
+      return NextResponse.json(
+        {
+          message: "Fill all the required fields",
+          success: false,
+        },
+        { status: 404 }
+      );
+    }
     const user = await User.findOne({ email });
     if (!user) {
       return NextResponse.json(
@@ -16,6 +27,16 @@ export async function POST(request) {
           success: false,
         },
         { status: 404 }
+      );
+    }
+    const isValid = await bcryptjs.compare(password, user.password);
+    if (!isValid) {
+      return NextResponse.json(
+        {
+          message: "Invalid Credentials",
+          success: false,
+        },
+        { status: 401 }
       );
     }
     if (user.isVerified) {
@@ -27,6 +48,7 @@ export async function POST(request) {
         { status: 409 }
       );
     }
+
     await sendEmail({
       email,
       emailType: "VERIFY",
@@ -35,12 +57,19 @@ export async function POST(request) {
     });
     return NextResponse.json(
       {
-        message: "Verification link is send to the email",
+        message: "Verification link is sent to the email",
+        success: true,
         userId: user._id,
       },
       { status: 200 }
     );
   } catch (error) {
-    console.log(error.message);
+    return NextResponse.json(
+      {
+        message: error.message,
+        succss: false,
+      },
+      { status: 500 }
+    );
   }
 }
