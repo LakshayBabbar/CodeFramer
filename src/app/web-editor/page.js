@@ -1,6 +1,6 @@
 import WebEditor from "@/components/Editor/WebEditor";
 
-const index = () => {
+const Page = () => {
   const data = {
     html: "<h1 id='h1'>Welcome to CodeFramer</h1>",
     css: "body {\n\tcolor: royalblue;\n}",
@@ -8,4 +8,4 @@ const index = () => {
   };
   return <WebEditor data={data} />;
 };
-export default index;
+export default Page;

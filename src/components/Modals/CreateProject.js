@@ -24,7 +24,7 @@ const CreateProject = ({ isOpen, setIsOpen }) => {
       ref.current = document.getElementById("modal");
     }
     !isOpen && setIsError(false);
-  }, [isOpen, isAuth]);
+  }, [isOpen, isAuth, navigate]);
 
   const dataHandler = (e) => {
     const { name, value } = e.target;

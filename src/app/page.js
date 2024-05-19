@@ -3,12 +3,13 @@ import { Button } from "@/components/ui/button";
 import CreateProject from "@/components/Modals/CreateProject";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Footer from "@/components/Footer/Footer";
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   return (
-    <main className="flex justify-center dark:bg-grid-white/[0.06] bg-grid-black/[0.08]">
+    <main className="flex flex-col items-center justify-center dark:bg-grid-white/[0.06] bg-grid-black/[0.08]">
       <div className=" my-36 flex flex-col justify-center md:w-3/4 gap-10">
         <section className="flex flex-col items-center justify-center gap-5 text-center w-full relative py-10">
           <h1 className="text-5xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-b dark:from-neutral-50 dark:to-neutral-400 from-neutral-800 to-neutral-500  bg-opacity-50">
@@ -46,8 +47,8 @@ export default function Home() {
             <h1 className="text-2xl font-bold">Web Environment</h1>
             <p className="text-sm">
               Try our editor to experiment freely with features. Note that work
-              won't be saved in try mode. Sign in for full functionality and
-              secure storage of your creative projects, accessible from any
+              won&apos;t be saved in try mode. Sign in for full functionality
+              and secure storage of your creative projects, accessible from any
               device.
             </p>
             <Button onClick={() => router.push("/web-editor")}>
@@ -61,8 +62,8 @@ export default function Home() {
             </span>
             <p className="text-sm">
               Try our editor to experiment freely with features. Note that work
-              won't be saved in try mode. Sign in for full functionality and
-              secure storage of your creative projects, accessible from any
+              won&apos;t be saved in try mode. Sign in for full functionality
+              and secure storage of your creative projects, accessible from any
               device.
             </p>
             <Button className="bg-neutral-500 hover:bg-neutral-500 cursor-not-allowed">
@@ -76,8 +77,8 @@ export default function Home() {
             </span>
             <p className="text-sm">
               Try our editor to experiment freely with features. Note that work
-              won't be saved in try mode. Sign in for full functionality and
-              secure storage of your creative projects, accessible from any
+              won&apos;t be saved in try mode. Sign in for full functionality
+              and secure storage of your creative projects, accessible from any
               device.
             </p>
             <Button className="bg-neutral-500 hover:bg-neutral-500 cursor-not-allowed">
@@ -86,6 +87,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <Footer />
       <CreateProject isOpen={isOpen} setIsOpen={setIsOpen} />
     </main>
   );

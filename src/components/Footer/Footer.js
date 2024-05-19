@@ -3,8 +3,7 @@ import Link from "next/link";
 const Footer = () => {
   const listStyle = "hover:underline hover:underline-offset-4";
   return (
-    <footer className="mt-10 w-full flex flex-col items-center">
-      <hr className="w-11/12 md:w-3/4" />
+    <footer className="mt-10 w-full flex flex-col items-center bg-primary-foreground">
       <div className="w-full md:w-3/4 py-10 px-10 md:px-0 flex flex-col md:flex-row gap-4 md:gap-0 justify-between md:items-center">
         <div className="flex flex-col gap-4 text-sm xl:text-base">
           <h1 className="text-2xl font-bold">CodeFramer</h1>

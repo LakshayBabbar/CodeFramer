@@ -25,23 +25,10 @@ export async function middleware(request) {
       },
     });
     return response;
-  } else if (request.nextUrl.pathname.startsWith("/dashboard")) {
-    const { error } = await verifyToken(token, process.env.ACCESS_SECRET_KEY);
-    if (error) {
-      return NextResponse.redirect(new URL("/auth?mode=login", request.url));
-    }
-    return NextResponse.next();
-  } else if (request.nextUrl.pathname.startsWith("/auth")) {
-    const { error } = await verifyToken(token, process.env.ACCESS_SECRET_KEY);
-    if (error) {
-      return NextResponse.next();
-    }
-    return NextResponse.redirect(new URL("/dashboard", request.url));
   }
-
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/auth/:path*", "/api/projects/:path*"],
+  matcher: ["/api/projects/:path*", "/api/auth/logout"],
 };

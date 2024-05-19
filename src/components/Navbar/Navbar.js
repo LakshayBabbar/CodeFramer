@@ -40,7 +40,7 @@ export default function Navbar() {
         })
       );
     }
-  }, [data]);
+  }, [data, dispatch]);
 
   const modeHandler = (val) => {
     setMode(val);

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import useSend from "@/hooks/useSend";
 import { useToast } from "@/components/ui/use-toast";
 
-const page = () => {
+const Page = () => {
   const [token, setToken] = useState("");
   const router = useRouter();
   const { toast } = useToast();
@@ -18,7 +18,7 @@ const page = () => {
     } else {
       router.push("/auth?mode='signup'");
     }
-  }, []);
+  }, [router]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -48,4 +48,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
@@ -16,6 +16,7 @@ function Auth() {
   const [isEmailNotVerified, setIsEmailNotVerified] = useState(false);
   const searchParams = useSearchParams();
   const navigate = useRouter();
+  const { isAuth } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const { toast } = useToast();
   const { fetchData, isError, error, loading, setIsError } = useSend();
@@ -26,7 +27,10 @@ function Auth() {
     if (!mode || mode !== "login") {
       navigate.push("/auth?mode=signup");
     }
-  }, [navigate, searchParams]);
+    if (isAuth) {
+      navigate.push("/dashboard");
+    }
+  }, [navigate, searchParams, isAuth]);
 
   const isLogin = searchParams.get("mode") === "login";
 
@@ -48,14 +52,13 @@ function Auth() {
     const date = new Date().toString();
     if (res && res.success) {
       if (!isLogin) {
-        return setIsOpen(true);
+        setIsOpen(true);
       } else {
         toast({
           title: res.message,
           description: date,
         });
         dispatch(authState({ isAuth: true, username: res.username }));
-        navigate.push("/dashboard");
       }
     } else {
       if (

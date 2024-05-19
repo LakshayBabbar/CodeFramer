@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import WebEditor from "@/components/Editor/WebEditor";
 import useFetch from "@/hooks/useFetch";
 
-const page = ({ params }) => {
+const Page = ({ params }) => {
   const { pid } = params;
   const [data, setData] = useState({});
   const {
@@ -16,9 +16,9 @@ const page = ({ params }) => {
     if (!loading && !isError) {
       setData(fetchedData);
     }
-  }, [fetchedData]);
+  }, [fetchedData, isError, loading]);
 
   return <WebEditor data={data} />;
 };
 
-export default page;
+export default Page;

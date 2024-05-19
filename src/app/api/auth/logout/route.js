@@ -1,30 +1,34 @@
 import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(request) {
   try {
-    const res = NextResponse.json(
-      {
-        message: "Logout successfully",
-        success: true,
-      },
-      { status: 200 }
-    );
-    const expires = new Date(0);
-    res.cookies.set("token", "", {
-      httpOnly: true,
-      secure: true,
-      expires: expires,
-      sameSite: "None",
-      path: "/",
-    });
-    res.cookies.set("testing", "undefined", {
-      httpOnly: true,
-      secure: true,
-      expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-      sameSite: "None",
-      path: "/",
-    });
-    return res;
+    const token = await request.cookies.get("token")?.value;
+    if (!token) {
+      return NextResponse.json(
+        {
+          message: "Not authenticate",
+          success: false,
+        },
+        { status: 400 }
+      );
+    } else {
+      const res = NextResponse.json(
+        {
+          message: "Logout successfully",
+          success: true,
+        },
+        { status: 200 }
+      );
+      const expires = new Date(0);
+      res.cookies.set("token", "", {
+        httpOnly: true,
+        secure: true,
+        expires: expires,
+        sameSite: "None",
+        path: "/",
+      });
+      return res;
+    }
   } catch (error) {
     return NextResponse.json(
       {

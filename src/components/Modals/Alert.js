@@ -7,7 +7,7 @@ const CreateProject = ({ isOpen, setIsOpen, title, description }) => {
 
   useEffect(() => {
     ref.current = document.getElementById("alert");
-  }, [isOpen, ref.current]);
+  }, [isOpen]);
 
   return isOpen && ref.current
     ? createPortal(
@@ -16,7 +16,13 @@ const CreateProject = ({ isOpen, setIsOpen, title, description }) => {
             <h1 className="font-bold text-xl">{title}</h1>
             <p className="text-sm">{description}</p>
             <div className="flex justify-end">
-              <Button onClick={() => setIsOpen(false)} size="sm" className="w-16">Ok</Button>
+              <Button
+                onClick={() => setIsOpen(false)}
+                size="sm"
+                className="w-16"
+              >
+                Ok
+              </Button>
             </div>
           </div>
         </div>,

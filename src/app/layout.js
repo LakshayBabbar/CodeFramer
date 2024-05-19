@@ -1,7 +1,6 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar/Navbar";
-import Footer from "@/components/Footer/Footer";
 const inter = Inter({ subsets: ["latin"], preload: true });
 import { Toaster } from "@/components/ui/toaster";
 import StoreProvider from "./StoreProvider";
@@ -26,7 +25,6 @@ export default function RootLayout({ children }) {
             <div id="modal" />
             <div id="alert" />
           </ReactQueryProvider>
-          <Footer />
           <Toaster />
         </StoreProvider>
       </body>
