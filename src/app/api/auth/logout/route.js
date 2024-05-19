@@ -17,6 +17,13 @@ export async function GET() {
       sameSite: "None",
       path: "/",
     });
+    res.cookies.set("testing", "undefined", {
+      httpOnly: true,
+      secure: true,
+      expires: expires,
+      sameSite: "None",
+      path: "/",
+    });
     return res;
   } catch (error) {
     return NextResponse.json(
