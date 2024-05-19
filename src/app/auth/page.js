@@ -55,8 +55,8 @@ function Auth() {
           description: date,
         });
         dispatch(authState({ isAuth: true, username: res.username }));
+        navigate.push("/dashboard");
       }
-      return navigate.push("/dashboard");
     } else {
       if (
         res.message ===

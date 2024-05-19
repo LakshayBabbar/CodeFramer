@@ -20,7 +20,7 @@ export async function GET() {
     res.cookies.set("testing", "undefined", {
       httpOnly: true,
       secure: true,
-      expires: expires,
+      expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
       sameSite: "None",
       path: "/",
     });
