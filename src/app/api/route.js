@@ -22,7 +22,7 @@ export async function GET(req) {
     return NextResponse.json(
       {
         message: error.message,
-        succss: false,
+        success: false,
       },
       { status: 500 }
     );

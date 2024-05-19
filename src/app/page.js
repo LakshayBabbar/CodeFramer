@@ -41,8 +41,8 @@ export default function Home() {
             <li>CSS3</li>
           </ul>
         </marquee>
-        <div className="grid md:grid-cols-2 xl:grid-cols-3 justify-items-center items-center gap-10 shadow-xl w-full">
-          <div className="mt-10 w-4/5 md:w-auto bg-secondary rounded-lg p-5 space-y-5">
+        <div className="grid md:grid-cols-2 xl:grid-cols-3 justify-items-center items-center gap-10 w-full">
+          <div className="mt-10 w-4/5 md:w-auto bg-secondary rounded-lg p-5 space-y-5 shadow-xl">
             <h1 className="text-2xl font-bold">Web Environment</h1>
             <p className="text-sm">
               Try our editor to experiment freely with features. Note that work

@@ -10,17 +10,19 @@ export async function GET() {
       { status: 200 }
     );
     const expires = new Date(0);
-    res.cookies.set("token", "undefined", {
+    res.cookies.set("token", "", {
       httpOnly: true,
       secure: true,
       expires: expires,
+      sameSite: "None",
+      path: "/",
     });
     return res;
   } catch (error) {
     return NextResponse.json(
       {
         message: error.message,
-        succss: false,
+        success: false,
       },
       { status: 500 }
     );

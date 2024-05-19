@@ -66,10 +66,10 @@ const page = () => {
                   );
                 })}
             </div>
-            <p className="text-center">{isError && error.message}</p>
+            <p className="text-center mb-36">{isError && error.message}</p>
           </>
         ) : (
-          <p className="text-center">Loading...</p>
+          <p className="text-center mb-40">Loading...</p>
         )}
       </section>
       <CreateProject isOpen={isOpen} setIsOpen={setIsOpen} />

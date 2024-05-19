@@ -48,18 +48,25 @@ export default function Navbar() {
   };
 
   const logoutHandler = async () => {
-    const req = await fetch("/api/auth/logout");
+    const req = await fetch("/api/auth/logout", {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+      },
+    });
     const res = await req.json();
-    dispatch(
-      authState({
-        isAuth: false,
-        username: undefined,
-      })
-    );
-    navigate.push("/");
-    setActive(false);
+    if (req.ok) {
+      dispatch(
+        authState({
+          isAuth: false,
+          username: undefined,
+        })
+      );
+      setActive(false);
+      navigate.push("/");
+    }
     const date = new Date().toString();
-    toast({
+    return toast({
       title: res.message,
       description: date,
     });
@@ -85,7 +92,7 @@ export default function Navbar() {
       <div
         className={`${
           active ? post : pre
-        } sm:translate-x-0 top-0 left-0 h-screen w-full p-14 sm:p-0 bg-card  sm:h-auto sm:w-auto flex sm:bg-auto absolute sm:relative flex-col sm:flex-row gap-4 sm:items-center transition-all duration-400`}
+        } sm:translate-x-0 top-0 left-0 h-screen w-full p-14 sm:p-0 bg-card sm:bg-transparent  sm:h-auto sm:w-auto flex sm:bg-auto absolute sm:relative flex-col sm:flex-row gap-4 sm:items-center transition-all duration-400`}
       >
         <Link href="/" className={linkStyle} onClick={linkHandler}>
           <FaHome />
@@ -118,7 +125,7 @@ export default function Navbar() {
           </button>
         )}
         <Select onValueChange={modeHandler}>
-          <SelectTrigger className="w-[fit-content] gap-2">
+          <SelectTrigger className="w-[fit-content] gap-2 bg-transparent border-none focus:ring-transparent">
             <SelectValue placeholder="Theme" />
           </SelectTrigger>
           <SelectContent className="z-[1000]">

@@ -19,7 +19,7 @@ function Auth() {
   const dispatch = useDispatch();
   const { toast } = useToast();
   const { fetchData, isError, error, loading, setIsError } = useSend();
-  const { fetchData: fd } = useSend();
+  const { fetchData: fd, loading: ld } = useSend();
 
   useEffect(() => {
     const mode = searchParams.get("mode");
@@ -85,15 +85,15 @@ function Auth() {
 
   return (
     <section className="w-full h-lvh flex justify-center items-center">
-      <div className="space-y-4">
+      <div className="space-y-4 sm:border sm:rounded-xl sm:p-8 sm:shadow-xl">
         <div className="space-y-1">
-          <h1 className="text-xl font-bold">
+          <h1 className="text-2xl font-bold">
             {!isLogin ? "Sign Up" : "Login"} to CodeFramer
           </h1>
           <p className="text-sm dark:text-neutral-200">
             {!isLogin
               ? "Sign Up to join our community."
-              : "Login to save and manage your work."}
+              : "Log in to save and manage your work."}
           </p>
         </div>
         <form className="space-y-4 w-80" onSubmit={submitHandler}>
@@ -132,7 +132,7 @@ function Auth() {
           {!isEmailNotVerified && (
             <Link
               href={isLogin ? "?mode=signup" : "?mode=login"}
-              className="hover:underline hover:underline-offset-4 text-blue-500"
+              className="hover:underline hover:underline-offset-4 text-blue-600"
             >
               {!isLogin
                 ? "Already have an account? Login"
@@ -143,8 +143,9 @@ function Auth() {
             <Button
               size="sm"
               variant="link"
-              className="text-blue-500 p-0"
+              className="text-blue-600 p-0"
               type="button"
+              disabled={ld}
               onClick={resendHandler}
             >
               Resend verification email?

@@ -48,6 +48,8 @@ export async function POST(request) {
         httpOnly: true,
         secure: true,
         expires: expires,
+        sameSite: "None",
+        path: "/",
       });
       return response;
     } else {
@@ -62,7 +64,7 @@ export async function POST(request) {
     return NextResponse.json(
       {
         message: error.message,
-        succss: false,
+        success: false,
       },
       { status: 500 }
     );
