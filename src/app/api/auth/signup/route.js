@@ -19,6 +19,35 @@ export async function POST(request) {
         { status: 409 }
       );
     }
+    const supportedDomains = [
+      "gmail.com",
+      "yahoo.com",
+      "outlook.com",
+      "hotmail.com",
+    ];
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json(
+        {
+          message: "Invalid email format.",
+          success: false,
+        },
+        { status: 400 }
+      );
+    }
+    const domain = email.split("@")[1];
+    if (!supportedDomains.includes(domain)) {
+      return NextResponse.json(
+        {
+          message: `Only ${supportedDomains.join(
+            ", "
+          )} are supported email providers`,
+          success: false,
+        },
+        { status: 403 }
+      );
+    }
     const salt = await bcryptjs.genSalt(10);
     const hashedPassword = await bcryptjs.hash(password, salt);
     const newUser = new User({
