@@ -108,6 +108,10 @@ export default function Navbar() {
             Dashboard
           </Link>
         )}
+        <Link href="/chat" className={linkStyle} onClick={linkHandler}>
+          <FaLaptopCode />
+          AI ChatBot
+        </Link>
         {!isAuth && (
           <Link
             href="/auth?mode=login"

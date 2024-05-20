@@ -1,9 +1,8 @@
 /** @type {import('tailwindcss').Config} */
+import typography from "@tailwindcss/typography";
 import svgToDataUri from "mini-svg-data-uri";
 import colors from "tailwindcss/colors";
-import {
-  default as flattenColorPalette,
-} from "tailwindcss/lib/util/flattenColorPalette";
+import { default as flattenColorPalette } from "tailwindcss/lib/util/flattenColorPalette";
 module.exports = {
   darkMode: ["class"],
   content: [
@@ -79,6 +78,7 @@ module.exports = {
     },
   },
   plugins: [
+    typography,
     require("tailwindcss-animate"),
     function ({ matchUtilities, theme }) {
       matchUtilities(
