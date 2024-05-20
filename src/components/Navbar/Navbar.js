@@ -7,6 +7,7 @@ import { FaSignInAlt } from "react-icons/fa";
 import { MdSpaceDashboard } from "react-icons/md";
 import { RiMenu4Fill } from "react-icons/ri";
 import { IoMdClose } from "react-icons/io";
+import { BsChatSquareQuote } from "react-icons/bs";
 import {
   Select,
   SelectItem,
@@ -109,7 +110,7 @@ export default function Navbar() {
           </Link>
         )}
         <Link href="/chat" className={linkStyle} onClick={linkHandler}>
-          <FaLaptopCode />
+          <BsChatSquareQuote />
           AI ChatBot
         </Link>
         {!isAuth && (
@@ -129,7 +130,10 @@ export default function Navbar() {
           </button>
         )}
         <Select onValueChange={modeHandler}>
-          <SelectTrigger className="w-[fit-content] gap-2 bg-transparent border-none focus:ring-transparent">
+          <SelectTrigger
+            className="w-[fit-content] gap-2 bg-transparent border-none focus:ring-transparent"
+            aria-label="Theme"
+          >
             <SelectValue placeholder="Theme" />
           </SelectTrigger>
           <SelectContent className="z-[1000]">

@@ -12,10 +12,10 @@ const CppIntroduction = () => {
   const { username } = useSelector((state) => state.auth);
   const [content, setContent] = useState(null);
   const [promt, setPromt] = useState("");
-  const { fetchData, loading, isError } = useSend();
+  const { fetchData, loading } = useSend();
   const submitHandler = async (e) => {
     e.preventDefault();
-    const req = await fetchData(process.env.AI_API, "POST", {
+    const req = await fetchData(process.env.NEXT_PUBLIC_AI_API, "POST", {
       contents: [
         {
           parts: [
@@ -40,7 +40,7 @@ const CppIntroduction = () => {
         } flex flex-col items-center gap-10`}
       >
         <Button
-          className="absolute top-16"
+          className="absolute top-20"
           variant="outline"
           onClick={() => setContent("")}
         >
