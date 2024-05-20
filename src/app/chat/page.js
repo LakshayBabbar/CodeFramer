@@ -33,7 +33,7 @@ const CppIntroduction = () => {
   };
 
   return (
-    <div className="flex items-center justify-center space-y-10 bg-dot-white/[0.18]">
+    <div className="flex items-center justify-center space-y-10 dark:bg-dot-white/[0.18] bg-dot-black/[0.2]">
       <div
         className={`mt-24 mb-10 w-11/12 md:w-3/4 ${
           content && "prose-neutral prose-lg"
@@ -46,7 +46,7 @@ const CppIntroduction = () => {
         >
           Clear
         </Button>
-        <article className="w-full xl:w-3/4 h-[calc(100vh-14rem)] overflow-y-auto">
+        <article className="w-full xl:w-3/4 h-[calc(100vh-16rem)] sm:h-[calc(100vh-14rem)] overflow-y-auto">
           {content ? (
             <ReactMarkdown
               // eslint-disable-next-line react/no-children-prop
@@ -79,7 +79,7 @@ const CppIntroduction = () => {
           />
           <Button
             disabled={loading}
-            className="rounded-full absolute right-0"
+            className="rounded-full absolute right-0 bg-black dark:bg-white"
             type="submit"
           >
             Send

@@ -74,22 +74,6 @@
     @apply bg-background text-foreground;
   }
 }
-* {
-  scrollbar-width: auto;
-}
-
-*::-webkit-scrollbar {
-  width: 8px;
-}
-
-*::-webkit-scrollbar-track {
-  background: rgb(185, 184, 184);
-}
-
-*::-webkit-scrollbar-thumb {
-  background-color: #252424;
-  border-radius: 20px;
-}
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -99,4 +83,17 @@ input:-webkit-autofill:active {
   -webkit-text-fill-color: #ffffff;
   transition: background-color 5000s ease-in-out 0s;
   box-shadow: inset 0 0 20px 20px #00000062;
+}
+@media (min-width: 980px) {
+  *::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: rgb(185, 184, 184);
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: #252424;
+  }
 }
