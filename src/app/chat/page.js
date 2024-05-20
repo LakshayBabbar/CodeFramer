@@ -15,21 +15,17 @@ const CppIntroduction = () => {
   const { fetchData, loading, isError } = useSend();
   const submitHandler = async (e) => {
     e.preventDefault();
-    const req = await fetchData(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=AIzaSyBkkLAK5YPUmjCSA4xay_Ly6hc1Xb8uNYE",
-      "POST",
-      {
-        contents: [
-          {
-            parts: [
-              {
-                text: promt,
-              },
-            ],
-          },
-        ],
-      }
-    );
+    const req = await fetchData(process.env.AI_API, "POST", {
+      contents: [
+        {
+          parts: [
+            {
+              text: promt,
+            },
+          ],
+        },
+      ],
+    });
     req.success
       ? setContent(req.candidates[0].content.parts[0].text)
       : setContent("Something went wrong");
