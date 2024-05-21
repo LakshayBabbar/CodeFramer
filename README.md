@@ -1,40 +1,63 @@
-<h1>CodeFramer</h1>
+# CodeFramer
 
-CodeFramer is a free and open-source online code editor that allows you to write and edit HTML, CSS, and JavaScript code. It is a Single-Page Application (SPA) built with modern web technologies like Next.js 14 for the front-end and Firebase for the back-end, offering seamless performance and robust functionality.
+CodeFramer is a versatile code editor built to enhance your coding experience with its intuitive interface and powerful features.
 
-<img src="./public/CodeFramer.png" width="500px">
+## Features
 
-<h1>Features</h1>
-<ul>
-<li>Syntax highlighting for HTML, CSS, and JavaScript</li>
-<li>Autocompletion for HTML tags and CSS properties</li>
-<li>Seamless Access & Save: Sign in to store your code snippets and projects securely in the cloud. Access them from any device, anywhere, for uninterrupted coding sessions.</li>
-<li>Live code preview</li>
-<li>Error checking and linting</li>
-<li>Code collaboration features (coming soon)</li>
-</ul>
+- **Modern Interface:** Enjoy a clean and intuitive user interface designed for productivity.
+- **Enhanced Performance:** Experience faster coding and editing with optimized performance.
+- **Resource Efficient:** CodeFramer operates efficiently, minimizing system resource consumption.
+- **AI Chatbot Support:** Get intelligent assistance and real-time support for your coding queries.
+- **Syntax Highlighting:** Benefit from accurate syntax highlighting across various programming languages.
+- **Autocomplete:** Speed up your coding process with intelligent autocomplete suggestions.
 
 ## Tech Stack
 
 - **FullStack Framework:** Next.js 14
 - **Database:** MongoDB
-- **Authentication:** JSON Web Tokens (JWT)
+- **Authentication:** Jose (JWT)
 - **Styling:** Tailwind CSS, ShadCn
-- **Libraries:** Redux-Toolkit, Mongoose, Nodemailer, React Query
+- **Other Libraries:** React Query, Redux Toolkit, Nodemailer, React-Markdown, Monaco Editor, UUID, Bcryptjs, React Icons, Mongoose
 
-<h1>Getting Started</h1>
 
-Clone the repository:
-git clone https://github.com/lakshaybabbar/codeframer.git
-Install the dependencies:
-npm install
-Start the development server:
-npm start
-Open http://localhost:3000 in your web browser.
-Deployment
+## Installation
 
-CodeFramer can be deployed to any static hosting platform, such as Netlify or Heroku. Once you have deployed your code, you can share the URL with others to collaborate on your projects.
+### Prerequisites
 
-<h1>License</h1>
+- Ensure you have [Node.js](https://nodejs.org/) installed on your machine.
 
+### Steps
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/lakshaybabbar/codeframer.git
+2. Navigate to the project directory:
+    ```bash
+   cd codeframer
+3. Install dependencies:
+    ```bash
+   npm install
+4. Configure Environment Variables:
+     - `ACCESS_SECRET_KEY`: User-defined access secret key
+     - `URI`: MongoDB URI address
+     - `BASE_URL`: Hosting address
+     - `SMTP_HOST`: SMTP Host Address
+     - `SMTP_PORT`: SMTP Port Number
+     - `SMTP_USERNAME`: SMTP Username
+     - `SMTP_PASSWORD`: SMTP Password
+     - `NEXT_PUBLIC_AI_API`: Google AI Studio API
+5. Start the development server:
+    ```bash
+   npm run dev
+
+## Contributing
+We welcome contributions from the community! If you have ideas for improvements or bug fixes, please feel free to submit a pull request.
+
+## Bug Reports
+If you encounter any bugs or issues while using CodeFramer, please open an issue on GitHub with detailed information about the problem.
+
+## License
 CodeFramer is licensed under the MIT License.
+
+
