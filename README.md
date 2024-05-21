@@ -5,6 +5,7 @@ CodeFramer is a versatile code editor built to enhance your coding experience wi
 ## Features
 
 - **Modern Interface:** Enjoy a clean and intuitive user interface designed for productivity.
+- **Secure Authentication:** Ensure secure access with email verification for user authentication.
 - **Enhanced Performance:** Experience faster coding and editing with optimized performance.
 - **Resource Efficient:** CodeFramer operates efficiently, minimizing system resource consumption.
 - **AI Chatbot Support:** Get intelligent assistance and real-time support for your coding queries.
@@ -59,5 +60,3 @@ If you encounter any bugs or issues while using CodeFramer, please open an issue
 
 ## License
 CodeFramer is licensed under the MIT License.
-
-
