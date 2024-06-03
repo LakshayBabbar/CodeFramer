@@ -19,16 +19,16 @@ export async function POST(request) {
         { status: 404 }
       );
     }
+    //check user is verified or not
+    /* if (!user.isVerified) {
+      return NextResponse.json(
+        {
+          message: "User is not verified, check your email for verification",
+        },
+        { status: 401 }
+      ); */
     const isValid = await bcryptjs.compare(password, user.password);
     if (isValid) {
-      if (!user.isVerified) {
-        return NextResponse.json(
-          {
-            message: "User is not verified, check your email for verification",
-          },
-          { status: 401 }
-        );
-      }
       const authToken = await generateToken(
         {
           id: user._id,

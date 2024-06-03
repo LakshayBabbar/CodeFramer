@@ -56,15 +56,15 @@ export async function POST(request) {
       password: hashedPassword,
     });
     const savedUser = await newUser.save();
-    savedUser &&
+    /*     savedUser &&
       (await sendEmail({
         email,
         emailType: "VERIFY",
         userId: savedUser._id.toString(),
         username,
-      }));
+      })); */
     return NextResponse.json({
-      message: "check your email for verification",
+      message: "Registered successfully",
       userId: savedUser._id,
     });
   } catch (error) {

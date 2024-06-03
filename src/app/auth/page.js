@@ -12,15 +12,15 @@ import Alert from "@/components/Modals/Alert";
 
 function Auth() {
   const [data, setData] = useState({ username: "", email: "", password: "" });
-  const [isOpen, setIsOpen] = useState(false);
-  const [isEmailNotVerified, setIsEmailNotVerified] = useState(false);
   const searchParams = useSearchParams();
   const navigate = useRouter();
   const { isAuth } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const { toast } = useToast();
   const { fetchData, isError, error, loading, setIsError } = useSend();
-  const { fetchData: fd, loading: ld } = useSend();
+  /*   const [isOpen, setIsOpen] = useState(false);
+  const [isEmailNotVerified, setIsEmailNotVerified] = useState(false);
+  const { fetchData: fd, loading: ld } = useSend(); */
 
   useEffect(() => {
     const mode = searchParams.get("mode");
@@ -38,39 +38,27 @@ function Auth() {
     const { name, value } = e.target;
     setData((prev) => ({ ...prev, [name]: value }));
     setIsError(false);
-    setIsEmailNotVerified(false);
+    /*     setIsEmailNotVerified(false); */
   };
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    setIsEmailNotVerified(false);
+    /*     setIsEmailNotVerified(false); */
     const res = await fetchData(
       `/api/auth/${isLogin ? "login" : "signup"}`,
       "POST",
       data
     );
     const date = new Date().toString();
-    if (res && res.success) {
-      if (!isLogin) {
-        setIsOpen(true);
-      } else {
-        toast({
-          title: res.message,
-          description: date,
-        });
-        dispatch(authState({ isAuth: true, username: res.username }));
-      }
-    } else {
-      if (
-        res.message ===
-        "User is not verified, check your email for verification"
-      ) {
-        setIsEmailNotVerified(true);
-      }
-    }
+    toast({
+      title: res.message,
+      description: date,
+    });
+    res.success &&
+      dispatch(authState({ isAuth: true, username: res.username }));
   };
 
-  const resendHandler = async () => {
+  /*   const resendHandler = async () => {
     const res = await fd("/api/auth/verification/resend", "POST", {
       email: data.email,
       password: data.password,
@@ -84,7 +72,7 @@ function Auth() {
     } else {
       setIsOpen(true);
     }
-  };
+  }; */
 
   return (
     <section className="w-full h-lvh flex justify-center items-center">
@@ -132,17 +120,16 @@ function Auth() {
           <p className="text-red-500 text-sm">{isError && error}</p>
         </form>
         <div>
-          {!isEmailNotVerified && (
-            <Link
-              href={isLogin ? "?mode=signup" : "?mode=login"}
-              className="hover:underline hover:underline-offset-4 text-blue-600"
-            >
-              {!isLogin
-                ? "Already have an account? Login"
-                : "Need an account? Sign Up"}
-            </Link>
-          )}
-          {isEmailNotVerified && (
+          <Link
+            href={isLogin ? "?mode=signup" : "?mode=login"}
+            className="hover:underline hover:underline-offset-4 text-blue-600"
+          >
+            {!isLogin
+              ? "Already have an account? Login"
+              : "Need an account? Sign Up"}
+          </Link>
+
+          {/* isEmailNotVerified && (
             <Button
               size="sm"
               variant="link"
@@ -153,15 +140,15 @@ function Auth() {
             >
               Resend verification email?
             </Button>
-          )}
+          ) */}
         </div>
       </div>
-      <Alert
+      {/* <Alert
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         title="Email Verification"
         description="Please check your email for the verification mail. If you don't see it in your inbox, be sure to check your spam folder as well."
-      />
+      /> */}
     </section>
   );
 }

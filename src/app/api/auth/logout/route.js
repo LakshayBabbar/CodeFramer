@@ -1,38 +1,18 @@
+export const revalidate = 0;
 import { NextResponse } from "next/server";
-
-export async function GET(request) {
+export async function GET(req) {
   try {
-    const token = await request.cookies.get("token")?.value;
-    if (!token) {
-      return NextResponse.json(
-        {
-          message: "Not authenticate",
-          success: false,
-        },
-        { status: 400 }
-      );
-    } else {
-      const res = NextResponse.json(
-        {
-          message: "Logout successfully",
-          success: true,
-        },
-        { status: 200 }
-      );
-      const expires = new Date(0);
-      res.cookies.set("token", "", {
-        httpOnly: true,
-        secure: true,
-        expires: expires,
-        sameSite: "None",
-        path: "/",
-      });
-      return res;
-    }
+    const res = NextResponse.redirect(new URL("/", req.url));
+    res.cookies.set("token", "", {
+      httpOnly: true,
+      secure: true,
+      maxAge: 0,
+    });
+    return res;
   } catch (error) {
     return NextResponse.json(
       {
-        message: error.message,
+        message: "Internal server error: " + error.message,
         success: false,
       },
       { status: 500 }
