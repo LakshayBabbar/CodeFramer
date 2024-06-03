@@ -1,8 +1,11 @@
 export const revalidate = 0;
 import { NextResponse } from "next/server";
-export async function GET(req) {
+export async function GET() {
   try {
-    const res = NextResponse.redirect(new URL("/", req.url));
+    const res = NextResponse.json({
+      message: "Logout successfully",
+      success: true,
+    });
     res.cookies.set("token", "", {
       httpOnly: true,
       secure: true,
