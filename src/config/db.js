@@ -9,7 +9,6 @@ export async function connectDB() {
     });
     connection.on("error", (err) => {
       console.log(err.message);
-      process.exit();
     });
   } catch (error) {
     console.log(error.message);
