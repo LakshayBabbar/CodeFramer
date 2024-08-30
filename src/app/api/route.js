@@ -3,7 +3,7 @@ import { verifyToken } from "@/utils/authToken";
 
 export async function GET(req) {
   try {
-    const token = req.cookies.get("token")?.value;
+    const token = req.headers.get("Authorization")?.split(" ")[1];
     const res = {
       message: "Welcome to CodeFramer",
     };

@@ -8,10 +8,10 @@ const useFetch = (url, queryKey) => {
         const response = await fetch(url, {
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
           },
           signal,
         });
-
         const responseData = await response.json();
         if (!response.ok) {
           throw new Error(responseData.message);

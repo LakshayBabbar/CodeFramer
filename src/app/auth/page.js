@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { authState } from "@/store/features/Auth/authSlice";
 import useSend from "@/hooks/useSend";
-import Alert from "@/components/Modals/Alert";
 
 function Auth() {
   const [data, setData] = useState({ username: "", email: "", password: "" });
@@ -18,9 +17,6 @@ function Auth() {
   const dispatch = useDispatch();
   const { toast } = useToast();
   const { fetchData, isError, error, loading, setIsError } = useSend();
-  /*   const [isOpen, setIsOpen] = useState(false);
-  const [isEmailNotVerified, setIsEmailNotVerified] = useState(false);
-  const { fetchData: fd, loading: ld } = useSend(); */
 
   useEffect(() => {
     const mode = searchParams.get("mode");
@@ -38,12 +34,10 @@ function Auth() {
     const { name, value } = e.target;
     setData((prev) => ({ ...prev, [name]: value }));
     setIsError(false);
-    /*     setIsEmailNotVerified(false); */
   };
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    /*     setIsEmailNotVerified(false); */
     const res = await fetchData(
       `/api/auth/${isLogin ? "login" : "signup"}`,
       "POST",
@@ -51,28 +45,14 @@ function Auth() {
     );
     const date = new Date().toString();
     toast({
-      title: res.message,
+      title: res?.message,
       description: date,
     });
-    res.success &&
+    if (res?.success) {
       dispatch(authState({ isAuth: true, username: res.username }));
-  };
-
-  /*   const resendHandler = async () => {
-    const res = await fd("/api/auth/verification/resend", "POST", {
-      email: data.email,
-      password: data.password,
-    });
-    const date = new Date().toString();
-    if (res && !res.success) {
-      toast({
-        title: res.message,
-        description: date,
-      });
-    } else {
-      setIsOpen(true);
+      localStorage.setItem("authToken", res?.authToken);
     }
-  }; */
+  };
 
   return (
     <section className="w-full h-lvh flex justify-center items-center">
@@ -128,27 +108,8 @@ function Auth() {
               ? "Already have an account? Login"
               : "Need an account? Sign Up"}
           </Link>
-
-          {/* isEmailNotVerified && (
-            <Button
-              size="sm"
-              variant="link"
-              className="text-blue-600 p-0"
-              type="button"
-              disabled={ld}
-              onClick={resendHandler}
-            >
-              Resend verification email?
-            </Button>
-          ) */}
         </div>
       </div>
-      {/* <Alert
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        title="Email Verification"
-        description="Please check your email for the verification mail. If you don't see it in your inbox, be sure to check your spam folder as well."
-      /> */}
     </section>
   );
 }

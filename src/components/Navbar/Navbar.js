@@ -17,7 +17,6 @@ import {
 } from "../ui/select";
 import { useSelector, useDispatch } from "react-redux";
 import { authState } from "@/store/features/Auth/authSlice";
-import { useToast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
 import useFetch from "@/hooks/useFetch";
 
@@ -27,7 +26,6 @@ export default function Navbar() {
   const [active, setActive] = useState(false);
   const dispatch = useDispatch();
   const { data } = useFetch("/api", "auth");
-  const { toast } = useToast();
   const navigate = useRouter();
   const pre = "-translate-x-[100vw]";
   const post = "-translate-x-0";
@@ -49,28 +47,16 @@ export default function Navbar() {
   };
 
   const logoutHandler = async () => {
-    const req = await fetch("/api/auth/logout", {
-      method: "GET",
-      headers: {
-        "content-type": "application/json",
-      },
-    });
-    const res = await req.json();
-    if (req.ok) {
-      dispatch(
-        authState({
-          isAuth: false,
-          username: undefined,
-        })
-      );
-      setActive(false);
-      navigate.push("/");
-    }
-    const date = new Date().toString();
-    return toast({
-      title: res.message,
-      description: date,
-    });
+    dispatch(
+      authState({
+        isAuth: false,
+        username: undefined,
+      })
+    );
+    setActive(false);
+    localStorage.removeItem("authToken");
+    location.reload();
+    navigate.push("/");
   };
 
   useEffect(() => {

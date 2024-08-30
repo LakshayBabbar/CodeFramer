@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { verifyToken } from "./utils/authToken";
 
 export async function middleware(request) {
-  const token = request.cookies.get("token")?.value;
+  const token = request.headers.get("Authorization")?.split(" ")[1];
   if (request.nextUrl.pathname.startsWith("/api/projects")) {
     const { payload, error } = await verifyToken(
       token,

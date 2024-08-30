@@ -19,14 +19,6 @@ export async function POST(request) {
         { status: 404 }
       );
     }
-    //check user is verified or not
-    /* if (!user.isVerified) {
-      return NextResponse.json(
-        {
-          message: "User is not verified, check your email for verification",
-        },
-        { status: 401 }
-      ); */
     const isValid = await bcryptjs.compare(password, user.password);
     if (isValid) {
       const authToken = await generateToken(
@@ -40,17 +32,10 @@ export async function POST(request) {
         {
           message: "Logged in successfully",
           username: user.username,
+          authToken,
         },
         { status: 200 }
       );
-      const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-      response.cookies.set("token", authToken.toString(), {
-        httpOnly: true,
-        secure: true,
-        expires: expires,
-        sameSite: "None",
-        path: "/",
-      });
       return response;
     } else {
       return NextResponse.json(

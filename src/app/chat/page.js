@@ -15,25 +15,30 @@ const CppIntroduction = () => {
   const { fetchData, loading } = useSend();
   const submitHandler = async (e) => {
     e.preventDefault();
-    const req = await fetchData(process.env.NEXT_PUBLIC_AI_API, "POST", {
-      contents: [
-        {
-          parts: [
-            {
-              text: promt,
-            },
-          ],
-        },
-      ],
-    });
+    const req = await fetchData(
+      process.env.NEXT_PUBLIC_AI_API,
+      "POST",
+      {
+        contents: [
+          {
+            parts: [
+              {
+                text: promt,
+              },
+            ],
+          },
+        ],
+      },
+      false
+    );
     req.success
-      ? setContent(req.candidates[0].content.parts[0].text)
+      ? setContent(req.candidates[0].content?.parts[0]?.text)
       : setContent("Something went wrong");
     setPromt("");
   };
 
   return (
-    <div className="flex items-center justify-center space-y-10 dark:bg-dot-white/[0.18] bg-dot-black/[0.2]">
+    <div className="flex items-center justify-center space-y-10 w-full">
       <div
         className={`mt-24 mb-10 w-11/12 md:w-3/4 ${
           content && "prose-neutral prose-lg"
@@ -42,11 +47,15 @@ const CppIntroduction = () => {
         <Button
           className="absolute top-20"
           variant="outline"
-          onClick={() => setContent("")}
+          onClick={() => setContent(null)}
         >
           Clear
         </Button>
-        <article className="w-full xl:w-3/4 h-[calc(100vh-16rem)] sm:h-[calc(100vh-14rem)] overflow-y-auto">
+        <article
+          className={`w-full xl:w-3/4 ${
+            content ? "h-fit" : "h-[calc(100vh-16rem)] sm:h-[calc(100vh-14rem)]"
+          }`}
+        >
           {content ? (
             <ReactMarkdown
               // eslint-disable-next-line react/no-children-prop
@@ -67,23 +76,25 @@ const CppIntroduction = () => {
           )}
         </article>
         <form
-          className="flex gap-4 relative w-full xl:w-3/4"
+          className="flex gap-4 fixed w-full h-24 bg-black bottom-0 items-center justify-center"
           onSubmit={submitHandler}
         >
-          <Input
-            type="text"
-            className="rounded-full border-black dark:border-white"
-            onChange={(e) => setPromt(e.target.value)}
-            value={promt}
-            required
-          />
-          <Button
-            disabled={loading}
-            className="rounded-full absolute right-0 bg-black dark:bg-white"
-            type="submit"
-          >
-            Send
-          </Button>
+          <div className="w-full md:w-3/5 mx-10 sm:mx-0 relative">
+            <Input
+              type="text"
+              className="rounded-full border-black dark:border-white w-full"
+              onChange={(e) => setPromt(e.target.value)}
+              value={promt}
+              required
+            />
+            <Button
+              disabled={loading}
+              className="rounded-full absolute top-0 right-0 bg-black dark:bg-white"
+              type="submit"
+            >
+              Send
+            </Button>
+          </div>
         </form>
       </div>
     </div>
