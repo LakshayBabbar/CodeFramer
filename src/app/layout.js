@@ -17,7 +17,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="dark overflow-x-hidden">
-      <body className={`${inter.className} overflow-x-hidden`}>
+      <body className={`${inter.className} overflow-x-hidden dark:bg-slate-950 bg-slate-100`}>
         <StoreProvider>
           <ReactQueryProvider>
             <Navbar />

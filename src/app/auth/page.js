@@ -49,14 +49,18 @@ function Auth() {
       description: date,
     });
     if (res?.success) {
-      dispatch(authState({ isAuth: true, username: res.username }));
-      localStorage.setItem("authToken", res?.authToken);
+      if (isLogin) {
+        dispatch(authState({ isAuth: true, username: res.username }));
+        localStorage.setItem("authToken", res?.authToken);
+      } else {
+        navigate.push("/auth?mode=login");
+      }
     }
   };
 
   return (
     <section className="w-full h-lvh flex justify-center items-center">
-      <div className="space-y-4 sm:border sm:rounded-xl sm:p-8 sm:shadow-xl">
+      <div className="space-y-4 sm:border sm:rounded-xl sm:p-8 sm:shadow-xl bg-slate-50 dark:bg-slate-950">
         <div className="space-y-1">
           <h1 className="text-2xl font-bold">
             {!isLogin ? "Sign Up" : "Login"} to CodeFramer
@@ -75,6 +79,7 @@ function Auth() {
               value={data.username}
               placeholder="Username"
               onChange={valueHandler}
+              className="bg-slate-50 dark:bg-slate-950"
               required
             />
           )}
@@ -84,6 +89,7 @@ function Auth() {
             value={data.email}
             placeholder="Email"
             onChange={valueHandler}
+            className="bg-slate-50 dark:bg-slate-950"
             required
           />
           <Input
@@ -92,6 +98,7 @@ function Auth() {
             value={data.password}
             placeholder="Password"
             onChange={valueHandler}
+            className="bg-slate-50 dark:bg-slate-950"
             required
           />
           <Button className="w-full" type="submit" disabled={loading}>

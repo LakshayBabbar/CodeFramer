@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    env_file: "/var/envs/codeframer.env"
+    depends_on:
+      db:
+        condition: service_healthy 
+    restart: always
+    networks:
+      - app-network
+
+  db:
+    image: "mongo:5.0"
+    ports:
+      - "27017:27017"
+    volumes:
+      - /home/lakshay-babbar/mongo:/data/db
+    restart: always
+    healthcheck:
+      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - app-network
+
+volumes:
+  mongo-data:
+
+
+networks:
+  app-network:
+    driver: bridge

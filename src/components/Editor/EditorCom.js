@@ -41,7 +41,7 @@ export default function EditorCom({ onChange, data, setUpdate }) {
   };
   return (
     <div>
-      <div className="flex items-center gap-4 p-2">
+      <div className="flex items-center gap-4 p-4">
         <Button
           onClick={() => setFileName("index.html")}
           className={`${
@@ -84,7 +84,7 @@ export default function EditorCom({ onChange, data, setUpdate }) {
           </Button>
         )}
       </div>
-      <div className="w-full h-[40vh]">
+      <div className="w-full h-[40vh] xl:h-[85vh]">
         <Editor
           width="100%"
           height="100%"
@@ -104,6 +104,16 @@ export default function EditorCom({ onChange, data, setUpdate }) {
             autoIndent: true,
             autoClosingBrackets: true,
             autoClosingQuotes: true,
+            acceptSuggestionOnEnter: "on",
+            autoClosingComments: true,
+            automaticLayout: true,
+            autoClosingOvertype: "always",
+            autoClosingDelete: "always",
+            acceptSuggestionOnEnter: "on",
+            tabCompletion: "on",
+            wordBasedSuggestions: true,
+            suggestOnTriggerCharacters: true,
+            suggestSelection: "first",
           }}
         />
       </div>
