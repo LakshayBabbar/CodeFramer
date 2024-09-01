@@ -60,7 +60,7 @@ function Auth() {
 
   return (
     <section className="w-full h-lvh flex justify-center items-center">
-      <div className="space-y-4 sm:border sm:rounded-xl sm:p-8 sm:shadow-xl bg-slate-50 dark:bg-slate-950">
+      <div className="space-y-4 sm:border sm:rounded-xl sm:p-8 sm:shadow-xl bg-slate-100 dark:bg-slate-950">
         <div className="space-y-1">
           <h1 className="text-2xl font-bold">
             {!isLogin ? "Sign Up" : "Login"} to CodeFramer
@@ -79,7 +79,7 @@ function Auth() {
               value={data.username}
               placeholder="Username"
               onChange={valueHandler}
-              className="bg-slate-50 dark:bg-slate-950"
+              className="bg-slate-100 dark:bg-slate-950"
               required
             />
           )}
@@ -89,7 +89,7 @@ function Auth() {
             value={data.email}
             placeholder="Email"
             onChange={valueHandler}
-            className="bg-slate-50 dark:bg-slate-950"
+            className="bg-slate-100 dark:bg-slate-950"
             required
           />
           <Input
@@ -98,7 +98,7 @@ function Auth() {
             value={data.password}
             placeholder="Password"
             onChange={valueHandler}
-            className="bg-slate-50 dark:bg-slate-950"
+            className="bg-slate-100 dark:bg-slate-950"
             required
           />
           <Button className="w-full" type="submit" disabled={loading}>
@@ -117,6 +117,7 @@ function Auth() {
           </Link>
         </div>
       </div>
+      <div className="fixed w-4/5 h-24 -bottom-10 -right-20 bg-gradient-to-r from-indigo-400 to-purple-700 blur-[120px] -rotate-12" />
     </section>
   );
 }

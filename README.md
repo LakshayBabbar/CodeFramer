@@ -5,7 +5,6 @@ CodeFramer is a versatile code editor built to enhance your coding experience wi
 ## Features
 
 - **Modern Interface:** Enjoy a clean and intuitive user interface designed for productivity.
-- **Secure Authentication:** Ensure secure access with email verification for user authentication.
 - **Enhanced Performance:** Experience faster coding and editing with optimized performance.
 - **Resource Efficient:** CodeFramer operates efficiently, minimizing system resource consumption.
 - **AI Chatbot Support:** Get intelligent assistance and real-time support for your coding queries.
@@ -17,7 +16,7 @@ CodeFramer is a versatile code editor built to enhance your coding experience wi
 - **FullStack Framework:** Next.js 14
 - **Database:** MongoDB
 - **Authentication:** Jose (JWT)
-- **Styling:** Tailwind CSS, ShadCn
+- **Styling:** Tailwind CSS, ShadCn, Aceternity UI
 - **Other Libraries:** React Query, Redux Toolkit, Nodemailer, React-Markdown, Monaco Editor, UUID, Bcryptjs, React Icons, Mongoose
 
 
@@ -43,10 +42,6 @@ CodeFramer is a versatile code editor built to enhance your coding experience wi
      - `ACCESS_SECRET_KEY`: User-defined access secret key
      - `URI`: MongoDB URI address
      - `BASE_URL`: Hosting address
-     - `SMTP_HOST`: SMTP Host Address
-     - `SMTP_PORT`: SMTP Port Number
-     - `SMTP_USERNAME`: SMTP Username
-     - `SMTP_PASSWORD`: SMTP Password
      - `NEXT_PUBLIC_AI_API`: Google AI Studio API
 5. Start the development server:
     ```bash

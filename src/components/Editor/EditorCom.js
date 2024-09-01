@@ -84,7 +84,7 @@ export default function EditorCom({ onChange, data, setUpdate }) {
           </Button>
         )}
       </div>
-      <div className="w-full h-[40vh] xl:h-[85vh]">
+      <div className="w-full h-[40vh]">
         <Editor
           width="100%"
           height="100%"

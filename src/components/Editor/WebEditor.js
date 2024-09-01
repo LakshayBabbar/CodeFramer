@@ -29,11 +29,10 @@ function WebEditor({ data }) {
   `;
 
   return (
-    <div className="flex flex-col h-screen bg-white overflow-y-hidden">
-      <div className="h-16 xl:h-14 w-full dark:bg-black border-b" />
-      <div className="flex flex-col xl:flex-row-reverse h-full xl:h-[94%] w-full">
-        <iframe title="output" srcDoc={srcDoc} width="60%" height="100%" className="w-full xl:w-3/5 xl:h-full" />
-        <div className="bg-[#1e1e1e] w-full xl:h-full xl:w-2/5">
+    <div className="flex flex-col h-screen overflow-y-hidden">
+      <div className="mt-14 flex flex-col h-full w-full">
+        <iframe title="output" srcDoc={srcDoc} width="100%" height="52%" />
+        <div className="bg-[#1e1e1e] w-full h-[46%]">
           <EditorCom
             onChange={setValues}
             data={values}

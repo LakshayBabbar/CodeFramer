@@ -46,7 +46,7 @@ const Page = () => {
         <hr className="border w-full" />
         <div className="flex w-full justify-between items-center">
           <h2 className="text-xl font-bold">Your Project&apos;s</h2>
-          <Button variant="outline" onClick={() => setIsOpen(true)}>
+          <Button variant="outline" onClick={() => setIsOpen(true)} className="bg-transparent">
             Create New
           </Button>
         </div>

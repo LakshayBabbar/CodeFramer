@@ -1,8 +1,6 @@
 "use client";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { RiMenu4Fill } from "react-icons/ri";
-import { IoMdClose } from "react-icons/io";
 import { useSelector, useDispatch } from "react-redux";
 import { authState } from "@/store/features/Auth/authSlice";
 import { useRouter } from "next/navigation";
@@ -15,6 +13,8 @@ import {
   HomeIcon,
   Laptop,
   LayoutDashboard,
+  AlignRight,
+  X,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Switch } from "../ui/switch";
@@ -55,7 +55,6 @@ export default function Navbar() {
     );
     setActive(false);
     localStorage.removeItem("authToken");
-    location.reload();
     navigate.push("/");
   };
 
@@ -78,7 +77,7 @@ export default function Navbar() {
 
   const iconStyle = "size-5 sm:size-4";
   return (
-    <div className="h-14 w-full flex justify-between px-5 sm:px-0 sm:justify-around items-center fixed top-0 left-0 bg-[rgba(240,244,255,0.7)] dark:bg-[rgba(11,14,31,0.7)] backdrop-blur-md z-[999]">
+    <div className="h-14 w-full flex border-b justify-between px-5 sm:px-0 sm:justify-around items-center fixed top-0 left-0 bg-[rgba(240,244,255,0.7)] dark:bg-[rgba(11,14,31,0.7)] backdrop-blur-md z-[999]">
       <Link href="/" className={cn(linkStyle, "text-md font-bold")}>
         <Code2Icon className="size-5" />
         CodeFramer
@@ -130,9 +129,9 @@ export default function Navbar() {
       </div>
       <div className="sm:hidden flex z-[1000] text-2xl">
         {!active ? (
-          <RiMenu4Fill onClick={() => setActive(true)} />
+          <AlignRight onClick={() => setActive(true)} />
         ) : (
-          <IoMdClose onClick={() => setActive(false)} />
+          <X onClick={() => setActive(false)} />
         )}
       </div>
     </div>
