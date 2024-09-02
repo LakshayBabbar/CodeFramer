@@ -3,7 +3,10 @@ import { verifyToken } from "./utils/authToken";
 
 export async function middleware(request) {
   const token = request.headers.get("Authorization")?.split(" ")[1];
-  if (request.nextUrl.pathname.startsWith("/api/projects")) {
+  if (
+    request.nextUrl.pathname.startsWith("/api/projects") ||
+    request.nextUrl.pathname.startsWith("/api/auth/close")
+  ) {
     const { payload, error } = await verifyToken(
       token,
       process.env.ACCESS_SECRET_KEY
@@ -16,7 +19,6 @@ export async function middleware(request) {
         { status: 401 }
       );
     }
-
     const headers = new Headers(request.headers);
     headers.set("authData", JSON.stringify(payload));
     const response = NextResponse.next({
@@ -30,5 +32,5 @@ export async function middleware(request) {
 }
 
 export const config = {
-  matcher: ["/api/projects/:path*"],
+  matcher: ["/api/projects/:path*", "/api/auth/close"],
 };

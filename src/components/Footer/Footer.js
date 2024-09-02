@@ -1,35 +1,21 @@
 import Link from "next/link";
+import { Code2Icon } from "lucide-react";
 
 const Footer = () => {
-  const listStyle = "hover:underline hover:underline-offset-4";
   return (
-    <footer className="mt-[20vh] w-full flex flex-col items-center bg-card">
-      <div className="w-full md:w-3/4 py-10 px-10 md:px-0 flex flex-col md:flex-row gap-4 md:gap-0 justify-between md:items-center">
-        <div className="flex flex-col gap-4 text-sm xl:text-base">
-          <h1 className="text-2xl font-bold">CodeFramer</h1>
-          <ul className="flex flex-col gap-4 sm:gap-2 md:gap-4 sm:flex-row">
-            <li className={listStyle}>
-              <Link href="/">Home</Link>
-            </li>
-            <li className={listStyle}>
-              <Link href="/auth?mode=signup">Sign Up</Link>
-            </li>
-            <li className={listStyle}>
-              <Link href="/auth?mode=login">Login</Link>
-            </li>
-            <li className={listStyle}>
-              <Link href="/dashboard">Dashboard</Link>
-            </li>
-            <li className={listStyle}>
-              <Link href="/web-editor">Web Editor</Link>
-            </li>
-          </ul>
-        </div>
-        <hr className="border-gray-600 sm:hidden md:block" />
-        <p className="text-sm xl:text-base">
-          © 2024 by CodeFramer. &nbsp;All rights reserved.
-        </p>
+    <footer className="mt-[10vh] py-10 text-center space-y-4 dark:text-slate-200 text-slate-800">
+      <h2 className="text-4xl text-transparent font-bold bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-600 flex gap-3 justify-center items-center flex-wrap">
+        <Code2Icon className="size-10 dark:text-slate-200 text-slate-800" />
+        CodeFramer
+      </h2>
+      <div className="space-x-4 sm:space-x-5 font-[500]">
+        <Link href="/">Home</Link>
+        <Link href="/web-editor">Editor</Link>
+        <Link href="/dashboard">Dashboard</Link>
+        <Link href="/chat">ChatBot</Link>
+        <Link href="/auth?mode=login">Login</Link>
       </div>
+      <p>© 2024 by CodeFramer. &nbsp;All rights reserved.</p>
     </footer>
   );
 };

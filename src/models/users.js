@@ -23,18 +23,6 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  verifyToken: {
-    type: String,
-  },
-  verifyTokenExp: {
-    type: Date,
-  },
-  resetToken: {
-    type: String,
-  },
-  resetTokenExp: {
-    Type: Date,
-  },
 });
 
 const User = mongoose.models.users || mongoose.model("users", userSchema);

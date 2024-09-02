@@ -13,7 +13,7 @@ export async function GET() {
     if (projects.length === 0) {
       return NextResponse.json(
         {
-          message: "User have not created any project yet",
+          message: "You have not created any project yet",
         },
         { status: 404 }
       );
