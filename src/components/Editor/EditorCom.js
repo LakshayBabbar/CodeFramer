@@ -6,6 +6,12 @@ export default function EditorCom({ onChange, data, setUpdate }) {
   const editorRef = useRef();
   const [fileName, setFileName] = useState("index.html");
 
+  const fileNames = [
+    { name: "index.html", displayName: "HTML" },
+    { name: "style.css", displayName: "CSS" },
+    { name: "script.js", displayName: "JavaScript" },
+  ];
+
   const files = {
     "script.js": {
       name: "script.js",
@@ -39,47 +45,34 @@ export default function EditorCom({ onChange, data, setUpdate }) {
       };
     });
   };
+
+  const activeStyle = "bg-neutral-700 text-white";
+  const inactiveStyle = "bg-neutral-800";
+  const btnStyle = "text-white hover:bg-[#262626]";
+
   return (
     <div>
-      <div className="flex items-center gap-4 p-4">
-        <Button
-          onClick={() => setFileName("index.html")}
-          className={`${
-            fileName === "index.html"
-              ? "bg-[#262626]"
-              : "bg-transparent border border-neutral-700"
-          }
-          text-white hover:bg-[#262626]`}
-          size="sm"
-        >
-          HTML
-        </Button>
-        <Button
-          onClick={() => setFileName("style.css")}
-          className={`${
-            fileName === "style.css"
-              ? "bg-[#262626]"
-              : "bg-transparent border border-neutral-700"
-          }
-          text-white hover:bg-[#262626]`}
-          size="sm"
-        >
-          CSS
-        </Button>
-        <Button
-          onClick={() => setFileName("script.js")}
-          className={`${
-            fileName === "script.js"
-              ? "bg-[#262626]"
-              : "bg-transparent border border-neutral-700"
-          }
-          text-white hover:bg-[#262626]`}
-          size="sm"
-        >
-          JS
-        </Button>
+      <div className="flex items-center gap-4 p-4 bg-[#1e1e1e]">
+        {fileNames.map((item) => {
+          return (
+            <Button
+              key={item.name}
+              onClick={() => setFileName(item.name)}
+              className={`${
+                fileName === item.name ? activeStyle : inactiveStyle
+              } ${btnStyle}`}
+              size="sm"
+            >
+              {item.displayName}
+            </Button>
+          );
+        })}
         {data && data._id && (
-          <Button onClick={setUpdate} size="sm">
+          <Button
+            onClick={setUpdate}
+            size="sm"
+            className="bg-white text-black hover:bg-slate-200"
+          >
             Save
           </Button>
         )}
@@ -88,10 +81,10 @@ export default function EditorCom({ onChange, data, setUpdate }) {
         <Editor
           width="100%"
           height="100%"
-          theme="vs-dark"
           path={file.name}
           value={file.value}
           language={file.language}
+          theme="vs-dark"
           onMount={handleEditorDidMount}
           onChange={handleEditorChange}
           options={{

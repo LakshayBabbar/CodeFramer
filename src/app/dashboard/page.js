@@ -106,7 +106,7 @@ const Page = () => {
             Close Account
           </Button>
           {isErr && <p className="text-center text-red-600">{err}</p>}
-          <p className="text-center max-w-96 text-yellow-600">
+          <p className="text-center max-w-96 text-amber-700 font-[600]">
             Note: Clicking this button will permanently close your account and
             delete all associated data.
           </p>
