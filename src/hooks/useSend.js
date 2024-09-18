@@ -28,6 +28,9 @@ const useSend = () => {
 
       const req = await fetch(url, options);
       const res = await req.json();
+      if ("error" in res) {
+        throw new Error(res.error);
+      }
       if (!req.ok) {
         throw new Error(res.message);
       }

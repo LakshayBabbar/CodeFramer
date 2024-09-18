@@ -93,7 +93,11 @@ export default function Navbar() {
         </Link>
         <Link href="/web-editor" className={linkStyle} onClick={linkHandler}>
           <Laptop className={iconStyle} />
-          Editor
+          Web Editor
+        </Link>
+        <Link href="/compiler" className={linkStyle} onClick={linkHandler}>
+          <Laptop className={iconStyle} />
+          Compiler
         </Link>
         {isAuth && (
           <Link href="/dashboard" className={linkStyle} onClick={linkHandler}>
