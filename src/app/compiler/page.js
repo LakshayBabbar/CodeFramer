@@ -3,7 +3,7 @@ import { Editor } from "@monaco-editor/react";
 import { useState, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { set } from "mongoose";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function Compiler() {
   const editorRef = useRef();
@@ -13,7 +13,7 @@ export default function Compiler() {
   const [output, setOutput] = useState("");
   const [outerr, setOuterr] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const { toast } = useToast();
 
   const handleEditorDidMount = (editor) => {
     editorRef.current = editor;
@@ -21,6 +21,9 @@ export default function Compiler() {
   };
 
   const handleSubmit = async () => {
+    setOutput("");
+    setOuterr("");
+    setLoading(true);
     try {
       const res = await fetch("/api/compile", {
         method: "POST",
@@ -30,24 +33,39 @@ export default function Compiler() {
         body: JSON.stringify({ code, language }),
       });
       const data = await res.json();
-      if ("outerr" in data) {
-        setOuterr(data.outerr);
-      }
-      if ("error" in data) {
+
+      if (data.error) {
         throw new Error(data.error);
-      }
-      if (!res.ok) {
+      } else if (data.stderr) {
+        setOuterr(data.stderr);
+      } else if (!res.ok) {
         throw new Error("Something went wrong");
+      } else {
+        setOutput(data.output);
       }
-      setOutput(data.output);
-    } catch (error) {}
+
+      setLoading(false);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: error.message,
+        status: "error",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="mt-14 w-full h-[93vh] flex items-center justify-center">
-      <div className="w-1/2 h-full bg-[#1e1e1e]">
+    <div className="mt-14 w-full md:h-[93vh] flex items-center justify-center">
+      <div className="md:w-1/2 h-1/2 md:h-full bg-[#1e1e1e]">
         <div className="p-2 w-full flex justify-end">
-          <Button size="sm" variant="outline" onClick={handleSubmit}>
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={handleSubmit}
+            disabled={loading}
+          >
             Run
           </Button>
         </div>
@@ -82,8 +100,10 @@ export default function Compiler() {
           }}
         />
       </div>
-      <div className="w-1/2 h-full p-4">
-        <pre>{output}</pre>
+      <div className="md:w-1/2 h-1/2 md:h-full p-4">
+        <pre>
+          {output} {outerr && <span className="text-red-400">{outerr}</span>}
+        </pre>
       </div>
     </div>
   );

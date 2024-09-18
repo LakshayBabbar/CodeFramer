@@ -31,20 +31,20 @@ export async function POST(req) {
       await fs.writeFile(filePath, code);
 
       const { stdout, stderr } = await execCommand(
-        `${lang.command} ${filePath}`
+        `${lang.command} ${filePath}`,
+        tempDirPath
       );
 
       await fs.rm(tempDirPath, { recursive: true, force: true });
 
-      if (stderr) {
+      return NextResponse.json({ output: stdout });
+    } catch (error) {
+      if (error.stderr) {
         return NextResponse.json(
-          { outerr: stderr || "Execution error" },
+          { stderr: error.stderr || "Execution error" },
           { status: 400 }
         );
       }
-
-      return NextResponse.json({ output: stdout });
-    } catch (error) {
       await fs.rm(tempDirPath, { recursive: true, force: true });
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
@@ -53,9 +53,9 @@ export async function POST(req) {
   }
 }
 
-const execCommand = (cmd) => {
+const execCommand = (cmd, cwd) => {
   return new Promise((resolve, reject) => {
-    exec(cmd, (error, stdout, stderr) => {
+    exec(cmd, { cwd }, (error, stdout, stderr) => {
       if (error) {
         reject({ stderr });
       } else {
