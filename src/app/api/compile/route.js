@@ -7,6 +7,8 @@ const languages = [
   { name: "python", extension: "py", command: "python3" },
   { name: "javascript", extension: "js", command: "node" },
   { name: "java", extension: "java", command: "java" },
+  { name: "c", extension: "c", command: "gcc", output: "a.out" },
+  { name: "cpp", extension: "cpp", command: "g++", output: "a.out" },
 ];
 
 export async function POST(req) {
@@ -30,12 +32,10 @@ export async function POST(req) {
       await fs.writeFile(filePath, code);
 
       const { stdout, stderr } = await execCommand(
-        `${lang.command} ${filePath}`,
+        `${lang.command} ${filePath} ${lang.output && `&& ./${lang.output}`}`,
         tempDirPath,
         inputs
       );
-
-      scheduleCleanup(tempDirPath);
 
       return NextResponse.json({ output: stdout });
     } catch (error) {
@@ -46,6 +46,8 @@ export async function POST(req) {
         );
       }
       return NextResponse.json({ error: error.message }, { status: 500 });
+    } finally {
+      await fs.rm(tempDirPath, { recursive: true, force: true });
     }
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
@@ -77,14 +79,4 @@ const execCommand = (cmd, cwd, inputs) => {
       clearTimeout(timer);
     });
   });
-};
-
-const scheduleCleanup = async (tempDirPath, delay = 10000) => {
-  setTimeout(async () => {
-    try {
-      await fs.rm(tempDirPath, { recursive: true, force: true });
-    } catch (err) {
-      console.error(`Failed to remove temp directory: ${tempDirPath}`, err);
-    }
-  }, delay);
 };

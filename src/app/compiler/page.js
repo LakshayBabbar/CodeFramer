@@ -74,6 +74,8 @@ export default function Compiler() {
             <SelectContent>
               <SelectItem value="python">Python</SelectItem>
               <SelectItem value="java">Java</SelectItem>
+              <SelectItem value="cpp">Cpp</SelectItem>
+              <SelectItem value="c">C</SelectItem>
               <SelectItem value="javascript">Javascript</SelectItem>
             </SelectContent>
           </Select>
