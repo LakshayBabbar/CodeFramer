@@ -11,7 +11,7 @@ const languages = [
 
 export async function POST(req) {
   try {
-    const { code, language } = await req.json();
+    const { code, language, inputs } = await req.json();
 
     const lang = languages.find((lang) => lang.name === language);
     if (!lang) {
@@ -27,15 +27,15 @@ export async function POST(req) {
 
     try {
       await fs.mkdir(tempDirPath, { recursive: true });
-
       await fs.writeFile(filePath, code);
 
       const { stdout, stderr } = await execCommand(
         `${lang.command} ${filePath}`,
-        tempDirPath
+        tempDirPath,
+        inputs
       );
 
-      await fs.rm(tempDirPath, { recursive: true, force: true });
+      scheduleCleanup(tempDirPath);
 
       return NextResponse.json({ output: stdout });
     } catch (error) {
@@ -45,7 +45,6 @@ export async function POST(req) {
           { status: 400 }
         );
       }
-      await fs.rm(tempDirPath, { recursive: true, force: true });
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
   } catch (error) {
@@ -53,14 +52,39 @@ export async function POST(req) {
   }
 }
 
-const execCommand = (cmd, cwd) => {
+const execCommand = (cmd, cwd, inputs) => {
   return new Promise((resolve, reject) => {
-    exec(cmd, { cwd }, (error, stdout, stderr) => {
+    const process = exec(cmd, { cwd }, (error, stdout, stderr) => {
       if (error) {
         reject({ stderr });
       } else {
         resolve({ stdout, stderr });
       }
     });
+
+    if (inputs) {
+      process.stdin.write(inputs);
+      process.stdin.end();
+    }
+
+    const timer = setTimeout(() => {
+      process.kill("SIGTERM");
+      fs.rm(cwd, { recursive: true, force: true });
+      reject({ stderr: "Execution timeout exceeded 10 seconds" });
+    }, 10000);
+
+    process.on("exit", () => {
+      clearTimeout(timer);
+    });
   });
+};
+
+const scheduleCleanup = async (tempDirPath, delay = 10000) => {
+  setTimeout(async () => {
+    try {
+      await fs.rm(tempDirPath, { recursive: true, force: true });
+    } catch (err) {
+      console.error(`Failed to remove temp directory: ${tempDirPath}`, err);
+    }
+  }, delay);
 };
