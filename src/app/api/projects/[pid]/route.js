@@ -12,7 +12,7 @@ export async function GET(req, { params }) {
     const projectData = await Project.findOne({
       _id: pid,
       userId: authData.id,
-    }).select("html css js _id");
+    }).select("-userId -__v -createdAt -updatedAt");
     if (!projectData) {
       return NextResponse.json(
         {
@@ -59,7 +59,6 @@ export async function PUT(req, { params }) {
   try {
     const { pid } = params;
     const reqBody = await req.json();
-    const { html, css, js } = await reqBody;
     const Headers = headers();
     const authData = await JSON.parse(Headers.get("authData"));
     const projectData = await Project.findOne({
@@ -74,9 +73,7 @@ export async function PUT(req, { params }) {
         { status: 404 }
       );
     }
-    projectData.html = html;
-    projectData.css = css;
-    projectData.js = js;
+    projectData[reqBody] = reqBody;
     await projectData.save();
     return NextResponse.json({
       message: "Project is updated successfully",

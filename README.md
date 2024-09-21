@@ -13,12 +13,12 @@ CodeFramer is a versatile code editor built to enhance your coding experience wi
 
 ## Tech Stack
 
-- **FullStack Framework:** Next.js 14
+- **Frontend:** Next.js 14
+- **Backend** Next.js 14 API Routes, flask
 - **Database:** MongoDB
 - **Authentication:** Jose (JWT)
 - **Styling:** Tailwind CSS, ShadCn, Aceternity UI
-- **Other Libraries:** React Query, Redux Toolkit, Nodemailer, React-Markdown, Monaco Editor, UUID, Bcryptjs, React Icons, Mongoose
-
+- **Other Libraries:** React Query, Redux Toolkit, Monaco Editor, React-Markdown, Bcryptjs, Mongoose
 
 ## Installation
 
@@ -32,26 +32,45 @@ CodeFramer is a versatile code editor built to enhance your coding experience wi
 
    ```bash
    git clone https://github.com/lakshaybabbar/codeframer.git
+   ```
+
 2. Navigate to the project directory:
-    ```bash
+   ```bash
    cd codeframer
+   ```
 3. Install dependencies:
-    ```bash
+   ```bash
    npm install
+   ```
 4. Configure Environment Variables:
-     - `ACCESS_SECRET_KEY`: User-defined access secret key
-     - `URI`: MongoDB URI address
-     - `BASE_URL`: Hosting address
-     - `NEXT_PUBLIC_AI_API`: Google AI Studio API
-5. Start the development server:
-    ```bash
+
+   - `ACCESS_SECRET_KEY`: User-defined access secret key
+   - `URI`: MongoDB URI address
+   - `BASE_URL`: Hosting address
+   - `NEXT_PUBLIC_AI_API`: Google AI Studio API
+   - `COMPILER_URL`: Path of python compiler
+
+5. Start docker container for compiling python code:
+
+   ```bash
+   cd compiler/python
+   docker build -t pycompiler .
+   docker run -p 5000:5000 --name compiler pycompiler
+   ```
+
+6. Start the development server:
+   ```bash
    npm run dev
+   ```
 
 ## Contributing
+
 We welcome contributions from the community! If you have ideas for improvements or bug fixes, please feel free to submit a pull request.
 
 ## Bug Reports
+
 If you encounter any bugs or issues while using CodeFramer, please open an issue on GitHub with detailed information about the problem.
 
 ## License
+
 CodeFramer is licensed under the MIT License.

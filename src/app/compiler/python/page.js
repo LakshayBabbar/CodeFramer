@@ -3,20 +3,12 @@ import { Editor } from "@monaco-editor/react";
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 export default function Compiler() {
   const editorRef = useRef();
-  const [language, setLanguage] = useState("python");
   const [code, setCode] = useState("");
   const [output, setOutput] = useState("");
-  const [outerr, setOuterr] = useState("");
+  const [status, setStatus] = useState(0);
   const [loading, setLoading] = useState(false);
   const [inputs, setInputs] = useState("");
   const { toast } = useToast();
@@ -28,27 +20,29 @@ export default function Compiler() {
 
   const handleSubmit = async () => {
     setOutput("");
-    setOuterr("");
+    setStatus(0);
     setLoading(true);
     try {
-      const res = await fetch("/api/compile", {
+      const res = await fetch("/api/compile/python", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ code, language, inputs }),
+        body: JSON.stringify({
+          code,
+          inputs: inputs.split("\n"),
+        }),
         signal: new AbortController().signal,
       });
       const data = await res.json();
 
       if (data.error) {
         throw new Error(data.error);
-      } else if (data.stderr) {
-        setOuterr(data.stderr);
       } else if (!res.ok) {
         throw new Error("Something went wrong");
       } else {
         setOutput(data.output);
+        setStatus(data.status);
       }
 
       setLoading(false);
@@ -66,19 +60,7 @@ export default function Compiler() {
   return (
     <div className="mt-14 w-full h-[93.8vh] flex flex-col md:flex-row items-center justify-center">
       <div className="w-full md:w-1/2 h-1/2 md:h-full bg-[#1e1e1e]">
-        <div className="h-[10%] md:h-[5%] w-full flex justify-between items-center px-4">
-          <Select onValueChange={(lang) => setLanguage(lang)}>
-            <SelectTrigger className="w-[160px] bg-transparent text-white border-zinc-800">
-              <SelectValue placeholder="Language" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="python">Python</SelectItem>
-              <SelectItem value="java">Java</SelectItem>
-              <SelectItem value="cpp">Cpp</SelectItem>
-              <SelectItem value="c">C</SelectItem>
-              <SelectItem value="javascript">Javascript</SelectItem>
-            </SelectContent>
-          </Select>
+        <div className="h-[10%] md:h-[5%] w-full flex justify-end items-center px-4">
           <Button
             className="px-4 py-[5px] h-fit border-none bg-neutral-700 text-white hover:bg-transparent"
             onClick={handleSubmit}
@@ -91,7 +73,7 @@ export default function Compiler() {
           width="100%"
           height="93%"
           value={code}
-          language={language}
+          language="python"
           theme="vs-dark"
           onMount={handleEditorDidMount}
           onChange={(val) => setCode(val)}
@@ -122,8 +104,12 @@ export default function Compiler() {
         />
       </div>
       <div className="w-full md:w-1/2 h-1/2 md:h-full flex flex-col-reverse md:flex-col">
-        <pre className="w-full h-1/2 p-4 overflow-auto">
-          {output} {outerr && <span className="text-red-400">{outerr}</span>}
+        <pre
+          className={`w-full h-1/2 p-4 overflow-auto ${
+            status === 1 && "text-red-400"
+          }`}
+        >
+          {output}
         </pre>
         <div className="w-full h-1/2 bg-slate-100 p-4 text-black border-t">
           <h3 className="text-xl font-bold">Enter Your Inputs</h3>
