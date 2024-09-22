@@ -38,7 +38,7 @@ export async function POST(request) {
       response.cookies.set("authToken", authToken, {
         httpOnly: true,
         secure: true,
-        sameSite: "strict",
+        sameSite: "none",
         path: "/",
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
       });

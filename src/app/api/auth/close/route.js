@@ -1,3 +1,5 @@
+export const revalidate = 0;
+
 import Project from "@/models/projects";
 import User from "@/models/users";
 import { NextResponse } from "next/server";
@@ -18,10 +20,18 @@ export async function DELETE() {
     }
     await User.findByIdAndDelete(authData?.id);
     await Project.deleteMany({ userId: authData?.id });
-    return NextResponse.json(
+    const res = NextResponse.json(
       { message: "Account closed successfully.", success: true },
       { status: 200 }
     );
+    res.cookies.set("authToken", " ", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      path: "/",
+      expires: new Date(0),
+    });
+    return res;
   } catch (error) {
     return NextResponse.json(
       { message: "An error occurred: " + error?.message, success: false },

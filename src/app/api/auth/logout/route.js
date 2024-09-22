@@ -1,3 +1,5 @@
+export const revalidate = 0;
+
 import { NextResponse } from "next/server";
 
 export async function GET(request) {
@@ -10,10 +12,10 @@ export async function GET(request) {
         status: 200,
       }
     );
-    res.cookies.set("authToken", "", {
+    res.cookies.set("authToken", " ", {
       httpOnly: true,
       secure: true,
-      sameSite: "strict",
+      sameSite: "none",
       path: "/",
       expires: new Date(0),
     });

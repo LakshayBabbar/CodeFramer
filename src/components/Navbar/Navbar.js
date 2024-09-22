@@ -54,7 +54,13 @@ export default function Navbar() {
       })
     );
     setActive(false);
-    await fetch("/api/auth/logout");
+    await fetch("/api/auth/logout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      cache: "no-store",
+    });
     navigate.push("/");
   };
 

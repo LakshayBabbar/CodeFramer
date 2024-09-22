@@ -16,41 +16,54 @@ const ProjectCard = ({ data }) => {
     });
     data.refetch(true);
   };
+
   const languages = Object.keys(data?.languages).join(", ") || "";
+
   return (
-    <div className="w-full sm:w-80 bg-card border p-6 flex gap-4 rounded-xl hover:border-primary transition-all duration-300 shadow-lg bg-slate-100 dark:bg-slate-950">
-      <span className="text-2xl">
-        <Code2Icon />
-      </span>
-      <div className="space-y-2">
-        <h1 className="font-bold">{data.name}</h1>
-        <p className="text-sm text-muted-foreground">
-          Created at: <span>{data?.createdAt.substring(0, 10)}</span>
-        </p>
-        <p className="text-sm text-muted-foreground">
-          Last updated: <span>{data?.updatedAt?.substring(0, 10)}</span>
-        </p>
-        <p className="text-sm text-muted-foreground">
-          Type: <span>{data.type}</span>
-        </p>
-        <p className="text-sm text-muted-foreground">
-          Languages: <span>{languages}</span>
-        </p>
-        <div className="flex gap-4 items-center">
+    <div className="w-full sm:max-w-96 bg-gradient-to-r from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-950 border border-transparent hover:border-slate-700 transition-all duration-200 p-6 rounded-2xl shadow-xl transform hover:scale-[1.02]">
+      <div className="p-6 flex flex-col gap-4">
+        <div className="flex items-center justify-between">
+          <span className="text-3xl text-primary">
+            <Code2Icon />
+          </span>
+          <h1 className="font-bold text-xl text-slate-900 dark:text-slate-100">
+            {data.name}
+          </h1>
+        </div>
+        <div className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+          <p>
+            <span className="font-semibold">Created at:&nbsp;</span>
+            {data?.createdAt.substring(0, 10)}
+          </p>
+          <p>
+            <span className="font-semibold">Last updated:&nbsp;</span>
+            {data?.updatedAt?.substring(0, 10)}
+          </p>
+          <p>
+            <span className="font-semibold">Type:</span> {data.type}
+          </p>
+          <p>
+            <span className="font-semibold">Languages:</span> {languages}
+          </p>
+        </div>
+        <div className="flex items-center justify-between mt-4">
           <Link
             href={
               data.type === "web"
                 ? `/web-editor/${data._id}`
-                : `/compiler/python/${data._id}`
+                : `/compiler/${languages}/${data._id}`
             }
           >
-            <Button size="sm" variant="outline" className="bg-transparent">
+            <Button  variant="outline" className="bg-transparent">
               Open
             </Button>
           </Link>
-          <span className="text-red-500 cursor-pointer" onClick={deleteHandler}>
+          <span
+            className="text-red-500 hover:text-red-600 cursor-pointer transition-colors"
+            onClick={deleteHandler}
+          >
             <acronym title="Delete Project">
-              <Delete />
+              <Delete className="w-6 h-6" />
             </acronym>
           </span>
         </div>

@@ -1,14 +1,17 @@
 import CompilerEditor from "@/components/Editor/Compiler";
+import { cookies } from "next/headers";
 
 const getData = async (id) => {
   try {
     if (!process.env.BASE_URL) {
       throw new Error("BASE_URL is not defined in environment variables");
     }
+    const token = cookies()?.get("authToken")?.value || "";
     const req = await fetch(`${process.env.BASE_URL}/api/projects/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       credentials: "include",
     });
