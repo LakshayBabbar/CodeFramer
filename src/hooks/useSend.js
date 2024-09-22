@@ -5,7 +5,7 @@ const useSend = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const fetchData = async (url, method, body, authHeaders = true) => {
+  const fetchData = async (url, method, body) => {
     setLoading(true);
     setIsError(false);
     setError("");
@@ -16,12 +16,6 @@ const useSend = () => {
           "Content-Type": "application/json",
         },
       };
-      if (authHeaders) {
-        options.headers = {
-          ...options.headers,
-          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-        };
-      }
       if (method === "POST" || method === "PUT") {
         options.body = JSON.stringify(body);
       }

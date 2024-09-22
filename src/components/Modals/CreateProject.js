@@ -17,7 +17,7 @@ const CreateProject = ({ isOpen, setIsOpen }) => {
   const ref = useRef(null);
   const [name, setName] = useState("");
   const [environment, setEnvironment] = useState("web");
-  const [language, setLanguage] = useState("");
+  const [language, setLanguage] = useState("python");
   const { isAuth } = useSelector((state) => state.auth);
   const navigate = useRouter();
   const { fetchData, isError, error, loading, setIsError } = useSend();
@@ -41,13 +41,16 @@ const CreateProject = ({ isOpen, setIsOpen }) => {
     const res = await fetchData("/api/projects/create", "POST", {
       name,
       type: environment,
+      language,
     });
     if (res && res.success) {
       setIsOpen(false);
     }
     res.success &&
       navigate.push(
-        environment === "web" ? `/web-editor/${res.pid}` : `/compiler/python`
+        environment === "web"
+          ? `/web-editor/${res.pid}`
+          : `/compiler/${language}/${res.pid}`
       );
   };
   return isOpen && isAuth && ref.current

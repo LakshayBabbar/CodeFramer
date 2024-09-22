@@ -32,10 +32,16 @@ export async function POST(request) {
         {
           message: "Logged in successfully",
           username: user.username,
-          authToken,
         },
         { status: 200 }
       );
+      response.cookies.set("authToken", authToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+        path: "/",
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
+      });
       return response;
     } else {
       return NextResponse.json(

@@ -28,6 +28,9 @@ const projectSchema = new mongoose.Schema(
       python: {
         type: String,
       },
+      javascript: {
+        type: String,
+      },
     },
   },
   { timestamps: true }

@@ -54,7 +54,7 @@ export default function Navbar() {
       })
     );
     setActive(false);
-    localStorage.removeItem("authToken");
+    await fetch("/api/auth/logout");
     navigate.push("/");
   };
 
@@ -95,7 +95,11 @@ export default function Navbar() {
           <Laptop className={iconStyle} />
           Web Editor
         </Link>
-        <Link href="/compiler/python" className={linkStyle} onClick={linkHandler}>
+        <Link
+          href="/compiler/python"
+          className={linkStyle}
+          onClick={linkHandler}
+        >
           <Laptop className={iconStyle} />
           Python
         </Link>

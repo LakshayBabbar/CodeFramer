@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { verifyToken } from "./utils/authToken";
 
 export async function middleware(request) {
-  const token = request.headers.get("Authorization")?.split(" ")[1];
+  const token = request.cookies.get("authToken")?.value;
   if (
     request.nextUrl.pathname.startsWith("/api/projects") ||
     request.nextUrl.pathname.startsWith("/api/auth/close")
@@ -14,7 +14,7 @@ export async function middleware(request) {
     if (error) {
       return NextResponse.json(
         {
-          message: "Could not Authenticate",
+          error: "Could not Authenticate",
         },
         { status: 401 }
       );

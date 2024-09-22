@@ -8,6 +8,35 @@ export async function POST(req) {
   try {
     const reqBody = await req.json();
     const projectData = await reqBody;
+    if (!projectData.name || !projectData.type) {
+      return NextResponse.json(
+        {
+          message: "Please provide all the required fields",
+          success: false,
+        },
+        { status: 400 }
+      );
+    }
+    if (projectData.type === "compiler" && !projectData.language) {
+      return NextResponse.json(
+        {
+          message: "Please provide all the required fields",
+          success: false,
+        },
+        { status: 400 }
+      );
+    }
+    if (projectData.type === "compiler") {
+      projectData.languages = projectData.languages || {};
+      projectData.languages[projectData.language] = " ";
+    }
+    if (projectData.type === "web") {
+      projectData.languages = {
+        html: "<h1 id='heading'>Welcome to your first project</h1>",
+        css: "#heading {\n\tcolor: blue;\n\tfont-size: 24px;\n}",
+        js: "",
+      };
+    }
     const headersList = headers();
     const authData = await JSON.parse(headersList.get("authData"));
 

@@ -51,7 +51,6 @@ function Auth() {
     if (res?.success) {
       if (isLogin) {
         dispatch(authState({ isAuth: true, username: res.username }));
-        localStorage.setItem("authToken", res?.authToken);
       } else {
         navigate.push("/auth?mode=login");
       }

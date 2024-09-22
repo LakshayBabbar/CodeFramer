@@ -2,7 +2,7 @@ import { Editor } from "@monaco-editor/react";
 import { useState, useRef } from "react";
 import { Button } from "../ui/button";
 
-export default function EditorCom({ onChange, data, setUpdate }) {
+export default function EditorCom({ onChange, data, setUpdate, id }) {
   const editorRef = useRef();
   const [fileName, setFileName] = useState("index.html");
 
@@ -16,17 +16,17 @@ export default function EditorCom({ onChange, data, setUpdate }) {
     "script.js": {
       name: "script.js",
       language: "javascript",
-      value: data.js,
+      value: data?.js,
     },
     "style.css": {
       name: "style.css",
       language: "css",
-      value: data.css,
+      value: data?.css,
     },
     "index.html": {
       name: "index.html",
       language: "html",
-      value: data.html,
+      value: data?.html,
     },
   };
 
@@ -67,7 +67,7 @@ export default function EditorCom({ onChange, data, setUpdate }) {
             </Button>
           );
         })}
-        {data && data._id && (
+        {id && (
           <Button
             onClick={setUpdate}
             size="sm"

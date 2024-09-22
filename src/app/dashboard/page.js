@@ -82,14 +82,16 @@ const Page = () => {
         </div>
         {!loading ? (
           <>
-            <div className="w-full grid xl:grid-cols-2 2xl:grid-cols-3 gap-5 justify-items-center xl:justify-items-start">
-              {!isError &&
-                data &&
-                data.map((item) => {
+            <div className="w-full flex flex-wrap gap-4">
+              {data?.length > 0 ? (
+                data?.map((item) => {
                   return (
                     <ProjectCard key={item._id} data={{ ...item, refetch }} />
                   );
-                })}
+                })
+              ) : (
+                <p className="text-center w-full">No project found.</p>
+              )}
             </div>
             <p className="text-center mb-36">{isError && error.message}</p>
           </>

@@ -18,7 +18,6 @@ DANGEROUS_KEYWORDS = [
 ]
 
 def is_code_safe(code):
-
     for pattern in DANGEROUS_KEYWORDS:
         if re.search(pattern, code):
             return False
@@ -39,16 +38,14 @@ def execute_python_safely():
 
     try:
         input_data = iter(inputs)
-
         output_capture = io.StringIO()
-        sys.stdout = output_capture  #
+        sys.stdout = output_capture
 
         exec_env = {
             'input': lambda prompt: next(input_data, ''),
         }
 
         exec(code, exec_env)
-
         output = output_capture.getvalue()
 
         return jsonify({
@@ -61,5 +58,13 @@ def execute_python_safely():
         shutil.rmtree(temp_dir)
         sys.stdout = sys.__stdout__
 
+
+@app.route('/status', methods=['GET'])
+def get_status():
+    return jsonify({
+        "status": "running",
+        "message": "Server is up and running!"
+    }), 200
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000, debug=True)

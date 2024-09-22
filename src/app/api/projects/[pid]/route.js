@@ -16,16 +16,19 @@ export async function GET(req, { params }) {
     if (!projectData) {
       return NextResponse.json(
         {
-          message: "Project not found",
+          error: "Project not found",
         },
         { status: 404 }
       );
     }
-    return NextResponse.json(projectData);
+    return NextResponse.json(projectData, { status: 200 });
   } catch (error) {
-    return NextResponse.json({
-      message: error.message,
-    });
+    return NextResponse.json(
+      {
+        error: error.message,
+      },
+      { status: 500 }
+    );
   }
 }
 export async function DELETE(req, { params }) {
@@ -73,7 +76,8 @@ export async function PUT(req, { params }) {
         { status: 404 }
       );
     }
-    projectData[reqBody] = reqBody;
+    console.log(reqBody);
+    projectData.languages = await reqBody.languages;
     await projectData.save();
     return NextResponse.json({
       message: "Project is updated successfully",

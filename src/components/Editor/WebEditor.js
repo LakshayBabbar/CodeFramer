@@ -10,11 +10,13 @@ function WebEditor({ data }) {
   const { fetchData } = useSend();
 
   useEffect(() => {
-    setValues(data);
+    setValues(data?.languages);
   }, [data]);
 
   const updateHandler = async () => {
-    const res = await fetchData(`/api/projects/${data._id}`, "PUT", values);
+    const res = await fetchData(`/api/projects/${data._id}`, "PUT", {
+      languages: values,
+    });
     const date = new Date().toString();
     toast({
       title: res.message,
@@ -23,9 +25,9 @@ function WebEditor({ data }) {
   };
 
   const srcDoc = `
-    <body>${values.html}</body>
-    <style>${values.css}</style>
-    <script>${values.js}</script>
+    <body>${values?.html}</body>
+    <style>${values?.css}</style>
+    <script>${values?.js}</script>
   `;
 
   return (
@@ -36,6 +38,7 @@ function WebEditor({ data }) {
           <EditorCom
             onChange={setValues}
             data={values}
+            id={data?._id}
             setUpdate={updateHandler}
           />
         </div>
