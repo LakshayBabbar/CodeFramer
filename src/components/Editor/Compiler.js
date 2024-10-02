@@ -27,7 +27,7 @@ export default function CompilerEditor({ data, language }) {
     setStatus(0);
     setLoading(true);
     try {
-      const res = await fetch(`/api/compile/${language}`, {
+      const res = await fetch(`/api/compiler/${language}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -4,8 +4,14 @@ import shutil
 import re
 import sys
 import io
+import os
+from dotenv import load_dotenv
 
 app = Flask(__name__)
+
+load_dotenv()
+
+ACCESS_KEY = os.getenv('ACCESS_KEY')
 
 DANGEROUS_KEYWORDS = [
     r'\bos\b',    
@@ -25,8 +31,12 @@ def is_code_safe(code):
 
 @app.route('/execute', methods=['POST'])
 def execute_python_safely():
+    access_key = request.json.get('access_key')
     code = request.json.get('code')
     inputs = request.json.get('inputs', [])
+
+    if not access_key or access_key != ACCESS_KEY:
+        return jsonify({"error": "Unauthorized access. Invalid access key."}), 403
 
     if not code:
         return jsonify({"error": "No code provided."}), 400

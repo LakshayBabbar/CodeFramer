@@ -6,7 +6,7 @@ WORKDIR /app
 
 COPY app.py .
 
-RUN pip install flask gunicorn RestrictedPython
+RUN pip install flask gunicorn RestrictedPython python-dotenv
 
 RUN chown -R appuser:appuser /app
 

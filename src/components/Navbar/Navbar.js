@@ -47,6 +47,13 @@ export default function Navbar() {
   };
 
   const logoutHandler = async () => {
+    await fetch("/api/auth/logout", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      cache: "no-store",
+    });
     dispatch(
       authState({
         isAuth: false,
@@ -54,14 +61,7 @@ export default function Navbar() {
       })
     );
     setActive(false);
-    await fetch("/api/auth/logout", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      cache: "no-store",
-    });
-    navigate.push("/");
+    navigate.push("/auth");
   };
 
   useEffect(() => {

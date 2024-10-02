@@ -44,11 +44,12 @@ CodeFramer is a versatile code editor built to enhance your coding experience wi
    ```
 4. Configure Environment Variables:
 
-   - `ACCESS_SECRET_KEY`: User-defined access secret key
+   - `ACCESS_SECRET_KEY`: User-defined access secret key for JWT
    - `URI`: MongoDB URI address
    - `BASE_URL`: Hosting address
    - `NEXT_PUBLIC_AI_API`: Google AI Studio API
    - `COMPILER_URL`: Path of python compiler
+   - `ACCESS_KEY`: User-defined access secret key for compilers
 
 5. Start docker container for compiling python code:
 

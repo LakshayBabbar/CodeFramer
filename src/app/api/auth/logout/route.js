@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(request) {
   try {
-    const res = NextResponse.json(
+    const response = NextResponse.json(
       {
         message: "Logged out successfully",
       },
@@ -12,14 +12,14 @@ export async function GET(request) {
         status: 200,
       }
     );
-    res.cookies.set("authToken", " ", {
+    response.cookies.set("authToken", " ", {
       httpOnly: true,
       secure: true,
       sameSite: "none",
       path: "/",
       expires: new Date(0),
     });
-    return res;
+    return response;
   } catch (error) {
     return NextResponse.json(
       {
