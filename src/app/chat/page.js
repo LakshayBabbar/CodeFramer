@@ -1,16 +1,14 @@
 "use client";
 import React, { useState } from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import rehypeRaw from "rehype-raw";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import useSend from "@/hooks/useSend";
 import { useSelector } from "react-redux";
+import Markdown from "markdown-to-jsx";
 
 const CppIntroduction = () => {
   const { username } = useSelector((state) => state.auth);
-  const [content, setContent] = useState(null);
+  const [content, setContent] = useState("");
   const [promt, setPromt] = useState("");
   const { fetchData, loading } = useSend();
   const submitHandler = async (e) => {
@@ -52,17 +50,12 @@ const CppIntroduction = () => {
           Clear
         </Button>
         <article
-          className={`w-full xl:w-3/4 ${
+          className={`w-full xl:w-3/4 mt-10 ${
             content ? "h-fit" : "h-[calc(100vh-16rem)] sm:h-[calc(100vh-14rem)]"
           }`}
         >
           {content ? (
-            <ReactMarkdown
-              // eslint-disable-next-line react/no-children-prop
-              children={content}
-              remarkPlugins={[remarkGfm]}
-              rehypePlugins={[rehypeRaw]}
-            />
+            <Markdown>{content}</Markdown>
           ) : (
             <div className="flex items-center justify-center w-full h-full">
               <h1 className="text-3xl sm:text-5xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-b dark:from-neutral-50 dark:to-neutral-400 from-neutral-800 to-neutral-500  bg-opacity-50 leading-tight">

@@ -27,31 +27,25 @@ export default function Home() {
       title: "Smart Code Editor",
       description:
         "Speed up your workflow with real-time code suggestions and auto-completion, designed to enhance productivity.",
-      icon: <Code2Icon className="size-10" />,
-    },
-    {
-      title: "Team Collaboration",
-      description:
-        "Collaborate with your team in real-time, making it easy to share ideas and code efficiently.",
-      icon: <Users className="size-10" />,
+      icon: Code2Icon,
     },
     {
       title: "AI Assistance",
       description:
         "Get immediate help and code suggestions from our AI chatbot, streamlining your coding experience.",
-      icon: <Bot className="size-10" />,
+      icon: Bot,
     },
     {
       title: "Secure Login",
       description:
         "Protect your account with advanced authentication methods, ensuring your data remains safe and secure.",
-      icon: <ShieldCheck className="size-10" />,
+      icon: ShieldCheck,
     },
     {
       title: "Real-Time Output",
       description:
         "See the results of your code instantly as you type, allowing for immediate feedback and quicker debugging.",
-      icon: <Monitor className="size-10" />,
+      icon: Monitor,
     },
   ];
 
@@ -86,14 +80,18 @@ export default function Home() {
             className="text-slate-700 dark:text-slate-200"
           />
         </h1>
-        <p className="w-4/5 md:w-[32rem] sm:text-xl dark:text-slate-300 text-slate-700 font-[500]">
-          CodeFramer simplifies coding with no setup, offering fast, effortless
-          development with autocompletion.
+        <p className="w-4/5 md:w-[32rem] sm:text-xl dark:text-slate-300 text-slate-700">
+          CodeFramer simplifies coding with
+          <strong>
+            {" "}
+            no setup, offering fast, effortless development{" "}
+          </strong>{" "}
+          with autocompletion.
         </p>
         <div className="flex flex-col gap-4 w-3/5 sm:w-80">
           <Button
             onClick={() => setIsOpen(true)}
-            className="bg-gradient-to-br hover:shadow-md hover:bg-gradient-to-tl hover:from-indigo-500 hover:to-purple-700 ring-4 dark:ring-indigo-800 ring-indigo-300 from-indigo-500 to-purple-700 text-white"
+            className="bg-gradient-to-br hover:shadow-md hover:bg-gradient-to-tl hover:from-indigo-500 hover:to-purple-700 ring-2 dark:ring-indigo-800 ring-indigo-300 from-indigo-500 to-purple-700 text-white rounded-3xl"
             size="lg"
           >
             Getting Started for free
@@ -143,19 +141,14 @@ export default function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 justify-items-center gap-4">
           {features.map((feature, index) => (
             <motion.div
-              whileHover={{ rotateX: -25 }}
-              transition={{
-                duration: 0.1,
-                type: "spring",
-                stiffness: 350,
-                damping: 12,
-              }}
-              className="p-5 dark:border dark:border-neutal-800 rounded-md shadow-xl w-4/5 sm:w-[20rem] h-64 flex flex-col items-center gap-4 bg-primary-foreground/25"
+              whileHover={{ scale: 1.04 }}
+              transition={{ type: "spring", stiffness: 200 }}
+              className="p-5 dark:border dark:border-neutal-800 rounded-md shadow-xl w-4/5 sm:w-[20rem] h-64 flex flex-col items-center gap-2 bg-primary-foreground/25"
               key={index}
             >
-              {feature.icon}
+              <feature.icon className="size-14" />
               <h3 className="text-xl font-[700]">{feature.title}</h3>
-              <p className="dark:text-gray-400 text-gray-600 font-semibold">
+              <p className="dark:text-gray-400 text-gray-600 font-semibold text-center">
                 {feature.description}
               </p>
             </motion.div>
