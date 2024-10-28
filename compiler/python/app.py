@@ -14,13 +14,18 @@ load_dotenv()
 ACCESS_KEY = os.getenv('ACCESS_KEY')
 
 DANGEROUS_KEYWORDS = [
-    r'\bos\b',    
+  r'\bos\b',    
     r'\bsys\b',     
     r'\bimport\b',  
     r'\beval\b',      
     r'\bexec\b',    
     r'\bopen\b',      
-    r'\bsubprocess\b'
+    r'\bsubprocess\b',
+    r'\bshutil\b',
+    r'\b__import__\b',  
+    r'\bglobals\b',
+    r'\blocals\b',
+    r'\bcompile\b'
 ]
 
 def is_code_safe(code):

@@ -3,15 +3,17 @@ import { Editor } from "@monaco-editor/react";
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import useSend from "@/hooks/useSend";
 
 export default function CompilerEditor({ data, language }) {
   const editorRef = useRef();
   const [code, setCode] = useState("");
   const [output, setOutput] = useState("");
   const [status, setStatus] = useState(0);
-  const [loading, setLoading] = useState(false);
   const [inputs, setInputs] = useState("");
   const { toast } = useToast();
+  const { fetchData, loading } = useSend();
+  const [isCodeRun, setIsCodeRun] = useState(false);
 
   useEffect(() => {
     setCode(data?.languages[language] || "");
@@ -25,73 +27,31 @@ export default function CompilerEditor({ data, language }) {
   const handleSubmit = async () => {
     setOutput("");
     setStatus(0);
-    setLoading(true);
-    try {
-      const res = await fetch(`/api/compiler/${language}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          code,
-          inputs: inputs.split("\n"),
-        }),
-        signal: new AbortController().signal,
-      });
-      const data = await res.json();
-
-      if (data.error) {
-        throw new Error(data.error);
-      } else if (!res.ok) {
-        throw new Error("Something went wrong");
-      } else {
-        setOutput(data.output);
-        setStatus(data.status);
-      }
-
-      setLoading(false);
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: error.message,
-        status: "error",
-      });
-    } finally {
-      setLoading(false);
+    setIsCodeRun(true);
+    const data = await fetchData("/api/compiler", "POST", {
+      code,
+      inputs: inputs.split("\n"),
+      language,
+    });
+    if (!data.error) {
+      setOutput(data.output);
+      setStatus(data.status);
     }
+    toast({
+      title: data.error ? "Error" : "Success",
+      description: data.error || data.message,
+    });
   };
 
   const saveHandler = async () => {
-    try {
-      const req = await fetch(`/api/projects/${data._id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          languages: { [language]: code },
-        }),
-        signal: new AbortController().signal,
-      });
-      const res = await req.json();
-
-      if (res.error) {
-        throw new Error(res.error);
-      } else if (!req.ok) {
-        throw new Error("Something went wrong");
-      }
-
-      toast({
-        title: "Success",
-        description: res.message,
-      });
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: error.message,
-        status: "error",
-      });
-    }
+    setIsCodeRun(false);
+    const res = await fetchData(`/api/projects/${data._id}`, "PUT", {
+      languages: { [language]: code },
+    });
+    toast({
+      title: res.message || res.error,
+      description: new Date().toString(),
+    });
   };
 
   return (
@@ -99,14 +59,18 @@ export default function CompilerEditor({ data, language }) {
       <div className="w-full md:w-1/2 h-1/2 md:h-full bg-[#1e1e1e]">
         <div className="h-[10%] md:h-[5%] w-full flex justify-end items-center gap-4 px-4">
           {data && (
-            <Button onClick={saveHandler} className="px-4 py-[5px] h-fit">
+            <Button
+              onClick={saveHandler}
+              className="px-4 py-[5px] h-fit"
+              disabled={loading && !isCodeRun}
+            >
               Save
             </Button>
           )}
           <Button
             className="px-4 py-[5px] h-fit border-none bg-neutral-700 text-white hover:bg-transparent"
             onClick={handleSubmit}
-            disabled={loading}
+            disabled={loading && isCodeRun}
           >
             Run
           </Button>
@@ -132,11 +96,6 @@ export default function CompilerEditor({ data, language }) {
             autoIndent: true,
             autoClosingBrackets: true,
             autoClosingQuotes: true,
-            acceptSuggestionOnEnter: "on",
-            autoClosingComments: true,
-            automaticLayout: true,
-            autoClosingOvertype: "always",
-            autoClosingDelete: "always",
             acceptSuggestionOnEnter: "on",
             tabCompletion: "on",
             wordBasedSuggestions: true,

@@ -11,10 +11,10 @@ const ProjectCard = ({ data }) => {
     const res = await fetchData(`/api/projects/${data._id}`, "DELETE");
     const date = new Date().toString();
     toast({
-      title: res.message,
+      title: res.message || res.error,
       description: date,
     });
-    data.refetch(true);
+    !res.error && data.refetch(true);
   };
 
   const languages = Object.keys(data?.languages).join(", ") || "";
@@ -54,7 +54,7 @@ const ProjectCard = ({ data }) => {
                 : `/compiler/${languages}/${data._id}`
             }
           >
-            <Button  variant="outline" className="bg-transparent">
+            <Button variant="outline" className="bg-transparent">
               Open
             </Button>
           </Link>

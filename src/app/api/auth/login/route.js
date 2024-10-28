@@ -14,7 +14,7 @@ export async function POST(request) {
     if (!user) {
       return NextResponse.json(
         {
-          message: "User not found",
+          error: "User not found",
         },
         { status: 404 }
       );
@@ -46,7 +46,7 @@ export async function POST(request) {
     } else {
       return NextResponse.json(
         {
-          message: "Invalid Credentails",
+          error: "Invalid Credentails",
         },
         { status: 401 }
       );
@@ -54,8 +54,7 @@ export async function POST(request) {
   } catch (error) {
     return NextResponse.json(
       {
-        message: error.message,
-        success: false,
+        error: error.message,
       },
       { status: 500 }
     );

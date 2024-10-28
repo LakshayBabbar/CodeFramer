@@ -5,7 +5,7 @@ const useSend = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const fetchData = async (url, method, body) => {
+  const fetchData = async (url, method = "GET", body) => {
     setLoading(true);
     setIsError(false);
     setError("");
@@ -22,19 +22,19 @@ const useSend = () => {
 
       const req = await fetch(url, options);
       const res = await req.json();
-      if ("error" in res) {
+      if (res.error) {
         throw new Error(res.error);
       }
       if (!req.ok) {
-        throw new Error(res.message);
+        throw new Error("Something went wrong");
       }
-      setLoading(false);
-      return { ...res, success: true };
+      return res;
     } catch (error) {
       setIsError(true);
       setError(error.message);
+      return { error: error.message };
+    } finally {
       setLoading(false);
-      return { success: false, message: error.message };
     }
   };
 

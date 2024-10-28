@@ -19,7 +19,7 @@ function WebEditor({ data }) {
     });
     const date = new Date().toString();
     toast({
-      title: res.message,
+      title: res.message || res.error,
       description: date,
     });
   };

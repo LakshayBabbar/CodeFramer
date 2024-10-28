@@ -43,17 +43,16 @@ function Auth() {
       "POST",
       data
     );
-    const date = new Date().toString();
-    toast({
-      title: res?.message,
-      description: date,
-    });
-    if (res?.success) {
+    if (!res.error) {
       if (isLogin) {
         dispatch(authState({ isAuth: true, username: res.username }));
       } else {
         navigate.push("/auth?mode=login");
       }
+      toast({
+        title: res.message,
+        description: new Date().toString(),
+      });
     }
   };
 

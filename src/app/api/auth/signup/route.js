@@ -13,7 +13,7 @@ export async function POST(request) {
     if (checkUser) {
       return NextResponse.json(
         {
-          message: "user is already registered",
+          error: "user is already registered",
         },
         { status: 409 }
       );
@@ -29,8 +29,7 @@ export async function POST(request) {
     if (!emailRegex.test(email)) {
       return NextResponse.json(
         {
-          message: "Invalid email format.",
-          success: false,
+          error: "Invalid email format.",
         },
         { status: 400 }
       );
@@ -39,10 +38,9 @@ export async function POST(request) {
     if (!supportedDomains.includes(domain)) {
       return NextResponse.json(
         {
-          message: `Only ${supportedDomains.join(
+          error: `Only ${supportedDomains.join(
             ", "
           )} are supported email providers`,
-          success: false,
         },
         { status: 403 }
       );
@@ -62,8 +60,7 @@ export async function POST(request) {
   } catch (error) {
     return NextResponse.json(
       {
-        message: error.message,
-        success: false,
+        error: error.message,
       },
       { status: 500 }
     );

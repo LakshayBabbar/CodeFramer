@@ -43,15 +43,14 @@ const CreateProject = ({ isOpen, setIsOpen }) => {
       type: environment,
       language,
     });
-    if (res && res.success) {
+    if (!res.error) {
       setIsOpen(false);
-    }
-    res.success &&
       navigate.push(
         environment === "web"
           ? `/web-editor/${res.pid}`
           : `/compiler/${language}/${res.pid}`
       );
+    }
   };
   return isOpen && isAuth && ref.current
     ? createPortal(

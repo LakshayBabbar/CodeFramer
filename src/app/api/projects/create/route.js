@@ -11,8 +11,7 @@ export async function POST(req) {
     if (!projectData.name || !projectData.type) {
       return NextResponse.json(
         {
-          message: "Please provide all the required fields",
-          success: false,
+          error: "Please provide all the required fields",
         },
         { status: 400 }
       );
@@ -20,8 +19,7 @@ export async function POST(req) {
     if (projectData.type === "compiler" && !projectData.language) {
       return NextResponse.json(
         {
-          message: "Please provide all the required fields",
-          success: false,
+          error: "Please provide all the required fields",
         },
         { status: 400 }
       );
@@ -47,9 +45,7 @@ export async function POST(req) {
     if (isExists) {
       return NextResponse.json(
         {
-          message:
-            "Project name is already taken, please choose a different one",
-          success: false,
+          error: "Project name is already taken, please choose a different one",
         },
         { status: 409 }
       );
@@ -60,15 +56,13 @@ export async function POST(req) {
       {
         message: "Project is created successfully",
         pid: newProject._id,
-        success: true,
       },
       { status: 201 }
     );
   } catch (error) {
     return NextResponse.json(
       {
-        message: error.message,
-        success: false,
+        error: error.message,
       },
       { status: 500 }
     );

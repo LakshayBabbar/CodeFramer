@@ -34,8 +34,7 @@ const Page = () => {
     const con = confirm("Are you sure you want to close your account?");
     if (con) {
       const res = await fetchData("/api/auth/close", "DELETE");
-      if (res.success) {
-        localStorage.removeItem("authToken");
+      if (!res.error) {
         dispatch(
           authState({
             isAuth: false,

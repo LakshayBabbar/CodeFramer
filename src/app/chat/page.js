@@ -29,7 +29,7 @@ const CppIntroduction = () => {
       },
       false
     );
-    req.success
+    !req.error
       ? setContent(req.candidates[0].content?.parts[0]?.text)
       : setContent("Something went wrong");
     setPromt("");
