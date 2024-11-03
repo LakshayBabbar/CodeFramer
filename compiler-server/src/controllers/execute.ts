@@ -1,17 +1,24 @@
 import { exec } from "child_process";
 import { Request, Response } from "express";
-import { getDockerCommand } from "../lib/lang-detect.js";
+import { getDockerCommand } from "../lib/getCommand.js";
+import { config } from "dotenv";
+config();
 
 interface ExecutionRequest extends Request {
   body: {
     code: string;
-    language: "python" | "javascript" | "java";
+    language: "python" | "javascript" | "cpp" | "c";
     inputs?: string;
+    access_key: string;
   };
 }
 
 export async function executionHandler(req: ExecutionRequest, res: Response) {
-  const { code, language, inputs = "" } = req.body;
+  const { code, language, inputs = "", access_key } = req.body;
+
+  if (access_key !== process.env.ACCESS_KEY) {
+    return res.status(401).json({ error: "Unauthorized access" });
+  }
 
   try {
     const command = await getDockerCommand(language, code);

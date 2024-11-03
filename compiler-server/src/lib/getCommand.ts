@@ -1,9 +1,10 @@
-type SupportedLanguage = "python" | "javascript" | "java";
+type SupportedLanguage = "python" | "javascript" | "cpp" | "c";
 
 export const imageMap: Record<SupportedLanguage, string> = {
   python: "python:3.10-slim",
   javascript: "node:18-alpine",
-  java: "openjdk:17-jdk-alpine",
+  cpp: "lakshaybabbar/custom-gcc:latest",
+  c: "lakshaybabbar/custom-gcc:latest",
 };
 
 export async function getDockerCommand(
@@ -21,8 +22,10 @@ export async function getDockerCommand(
       return `${baseCommand} sh -c "echo ${encodedCode} | base64 -d > /temp.py && python3 /temp.py"`;
     case "javascript":
       return `${baseCommand} sh -c "echo ${encodedCode} | base64 -d > /temp.js && node /temp.js"`;
-    case "java":
-      return `${baseCommand} sh -c "echo ${encodedCode} | base64 -d > /temp.java && java /temp.java"`;
+    case "cpp":
+      return `${baseCommand} "echo ${encodedCode} | base64 -d > /temp.cpp && g++ /temp.cpp -o temp.out && ./temp.out"`;
+    case "c":
+      return `${baseCommand} "echo ${encodedCode} | base64 -d > /temp.c && gcc /temp.c -o temp.out && ./temp.out"`;
     default:
       throw new Error("Unsupported language");
   }

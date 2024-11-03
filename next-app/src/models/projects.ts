@@ -31,6 +31,12 @@ const projectSchema = new mongoose.Schema(
       java: {
         type: String,
       },
+      cpp: {
+        type: String,
+      },
+      c: {
+        type: String,
+      },
       javascript: {
         type: String,
       },
