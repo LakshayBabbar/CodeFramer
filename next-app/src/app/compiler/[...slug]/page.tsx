@@ -1,5 +1,6 @@
 import CompilerEditor from "@/components/Editor/Compiler";
 import { cookies } from "next/headers";
+import { SUPPORTED_LANGUAGES } from "@/lib/lang";
 
 const getData = async (id: string) => {
   try {
@@ -42,8 +43,9 @@ export async function generateMetadata({
 
 const Compiler = async ({ params }: { params: { slug: string[] } }) => {
   const { slug } = params;
-  fetch(`${process.env.COMPILER_URL}/status`);
-  if (slug[0] !== "python") {
+  const isValidLang = SUPPORTED_LANGUAGES.find((lang) => lang === slug[0]);
+
+  if (!isValidLang) {
     return (
       <main className="flex h-screen w-full items-center justify-center text-3xl font-light">
         Language not supported

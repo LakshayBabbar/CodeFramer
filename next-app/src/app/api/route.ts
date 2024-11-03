@@ -27,7 +27,5 @@ export async function GET(req: NextRequest) {
       },
       { status: 500 }
     );
-  } finally {
-    fetch(process.env.COMPILER_URL + "/status");
   }
 }

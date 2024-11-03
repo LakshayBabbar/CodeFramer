@@ -12,6 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { SUPPORTED_LANGUAGES } from "@/lib/lang";
 
 interface CreateProjectProps {
   isOpen: boolean;
@@ -101,7 +102,13 @@ const CreateProject: React.FC<CreateProjectProps> = ({ isOpen, setIsOpen }) => {
                       <SelectValue placeholder="Language" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="python">Python</SelectItem>
+                      {SUPPORTED_LANGUAGES.map((lang, index) => {
+                        return (
+                          <SelectItem key={index} value={lang}>
+                            {lang}
+                          </SelectItem>
+                        );
+                      })}
                     </SelectContent>
                   </Select>
                 )}

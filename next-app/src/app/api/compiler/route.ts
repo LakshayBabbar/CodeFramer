@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
   if (!referer.includes(process.env.BASE_URL || "")) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  const { code, inputs } = await req.json();
+  const { code, inputs, language } = await req.json();
 
   try {
     const access_key = process.env?.ACCESS_KEY;
@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ code, inputs, access_key }),
+      body: JSON.stringify({ code, inputs, access_key, language }),
     });
 
     const response = (await Promise.race([

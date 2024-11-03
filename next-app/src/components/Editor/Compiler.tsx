@@ -4,6 +4,8 @@ import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import useSend from "@/hooks/useSend";
+import { SUPPORTED_LANGUAGES } from "@/lib/lang";
+import { useRouter } from "next/navigation";
 
 interface CompilerEditorProps {
   language: string;
@@ -20,11 +22,12 @@ export default function CompilerEditor({
   const editorRef = useRef<any>(null);
   const [code, setCode] = useState("");
   const [output, setOutput] = useState("");
-  const [status, setStatus] = useState(0);
+  const [status, setStatus] = useState(false);
   const [inputs, setInputs] = useState("");
   const { toast } = useToast();
   const { fetchData, loading } = useSend();
   const [isCodeRun, setIsCodeRun] = useState(false);
+  const redirect = useRouter();
 
   useEffect(() => {
     setCode(data?.languages[language] || "");
@@ -37,25 +40,26 @@ export default function CompilerEditor({
 
   const handleSubmit = async () => {
     setOutput("");
-    setStatus(0);
+    setStatus(false);
     setIsCodeRun(true);
     const data = await fetchData({
       url: "/api/compiler",
       method: "POST",
       body: {
         code,
-        inputs: inputs.split("\n"),
+        inputs: inputs,
         language,
       },
     });
     if (!data.error) {
       setOutput(data.output);
-      setStatus(data.status);
+      setStatus(data.codeError);
     }
-    toast({
-      title: data.error ? "Error" : "Success",
-      description: data.error || data.message,
-    });
+    !data.codeError &&
+      toast({
+        title: data.error ? "Error" : "Compiled Successfully!",
+        description: data.error || data.message,
+      });
   };
 
   const saveHandler = async () => {
@@ -77,7 +81,7 @@ export default function CompilerEditor({
     <div className="mt-14 w-full h-[93.8vh] flex flex-col md:flex-row items-center justify-center">
       <div className="w-full md:w-1/2 h-1/2 md:h-full bg-[#1e1e1e]">
         <div className="h-[10%] md:h-[5%] w-full flex justify-end items-center gap-4 px-4">
-          {data && (
+          {data ? (
             <Button
               onClick={saveHandler}
               className="px-4 py-[5px] h-fit"
@@ -85,6 +89,20 @@ export default function CompilerEditor({
             >
               Save
             </Button>
+          ) : (
+            <select
+              onChange={(e) => redirect.push(e.target.value)}
+              className="py-1 px-4 rounded-md bg-neutral-700 appearance-none text-center"
+              value={language}
+            >
+              {SUPPORTED_LANGUAGES.map((lang, index) => {
+                return (
+                  <option key={index} value={lang}>
+                    {lang}
+                  </option>
+                );
+              })}
+            </select>
           )}
           <Button
             className="px-4 py-[5px] h-fit border-none bg-neutral-700 text-white hover:bg-transparent"
@@ -126,7 +144,7 @@ export default function CompilerEditor({
       <div className="w-full md:w-1/2 h-1/2 md:h-full flex flex-col-reverse md:flex-col">
         <pre
           className={`w-full h-1/2 p-4 overflow-auto ${
-            status === 1 && "text-red-400"
+            status === true && "text-red-400"
           }`}
         >
           {output}
