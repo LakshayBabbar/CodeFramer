@@ -85,29 +85,30 @@ export default function CompilerEditor({
             <Button
               onClick={saveHandler}
               className="px-4 py-[5px] h-fit"
-              disabled={loading && !isCodeRun}
+              disabled={loading && isCodeRun === false}
             >
               Save
             </Button>
           ) : (
             <select
               onChange={(e) => redirect.push(e.target.value)}
-              className="py-1 px-4 rounded-md bg-neutral-700 appearance-none text-center"
+              className="py-1 px-4 rounded-md bg-neutral-700"
               value={language}
             >
               {SUPPORTED_LANGUAGES.map((lang, index) => {
+                const capitalize = lang.charAt(0).toUpperCase() + lang.slice(1);
                 return (
                   <option key={index} value={lang}>
-                    {lang}
+                    {capitalize}
                   </option>
                 );
               })}
             </select>
           )}
           <Button
-            className="px-4 py-[5px] h-fit border-none bg-neutral-700 text-white hover:bg-transparent"
+            className="px-4 py-[5px] h-fit border-none bg-neutral-700 text-white hover:bg-neutral-600"
             onClick={handleSubmit}
-            disabled={loading && isCodeRun}
+            disabled={loading && isCodeRun === true}
           >
             Run
           </Button>

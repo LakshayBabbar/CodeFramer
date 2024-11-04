@@ -29,6 +29,7 @@ CodeFramer is a versatile code editor designed to enhance your coding experience
 ### Prerequisites
 
 Ensure you have the following installed on your machine:
+
 - [Docker](https://www.docker.com/get-started)
 - [Node.js](https://nodejs.org/en/download/)
 
@@ -54,13 +55,18 @@ Ensure you have the following installed on your machine:
 
 4.  **Configure Environment Variables:**
 
-    Create a `.env.local` file in the root of your project and add the following variables:
+    Create a `.env.local` file in the nextjs application and add the following variables:
 
     - `ACCESS_SECRET_KEY`: Your defined access secret key.
     - `URI`: MongoDB URI address.
     - `BASE_URL`: Hosting address.
     - `NEXT_PUBLIC_AI_API`: Google AI Studio API key.
     - `COMPILER_URL`: Path to the compiler server.
+
+    Create a `.env` file in the compiler server and add the following variables:
+
+    - `ACCESS_SECRET_KEY`: Your defined access secret key. Note: Same as nextjs appication.
+    - `ORIGIN`: Allowed origin for cors.
 
 5.  **Start the Compiler Server for code execution in an isolated environment:**
 

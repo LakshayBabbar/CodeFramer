@@ -21,8 +21,8 @@ export async function executionHandler(req: ExecutionRequest, res: Response) {
   }
 
   try {
-    const command = await getDockerCommand(language, code);
-    const output = await execCommand(command, inputs);
+    const command = await getDockerCommand(language, code, inputs);
+    const output = await execCommand(command);
     if (output.stderr) {
       return res.json({ output: output.stderr, codeError: true });
     }
@@ -34,13 +34,10 @@ export async function executionHandler(req: ExecutionRequest, res: Response) {
 }
 
 const execCommand = (
-  cmd: string,
-  inputs: string
+  cmd: string
 ): Promise<{ stdout?: string; stderr?: string }> => {
   return new Promise((resolve, reject) => {
     const process = exec(cmd, { maxBuffer: 1024 * 1024 * 5 });
-    process.stdin?.write(inputs);
-    process.stdin?.end();
 
     const timer = setTimeout(() => {
       process.kill("SIGTERM");

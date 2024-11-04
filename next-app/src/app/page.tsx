@@ -12,6 +12,8 @@ import {
   ShieldCheck,
   Bot,
   Monitor,
+  SquareCode,
+  Layers,
 } from "lucide-react";
 import { FlipWords } from "@/components/ui/flip-words";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
@@ -29,22 +31,34 @@ export default function Home() {
       icon: Code2Icon,
     },
     {
+      title: "Multiple Language Support",
+      description:
+        "Write and run code in various programming languages, all within a single environment.",
+      icon: SquareCode,
+    },
+    {
+      title: "Project Management",
+      description:
+        "Add and manage multiple projects of different languages and environments through the user dashboard.",
+      icon: Layers,
+    },
+    {
       title: "AI Assistance",
       description:
         "Get immediate help and code suggestions from our AI chatbot, streamlining your coding experience.",
       icon: Bot,
     },
     {
+      title: "Real-Time Output",
+      description:
+        "See the results of your code instantly as you type in web env, allowing for immediate feedback and quicker debugging.",
+      icon: Monitor,
+    },
+    {
       title: "Secure Login",
       description:
         "Protect your account with advanced authentication methods, ensuring your data remains safe and secure.",
       icon: ShieldCheck,
-    },
-    {
-      title: "Real-Time Output",
-      description:
-        "See the results of your code instantly as you type, allowing for immediate feedback and quicker debugging.",
-      icon: Monitor,
     },
   ];
 
@@ -66,10 +80,10 @@ export default function Home() {
           <HoverBorderGradient
             containerClassName="rounded-full"
             as="button"
-            className="dark:bg-slate-950 bg-slate-100 text-black dark:text-white flex items-center space-x-2"
+            className="dark:bg-slate-950 bg-slate-100 text-black dark:text-white flex space-x-2"
           >
-            <Code2Icon />
-            <span className="font-[500] ">CodeFramer</span>
+            <Code2Icon className="size-5" />
+            <span className="font-mono">CodeFramer</span>
           </HoverBorderGradient>
         </div>
         <h1 className="text-6xl sm:text-[6rem] max-w-[40rem] font-[600] text-center text-transparent bg-clip-text bg-gradient-to-br from-indigo-500 to-purple-700">

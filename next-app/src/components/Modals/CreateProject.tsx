@@ -23,7 +23,7 @@ const CreateProject: React.FC<CreateProjectProps> = ({ isOpen, setIsOpen }) => {
   const modalRef = useRef<HTMLDivElement | null>(null);
   const [name, setName] = useState<string>("");
   const [environment, setEnvironment] = useState<"web" | "compiler">("web");
-  const [language, setLanguage] = useState<"python">("python");
+  const [language, setLanguage] = useState("python");
   const { isAuth } = useAuth();
   const router = useRouter();
   const { fetchData, isError, error, loading, setIsError } = useSend();
@@ -95,7 +95,7 @@ const CreateProject: React.FC<CreateProjectProps> = ({ isOpen, setIsOpen }) => {
                 </Select>
                 {environment === "compiler" && (
                   <Select
-                    onValueChange={(val) => setLanguage(val as "python")}
+                    onValueChange={(val: string) => setLanguage(val)}
                     required
                   >
                     <SelectTrigger className="flex-grow">
