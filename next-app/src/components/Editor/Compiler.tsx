@@ -10,8 +10,8 @@ import { useRouter } from "next/navigation";
 interface CompilerEditorProps {
   language: string;
   data?: {
-    _id: string;
-    languages: Record<string, string>;
+    id: string;
+    languages: { name: string; code: string }[];
   };
 }
 
@@ -30,7 +30,7 @@ export default function CompilerEditor({
   const redirect = useRouter();
 
   useEffect(() => {
-    setCode(data?.languages[language] || "");
+    setCode(data?.languages[0]?.code || "");
   }, [data, language]);
 
   const handleEditorDidMount: OnMount = (editor) => {
@@ -65,10 +65,10 @@ export default function CompilerEditor({
   const saveHandler = async () => {
     setIsCodeRun(false);
     const res = await fetchData({
-      url: `/api/projects/${data?._id}`,
+      url: `/api/projects/${data?.id}`,
       method: "PUT",
       body: {
-        languages: { [language]: code },
+        languages: [{ name: data?.languages[0].name, code }],
       },
     });
     toast({
@@ -92,7 +92,7 @@ export default function CompilerEditor({
           ) : (
             <select
               onChange={(e) => redirect.push(e.target.value)}
-              className="py-1 px-4 rounded-md bg-neutral-700"
+              className="py-1 px-4 rounded-md bg-neutral-700 text-white"
               value={language}
             >
               {SUPPORTED_LANGUAGES.map((lang, index) => {

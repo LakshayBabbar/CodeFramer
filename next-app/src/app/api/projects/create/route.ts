@@ -1,48 +1,44 @@
 import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
-import Project from "@/models/projects";
-import { connectDB } from "@/config/db";
-connectDB();
+import prisma from "@/config/db";
+import { ProjectType } from "@prisma/client";
 
 export async function POST(req: NextRequest) {
   try {
     const reqBody = await req.json();
-    const projectData = await reqBody;
-    if (!projectData.name || !projectData.type) {
-      return NextResponse.json(
-        {
-          error: "Please provide all the required fields",
-        },
-        { status: 400 }
-      );
-    }
-    if (projectData.type === "compiler" && !projectData.language) {
-      return NextResponse.json(
-        {
-          error: "Please provide all the required fields",
-        },
-        { status: 400 }
-      );
-    }
-    if (projectData.type === "compiler") {
-      projectData.languages = projectData.languages || {};
-      projectData.languages[projectData.language] = " ";
-    }
-    if (projectData.type === "web") {
-      projectData.languages = {
-        html: "<h1 id='heading'>Welcome to your first project</h1>",
-        css: "#heading {\n\tcolor: blue;\n\tfont-size: 24px;\n}",
-        js: "",
-      };
-    }
-    const headersList = headers();
-    const authData = await JSON.parse(headersList.get("authData") || "");
+    const { name, type, language } = reqBody;
 
-    const isExists = await Project.findOne({
-      name: projectData.name,
-      userId: authData.id,
+    let languages = {};
+    if (type === "COMPILER") {
+      languages = [{ name: language, code: " " }];
+    } else if (type === "WEB") {
+      languages = [
+        {
+          name: "html",
+          code: "<h1 id='heading'>Welcome to your first project</h1>",
+        },
+        {
+          name: "css",
+          code: "#heading {\n\tcolor: blue;\n\tfont-size: 24px;\n}",
+        },
+        {
+          name: "javascript",
+          code: "",
+        },
+      ];
+    }
+
+    const headersList = headers();
+    const authData = JSON.parse(headersList.get("authData") || "{}");
+
+    const existingProject = await prisma.project.findFirst({
+      where: {
+        name,
+        userId: authData.id,
+      },
     });
-    if (isExists) {
+
+    if (existingProject) {
       return NextResponse.json(
         {
           error: "Project name is already taken, please choose a different one",
@@ -50,21 +46,26 @@ export async function POST(req: NextRequest) {
         { status: 409 }
       );
     }
-    const newProject = new Project({ ...projectData, userId: authData.id });
-    await newProject.save();
+
+    const newProject = await prisma.project.create({
+      data: {
+        name,
+        type: type as ProjectType,
+        userId: authData.id,
+        languages: languages as any,
+      },
+    });
+
     return NextResponse.json(
       {
-        message: "Project is created successfully",
-        pid: newProject._id,
+        message: "Project created successfully",
+        pid: newProject.id,
       },
       { status: 201 }
     );
   } catch (error: any) {
-    return NextResponse.json(
-      {
-        error: error.message,
-      },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  } finally {
+    await prisma.$disconnect();
   }
 }

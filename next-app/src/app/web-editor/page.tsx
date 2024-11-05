@@ -1,15 +1,20 @@
 import WebEditor from "@/components/Editor/WebEditor";
 
 const Page = () => {
-  const languages = {
-    html: `<div class="container">
+  const languages = [
+    {
+      name: "html",
+      code: `<div class="container">
   <h1>Welcome to <br/><span>CodeFramer</span></h1>
   <p>CodeFramer is a versatile code editor built to enhance your coding experience with its intuitive interface and
     powerful
     features.
   <p>
 </div>`,
-    css: `body {
+    },
+    {
+      name: "css",
+      code: `body {
     font-family: "inter";
     text-align: center;
     color: aliceblue;
@@ -55,8 +60,12 @@ const Page = () => {
         max-width: 75vw;
     }
 }`,
-    js: "",
-  };
+    },
+    {
+      name: "javascript",
+      code: "",
+    },
+  ];
   return <WebEditor data={{ languages }} />;
 };
 export default Page;

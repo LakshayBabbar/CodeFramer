@@ -1,7 +1,5 @@
-import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar/Navbar";
-const inter = Inter({ subsets: ["latin"], preload: true });
 import { Toaster } from "@/components/ui/toaster";
 import ReactQueryProvider from "@/context/ReactQueryProvider";
 import AuthProvider from "@/context/AuthProvider";
@@ -21,9 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark overflow-x-hidden">
-      <body
-        className={`${inter.className} overflow-x-hidden dark:bg-slate-950 bg-slate-100`}
-      >
+      <body className={`overflow-x-hidden dark:bg-slate-950 bg-slate-100`}>
         <AuthProvider>
           <ReactQueryProvider>
             <Navbar />

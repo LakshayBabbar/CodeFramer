@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 interface EditorComProps {
   pid: string;
   data: {
-    js?: string;
+    javascript?: string;
     css?: string;
     html?: string;
   };
@@ -34,7 +34,7 @@ export default function EditorCom({
     "script.js": {
       name: "script.js",
       language: "javascript",
-      value: data?.js || "",
+      value: data?.javascript || "",
     },
     "style.css": {
       name: "style.css",
@@ -56,10 +56,12 @@ export default function EditorCom({
   };
 
   const handleEditorChange = (value: string | undefined) => {
+    const lang =
+      file.name.split(".")[1] === "js" ? "javascript" : file.name.split(".")[1];
     if (value !== undefined) {
       onChangeHandler((values) => ({
         ...values,
-        [fileName.split(".")[1]]: value,
+        [lang]: value,
       }));
     }
   };

@@ -5,29 +5,38 @@ import { useToast } from "@/hooks/use-toast";
 import useSend from "@/hooks/useSend";
 
 export interface webEditorDataType {
-  languages: {
-    html: string;
-    css: string;
-    js: string;
-  };
-  _id?: string;
+  languages: { name: string; code: string }[];
+  id?: string;
 }
 
 function WebEditor({ data }: { data: webEditorDataType }) {
-  const [values, setValues] = useState({ html: "", css: "", js: "" });
+  const [values, setValues] = useState({ html: "", css: "", javascript: "" });
   const { toast } = useToast();
   const { fetchData } = useSend();
 
   useEffect(() => {
-    setValues(data?.languages);
+    let extractLanguages = {} as any;
+    data?.languages.forEach((lang) => {
+      extractLanguages[lang?.name] = lang.code || "";
+    });
+
+    setValues({
+      html: extractLanguages?.html || "",
+      css: extractLanguages?.css || "",
+      javascript: extractLanguages?.javascript || "",
+    });
   }, [data]);
 
   const updateHandler = async () => {
     const res = await fetchData({
-      url: `/api/projects/${data._id}`,
+      url: `/api/projects/${data.id}`,
       method: "PUT",
       body: {
-        languages: values,
+        languages: [
+          { name: "html", code: values.html },
+          { name: "css", code: values.css },
+          { name: "javascript", code: values.javascript },
+        ],
       },
     });
     const date = new Date().toString();
@@ -40,7 +49,7 @@ function WebEditor({ data }: { data: webEditorDataType }) {
   const srcDoc = `
     <body>${values?.html}</body>
     <style>${values?.css}</style>
-    <script>${values?.js}</script>
+    <script>${values?.javascript}</script>
   `;
 
   return (
@@ -51,7 +60,7 @@ function WebEditor({ data }: { data: webEditorDataType }) {
           <EditorCom
             onChangeHandler={setValues}
             data={values}
-            pid={data?._id || ""}
+            pid={data?.id || ""}
             updateHandler={updateHandler}
           />
         </div>

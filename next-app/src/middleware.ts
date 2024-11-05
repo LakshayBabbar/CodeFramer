@@ -1,42 +1,60 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyToken } from "./lib/authToken";
 
+const PROTECTED_API_PATHS = ["/api/projects", "/api/auth/close"];
+const PROTECTED_APP_PATHS = ["/chat", "/dashboard"];
+const ACCESS_SECRET_KEY = process.env.ACCESS_SECRET_KEY || "";
+
+const isProtectedApiPath = (pathname: string) =>
+  PROTECTED_API_PATHS.some((path) => pathname.startsWith(path));
+
+const isProtectedAppPath = (pathname: string) =>
+  PROTECTED_APP_PATHS.some((path) => pathname.startsWith(path));
+
+const isProtectedCompilerPath = (pathname: string) => {
+  return /^\/compiler\/[^/]+\/[^/]+$/.test(pathname);
+};
+
+const isProtectedWebEditorPath = (pathname: string) => {
+  return /^\/web-editor\/[^/]+\/?$/.test(pathname);
+};
+
 export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
   const token =
     request.cookies.get("authToken")?.value ||
     request.headers.get("Authorization")?.split(" ")[1] ||
     "";
-  if (
-    request.nextUrl.pathname.startsWith("/api/projects") ||
-    request.nextUrl.pathname.startsWith("/api/auth/close")
-  ) {
-    const { payload, error } = await verifyToken(
-      token,
-      process.env.ACCESS_SECRET_KEY || ""
-    );
+
+  if (isProtectedApiPath(pathname)) {
+    const { payload, error } = await verifyToken(token, ACCESS_SECRET_KEY);
+
     if (error) {
       return NextResponse.json(
-        {
-          error: "Could not Authenticate",
-        },
+        { error: "Authentication failed. Please check your token." },
         { status: 401 }
       );
     }
+
     const headers = new Headers(request.headers);
     headers.set("authData", JSON.stringify(payload));
-    const response = NextResponse.next({
+
+    return NextResponse.next({
       request: {
         headers,
       },
     });
-    return response;
-  } else if (
-    (request.nextUrl.pathname.startsWith("/chat") ||
-      request.nextUrl.pathname.startsWith("/dashboard")) &&
+  }
+
+  if (
+    (isProtectedAppPath(pathname) ||
+      isProtectedCompilerPath(pathname) ||
+      isProtectedWebEditorPath(pathname)) &&
     !token
   ) {
     return NextResponse.redirect(new URL("/auth?mode=login", request.url));
   }
+
   return NextResponse.next();
 }
 
@@ -46,5 +64,7 @@ export const config = {
     "/api/auth/close",
     "/chat",
     "/dashboard/:path*",
+    "/web-editor/:path*",
+    "/compiler/:path*",
   ],
 };

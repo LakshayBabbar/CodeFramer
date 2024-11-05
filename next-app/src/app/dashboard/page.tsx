@@ -91,7 +91,7 @@ const Page = () => {
               {data?.length > 0 ? (
                 data?.map((item: ProjectCardProps) => {
                   return (
-                    <ProjectCard key={item._id} data={{ ...item, refetch }} />
+                    <ProjectCard key={item.id} data={{ ...item, refetch }} />
                   );
                 })
               ) : (
@@ -105,7 +105,11 @@ const Page = () => {
         )}
         <hr className="border w-full" />
         <div className="flex flex-col items-center space-y-4 pb-10">
-          <AlertWrapper handlerFn={closeAccountHandler} conformText={username}>
+          <AlertWrapper
+            handlerFn={closeAccountHandler}
+            conformText={username}
+            disabled={reqData.loading}
+          >
             Close Account
           </AlertWrapper>
           {reqData.isError && (

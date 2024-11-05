@@ -6,12 +6,12 @@ import { Code2Icon, Delete } from "lucide-react";
 import { QueryObserverResult } from "@tanstack/react-query";
 
 export interface ProjectCardProps {
-  _id: string;
+  id: string;
   name: string;
   createdAt: string;
   updatedAt: string;
   type: string;
-  languages: Record<string, string>;
+  languages: { name: string; code: string }[];
   refetch: () => Promise<QueryObserverResult<any, Error>>;
 }
 
@@ -20,7 +20,7 @@ const ProjectCard = ({ data }: { data: ProjectCardProps }) => {
   const { fetchData } = useSend();
   const deleteHandler = async () => {
     const res = await fetchData({
-      url: `/api/projects/${data._id}`,
+      url: `/api/projects/${data.id}`,
       method: "DELETE",
     });
     const date = new Date().toString();
@@ -33,7 +33,7 @@ const ProjectCard = ({ data }: { data: ProjectCardProps }) => {
     }
   };
 
-  const languages = Object.keys(data?.languages || {}).join(", ");
+  const languages = data.languages.map((lang) => lang.name).join(", ");
 
   return (
     <div className="w-full sm:max-w-96 bg-gradient-to-r from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-950 border border-transparent hover:border-slate-700 transition-all duration-200 p-6 rounded-2xl shadow-xl transform hover:scale-[1.02]">
@@ -65,9 +65,9 @@ const ProjectCard = ({ data }: { data: ProjectCardProps }) => {
         <div className="flex items-center justify-between mt-4">
           <Link
             href={
-              data.type === "web"
-                ? `/web-editor/${data._id}`
-                : `/compiler/${languages}/${data._id}`
+              data.type === "WEB"
+                ? `/web-editor/${data.id}`
+                : `/compiler/${languages}/${data.id}`
             }
           >
             <Button variant="outline" className="bg-transparent">

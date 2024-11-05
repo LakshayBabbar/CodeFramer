@@ -22,7 +22,7 @@ interface CreateProjectProps {
 const CreateProject: React.FC<CreateProjectProps> = ({ isOpen, setIsOpen }) => {
   const modalRef = useRef<HTMLDivElement | null>(null);
   const [name, setName] = useState<string>("");
-  const [environment, setEnvironment] = useState<"web" | "compiler">("web");
+  const [environment, setEnvironment] = useState<"WEB" | "COMPILER">("WEB");
   const [language, setLanguage] = useState("python");
   const { isAuth } = useAuth();
   const router = useRouter();
@@ -57,7 +57,7 @@ const CreateProject: React.FC<CreateProjectProps> = ({ isOpen, setIsOpen }) => {
     if (!res.error) {
       setIsOpen(false);
       router.push(
-        environment === "web"
+        environment === "WEB"
           ? `/web-editor/${res.pid}`
           : `/compiler/${language}/${res.pid}`
       );
@@ -81,7 +81,7 @@ const CreateProject: React.FC<CreateProjectProps> = ({ isOpen, setIsOpen }) => {
               <div className="flex justify-between gap-4">
                 <Select
                   onValueChange={(val) =>
-                    setEnvironment(val as "web" | "compiler")
+                    setEnvironment(val as "WEB" | "COMPILER")
                   }
                   required
                 >
@@ -89,11 +89,11 @@ const CreateProject: React.FC<CreateProjectProps> = ({ isOpen, setIsOpen }) => {
                     <SelectValue placeholder="Environment" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="web">Web</SelectItem>
-                    <SelectItem value="compiler">Compiler</SelectItem>
+                    <SelectItem value="WEB">Web</SelectItem>
+                    <SelectItem value="COMPILER">Compiler</SelectItem>
                   </SelectContent>
                 </Select>
-                {environment === "compiler" && (
+                {environment === "COMPILER" && (
                   <Select
                     onValueChange={(val: string) => setLanguage(val)}
                     required
