@@ -22,10 +22,10 @@ export default function CompilerEditor({
   const editorRef = useRef<any>(null);
   const [code, setCode] = useState("");
   const [output, setOutput] = useState("");
-  const [status, setStatus] = useState(false);
+  const [isCodeErr, setIsCodeErr] = useState(false);
   const [inputs, setInputs] = useState("");
   const { toast } = useToast();
-  const { fetchData, loading } = useSend();
+  const { fetchData, loading, isError, error } = useSend();
   const [isCodeRun, setIsCodeRun] = useState(false);
   const redirect = useRouter();
 
@@ -40,7 +40,6 @@ export default function CompilerEditor({
 
   const handleSubmit = async () => {
     setOutput("");
-    setStatus(false);
     setIsCodeRun(true);
     const data = await fetchData({
       url: "/api/compiler",
@@ -53,13 +52,13 @@ export default function CompilerEditor({
     });
     if (!data.error) {
       setOutput(data.output);
-      setStatus(data.codeError);
-    }
-    !data.codeError &&
+      setIsCodeErr(data.codeError);
+    } else {
       toast({
-        title: data.error ? "Error" : "Compiled Successfully!",
-        description: data.error || data.message,
+        title: data.error || "Failed to compile.",
+        description: new Date().toString(),
       });
+    }
   };
 
   const saveHandler = async () => {
@@ -145,7 +144,7 @@ export default function CompilerEditor({
       <div className="w-full md:w-1/2 h-1/2 md:h-full flex flex-col-reverse md:flex-col">
         <pre
           className={`w-full h-1/2 p-4 overflow-auto ${
-            status === true && "text-red-400"
+            isCodeErr && "text-red-400"
           }`}
         >
           {output}

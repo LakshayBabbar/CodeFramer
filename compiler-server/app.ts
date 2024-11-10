@@ -1,6 +1,6 @@
 import bodyParser from "body-parser";
-import express, { Request } from "express";
-import { executionHandler } from "./src/controllers/execute.js";
+import express, { Request, Response } from "express";
+import { executionHandler } from "./src/controllers/executionHandler.js";
 import cors from "cors";
 import { config } from "dotenv";
 config();
@@ -25,15 +25,15 @@ app.use(bodyParser.json());
 
 const PORT = process.env.PORT || 5000;
 
-app.get("/status", (req: Request, res: any) => {
+app.get("/status", (req: Request, res: Response) => {
   try {
-    return res.status(200).json({ status: "Server is running" });
+    res.status(200).json({ message: "Server is running" });
   } catch (error: any) {
-    return res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 
-app.post("/execute", executionHandler as any);
+app.post("/execute", executionHandler);
 
 app.listen(PORT, () => {
   console.log("Server running on port: " + PORT);

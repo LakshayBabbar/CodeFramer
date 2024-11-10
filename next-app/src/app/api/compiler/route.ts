@@ -13,10 +13,7 @@ export async function POST(req: NextRequest) {
     const compilerUrl = process.env.COMPILER_URL + "/execute";
 
     const timeout = new Promise((_, reject) =>
-      setTimeout(
-        () => reject(new Error("Server is booting, please wait few seconds")),
-        8000
-      )
+      setTimeout(() => reject(new Error("Request timed out")), 10000)
     );
 
     const fetchExecution = fetch(compilerUrl, {

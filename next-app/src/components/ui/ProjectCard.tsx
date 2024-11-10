@@ -33,7 +33,9 @@ const ProjectCard = ({ data }: { data: ProjectCardProps }) => {
     }
   };
 
-  const languages = data.languages.map((lang) => lang.name).join(", ");
+  const languages = data.languages
+    .map((lang) => lang.name.charAt(0).toUpperCase() + lang.name.slice(1))
+    .join(", ");
 
   return (
     <div className="w-full sm:max-w-96 bg-gradient-to-r from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-950 border border-transparent hover:border-slate-700 transition-all duration-200 p-6 rounded-2xl shadow-xl transform hover:scale-[1.02]">
@@ -56,7 +58,7 @@ const ProjectCard = ({ data }: { data: ProjectCardProps }) => {
             {data?.updatedAt?.substring(0, 10)}
           </p>
           <p>
-            <span className="font-semibold">Type:</span> {data.type}
+            <span className="font-semibold">Env:</span> {data.type}
           </p>
           <p>
             <span className="font-semibold">Languages:</span> {languages}
@@ -67,7 +69,7 @@ const ProjectCard = ({ data }: { data: ProjectCardProps }) => {
             href={
               data.type === "WEB"
                 ? `/web-editor/${data.id}`
-                : `/compiler/${languages}/${data.id}`
+                : `/compiler/${data?.languages[0].name}/${data.id}`
             }
           >
             <Button variant="outline" className="bg-transparent">
