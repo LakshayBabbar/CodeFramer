@@ -1,7 +1,7 @@
 import Docker from "dockerode";
 import { Response } from "express";
 import { config } from "dotenv";
-import { buildExecutionCommand } from "../lib/execCommand.js";
+import { buildExecutionCommand } from "../utils/execCommand.js";
 import { ExecutionRequest, SupportedLanguage } from "../types/types.js";
 config();
 
@@ -65,11 +65,13 @@ export async function executionHandler(req: ExecutionRequest, res: Response) {
     let stderr = "";
 
     stdoutStream.on("data", (chunk) => {
-      stdout += chunk.toString();
+      const sanitizedChunk = chunk.toString().replace(/[^\x20-\x7E\n\r]/g, "");
+      stdout += sanitizedChunk;
     });
 
     stderrStream.on("data", (chunk) => {
-      stderr += chunk.toString();
+      const sanitizedChunk = chunk.toString().replace(/[^\x20-\x7E\n\r]/g, "");
+      stderr += sanitizedChunk;
     });
 
     stdoutStream.on("end", async () => {

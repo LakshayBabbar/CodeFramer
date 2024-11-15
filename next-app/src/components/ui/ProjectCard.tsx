@@ -38,13 +38,13 @@ const ProjectCard = ({ data }: { data: ProjectCardProps }) => {
     .join(", ");
 
   return (
-    <div className="w-full sm:max-w-96 bg-gradient-to-r from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-950 border border-transparent hover:border-slate-700 transition-all duration-200 p-6 rounded-2xl shadow-xl transform hover:scale-[1.02]">
-      <div className="p-6 flex flex-col gap-4">
-        <div className="flex items-center justify-between">
+    <div className="w-full sm:max-w-80 bg-card p-8 dark:bg-slate-900 rounded-xl shadow-lg hover:scale-105 transition-all duration-300">
+      <div className="flex flex-col gap-4">
+        <div className="flex items-center justify-between gap-4">
           <span className="text-3xl text-primary">
             <Code2Icon />
           </span>
-          <h1 className="font-bold text-xl text-slate-900 dark:text-slate-100">
+          <h1 className="font-bold text-xl text-slate-900 dark:text-slate-100 line-clamp-1">
             {data.name}
           </h1>
         </div>
@@ -64,7 +64,7 @@ const ProjectCard = ({ data }: { data: ProjectCardProps }) => {
             <span className="font-semibold">Languages:</span> {languages}
           </p>
         </div>
-        <div className="flex items-center justify-between mt-4">
+        <div className="flex items-center justify-between">
           <Link
             href={
               data.type === "WEB"
@@ -79,6 +79,7 @@ const ProjectCard = ({ data }: { data: ProjectCardProps }) => {
           <span
             className="text-red-500 hover:text-red-600 cursor-pointer transition-colors"
             onClick={deleteHandler}
+            aria-label="Delete project"
           >
             <Delete className="w-6 h-6" />
           </span>

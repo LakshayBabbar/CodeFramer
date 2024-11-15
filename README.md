@@ -72,8 +72,7 @@ Ensure you have the following installed on your machine:
 
     ```bash
     cd compiler-server
-    npm install
-    npm start
+    bash ./entrypoint.sh
     ```
 
 6.  **Start the development server:**

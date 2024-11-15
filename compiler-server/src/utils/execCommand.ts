@@ -1,11 +1,4 @@
-type SupportedLanguage = "python" | "javascript" | "cpp" | "c";
-
-export const imageMap: Record<SupportedLanguage, string> = {
-  python: "python:3.10-slim",
-  javascript: "node:18-alpine",
-  cpp: "lakshaybabbar/custom-gcc:latest",
-  c: "lakshaybabbar/custom-gcc:latest",
-};
+import { SupportedLanguage } from "../types/types.js";
 
 export function buildExecutionCommand(
   language: SupportedLanguage,

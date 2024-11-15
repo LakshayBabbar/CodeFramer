@@ -16,13 +16,15 @@ interface AlertWrapperProps {
   conformText: string;
   handlerFn: () => void;
   disabled?: boolean;
+  variant?: "destructive" | "ghost";
 }
 
 const AlertWrapper = ({
   children,
   conformText,
   handlerFn,
-  disabled
+  variant = "ghost",
+  disabled,
 }: AlertWrapperProps) => {
   const [input, setInput] = React.useState("");
   const [isError, setIsError] = React.useState(false);
@@ -38,9 +40,9 @@ const AlertWrapper = ({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="destructive">{children}</Button>
+        <Button variant={variant}>{children}</Button>
       </AlertDialogTrigger>
-      <AlertDialogContent className="fixed top-0 left-0 w-full h-screen bg-[rgba(7,10,24,0.68)] backdrop-blur-lg flex items-center justify-center z-20 overflow-hidden">
+      <AlertDialogContent className="fixed top-0 left-0 w-full h-screen bg-[rgba(7,10,24,0.68)] backdrop-blur-lg flex items-center justify-center z-[999] overflow-hidden">
         <div className="bg-card p-6 space-y-5 border rounded-xl w-11/12 md:max-w-[40rem]">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-xl font-bold">

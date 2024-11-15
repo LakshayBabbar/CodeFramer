@@ -63,7 +63,7 @@ const Page = () => {
           alt="user image"
         />
       </section>
-      <section className="w-4/5 xl:w-3/4 space-y-10 mt-5">
+      <section className="w-4/5 xl:w-4/5 space-y-10 mt-5">
         <div className="flex flex-col items-center justify-center gap-2">
           <h1 className="text-xl font-bold text-center">
             Welcome, @{username}
@@ -109,6 +109,7 @@ const Page = () => {
             handlerFn={closeAccountHandler}
             conformText={username}
             disabled={reqData.loading}
+            variant="destructive"
           >
             Close Account
           </AlertWrapper>

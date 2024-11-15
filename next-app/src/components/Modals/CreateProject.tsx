@@ -67,7 +67,7 @@ const CreateProject: React.FC<CreateProjectProps> = ({ isOpen, setIsOpen }) => {
   return isOpen && isAuth && modalRef.current
     ? createPortal(
         <div className="fixed top-0 left-0 w-full h-screen flex items-center justify-center backdrop-blur-xl z-[50]">
-          <div className="w-11/12 sm:w-[30rem] p-6 dark:border rounded-xl dark:bg-slate-950 bg-slate-100 space-y-2 shadow-2xl">
+          <div className="w-11/12 sm:w-[30rem] p-6 dark:border bg-card rounded-xl space-y-2 shadow-2xl">
             <h1 className="font-bold text-xl my-2">Create New</h1>
             <form onSubmit={projectHandler} className="space-y-4">
               <Input
