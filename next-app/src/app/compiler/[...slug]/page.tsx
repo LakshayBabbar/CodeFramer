@@ -44,6 +44,7 @@ export async function generateMetadata({
 const Compiler = async ({ params }: { params: { slug: string[] } }) => {
   const { slug } = params;
   const isValidLang = SUPPORTED_LANGUAGES.find((lang) => lang === slug[0]);
+  const access_key = process.env.ACCESS_KEY || "";
 
   if (!isValidLang) {
     return (
@@ -60,9 +61,11 @@ const Compiler = async ({ params }: { params: { slug: string[] } }) => {
           {data?.error}
         </main>
       );
-    return <CompilerEditor language={slug[0]} data={data} />;
+    return (
+      <CompilerEditor language={slug[0]} data={data} access_key={access_key} />
+    );
   }
-  return <CompilerEditor language={slug[0]} />;
+  return <CompilerEditor language={slug[0]} access_key={access_key} />;
 };
 
 export default Compiler;

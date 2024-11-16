@@ -33,7 +33,7 @@ app.get("/status", (req: Request, res: Response) => {
   }
 });
 
-app.post("/execute", executionHandler);
+app.post("/execute/:lang", executionHandler);
 
 app.listen(PORT, () => {
   console.log("Server running on port: " + PORT);

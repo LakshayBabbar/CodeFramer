@@ -13,11 +13,13 @@ interface CompilerEditorProps {
     id: string;
     languages: { name: string; code: string }[];
   };
+  access_key: string;
 }
 
 export default function CompilerEditor({
   data,
   language,
+  access_key,
 }: CompilerEditorProps) {
   const editorRef = useRef<any>(null);
   const [code, setCode] = useState("");
@@ -42,12 +44,12 @@ export default function CompilerEditor({
     setOutput("");
     setIsCodeRun(true);
     const data = await fetchData({
-      url: "/api/compiler",
+      url: `${process.env.NEXT_PUBLIC_COMPILER_URL || ""}/execute/${language}`,
       method: "POST",
       body: {
         code,
         inputs: inputs,
-        language,
+        access_key,
       },
     });
     if (!data.error) {

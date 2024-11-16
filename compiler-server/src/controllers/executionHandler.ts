@@ -16,19 +16,25 @@ const imageMap: Record<SupportedLanguage, string> = {
 };
 
 export async function executionHandler(req: ExecutionRequest, res: Response) {
-  const { code, language, inputs = "", access_key } = req.body;
-
-  if (access_key !== process.env.ACCESS_KEY) {
-    res.status(401).json({ error: "Unauthorized access" });
-  }
-
-  const image = imageMap[language];
-
-  if (!image) {
-    res.status(400).json({ error: "Unsupported language" });
-  }
+  const language = req.params.lang as SupportedLanguage;
+  const { code, inputs = "", access_key } = req.body;
+  const referer = req.headers.referer;
 
   try {
+    if (!referer || !referer.includes(process.env.ORIGIN || "")) {
+      throw new Error("Unauthorized access:401");
+    }
+
+    if (access_key !== process.env.ACCESS_KEY) {
+      throw new Error("Unauthorized access:401");
+    }
+
+    const image = imageMap[language];
+
+    if (!image) {
+      throw new Error("Unsupported language:400");
+    }
+
     const command = buildExecutionCommand(language, code, inputs);
 
     const container = await docker.createContainer({
@@ -41,12 +47,20 @@ export async function executionHandler(req: ExecutionRequest, res: Response) {
 
     await container.start();
 
-    const timeout = setTimeout(async () => {
-      try {
-        await container.kill();
-      } catch (err) {
-        console.error("Failed to kill container on timeout:", err);
-      }
+    let stdout = "";
+    let stderr = "";
+    let isTimedOut = false;
+
+    const timeout = setTimeout(() => {
+      isTimedOut = true;
+      res.json({
+        output: "Execution timed out",
+        codeError: true,
+      });
+
+      container.kill({ signal: "SIGKILL" }).catch((err) => {
+        console.error("Error killing container", err);
+      });
     }, EXECUTION_TIMEOUT_MS);
 
     const stdoutStream = await container.logs({
@@ -61,9 +75,6 @@ export async function executionHandler(req: ExecutionRequest, res: Response) {
       follow: true,
     });
 
-    let stdout = "";
-    let stderr = "";
-
     stdoutStream.on("data", (chunk) => {
       const sanitizedChunk = chunk.toString().replace(/[^\x20-\x7E\n\r]/g, "");
       stdout += sanitizedChunk;
@@ -75,13 +86,27 @@ export async function executionHandler(req: ExecutionRequest, res: Response) {
     });
 
     stdoutStream.on("end", async () => {
-      clearTimeout(timeout);
-      res.json({
-        output: stderr ? stderr : stdout,
-        codeError: stderr ? true : false,
-      });
+      if (!isTimedOut) {
+        clearTimeout(timeout);
+        res.json({
+          output: stdout || stderr,
+          codeError: stderr ? true : false,
+        });
+      }
+
+      try {
+        await container.kill({ signal: "SIGKILL" });
+      } catch (err) {
+        console.error("Error cleaning up container", err);
+      }
     });
   } catch (error: any) {
-    res.status(500).json({ error: error.message || "Execution failed" });
+    let statusCode = 500;
+    let message = error.message || "Execution failed";
+    if (error.message.includes(":")) {
+      statusCode = parseInt(error.message.split(":")[1]);
+      message = error.message.split(":")[0];
+    }
+    res.status(statusCode).json({ error: message });
   }
 }
