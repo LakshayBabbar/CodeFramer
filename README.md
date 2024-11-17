@@ -82,10 +82,6 @@ Ensure you have the following installed on your machine:
     npm start
     ```
 
-## Contributing
-
-We welcome contributions from the community! If you have ideas for improvements or bug fixes, please feel free to submit a pull request.
-
 ## Bug Reports
 
 If you encounter any bugs or issues while using CodeFramer, please open an issue on GitHub with detailed information about the problem.
