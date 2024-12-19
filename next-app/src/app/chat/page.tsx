@@ -5,31 +5,28 @@ import { Button } from "@/components/ui/button";
 import useSend from "@/hooks/useSend";
 import useAuth from "@/hooks/useAuth";
 import Markdown from "markdown-to-jsx";
+import { useToast } from "@/hooks/use-toast";
 
 const ChatBot = () => {
-  const { username } = useAuth();
+  const { isAuth, username } = useAuth();
   const [content, setContent] = useState("");
   const [promt, setPromt] = useState("");
   const { fetchData, loading } = useSend();
+  const { toast } = useToast();
+
   const submitHandler = async (e: FormEvent) => {
     e.preventDefault();
+    if (!isAuth) {
+      toast({ title: "Please log in to access assistance from our AI assistant (Aizen)." });
+      return null;
+    }
     const req = await fetchData({
-      url: process.env.NEXT_PUBLIC_AI_API || "",
+      url: "/api/copilot",
       method: "POST",
-      body: {
-        contents: [
-          {
-            parts: [
-              {
-                text: promt,
-              },
-            ],
-          },
-        ],
-      },
+      body: { prompt: promt },
     });
     if (!req.error) {
-      setContent(req.candidates[0].content?.parts[0]?.text);
+      setContent(req.data);
     } else setContent("Something went wrong");
     setPromt("");
   };
@@ -37,9 +34,8 @@ const ChatBot = () => {
   return (
     <div className="flex items-center justify-center space-y-10 w-full">
       <div
-        className={`mt-24 mb-10 w-11/12 md:w-3/4 ${
-          content && "prose-neutral prose-lg"
-        } flex flex-col items-center gap-10`}
+        className={`mt-24 mb-10 w-11/12 md:w-3/4 ${content && "prose-neutral prose-lg"
+          } flex flex-col items-center gap-10`}
       >
         <Button
           className="absolute top-20"
@@ -49,9 +45,8 @@ const ChatBot = () => {
           Clear
         </Button>
         <article
-          className={`w-full xl:w-3/4 mt-10 ${
-            content ? "h-fit" : "h-[calc(100vh-16rem)] sm:h-[calc(100vh-14rem)]"
-          }`}
+          className={`w-full xl:w-3/4 mt-10 ${content ? "h-fit" : "h-[calc(100vh-16rem)] sm:h-[calc(100vh-14rem)]"
+            }`}
         >
           {content ? (
             <Markdown>{content}</Markdown>

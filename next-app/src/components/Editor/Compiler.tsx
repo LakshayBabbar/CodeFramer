@@ -1,11 +1,11 @@
 "use client";
 import { Editor, OnMount } from "@monaco-editor/react";
 import { useState, useRef, useEffect } from "react";
-import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import useSend from "@/hooks/useSend";
 import { SUPPORTED_LANGUAGES } from "@/lib/lang";
 import { useRouter } from "next/navigation";
+import { CopilotButton } from "../Copilot/Copilot";
 
 interface CompilerEditorProps {
   language: string;
@@ -27,9 +27,10 @@ export default function CompilerEditor({
   const [isCodeErr, setIsCodeErr] = useState(false);
   const [inputs, setInputs] = useState("");
   const { toast } = useToast();
-  const { fetchData, loading, isError, error } = useSend();
+  const { fetchData, loading } = useSend();
   const [isCodeRun, setIsCodeRun] = useState(false);
   const redirect = useRouter();
+
 
   useEffect(() => {
     setCode(data?.languages[0]?.code || "");
@@ -81,19 +82,20 @@ export default function CompilerEditor({
   return (
     <div className="mt-14 w-full h-[93.8vh] flex flex-col md:flex-row items-center justify-center">
       <div className="w-full md:w-1/2 h-1/2 md:h-full bg-[#1e1e1e]">
-        <div className="h-[10%] md:h-[5%] w-full flex justify-end items-center gap-4 px-4">
+        <div className="w-full flex justify-end items-center p-2">
+          <CopilotButton code={code} setCode={setCode} lang={language} />
           {data ? (
-            <Button
+            <button
               onClick={saveHandler}
-              className="px-4 py-[5px] h-fit"
+              className="px-4 py-1 bg-white text-black"
               disabled={loading && isCodeRun === false}
             >
               Save
-            </Button>
+            </button>
           ) : (
             <select
               onChange={(e) => redirect.push(e.target.value)}
-              className="py-1 px-4 rounded-md bg-neutral-700 text-white"
+              className="py-[6px] px-4 mx-2 bg-neutral-700 text-white"
               value={language}
             >
               {SUPPORTED_LANGUAGES.map((lang, index) => {
@@ -106,13 +108,13 @@ export default function CompilerEditor({
               })}
             </select>
           )}
-          <Button
-            className="px-4 py-[5px] h-fit border-none bg-neutral-700 text-white hover:bg-neutral-600"
+          <button
+            className="px-4 py-1 h-fit bg-neutral-700 text-white hover:bg-neutral-600"
             onClick={handleSubmit}
             disabled={loading && isCodeRun === true}
           >
             Run
-          </Button>
+          </button>
         </div>
         <Editor
           width="100%"
@@ -145,9 +147,8 @@ export default function CompilerEditor({
       </div>
       <div className="w-full md:w-1/2 h-1/2 md:h-full flex flex-col-reverse md:flex-col">
         <pre
-          className={`w-full h-1/2 p-4 overflow-auto ${
-            isCodeErr && "text-red-400"
-          }`}
+          className={`w-full h-1/2 p-4 overflow-auto ${isCodeErr && "text-red-400"
+            }`}
         >
           {output}
         </pre>

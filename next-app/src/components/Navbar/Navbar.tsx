@@ -8,7 +8,6 @@ import {
   Code2Icon,
   LogIn,
   LogOutIcon,
-  MessageSquareDot,
   HomeIcon,
   Laptop,
   LayoutDashboard,
@@ -16,6 +15,7 @@ import {
   X,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { IconSparkles } from "@tabler/icons-react";
 import { Switch } from "../ui/switch";
 
 export default function Navbar() {
@@ -106,8 +106,8 @@ export default function Navbar() {
           </Link>
         )}
         <Link href="/chat" className={linkStyle} onClick={linkHandler}>
-          <MessageSquareDot className={iconStyle} />
-          Chat Bot
+          <IconSparkles size={20}  />
+          Aizen
         </Link>
         {!isAuth && (
           <Link

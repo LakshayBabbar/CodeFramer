@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyToken } from "./lib/authToken";
 
-const PROTECTED_API_PATHS = ["/api/projects", "/api/auth/close"];
-const PROTECTED_APP_PATHS = ["/chat", "/dashboard"];
+const PROTECTED_API_PATHS = ["/api/projects", "/api/auth/close", "/api/copilot"];
+const PROTECTED_APP_PATHS = ["/dashboard"];
 const ACCESS_SECRET_KEY = process.env.ACCESS_SECRET_KEY || "";
 
 const isProtectedApiPath = (pathname: string) =>
@@ -62,7 +62,7 @@ export const config = {
   matcher: [
     "/api/projects/:path*",
     "/api/auth/close",
-    "/chat",
+    "/api/copilot",
     "/dashboard/:path*",
     "/web-editor/:path*",
     "/compiler/:path*",

@@ -1,6 +1,6 @@
 import { Editor, OnMount } from "@monaco-editor/react";
-import { useState, useRef } from "react";
-import { Button } from "../ui/button";
+import { useState, useRef, use, useEffect } from "react";
+import { CopilotButton } from "../Copilot/Copilot";
 
 interface EditorComProps {
   pid: string;
@@ -20,14 +20,15 @@ export default function EditorCom({
   updateHandler,
 }: EditorComProps) {
   const editorRef = useRef<any>(null);
+  const [code, setCode] = useState<string>("");
   const [fileName, setFileName] = useState<
     "index.html" | "style.css" | "script.js"
   >("index.html");
 
   const fileNames = [
-    { name: "index.html", displayName: "HTML" },
-    { name: "style.css", displayName: "CSS" },
-    { name: "script.js", displayName: "JavaScript" },
+    { name: "index.html" },
+    { name: "style.css" },
+    { name: "script.js" },
   ];
 
   const files = {
@@ -66,36 +67,44 @@ export default function EditorCom({
     }
   };
 
-  const activeStyle = "bg-neutral-700 text-white";
-  const inactiveStyle = "bg-neutral-800";
-  const btnStyle = "text-white hover:bg-[#262626]";
+  useEffect(() => {
+    if (code) {
+      editorRef.current.setValue(code);
+    }
+  }, [code]);
+
+
+  const activeStyle = "bg-neutral-700 text-white border-t-4 border-red-500";
+  const inactiveStyle = "bg-neutral-800 border-t-4 border-neutral-800";
+  const btnStyle = "text-white rounded-none p-2 px-4";
 
   return (
     <div>
-      <div className="flex items-center gap-4 p-4 bg-[#1e1e1e]">
-        {fileNames.map((item) => (
-          <Button
-            key={item.name}
-            onClick={() =>
-              setFileName(item.name as "index.html" | "style.css" | "script.js")
-            }
-            className={`${
-              fileName === item.name ? activeStyle : inactiveStyle
-            } ${btnStyle}`}
-            size="sm"
-          >
-            {item.displayName}
-          </Button>
-        ))}
+      <div className="flex justify-between pb-4 bg-[#1e1e1e]">
+        <div className="flex items-center gap-[1px]">
+          {fileNames.map((item) => (
+            <button
+              key={item.name}
+              onClick={() =>
+                setFileName(item.name as "index.html" | "style.css" | "script.js")
+              }
+              className={`${fileName === item.name ? activeStyle : inactiveStyle
+                } ${btnStyle}`}
+            >
+              {item.name}
+            </button>
+          ))}
+        <CopilotButton code={file.value} lang={file.name} setCode={setCode} />
+        </div>
         {pid && (
-          <Button
+          <button
             onClick={updateHandler}
-            size="sm"
-            className="bg-white text-black hover:bg-slate-200"
+            className="bg-neutral-700 p-2 text-white px-4 rounded-bl-2xl"
           >
             Save
-          </Button>
+          </button>
         )}
+
       </div>
       <div className="w-full h-[40vh]">
         <Editor
@@ -112,7 +121,8 @@ export default function EditorCom({
             minimap: { enabled: false },
             formatOnPaste: true,
             formatOnType: true,
-            autoIndent: "full",
+            autoIndent: "advanced",
+            autoClosingBrackets: "always",
             acceptSuggestionOnEnter: "on",
             automaticLayout: true,
             autoClosingOvertype: "always",

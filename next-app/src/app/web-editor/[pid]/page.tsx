@@ -2,6 +2,7 @@
 import WebEditor from "@/components/Editor/WebEditor";
 import useFetch from "@/hooks/useFetch";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import { MultiStepLoader } from "@/components/ui/multi-step-loader";
 
 const Page = ({ params }: { params: { pid: string } }) => {
   const { pid } = params;
@@ -17,7 +18,7 @@ const Page = ({ params }: { params: { pid: string } }) => {
       </div>
     );
   }
-  if (loading) return <LoadingSpinner />;
+  if (loading) return <MultiStepLoader />;
 
   return <WebEditor data={data} />;
 };

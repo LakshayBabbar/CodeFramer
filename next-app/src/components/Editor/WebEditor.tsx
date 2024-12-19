@@ -47,7 +47,7 @@ function WebEditor({ data }: { data: webEditorDataType }) {
   };
 
   const srcDoc = `
-    <body>${values?.html}</body>
+    ${values?.html}
     <style>${values?.css}</style>
     <script>${values?.javascript}</script>
   `;

@@ -27,37 +27,37 @@ export default function Home() {
     {
       title: "Smart Code Editor",
       description:
-        "Speed up your workflow with real-time code suggestions and auto-completion, designed to enhance productivity.",
+        "Enhance productivity with real-time code suggestions and auto-completion.",
       icon: Code2Icon,
     },
     {
       title: "Multiple Language Support",
       description:
-        "Write and run code in various programming languages, all within a single environment.",
+        "Write and run code in various programming languages within a single environment.",
       icon: SquareCode,
-    },
-    {
-      title: "Project Management",
-      description:
-        "Add and manage multiple projects of different languages and environments through the user dashboard.",
-      icon: Layers,
     },
     {
       title: "AI Assistance",
       description:
-        "Get immediate help and code suggestions from our AI chatbot, streamlining your coding experience.",
+        "Streamline your coding experience with immediate help and code suggestions from our AI Assistant Aizen.",
       icon: Bot,
+    },
+    {
+      title: "Project Management",
+      description:
+        "Manage multiple projects of different languages and environments through the user dashboard.",
+      icon: Layers,
     },
     {
       title: "Real-Time Output",
       description:
-        "See the results of your code instantly as you type in web env, allowing for immediate feedback and quicker debugging.",
+        "Get instant feedback and quicker debugging with real-time output as you type.",
       icon: Monitor,
     },
     {
       title: "Secure Login",
       description:
-        "Protect your account with advanced authentication methods, ensuring your data remains safe and secure.",
+        "Ensure your data remains safe and secure with advanced authentication methods.",
       icon: ShieldCheck,
     },
   ];

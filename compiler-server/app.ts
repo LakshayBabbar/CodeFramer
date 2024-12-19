@@ -6,7 +6,7 @@ import { config } from "dotenv";
 config();
 
 const app = express();
-const allowedOrigins = [process.env.ORIGIN];
+const allowedOrigins = [process.env.ORIGIN, process.env.ORIGIN2];
 const corsOptions = {
   origin: (
     origin: string | undefined,

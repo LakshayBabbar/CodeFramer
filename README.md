@@ -60,7 +60,7 @@ Ensure you have the following installed on your machine:
     - `ACCESS_SECRET_KEY`: Your defined access secret key.
     - `URI`: MongoDB URI address.
     - `BASE_URL`: Hosting address.
-    - `NEXT_PUBLIC_AI_API`: Google AI Studio API key.
+    - `GEMINI_API`: Google AI Studio API key.
     - `COMPILER_URL`: Path to the compiler server.
 
     Create a `.env` file in the compiler server and add the following variables:
@@ -81,10 +81,6 @@ Ensure you have the following installed on your machine:
     cd ../next-app
     npm start
     ```
-
-## Contributing
-
-We welcome contributions from the community! If you have ideas for improvements or bug fixes, please feel free to submit a pull request.
 
 ## Bug Reports
 

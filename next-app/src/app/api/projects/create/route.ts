@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
 import prisma from "@/config/db";
 import { ProjectType } from "@prisma/client";
+import template from "@/shared/template.json"
 
 export async function POST(req: NextRequest) {
   try {
@@ -12,20 +13,7 @@ export async function POST(req: NextRequest) {
     if (type === "COMPILER") {
       languages = [{ name: language, code: " " }];
     } else if (type === "WEB") {
-      languages = [
-        {
-          name: "html",
-          code: "<h1 id='heading'>Welcome to your first project</h1>",
-        },
-        {
-          name: "css",
-          code: "#heading {\n\tcolor: blue;\n\tfont-size: 24px;\n}",
-        },
-        {
-          name: "javascript",
-          code: "",
-        },
-      ];
+      languages = template
     }
 
     const headersList = headers();
