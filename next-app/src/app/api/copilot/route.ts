@@ -1,9 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-    const { prompt } = await req.json();
+    const { prompt, type } = await req.json();
+    let key;
+    if (type === "CODE") {
+        key = process.env.CODE_AI_API;
+    } else {
+        key = process.env.GENERAL_AI_API;
+    }
     try {
-        const response = await fetch(process.env.GEMINI_API || "", {
+        const response = await fetch(key || "", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

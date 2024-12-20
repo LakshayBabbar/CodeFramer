@@ -21,7 +21,7 @@ export async function executionHandler(req: ExecutionRequest, res: Response) {
   const referer = req.headers.referer;
 
   try {
-    if (!referer || !referer.includes(process.env.ORIGIN || "")) {
+    if (!referer || (!referer.includes(process.env.ORIGIN || "") && !referer.includes(process.env.ORIGIN2 || ""))) {
       throw new Error("Unauthorized access:401");
     }
 

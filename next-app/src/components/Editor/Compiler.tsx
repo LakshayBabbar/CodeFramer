@@ -82,12 +82,12 @@ export default function CompilerEditor({
   return (
     <div className="mt-14 w-full h-[93.8vh] flex flex-col md:flex-row items-center justify-center">
       <div className="w-full md:w-1/2 h-1/2 md:h-full bg-[#1e1e1e]">
-        <div className="w-full flex justify-end items-center p-2">
+        <div className="w-full flex justify-end items-center p-2 gap-2">
           <CopilotButton code={code} setCode={setCode} lang={language} />
           {data ? (
             <button
               onClick={saveHandler}
-              className="px-4 py-1 bg-white text-black"
+              className="px-4 py-1 bg-white text-black disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={loading && isCodeRun === false}
             >
               Save
@@ -95,7 +95,7 @@ export default function CompilerEditor({
           ) : (
             <select
               onChange={(e) => redirect.push(e.target.value)}
-              className="py-[6px] px-4 mx-2 bg-neutral-700 text-white"
+              className="py-[5.5px] px-4 mx-2 bg-neutral-700 text-white"
               value={language}
             >
               {SUPPORTED_LANGUAGES.map((lang, index) => {
@@ -109,7 +109,7 @@ export default function CompilerEditor({
             </select>
           )}
           <button
-            className="px-4 py-1 h-fit bg-neutral-700 text-white hover:bg-neutral-600"
+            className="px-4 py-1 bg-neutral-700 text-white hover:bg-neutral-600 disabled:opacity-50 disabled:cursor-not-allowed"
             onClick={handleSubmit}
             disabled={loading && isCodeRun === true}
           >
@@ -118,7 +118,7 @@ export default function CompilerEditor({
         </div>
         <Editor
           width="100%"
-          height="93%"
+          height="90%"
           value={code}
           language={language}
           theme="vs-dark"
@@ -128,9 +128,6 @@ export default function CompilerEditor({
             fontSize: 14,
             minimap: {
               enabled: false,
-            },
-            padding: {
-              top: 10,
             },
             formatOnPaste: true,
             formatOnType: true,

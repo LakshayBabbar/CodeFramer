@@ -60,7 +60,8 @@ Ensure you have the following installed on your machine:
     - `ACCESS_SECRET_KEY`: Your defined access secret key.
     - `URI`: MongoDB URI address.
     - `BASE_URL`: Hosting address.
-    - `GEMINI_API`: Google AI Studio API key.
+    - `CODE_AI_API`: Google AI Studio API key for editor in-built ai.
+    - `GENERAL_AI_API`: Google AI Studio API key for chat.
     - `COMPILER_URL`: Path to the compiler server.
 
     Create a `.env` file in the compiler server and add the following variables:

@@ -48,7 +48,8 @@ const CopilotModal = memo(({ code, setCode, lang, isOpen, setIsOpen }: CopilotMo
                 url: "/api/copilot",
                 method: "POST",
                 body: {
-                    prompt
+                    prompt,
+                    type: "CODE"
                 },
             });
             if (!response.error) {
@@ -94,13 +95,13 @@ const CopilotModal = memo(({ code, setCode, lang, isOpen, setIsOpen }: CopilotMo
                 </div>
                 <div className="flex gap-2">
                     <textarea
-                        className="flex-grow h-10 p-2 bg-secondary rounded-md text-white"
+                        className="flex-grow h-10 p-2 max-h-56 bg-secondary rounded-md text-white"
                         placeholder="How can I help you?"
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                     />
                     <button
-                        className={cn(buttonClass, "w-fit px-2")}
+                        className={cn(buttonClass, "w-fit p-2 h-fit")}
                         onClick={() => submitHandler("QUERY")}
                         disabled={loading}
                     >
