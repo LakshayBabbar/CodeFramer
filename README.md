@@ -2,7 +2,7 @@
 
 CodeFramer is a versatile code editor designed to enhance your coding experience with its intuitive interface and powerful features. Built with a focus on performance and resource efficiency, CodeFramer is perfect for developers looking for a reliable coding platform.
 
-<img src="./assets/arch.png" alt="CodeFramer Architecture" width="600px">
+<video src="https://github.com/user-attachments/assets/918cfc40-e247-4faf-afd2-e854fb5bb10e" width="900px" alt="Inro Video" controls></video>
 
 ## Features
 
@@ -14,15 +14,21 @@ CodeFramer is a versatile code editor designed to enhance your coding experience
 - **Modern Interface:** Enjoy a clean and intuitive user interface that promotes productivity.
 - **Enhanced Performance:** Experience fast coding and editing with optimized performance, allowing for seamless multitasking.
 
-## Tech Stack
+## Architecture
 
-- **Frontend:** Next.js 14
-- **Backend:** Next.js 14 API Routes, Node.js, Express
-- **Database:** MongoDB
-- **Tools:** Docker
-- **Authentication:** JSON Web Tokens (JWT)
-- **Styling:** Tailwind CSS, ShadCN, Aceternity UI
-- **Other Libraries:** React Query, Monaco Editor
+<img src="./assets/arch.png" alt="CodeFramer Architecture" width="900px" />
+
+The architecture of CodeFramer is designed to ensure high performance, security, and scalability. The system is divided into several key components:
+
+1. **Frontend:** Built with Next.js 14, the frontend provides a modern and responsive user interface. It communicates with the backend through API routes.
+2. **Backend:** The backend, also developed with Next.js 14 API Routes, Node.js, and Express, handles all the business logic and API requests.
+3. **Database:** MongoDB is used for data storage, offering flexibility and scalability.
+4. **Containerized Execution:** Docker is used to create isolated containers for code execution, ensuring security and resource efficiency.
+5. **Authentication:** JSON Web Tokens (JWT) are used for secure user authentication.
+6. **Styling:** Tailwind CSS, ShadCN, and Aceternity UI are used for styling, providing a clean and consistent look.
+7. **Additional Libraries:** React Query for data fetching and state management, and Monaco Editor for an enhanced coding experience.
+
+This modular architecture allows CodeFramer to deliver a seamless and efficient coding environment.
 
 ## Installation
 
