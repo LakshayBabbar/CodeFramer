@@ -16,6 +16,9 @@ export async function GET(
         id: pid,
         userId: authData.id,
       },
+      include: {
+        languages: true,
+      }
     });
 
     if (!projectData) {
@@ -85,40 +88,60 @@ export async function PUT(
   try {
     const { pid } = params;
     const { languages } = await req.json();
-    const Headers = headers();
-    const authData = await JSON.parse(Headers.get("authData") || "");
 
-    const updatedProject = await prisma.project.update({
+    if (
+      !Array.isArray(languages) ||
+      languages.some((lang) => typeof lang.name !== "string" || typeof lang.code !== "string")
+    ) {
+      return NextResponse.json(
+        { error: "Invalid languages data. Each language must have 'name' and 'code' fields." },
+        { status: 400 }
+      );
+    }
+
+    const Headers = headers();
+    const authData = JSON.parse(Headers.get("authData") || "{}");
+
+    const existingProject = await prisma.project.findFirst({
       where: {
         id: pid,
         userId: authData.id,
       },
-      data: {
-        languages,
-      },
     });
 
-    if (!updatedProject) {
+    if (!existingProject) {
       return NextResponse.json(
-        {
-          error: "Project not found",
-        },
+        { error: "Project not found or you do not have permission to edit this project." },
         { status: 404 }
       );
     }
 
+    for (const lang of languages) {
+      await prisma.language.updateMany({
+        where: {
+          name: lang.name,
+          projectId: pid,
+        },
+        data: {
+          code: lang.code || null
+        },
+      });
+    }
+
     return NextResponse.json(
       {
-        message: "Project is updated successfully",
+        message: "Project updated successfully",
       },
       { status: 202 }
     );
   } catch (error: any) {
     return NextResponse.json(
       {
-        error: error.message,
+        error: error.message || "An unexpected error occurred.",
       },
       { status: 500 }
     );
+  } finally {
+    await prisma.$disconnect();
   }
 }

@@ -2,22 +2,36 @@ import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
 import prisma from "@/config/db";
 import { ProjectType } from "@prisma/client";
-import template from "@/shared/template.json"
+import template from "@/shared/template.json";
 
 export async function POST(req: NextRequest) {
   try {
     const reqBody = await req.json();
     const { name, type, language } = reqBody;
 
-    let languages = {};
+    if (!name || !type || (type === "COMPILER" && !language)) {
+      return NextResponse.json(
+        { error: "Missing required fields: name, type, or language (for COMPILER)" },
+        { status: 400 }
+      );
+    }
+
+    let languages: any[] = [];
     if (type === "COMPILER") {
-      languages = [{ name: language, code: " " }];
+      languages = [{ name: language, code: "" }];
     } else if (type === "WEB") {
-      languages = template
+      languages = template; 
     }
 
     const headersList = headers();
     const authData = JSON.parse(headersList.get("authData") || "{}");
+
+    if (!authData || !authData.id) {
+      return NextResponse.json(
+        { error: "Unauthorized request. Missing user authentication data." },
+        { status: 401 }
+      );
+    }
 
     const existingProject = await prisma.project.findFirst({
       where: {
@@ -28,9 +42,7 @@ export async function POST(req: NextRequest) {
 
     if (existingProject) {
       return NextResponse.json(
-        {
-          error: "Project name is already taken, please choose a different one",
-        },
+        { error: "Project name is already taken. Please choose a different one." },
         { status: 409 }
       );
     }
@@ -40,7 +52,9 @@ export async function POST(req: NextRequest) {
         name,
         type: type as ProjectType,
         userId: authData.id,
-        languages: languages as any,
+        languages: {
+          create: languages,
+        },
       },
     });
 
@@ -52,7 +66,11 @@ export async function POST(req: NextRequest) {
       { status: 201 }
     );
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error("Error creating project:", error);
+    return NextResponse.json(
+      { error: error.message || "Internal Server Error" },
+      { status: 500 }
+    );
   } finally {
     await prisma.$disconnect();
   }

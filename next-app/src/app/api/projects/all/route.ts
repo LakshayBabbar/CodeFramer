@@ -10,6 +10,9 @@ export async function GET() {
       where: {
         userId: authData.id,
       },
+      include: {
+        languages: true,
+      }
     });
     return NextResponse.json(projects);
   } catch (error: any) {

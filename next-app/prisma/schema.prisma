@@ -1,5 +1,5 @@
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -8,7 +8,7 @@ generator client {
 }
 
 model User {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  id        String    @id @default(cuid())
   username  String    @unique
   email     String    @unique
   password  String
@@ -16,26 +16,31 @@ model User {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   projects  Project[]
-
-  @@map("users")
 }
 
 model Project {
-  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  id        String      @id @default(cuid())
   name      String
-  user      User?       @relation(fields: [userId], references: [id])
-  userId    String      @db.ObjectId
   type      ProjectType
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
   languages Language[]
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
 
-  @@map("projects")
+  @@index([userId])
 }
 
-type Language {
-  name String
-  code String?
+model Language {
+  id        String   @id @default(cuid())
+  name      String
+  code      String?
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([projectId])
 }
 
 enum ProjectType {
