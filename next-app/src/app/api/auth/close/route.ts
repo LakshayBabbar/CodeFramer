@@ -19,15 +19,11 @@ export async function DELETE() {
       return NextResponse.json({ error: "User not found." }, { status: 404 });
     }
 
-    await prisma.$transaction(async (tx) => {
-      await tx.project.deleteMany({
-        where: { userId: authData.id },
-      });
-
-      await tx.user.delete({
-        where: { id: authData.id },
-      });
-    });
+    await prisma.user.delete({
+      where: {
+        id: user.id,
+      },
+    })
 
     const res = NextResponse.json(
       { message: "Account closed successfully." },

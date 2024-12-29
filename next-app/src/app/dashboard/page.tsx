@@ -12,6 +12,7 @@ import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import AlertWrapper from "@/components/ui/AlertWrapper";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Page = () => {
   const { username, setUsername, SetIsAuth } = useAuth();
@@ -50,7 +51,6 @@ const Page = () => {
       </main>
     );
   }
-  if (loading) return <LoadingSpinner />;
 
   return (
     <main className="flex flex-col w-full justify-center items-center gap-10">
@@ -78,16 +78,14 @@ const Page = () => {
         <div className="flex w-full justify-between items-center">
           <h2 className="text-xl font-bold">Your Project&apos;s</h2>
           <Button
-            variant="outline"
             onClick={() => setIsOpen(true)}
-            className="bg-transparent"
           >
             Create New
           </Button>
         </div>
-        {!loading ? (
-          <>
-            <div className="w-full flex flex-wrap gap-4">
+        <div className="w-full flex flex-wrap gap-4">
+          {!loading ? (
+            <>
               {data?.length > 0 ? (
                 data?.map((item: ProjectCardProps) => {
                   return (
@@ -97,17 +95,31 @@ const Page = () => {
               ) : (
                 <p className="text-center w-full">No project found.</p>
               )}
-            </div>
-            <p className="text-center mb-36">{isError && error?.message}</p>
-          </>
-        ) : (
-          <p className="text-center mb-40">Loading...</p>
-        )}
+              <p className="text-center mb-36">{isError && error?.message}</p>
+            </>
+          ) : (
+            <>
+              {Array.from({ length: 6 }).map((_, i) => {
+                return (
+                  <div key={i} className="w-full sm:max-w-80 p-8 rounded-xl space-y-4 border">
+                    <Skeleton className="size-12 rounded-md" />
+                    <Skeleton className="h-6 w-[250px]" />
+                    <Skeleton className="h-4 w-[120px]" />
+                    <div className="flex items-center justify-between">
+                      <Skeleton className="h-6 w-[60px]" />
+                      <Skeleton className="h-6 w-[40px]" />
+                    </div>
+                  </div>
+                );
+              })}
+            </>
+          )}
+        </div>
         <hr className="border w-full" />
         <div className="flex flex-col items-center space-y-4 pb-10">
           <AlertWrapper
             handlerFn={closeAccountHandler}
-            conformText={username}
+            conformText={`sudo userdel ${username}`}
             disabled={reqData.loading}
             variant="destructive"
           >

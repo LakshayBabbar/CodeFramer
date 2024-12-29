@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
 import prisma from "@/config/db";
 import { ProjectType } from "@prisma/client";
-import template from "@/shared/template.json";
+import template from "@/shared/template-web.json";
 
 export async function POST(req: NextRequest) {
   try {
@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
     if (type === "COMPILER") {
       languages = [{ name: language, code: "" }];
     } else if (type === "WEB") {
-      languages = template; 
+      languages = template;
     }
 
     const headersList = headers();
@@ -66,9 +66,9 @@ export async function POST(req: NextRequest) {
       { status: 201 }
     );
   } catch (error: any) {
-    console.error("Error creating project:", error);
+    console.error("Error creating project:", error.message);
     return NextResponse.json(
-      { error: error.message || "Internal Server Error" },
+      { error: "Internal Server Error" },
       { status: 500 }
     );
   } finally {

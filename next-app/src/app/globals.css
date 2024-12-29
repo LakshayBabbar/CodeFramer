@@ -97,11 +97,11 @@ input:-webkit-autofill:active {
   -webkit-background-clip: text;
   -webkit-text-fill-color: #ffffff;
   transition: background-color 5000s ease-in-out 0s;
-  box-shadow: inset 0 0 20px 20px #00000062;
+  box-shadow: inset 0 0 20px 20px #02143a6e;
 }
 @media (min-width: 980px) {
   *::-webkit-scrollbar {
-    width: 8px;
+    width: 5px;
   }
 
   *::-webkit-scrollbar-track {

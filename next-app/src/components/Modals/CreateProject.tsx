@@ -13,6 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SUPPORTED_LANGUAGES } from "@/lib/lang";
+import { motion } from "framer-motion";
 
 interface CreateProjectProps {
   isOpen: boolean;
@@ -66,69 +67,73 @@ const CreateProject: React.FC<CreateProjectProps> = ({ isOpen, setIsOpen }) => {
 
   return isOpen && isAuth && modalRef.current
     ? createPortal(
-        <div className="fixed top-0 left-0 w-full h-screen flex items-center justify-center backdrop-blur-xl z-[50]">
-          <div className="w-11/12 sm:w-[30rem] p-6 dark:border bg-card rounded-xl space-y-2 shadow-2xl">
-            <h1 className="font-bold text-xl my-2">Create New</h1>
-            <form onSubmit={projectHandler} className="space-y-4">
-              <Input
-                name="name"
-                value={name}
-                className="bg-transparent"
-                placeholder="Name"
-                onChange={dataHandler}
+      <div className="fixed top-0 left-0 w-full h-screen flex items-center justify-center backdrop-blur-xl z-[50]">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.2, type: "spring", stiffness: 200, damping: 20 }}
+          className="w-11/12 sm:w-[30rem] p-6 dark:border bg-card rounded-xl space-y-2 shadow-2xl">
+          <h1 className="font-bold text-xl my-2">Create New</h1>
+          <form onSubmit={projectHandler} className="space-y-4">
+            <Input
+              name="name"
+              value={name}
+              className="bg-transparent"
+              placeholder="Name"
+              onChange={dataHandler}
+              required
+            />
+            <div className="flex justify-between gap-4">
+              <Select
+                onValueChange={(val) =>
+                  setEnvironment(val as "WEB" | "COMPILER")
+                }
                 required
-              />
-              <div className="flex justify-between gap-4">
+              >
+                <SelectTrigger className="flex-grow">
+                  <SelectValue placeholder="Environment" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="WEB">Web</SelectItem>
+                  <SelectItem value="COMPILER">Compiler</SelectItem>
+                </SelectContent>
+              </Select>
+              {environment === "COMPILER" && (
                 <Select
-                  onValueChange={(val) =>
-                    setEnvironment(val as "WEB" | "COMPILER")
-                  }
+                  onValueChange={(val: string) => setLanguage(val)}
                   required
                 >
                   <SelectTrigger className="flex-grow">
-                    <SelectValue placeholder="Environment" />
+                    <SelectValue placeholder="Language" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="WEB">Web</SelectItem>
-                    <SelectItem value="COMPILER">Compiler</SelectItem>
+                    {SUPPORTED_LANGUAGES.map((lang, index) => {
+                      return (
+                        <SelectItem key={index} value={lang}>
+                          {lang}
+                        </SelectItem>
+                      );
+                    })}
                   </SelectContent>
                 </Select>
-                {environment === "COMPILER" && (
-                  <Select
-                    onValueChange={(val: string) => setLanguage(val)}
-                    required
-                  >
-                    <SelectTrigger className="flex-grow">
-                      <SelectValue placeholder="Language" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {SUPPORTED_LANGUAGES.map((lang, index) => {
-                        return (
-                          <SelectItem key={index} value={lang}>
-                            {lang}
-                          </SelectItem>
-                        );
-                      })}
-                    </SelectContent>
-                  </Select>
-                )}
-              </div>
+              )}
+            </div>
 
-              {isError && <p className="text-sm text-red-500">{error}</p>}
+            {isError && <p className="text-sm text-red-500">{error}</p>}
 
-              <div className="flex gap-4 justify-end">
-                <Button variant="outline" onClick={() => setIsOpen(false)}>
-                  Cancel
-                </Button>
-                <Button type="submit" disabled={loading}>
-                  Create
-                </Button>
-              </div>
-            </form>
-          </div>
-        </div>,
-        modalRef.current
-      )
+            <div className="flex gap-4 justify-end">
+              <Button variant="outline" onClick={() => setIsOpen(false)}>
+                Cancel
+              </Button>
+              <Button type="submit" disabled={loading}>
+                Create
+              </Button>
+            </div>
+          </form>
+        </motion.div>
+      </div>,
+      modalRef.current
+    )
     : null;
 };
 

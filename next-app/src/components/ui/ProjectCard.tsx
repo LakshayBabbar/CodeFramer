@@ -1,8 +1,7 @@
-import { Button } from "./button";
 import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
 import useSend from "@/hooks/useSend";
-import { Code2Icon, Delete } from "lucide-react";
+import { Code2Icon, Clock, Trash2 } from "lucide-react";
 import { QueryObserverResult } from "@tanstack/react-query";
 
 export interface ProjectCardProps {
@@ -17,7 +16,7 @@ export interface ProjectCardProps {
 
 const ProjectCard = ({ data }: { data: ProjectCardProps }) => {
   const { toast } = useToast();
-  const { fetchData } = useSend();
+  const { fetchData, loading, isError } = useSend();
   const deleteHandler = async () => {
     const res = await fetchData({
       url: `/api/projects/${data.id}`,
@@ -33,57 +32,16 @@ const ProjectCard = ({ data }: { data: ProjectCardProps }) => {
     }
   };
 
-  const languages = data.languages
-    .map((lang) => lang.name.charAt(0).toUpperCase() + lang.name.slice(1))
-    .join(", ");
-
   return (
-    <div className="w-full sm:max-w-80 bg-card p-8 dark:bg-slate-900 rounded-xl shadow-lg hover:scale-105 transition-all duration-300">
-      <div className="flex flex-col gap-4">
-        <div className="flex items-center justify-between gap-4">
-          <span className="text-3xl text-primary">
-            <Code2Icon />
-          </span>
-          <h1 className="font-bold text-xl text-slate-900 dark:text-slate-100 line-clamp-1">
-            {data.name}
-          </h1>
-        </div>
-        <div className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
-          <p>
-            <span className="font-semibold">Created at:&nbsp;</span>
-            {data?.createdAt?.substring(0, 10)}
-          </p>
-          <p>
-            <span className="font-semibold">Last updated:&nbsp;</span>
-            {data?.updatedAt?.substring(0, 10)}
-          </p>
-          <p>
-            <span className="font-semibold">Env:</span> {data.type}
-          </p>
-          <p>
-            <span className="font-semibold">Languages:</span> {languages}
-          </p>
-        </div>
-        <div className="flex items-center justify-between">
-          <Link
-            href={
-              data.type === "WEB"
-                ? `/web-editor/${data.id}`
-                : `/compiler/${data?.languages[0].name}/${data.id}`
-            }
-          >
-            <Button variant="outline" className="bg-transparent">
-              Open
-            </Button>
-          </Link>
-          <span
-            className="text-red-500 hover:text-red-600 cursor-pointer transition-colors"
-            onClick={deleteHandler}
-            aria-label="Delete project"
-          >
-            <Delete className="w-6 h-6" />
-          </span>
-        </div>
+    <div className={`w-full sm:max-w-80 p-8 bg-gradient-to-b from-slate-100 to-slate-200  dark:from-slate-900 dark:to-slate-950 rounded-2xl drop-shadow-xl border-2 space-y-2 dark:text-slate-200 ${isError && "border border-red-500"} dark:border-slate-950 hover:border-2 hover:border-slate-600 hover:dark:border-neutral-500 transition-all duration-300`}>
+      <div>
+        <Code2Icon size={50} className="dark:bg-slate-900 bg-slate-200 p-2 rounded-md" />
+      </div>
+      <p className="text-2xl line-clamp-2">{data?.name}</p>
+      <p className="flex gap-2 items-center"><Clock size={15} strokeWidth={2} />{data?.createdAt?.substring(0, 10)}</p>
+      <div className="flex justify-between items-center">
+        <Link href={`${data.type === "WEB" ? "/web-editor/" : `/compiler/${data?.languages[0]?.name}/`}${data?.id}`} className="underline underline-offset-2">Open</Link>
+        <button aria-label="delete project" onClick={deleteHandler} disabled={loading}><Trash2 size={16} /></button>
       </div>
     </div>
   );

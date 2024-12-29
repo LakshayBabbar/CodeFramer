@@ -1,11 +1,20 @@
 "use client";
-import { Editor, OnMount } from "@monaco-editor/react";
-import { useState, useRef, useEffect } from "react";
+import Editor from "./index";
+import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import useSend from "@/hooks/useSend";
 import { SUPPORTED_LANGUAGES } from "@/lib/lang";
 import { useRouter } from "next/navigation";
-import { CopilotButton } from "../Copilot/Copilot";
+import { Button } from "../ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import templates from "@/shared/templates.json"
+
 
 interface CompilerEditorProps {
   language: string;
@@ -21,7 +30,6 @@ export default function CompilerEditor({
   language,
   access_key,
 }: CompilerEditorProps) {
-  const editorRef = useRef<any>(null);
   const [code, setCode] = useState("");
   const [output, setOutput] = useState("");
   const [isCodeErr, setIsCodeErr] = useState(false);
@@ -31,15 +39,13 @@ export default function CompilerEditor({
   const [isCodeRun, setIsCodeRun] = useState(false);
   const redirect = useRouter();
 
-
   useEffect(() => {
     setCode(data?.languages[0]?.code || "");
+    if (!data) {
+      const sampleCode = templates.find((t) => t.name === language)?.code;
+      setCode(sampleCode || "");
+    }
   }, [data, language]);
-
-  const handleEditorDidMount: OnMount = (editor) => {
-    editorRef.current = editor;
-    editor.focus();
-  };
 
   const handleSubmit = async () => {
     setOutput("");
@@ -79,68 +85,42 @@ export default function CompilerEditor({
     });
   };
 
+
   return (
     <div className="mt-14 w-full h-[93.8vh] flex flex-col md:flex-row items-center justify-center">
-      <div className="w-full md:w-1/2 h-1/2 md:h-full bg-[#1e1e1e]">
-        <div className="w-full flex justify-end items-center p-2 gap-2">
-          <CopilotButton code={code} setCode={setCode} lang={language} />
+      <div className="w-full md:w-1/2 h-1/2 md:h-full bg-slate-950">
+        <Editor file={{ name: language, value: code, language }} onValChange={(val) => setCode(val || "")}>
           {data ? (
-            <button
+            <Button
+              variant="secondary"
               onClick={saveHandler}
-              className="px-4 py-1 bg-white text-black disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={loading && isCodeRun === false}
             >
               Save
-            </button>
+            </Button>
           ) : (
-            <select
-              onChange={(e) => redirect.push(e.target.value)}
-              className="py-[5.5px] px-4 mx-2 bg-neutral-700 text-white"
-              value={language}
-            >
-              {SUPPORTED_LANGUAGES.map((lang, index) => {
-                const capitalize = lang.charAt(0).toUpperCase() + lang.slice(1);
-                return (
-                  <option key={index} value={lang}>
-                    {capitalize}
-                  </option>
-                );
-              })}
-            </select>
+            <Select onValueChange={(val) => redirect.push(val)}>
+              <SelectTrigger className="w-fit">
+                <SelectValue placeholder={language} />
+              </SelectTrigger>
+              <SelectContent>
+                {SUPPORTED_LANGUAGES.map((lang, index) => {
+                  const capitalize = lang.charAt(0).toUpperCase() + lang.slice(1);
+                  return (
+                    <SelectItem key={index} value={lang}>{capitalize}</SelectItem>
+                  );
+                })}
+              </SelectContent>
+            </Select>
           )}
-          <button
-            className="px-4 py-1 bg-neutral-700 text-white hover:bg-neutral-600 disabled:opacity-50 disabled:cursor-not-allowed"
+          <Button
+            variant="secondary"
             onClick={handleSubmit}
             disabled={loading && isCodeRun === true}
           >
             Run
-          </button>
-        </div>
-        <Editor
-          width="100%"
-          height="90%"
-          value={code}
-          language={language}
-          theme="vs-dark"
-          onMount={handleEditorDidMount}
-          onChange={(val) => setCode(val || "")}
-          options={{
-            fontSize: 14,
-            minimap: {
-              enabled: false,
-            },
-            formatOnPaste: true,
-            formatOnType: true,
-            autoIndent: "full",
-            autoClosingBrackets: "always",
-            autoClosingQuotes: "always",
-            acceptSuggestionOnEnter: "on",
-            tabCompletion: "on",
-            wordBasedSuggestions: "allDocuments",
-            suggestOnTriggerCharacters: true,
-            suggestSelection: "first",
-          }}
-        />
+          </Button>
+        </Editor>
       </div>
       <div className="w-full md:w-1/2 h-1/2 md:h-full flex flex-col-reverse md:flex-col">
         <pre

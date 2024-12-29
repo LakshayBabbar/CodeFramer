@@ -16,16 +16,24 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { IconSparkles } from "@tabler/icons-react";
-import { Switch } from "../ui/switch";
+import { Moon, Sun } from "lucide-react"
+import { useTheme } from "next-themes"
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 export default function Navbar() {
-  const [mode, setMode] = useState("dark");
   const [active, setActive] = useState(false);
   const { isAuth, SetIsAuth, setUsername } = useAuth();
   const { data } = useFetch("/api", "auth");
   const navigate = useRouter();
   const pre = "-translate-x-[100vw]";
   const post = "-translate-x-0";
+  const { setTheme } = useTheme()
 
   useEffect(() => {
     if (data?.isAuth === true) {
@@ -33,12 +41,6 @@ export default function Navbar() {
       setUsername(data?.username || "");
     }
   }, [data, setUsername, SetIsAuth]);
-
-  const modeHandler = (isDark: boolean) => {
-    const val = isDark ? "dark" : "light";
-    setMode(val);
-    localStorage.setItem("theme", val);
-  };
 
   const logoutHandler = async () => {
     await fetch("/api/auth/logout", {
@@ -54,16 +56,6 @@ export default function Navbar() {
     navigate.push("/auth");
   };
 
-  useEffect(() => {
-    const theme = localStorage.getItem("theme");
-    if (theme === "dark" || !theme) {
-      setMode("dark");
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      setMode("light");
-    }
-  }, [mode]);
   function linkHandler() {
     setActive(false);
   }
@@ -71,17 +63,16 @@ export default function Navbar() {
   const linkStyle =
     "flex items-center text-md gap-2 dark:text-slate-300 text-slate-800";
 
-  const iconStyle = "size-5 sm:size-4";
+  const iconStyle = "size-5 md:size-4";
   return (
-    <div className="h-14 w-full flex border-b justify-between px-5 sm:px-0 sm:justify-around items-center fixed top-0 left-0 bg-[rgba(240,244,255,0.7)] dark:bg-[rgba(11,14,31,0.7)] backdrop-blur-md z-[99]">
+    <div className="h-14 w-full flex border-b justify-between px-5 md:px-0 md:justify-around items-center fixed top-0 left-0 bg-[rgba(240,244,255,0.7)] dark:bg-[rgba(9,13,37,0.7)] backdrop-blur-xl z-[99]">
       <Link href="/" className={cn(linkStyle, "text-md font-bold font-mono items-start")}>
         <Code2Icon className="size-5" />
         CodeFramer
       </Link>
       <div
-        className={`${
-          active ? post : pre
-        } sm:translate-x-0 top-0 left-0 h-screen w-full p-14 sm:p-0 bg-card sm:bg-transparent  sm:h-auto sm:w-auto flex sm:bg-auto absolute sm:relative flex-col sm:flex-row gap-5 sm:items-center transition-all duration-400`}
+        className={`${active ? post : pre
+          } md:translate-x-0 top-0 left-0 h-screen w-full p-14 md:p-0 bg-card md:bg-transparent  md:h-auto md:w-auto flex md:bg-auto absolute md:relative flex-col md:flex-row gap-5 md:items-center transition-all duration-400`}
       >
         <Link href="/" className={linkStyle} onClick={linkHandler}>
           <HomeIcon className={iconStyle} />
@@ -106,7 +97,7 @@ export default function Navbar() {
           </Link>
         )}
         <Link href="/chat" className={linkStyle} onClick={linkHandler}>
-          <IconSparkles size={20}  />
+          <IconSparkles size={20} />
           Aizen
         </Link>
         {!isAuth && (
@@ -125,13 +116,28 @@ export default function Navbar() {
             Logout
           </button>
         )}
-        <Switch
-          id="mode"
-          checked={mode === "dark"}
-          onCheckedChange={(val) => modeHandler(val)}
-        />
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="sm" className="bg-transparent rounded-full border-neutral-400 hover:dark:bg-slate-800 hover:bg-slate-200 w-fit h-fit p-2">
+              <Sun className="h-[1.4rem] w-[1.4rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+              <Moon className="absolute h-[1.4rem] w-[1.4rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+              <span className="sr-only">Toggle theme</span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="z-[100] ml-24 md:ml-0">
+            <DropdownMenuItem onClick={() => setTheme("light")}>
+              Light
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setTheme("dark")}>
+              Dark
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setTheme("system")}>
+              System
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
-      <div className="sm:hidden flex z-[1000] text-2xl">
+      <div className="md:hidden flex z-[1000] text-2xl">
         {!active ? (
           <AlignRight onClick={() => setActive(true)} />
         ) : (

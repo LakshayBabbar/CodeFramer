@@ -1,0 +1,18 @@
+[
+    {
+        "name": "python",
+        "code": "# Online Python compiler to run Python program online\n\n# Write Python code here\ndef main():\n    print(\"Hello from CodeFramer\")\n\nmain()"
+    },
+    {
+        "name": "javascript",
+        "code": "// Online JavaScript compiler to run JavaScript program online\n\n// Write JavaScript code here\nfunction main() {\n    console.log(\"Hello from CodeFramer\");\n}\n\nmain();"
+    },
+    {
+        "name": "cpp",
+        "code": "// Online C++ compiler to run C++ program online\n#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write C++ code here\n    cout << \"Hello from CodeFramer\" << endl;\n    return 0;\n}"
+    },
+    {
+        "name": "c",
+        "code": "// Online C compiler to run C program online\n#include <stdio.h>\n\nint main() {\n    // Write C code here\n    printf(\"Hello from CodeFramer\\n\");\n    return 0;\n}"
+    }
+]

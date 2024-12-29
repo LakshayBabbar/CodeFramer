@@ -10,6 +10,7 @@ import {
 import { AlertDialogFooter, AlertDialogHeader } from "./alert-dialog";
 import { Input } from "./input";
 import { Button } from "./button";
+import { motion } from "framer-motion";
 
 interface AlertWrapperProps {
   children: React.ReactNode;
@@ -43,13 +44,17 @@ const AlertWrapper = ({
         <Button variant={variant}>{children}</Button>
       </AlertDialogTrigger>
       <AlertDialogContent className="fixed top-0 left-0 w-full h-screen bg-[rgba(7,10,24,0.68)] backdrop-blur-lg flex items-center justify-center z-[999] overflow-hidden">
-        <div className="bg-card p-6 space-y-5 border rounded-xl w-11/12 md:max-w-[40rem]">
+        <motion.div
+          initial={{ scale: 0.5, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.5, opacity: 0 }}
+          className="bg-card p-6 space-y-5 border rounded-xl w-11/12 md:max-w-[40rem]">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-xl font-bold">
               Are you absolutely sure?
             </AlertDialogTitle>
             <AlertDialogDescription className="text-sm dark:text-slate-200">
-              {`This action is irreversible. Confirming will permanently delete all your data from our servers. Please type '${conformText}' to proceed with deletion.`}
+              This action is irreversible. Confirming will permanently delete all your data from our servers. Please type &quot;<strong>{conformText}</strong>&quot; to proceed with deletion.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <Input
@@ -81,7 +86,7 @@ const AlertWrapper = ({
               Continue
             </Button>
           </AlertDialogFooter>
-        </div>
+        </motion.div>
       </AlertDialogContent>
     </AlertDialog>
   );

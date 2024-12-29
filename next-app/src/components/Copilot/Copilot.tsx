@@ -7,6 +7,7 @@ import { X } from "lucide-react";
 import useAuth from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { IconSparkles } from '@tabler/icons-react'
+import { AnimatePresence, motion } from "framer-motion";
 
 interface CopilotProps {
     code: string;
@@ -73,7 +74,11 @@ const CopilotModal = memo(({ code, setCode, lang, isOpen, setIsOpen }: CopilotMo
             aria-modal="true"
             aria-labelledby="copilot-modal-title"
         >
-            <div className="w-11/12 sm:w-[30rem] relative p-6 bg-card dark:border rounded-xl space-y-4 shadow-2xl">
+            <motion.div
+                initial={{ scale: 0.5, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ type: "spring", stiffness: 240, damping: 20 }}
+                className="w-11/12 sm:w-[30rem] relative p-6 bg-card dark:border rounded-xl space-y-4 shadow-2xl">
                 <button className="absolute top-2 right-2" aria-label="Close" onClick={() => setIsOpen(false)}><X /></button>
                 <div>
                     <h1 id="copilot-modal-title" className="text-2xl gap-1 text-center flex justify-center font-semibold bg-gradient-to-tr from-violet-700 to-violet-400 bg-clip-text text-transparent">
@@ -111,7 +116,7 @@ const CopilotModal = memo(({ code, setCode, lang, isOpen, setIsOpen }: CopilotMo
                 {isError && <p className="text-red-500  ">{error}</p>}
                 {loading && <div className="w-full flex justify-center">
                     <div className="size-10 rounded-full border-t-2 border-b-2 border-indigo-600 animate-spin" /></div>}
-            </div>
+            </motion.div>
         </div>,
         modalRef.current
     );
@@ -128,7 +133,7 @@ const CopilotButton = memo((props: CopilotProps) => {
     return (
         <div>
             <button
-                className="p-1 px-6 rounded-full hover:opacity-90 relative text-white"
+                className="p-1 pr-6 rounded-full hover:opacity-90 relative text-slate-700 dark:text-white"
                 onClick={toggleModal}
                 aria-label="Get help from AI"
             >

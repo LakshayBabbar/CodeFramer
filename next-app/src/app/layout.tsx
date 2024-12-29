@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar/Navbar";
 import { Toaster } from "@/components/ui/toaster";
 import ReactQueryProvider from "@/context/ReactQueryProvider";
 import AuthProvider from "@/context/AuthProvider";
+import { ThemeProvider } from "@/context/ThemeProvider";
 
 export const metadata = {
   title: "CodeFramer",
@@ -22,9 +23,14 @@ export default function RootLayout({
       <body className={`overflow-x-hidden dark:bg-slate-950 bg-slate-100`}>
         <AuthProvider>
           <ReactQueryProvider>
-            <Navbar />
-            {children}
-            <div id="modal" />
+            <ThemeProvider attribute="class"
+              defaultTheme="dark"
+              enableSystem
+              disableTransitionOnChange>
+              <Navbar />
+              {children}
+              <div id="modal" />
+            </ThemeProvider>
           </ReactQueryProvider>
           <Toaster />
         </AuthProvider>
