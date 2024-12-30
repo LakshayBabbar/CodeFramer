@@ -63,7 +63,7 @@ const ChatBot = () => {
           )}
         </article>
         <form
-          className="flex gap-4 fixed w-full h-24 dark:bg-slate-950 bg-slate-100 bottom-0 items-center justify-center"
+          className="flex gap-4 fixed w-full h-24 bg-card bottom-0 items-center justify-center"
           onSubmit={submitHandler}
         >
           <div className="w-full md:w-3/5 mx-10 sm:mx-0 relative">

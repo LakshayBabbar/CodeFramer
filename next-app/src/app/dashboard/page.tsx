@@ -8,7 +8,6 @@ import Image from "next/image";
 import img from "@/../public/user.jpeg";
 import useFetch from "@/hooks/useFetch";
 import useSend from "@/hooks/useSend";
-import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import AlertWrapper from "@/components/ui/AlertWrapper";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
@@ -101,13 +100,14 @@ const Page = () => {
             <>
               {Array.from({ length: 6 }).map((_, i) => {
                 return (
-                  <div key={i} className="w-full sm:max-w-80 p-8 rounded-xl space-y-4 border">
-                    <Skeleton className="size-12 rounded-md" />
-                    <Skeleton className="h-6 w-[250px]" />
+                  <div key={i} className="w-full sm:max-w-80 p-8 rounded-xl space-y-4 dark:bg-neutral-950 drop-shadow-xl bg-neutral-400">
+                    <Skeleton className="h-10 w-[200px]" />
+                    <Skeleton className="h-4 w-[120px]" />
+                    <Skeleton className="h-4 w-[120px]" />
                     <Skeleton className="h-4 w-[120px]" />
                     <div className="flex items-center justify-between">
                       <Skeleton className="h-6 w-[60px]" />
-                      <Skeleton className="h-6 w-[40px]" />
+                      <Skeleton className="h-6 w-[20px]" />
                     </div>
                   </div>
                 );

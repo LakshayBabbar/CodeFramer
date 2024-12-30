@@ -60,7 +60,7 @@ const BaseEditor = ({ file, onValChange, children }: EditorComProps) => {
 
     return (
         <div className="w-full h-full">
-            <div className="w-full py-2 h-fit flex flex-wrap gap-2 items-center justify-between border bg-slate-50 dark:bg-slate-950 px-5">
+            <div className="w-full py-2 h-fit flex flex-wrap gap-2 items-center justify-between border bg-card px-5">
                 <div className="flex items-center gap-2">
                     <CopilotButton code={file.value} setCode={setRes} lang={file.language} />
                     {theme === "dark" && <Select onValueChange={(val) => themeHandler(val)}>
@@ -82,7 +82,7 @@ const BaseEditor = ({ file, onValChange, children }: EditorComProps) => {
             </div>
             <Editor
                 width="100%"
-                height="100%"
+                height="93%"
                 path={file.name}
                 value={file.value}
                 language={file.language}

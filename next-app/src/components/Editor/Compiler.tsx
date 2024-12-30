@@ -122,7 +122,7 @@ export default function CompilerEditor({
           </Button>
         </Editor>
       </div>
-      <div className="w-full md:w-1/2 h-1/2 md:h-full flex flex-col-reverse md:flex-col">
+      <div className="w-full md:w-1/2 h-1/2 md:h-full mt-7 md:mt-0 flex flex-col-reverse md:flex-col">
         <pre
           className={`w-full h-1/2 p-4 overflow-auto ${isCodeErr && "text-red-400"
             }`}

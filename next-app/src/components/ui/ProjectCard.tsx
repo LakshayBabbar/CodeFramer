@@ -1,8 +1,11 @@
-import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
 import useSend from "@/hooks/useSend";
-import { Code2Icon, Clock, Trash2 } from "lucide-react";
 import { QueryObserverResult } from "@tanstack/react-query";
+import { MagicCard } from "./magic-card";
+import { useTheme } from "next-themes";
+import { Clock } from "lucide-react";
+import { Trash } from "lucide-react";
+import Link from "next/link";
 
 export interface ProjectCardProps {
   id: string;
@@ -16,7 +19,9 @@ export interface ProjectCardProps {
 
 const ProjectCard = ({ data }: { data: ProjectCardProps }) => {
   const { toast } = useToast();
-  const { fetchData, loading, isError } = useSend();
+  const { fetchData, loading } = useSend();
+  const { theme } = useTheme();
+
   const deleteHandler = async () => {
     const res = await fetchData({
       url: `/api/projects/${data.id}`,
@@ -32,18 +37,25 @@ const ProjectCard = ({ data }: { data: ProjectCardProps }) => {
     }
   };
 
+  const languages = data?.languages?.map((lang) => lang.name.charAt(0).toUpperCase() + lang.name.slice(1)).join(", ");
+  const type = data?.type?.charAt(0) + data?.type?.slice(1).toLowerCase();
+
   return (
-    <div className={`w-full sm:max-w-80 p-8 bg-gradient-to-b from-slate-100 to-slate-200  dark:from-slate-900 dark:to-slate-950 rounded-2xl drop-shadow-xl border-2 space-y-2 dark:text-slate-200 ${isError && "border border-red-500"} dark:border-slate-950 hover:border-2 hover:border-slate-600 hover:dark:border-neutral-500 transition-all duration-300`}>
-      <div>
-        <Code2Icon size={50} className="dark:bg-slate-900 bg-slate-200 p-2 rounded-md" />
+    <MagicCard
+      className="p-8 shadow-2xl w-full sm:w-80 dark:text-neutral-300 text-neutral-800"
+      gradientColor={theme === "dark" ? "#262626" : "#D9D9D955"}
+    >
+      <div className="flex flex-col gap-2 w-full">
+        <p className="text-3xl line-clamp-1">{data?.name}</p>
+        <p className="flex items-center gap-2"><Clock size={20} strokeWidth={2.5} />{data?.createdAt?.substring(0, 10)}</p>
+        <p><strong>Type: </strong>{type}</p>
+        <p><strong>Language: </strong>{languages}</p>
+        <div className="flex w-full justify-between">
+          <Link href={data?.type === "COMPILER" ? `/compiler/${data?.languages[0]?.name}/${data?.id}` : `/web-editor/${data?.id}`} className="underline">Open</Link>
+          <button onClick={deleteHandler} disabled={loading} aria-label="delete"><Trash size="17" strokeWidth={2.5} /></button>
+        </div>
       </div>
-      <p className="text-2xl line-clamp-2">{data?.name}</p>
-      <p className="flex gap-2 items-center"><Clock size={15} strokeWidth={2} />{data?.createdAt?.substring(0, 10)}</p>
-      <div className="flex justify-between items-center">
-        <Link href={`${data.type === "WEB" ? "/web-editor/" : `/compiler/${data?.languages[0]?.name}/`}${data?.id}`} className="underline underline-offset-2">Open</Link>
-        <button aria-label="delete project" onClick={deleteHandler} disabled={loading}><Trash2 size={16} /></button>
-      </div>
-    </div>
+    </MagicCard>
   );
 };
 

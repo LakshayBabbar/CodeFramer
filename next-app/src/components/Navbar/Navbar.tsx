@@ -65,7 +65,7 @@ export default function Navbar() {
 
   const iconStyle = "size-5 md:size-4";
   return (
-    <div className="h-14 w-full flex border-b justify-between px-5 md:px-0 md:justify-around items-center fixed top-0 left-0 bg-[rgba(240,244,255,0.7)] dark:bg-[rgba(9,13,37,0.7)] backdrop-blur-xl z-[99]">
+    <div className="h-14 w-full flex border-b justify-between px-5 md:px-0 md:justify-around items-center fixed top-0 left-0 bg-card backdrop-blur-xl z-[99]">
       <Link href="/" className={cn(linkStyle, "text-md font-bold font-mono items-start")}>
         <Code2Icon className="size-5" />
         CodeFramer
@@ -118,7 +118,7 @@ export default function Navbar() {
         )}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="sm" className="bg-transparent rounded-full border-neutral-400 hover:dark:bg-slate-800 hover:bg-slate-200 w-fit h-fit p-2">
+            <Button variant="outline" size="sm" className="rounded-full w-fit h-fit p-2">
               <Sun className="h-[1.4rem] w-[1.4rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
               <Moon className="absolute h-[1.4rem] w-[1.4rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
               <span className="sr-only">Toggle theme</span>

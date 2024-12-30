@@ -19,8 +19,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark overflow-x-hidden">
-      <body className={`overflow-x-hidden dark:bg-slate-950 bg-slate-100`}>
+    <html lang="en">
+      <body className="overflow-x-hidden">
         <AuthProvider>
           <ReactQueryProvider>
             <ThemeProvider attribute="class"
