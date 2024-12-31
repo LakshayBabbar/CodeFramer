@@ -3,12 +3,13 @@ import React, { FormEvent, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import useSend from "@/hooks/useSend";
-import useAuth from "@/hooks/useAuth";
 import Markdown from "markdown-to-jsx";
 import { useToast } from "@/hooks/use-toast";
+import { useSession } from "@clerk/nextjs";
 
 const ChatBot = () => {
-  const { isAuth, username } = useAuth();
+  const { isSignedIn: isAuth, session } = useSession();
+  const username = session?.publicUserData?.firstName;
   const [content, setContent] = useState("");
   const [promt, setPromt] = useState("");
   const { fetchData, loading } = useSend();

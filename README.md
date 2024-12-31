@@ -63,12 +63,18 @@ Ensure you have the following installed on your machine:
 
     Create a `.env.local` file in the nextjs application and add the following variables:
 
-    - `ACCESS_SECRET_KEY`: Your defined access secret key.
-    - `URI`: MongoDB URI address.
+    - `DATABASE_URL`: MongoDB URI address.
     - `BASE_URL`: Hosting address.
     - `CODE_AI_API`: Google AI Studio API key for editor in-built ai.
     - `GENERAL_AI_API`: Google AI Studio API key for chat.
     - `COMPILER_URL`: Path to the compiler server.
+    - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
+    - `CLERK_SECRET_KEY`
+    - `NEXT_PUBLIC_CLERK_SIGN_IN_URL`
+    - `NEXT_PUBLIC_CLERK_SIGN_UP_URL`
+    - `CLERK_SIGN_IN_FORCE_REDIRECT_URL`
+    - `CLERK_SIGN_UP_FORCE_REDIRECT_URL`
+    - `SIGNING_SECRET`"
 
     Create a `.env` file in the compiler server and add the following variables:
 

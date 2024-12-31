@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { createPortal } from "react-dom";
-import useAuth from "@/hooks/useAuth";
+import { useAuth } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import useSend from "@/hooks/useSend";
 import {
@@ -25,7 +25,7 @@ const CreateProject: React.FC<CreateProjectProps> = ({ isOpen, setIsOpen }) => {
   const [name, setName] = useState<string>("");
   const [environment, setEnvironment] = useState<"WEB" | "COMPILER">("WEB");
   const [language, setLanguage] = useState("python");
-  const { isAuth } = useAuth();
+  const { isSignedIn: isAuth } = useAuth();
   const router = useRouter();
   const { fetchData, isError, error, loading, setIsError } = useSend();
 

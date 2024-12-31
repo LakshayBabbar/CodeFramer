@@ -4,10 +4,10 @@ import { createPortal } from "react-dom";
 import useSend from "@/hooks/useSend";
 import { cn } from "@/lib/utils";
 import { X } from "lucide-react";
-import useAuth from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { IconSparkles } from '@tabler/icons-react'
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
+import { useAuth } from "@clerk/nextjs";
 
 interface CopilotProps {
     code: string;
@@ -27,7 +27,7 @@ const CopilotModal = memo(({ code, setCode, lang, isOpen, setIsOpen }: CopilotMo
     const modalRef = useRef<HTMLDivElement | null>(null);
     const { fetchData, loading, isError, error } = useSend();
     const [query, setQuery] = useState("");
-    const { isAuth } = useAuth();
+    const { isSignedIn: isAuth } = useAuth();
     const { toast } = useToast();
 
     useEffect(() => {

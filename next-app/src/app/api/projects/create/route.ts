@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { headers } from "next/headers";
 import prisma from "@/config/db";
 import { ProjectType } from "@prisma/client";
 import template from "@/shared/template-web.json";
+import { auth } from "@clerk/nextjs/server";
 
 export async function POST(req: NextRequest) {
   try {
@@ -23,20 +23,13 @@ export async function POST(req: NextRequest) {
       languages = template;
     }
 
-    const headersList = headers();
-    const authData = JSON.parse(headersList.get("authData") || "{}");
-
-    if (!authData || !authData.id) {
-      return NextResponse.json(
-        { error: "Unauthorized request. Missing user authentication data." },
-        { status: 401 }
-      );
-    }
+    await auth.protect();
+    const { userId } = await auth();
 
     const existingProject = await prisma.project.findFirst({
       where: {
         name,
-        userId: authData.id,
+        userId: userId || "",
       },
     });
 
@@ -51,7 +44,7 @@ export async function POST(req: NextRequest) {
       data: {
         name,
         type: type as ProjectType,
-        userId: authData.id,
+        userId: userId || "",
         languages: {
           create: languages,
         },

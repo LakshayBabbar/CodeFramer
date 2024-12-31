@@ -1,14 +1,14 @@
-import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import prisma from "@/config/db";
+import { auth } from "@clerk/nextjs/server";
 
 export async function GET() {
   try {
-    const Headers = headers();
-    const authData = await JSON.parse(Headers.get("authData") || "");
+    await auth.protect();
+    const { userId } = await auth();
     const projects = await prisma.project.findMany({
       where: {
-        userId: authData.id,
+        userId: userId || "",
       },
       include: {
         languages: true,

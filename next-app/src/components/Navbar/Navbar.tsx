@@ -1,13 +1,9 @@
 "use client";
 import Link from "next/link";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import useAuth from "@/hooks/useAuth";
-import useFetch from "@/hooks/useFetch";
+import { useState } from "react";
 import {
   Code2Icon,
   LogIn,
-  LogOutIcon,
   HomeIcon,
   Laptop,
   LayoutDashboard,
@@ -25,36 +21,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useAuth, UserButton } from "@clerk/nextjs";
 
 export default function Navbar() {
   const [active, setActive] = useState(false);
-  const { isAuth, SetIsAuth, setUsername } = useAuth();
-  const { data } = useFetch("/api", "auth");
-  const navigate = useRouter();
+  const { isSignedIn: isAuth, } = useAuth();
   const pre = "-translate-x-[100vw]";
   const post = "-translate-x-0";
   const { setTheme } = useTheme()
-
-  useEffect(() => {
-    if (data?.isAuth === true) {
-      SetIsAuth(true);
-      setUsername(data?.username || "");
-    }
-  }, [data, setUsername, SetIsAuth]);
-
-  const logoutHandler = async () => {
-    await fetch("/api/auth/logout", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      cache: "no-store",
-    });
-    setUsername("");
-    SetIsAuth(false);
-    setActive(false);
-    navigate.push("/auth");
-  };
 
   function linkHandler() {
     setActive(false);
@@ -90,31 +64,38 @@ export default function Navbar() {
           <Laptop className={iconStyle} />
           Compilers
         </Link>
-        {isAuth && (
-          <Link href="/dashboard" className={linkStyle} onClick={linkHandler}>
-            <LayoutDashboard className={iconStyle} />
-            Dashboard
-          </Link>
-        )}
         <Link href="/chat" className={linkStyle} onClick={linkHandler}>
           <IconSparkles size={20} />
           Aizen
         </Link>
         {!isAuth && (
-          <Link
-            href="/auth?mode=login"
-            className={linkStyle}
-            onClick={linkHandler}
-          >
-            <LogIn className={iconStyle} />
-            Sign In
-          </Link>
+          <>
+            <Link
+              href="/sign-in"
+              className={linkStyle}
+              onClick={linkHandler}
+            >
+              <LogIn className={iconStyle} />
+              Sign In
+            </Link>
+            <Link
+              href="/sign-up"
+              className={linkStyle}
+              onClick={linkHandler}
+            >
+              <LogIn className={iconStyle} />
+              Sign Up
+            </Link>
+          </>
         )}
         {isAuth && (
-          <button className={linkStyle} onClick={logoutHandler}>
-            <LogOutIcon className={iconStyle} />
-            Logout
-          </button>
+          <>
+            <Link href="/dashboard" className={linkStyle} onClick={linkHandler}>
+              <LayoutDashboard className={iconStyle} />
+              Dashboard
+            </Link>
+            <UserButton />
+          </>
         )}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

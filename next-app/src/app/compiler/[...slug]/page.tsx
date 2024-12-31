@@ -1,20 +1,22 @@
 import CompilerEditor from "@/components/Editor/Compiler";
-import { cookies } from "next/headers";
 import { SUPPORTED_LANGUAGES } from "@/lib/lang";
+import { auth } from "@clerk/nextjs/server";
 
 const getData = async (id: string) => {
   try {
-    if (!process.env.BASE_URL) {
-      throw new Error("BASE_URL is not defined in environment variables");
+    const { getToken } = await auth();
+    const token = await getToken();
+    if (!token) {
+      return {
+        error: "Unauthorized access",
+      };
     }
-    const token = cookies()?.get("authToken")?.value || "";
     const req = await fetch(`${process.env.BASE_URL}/api/projects/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      credentials: "include",
     });
     if (!req.ok) {
       const errorText = (await req.json()) || { error: "Failed to fetch data" };

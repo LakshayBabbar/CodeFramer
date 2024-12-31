@@ -50,7 +50,7 @@ export default function Home() {
           duration={0.5}
           repeatDelay={1}
           className={cn(
-            "[mask-image:radial-gradient(300px_circle_at_center,white,transparent)] sm:[mask-image:radial-gradient(500px_circle_at_center,white,transparent)]",
+            "[mask-image:radial-gradient(400px_circle_at_center,white,transparent)] sm:[mask-image:radial-gradient(500px_circle_at_center,white,transparent)]",
             "inset-x-0 inset-y-[-30%] h-[200%] skew-y-12 -z-10",
           )}
         />

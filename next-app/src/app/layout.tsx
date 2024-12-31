@@ -2,8 +2,8 @@ import "./globals.css";
 import Navbar from "@/components/Navbar/Navbar";
 import { Toaster } from "@/components/ui/toaster";
 import ReactQueryProvider from "@/context/ReactQueryProvider";
-import AuthProvider from "@/context/AuthProvider";
 import { ThemeProvider } from "@/context/ThemeProvider";
+import { ClerkProvider } from "@clerk/nextjs";
 
 export const metadata = {
   title: "CodeFramer",
@@ -19,9 +19,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="overflow-x-hidden">
-        <AuthProvider>
+    <ClerkProvider>
+      <html lang="en">
+        <body className="overflow-x-hidden">
           <ReactQueryProvider>
             <ThemeProvider attribute="class"
               defaultTheme="dark"
@@ -33,8 +33,8 @@ export default function RootLayout({
             </ThemeProvider>
           </ReactQueryProvider>
           <Toaster />
-        </AuthProvider>
-      </body>
-    </html>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

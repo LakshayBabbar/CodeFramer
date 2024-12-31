@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { headers } from "next/headers";
 import prisma from "@/config/db";
+import { auth } from "@clerk/nextjs/server";
 
 export async function GET(
   req: NextRequest,
@@ -8,13 +8,13 @@ export async function GET(
 ) {
   try {
     const { pid } = params;
-    const Headers = headers();
-    const authData = await JSON.parse(Headers.get("authData") || "");
+    await auth.protect();
+    const { userId } = await auth();
 
     const projectData = await prisma.project.findFirst({
       where: {
         id: pid,
-        userId: authData.id,
+        userId: userId || "",
       },
       include: {
         languages: true,
@@ -47,14 +47,14 @@ export async function DELETE(
   { params }: { params: { pid: string } }
 ) {
   const { pid } = params;
-  const Headers = headers();
-  const authData = await JSON.parse(Headers.get("authData") || "");
+  await auth.protect();
+  const { userId } = await auth();
 
   try {
     const project = await prisma.project.delete({
       where: {
         id: pid,
-        userId: authData.id,
+        userId: userId || "",
       },
     });
 
@@ -99,13 +99,13 @@ export async function PUT(
       );
     }
 
-    const Headers = headers();
-    const authData = JSON.parse(Headers.get("authData") || "{}");
+    await auth.protect();
+    const { userId } = await auth();
 
     const existingProject = await prisma.project.findFirst({
       where: {
         id: pid,
-        userId: authData.id,
+        userId: userId || "",
       },
     });
 
