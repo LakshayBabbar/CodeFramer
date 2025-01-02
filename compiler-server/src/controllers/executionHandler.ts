@@ -18,13 +18,8 @@ const imageMap: Record<SupportedLanguage, string> = {
 export async function executionHandler(req: ExecutionRequest, res: Response) {
   const language = req.params.lang as SupportedLanguage;
   const { code, inputs = "", access_key } = req.body;
-  const referer = req.headers.referer;
 
   try {
-    if (!referer || (!referer.includes(process.env.ORIGIN || "") && !referer.includes(process.env.ORIGIN2 || ""))) {
-      throw new Error("Unauthorized access:401");
-    }
-
     if (access_key !== process.env.ACCESS_KEY) {
       throw new Error("Unauthorized access:401");
     }
@@ -51,17 +46,26 @@ export async function executionHandler(req: ExecutionRequest, res: Response) {
     let stderr = "";
     let isTimedOut = false;
 
-    const timeout = setTimeout(() => {
+    const timeout = setTimeout(async () => {
       isTimedOut = true;
       res.json({
         output: "Execution timed out",
         codeError: true,
       });
-
-      container.kill({ signal: "SIGKILL" }).catch((err) => {
-        console.error("Error killing container", err);
-      });
+      await cleanUpContainer(container);
     }, EXECUTION_TIMEOUT_MS);
+
+    const cleanUpContainer = async (container: Docker.Container) => {
+      try {
+        // Ensure container is not already stopped
+        const inspectData = await container.inspect();
+        if (inspectData.State.Running) {
+          await container.kill({ signal: "SIGKILL" });
+        }
+      } catch (err) {
+        console.error("Error cleaning up container:", err);
+      }
+    };
 
     const stdoutStream = await container.logs({
       stdout: true,
@@ -90,14 +94,9 @@ export async function executionHandler(req: ExecutionRequest, res: Response) {
         clearTimeout(timeout);
         res.json({
           output: stdout || stderr,
-          codeError: stderr ? true : false,
+          codeError: !!stderr,
         });
-      }
-
-      try {
-        await container.kill({ signal: "SIGKILL" });
-      } catch (err) {
-        console.error("Error cleaning up container", err);
+        await cleanUpContainer(container);
       }
     });
   } catch (error: any) {

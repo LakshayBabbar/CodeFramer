@@ -119,7 +119,8 @@ export async function PUT(
           projectId: pid,
         },
         data: {
-          code: lang.code || null
+          code: lang.code || null,
+          inputs: lang.inputs || null,
         },
       });
     }

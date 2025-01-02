@@ -1,9 +1,4 @@
 User-agent: *
 Allow: /
 Disallow: /dashboard/
-Allow: /web-editor$
-Disallow: /web-editor/
-Allow: /compiler/[^/]*
-Disallow: /compiler/
 Allow: /sign-in
-Allow: /chat

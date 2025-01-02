@@ -5,7 +5,7 @@ export function buildExecutionCommand(
   code: string,
   inputs: string
 ): string {
-  const encodedInputs = Buffer.from(inputs, "utf-8").toString("base64");
+  const encodedInputs = Buffer.from(inputs || "", "utf-8").toString("base64");
   const encodedCode = Buffer.from(code, "utf-8").toString("base64");
   const baseCommand = `echo ${encodedInputs} | base64 -d > /inputs.txt && echo ${encodedCode} | base64 -d >`;
 

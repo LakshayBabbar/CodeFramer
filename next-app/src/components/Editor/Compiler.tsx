@@ -20,30 +20,30 @@ interface CompilerEditorProps {
   language: string;
   data?: {
     id: string;
-    languages: { name: string; code: string }[];
+    languages: { name: string; code: string, inputs?: string; }[];
   };
-  access_key: string;
 }
 
 export default function CompilerEditor({
   data,
   language,
-  access_key,
 }: CompilerEditorProps) {
   const [code, setCode] = useState("");
   const [output, setOutput] = useState("");
   const [isCodeErr, setIsCodeErr] = useState(false);
-  const [inputs, setInputs] = useState("");
+  const [inputs, setInputs] = useState<string | null>(null);
   const { toast } = useToast();
   const { fetchData, loading } = useSend();
   const [isCodeRun, setIsCodeRun] = useState(false);
   const redirect = useRouter();
 
   useEffect(() => {
-    setCode(data?.languages[0]?.code || "");
     if (!data) {
       const sampleCode = templates.find((t) => t.name === language)?.code;
       setCode(sampleCode || "");
+    } else {
+      setCode(data?.languages[0]?.code || "");
+      setInputs(data.languages[0]?.inputs || null);
     }
   }, [data, language]);
 
@@ -51,12 +51,11 @@ export default function CompilerEditor({
     setOutput("");
     setIsCodeRun(true);
     const data = await fetchData({
-      url: `${process.env.NEXT_PUBLIC_COMPILER_URL || ""}/execute/${language}`,
+      url: `/api/execute/${language}`,
       method: "POST",
       body: {
         code,
-        inputs: inputs,
-        access_key,
+        inputs: inputs
       },
     });
     if (!data.error) {
@@ -76,7 +75,7 @@ export default function CompilerEditor({
       url: `/api/projects/${data?.id}`,
       method: "PUT",
       body: {
-        languages: [{ name: data?.languages[0].name, code }],
+        languages: [{ name: data?.languages[0].name, code, inputs }],
       },
     });
     toast({
@@ -134,6 +133,7 @@ export default function CompilerEditor({
           <textarea
             onChange={(e) => setInputs(e.target.value)}
             className="bg-transparent w-full h-[80%] max-h-[80%] max-w-full border-none focus:outline-none pt-2"
+            value={inputs || ""}
           />
         </div>
       </div>

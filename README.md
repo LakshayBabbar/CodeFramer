@@ -67,8 +67,8 @@ Ensure you have the following installed on your machine:
     - `BASE_URL`: Hosting address.
     - `CODE_AI_API`: Google AI Studio API key for editor in-built ai.
     - `GENERAL_AI_API`: Google AI Studio API key for chat.
-    - `NEXT_PUBLIC_COMPILER_URL`: Path to the compiler server.
-    - `NEXT_PUBLIC_ACCESS_KEY`: Access key for compiler server
+    - `COMPILER_API`: Path to the compiler server.
+    - `COMPILER_SECRET`: Access key for compiler server
     - `AUTH_SECRET`: Secret for generating jwt tokens
     - `AUTH_GOOGLE_ID`
     - `AUTH_GOOGLE_SECRET`

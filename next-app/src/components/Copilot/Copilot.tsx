@@ -66,7 +66,7 @@ const CopilotModal = memo(({ code, setCode, lang, isOpen, setIsOpen }: CopilotMo
 
     if (!isOpen || !modalRef.current) return null;
 
-    const buttonClass = "py-2 w-40 bg-gradient-to-tr from-indigo-700 to-purple-500 rounded-md hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed text-white";
+    const buttonClass = "py-2 w-40 bg-gradient-to-tr from-indigo-700 to-purple-500 rounded-2xl hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed text-white";
 
     return createPortal(
         <div
@@ -99,9 +99,9 @@ const CopilotModal = memo(({ code, setCode, lang, isOpen, setIsOpen }: CopilotMo
                         </button>
                     ))}
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-2 items-end">
                     <textarea
-                        className="flex-grow h-10 p-2 max-h-56 bg-secondary rounded-md text-white"
+                        className="flex-grow min-h-10 h-fit p-2 max-h-56 bg-secondary rounded-md text-white"
                         placeholder="How can I help you?"
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
@@ -151,10 +151,10 @@ export { CopilotButton };
 
 const getPrompt = (context: Context, lang: string, code: string, query: string): string => {
     const prompts: Record<Context, string> = {
-        FIX: `Fix the following ${lang} code and provide the fixed code with explanations as comments above relevant sections: \n\n${code}`,
-        EXPLAIN: `Explain the following ${lang} code. Include explanations as comments directly above the relevant code sections: \n\n${code}`,
-        IMPROVE: `Improve the following ${lang} code and include comments explaining the improvements inline: \n\n${code}`,
-        QUERY: `Answer the query related to this ${lang} code. Include the explanation as comments and provide the code below. \n\nQuery: ${query} \n\nCode: ${code}`,
+        FIX: `Fix the following ${lang} code and provide the fixed code. Include any explanations as comments within the code: \n\n${code}\n\nPlease return the response in code format only.`,
+        EXPLAIN: `Explain the following ${lang} code. Include explanations as comments directly above the relevant code sections: \n\n${code}\n\nPlease return the response in code format only.`,
+        IMPROVE: `Improve the following ${lang} code and include comments explaining the improvements inline: \n\n${code}\n\nPlease return the response in code format only.`,
+        QUERY: `Answer the query related to this ${lang} code. Include the explanation as comments and provide the code below: \n\nQuery: ${query} \n\nCode: ${code}\n\nPlease return the response in code format only.`,
     };
     return prompts[context];
 };
