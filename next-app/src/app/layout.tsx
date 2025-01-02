@@ -3,14 +3,11 @@ import Navbar from "@/components/Navbar/Navbar";
 import { Toaster } from "@/components/ui/toaster";
 import ReactQueryProvider from "@/context/ReactQueryProvider";
 import { ThemeProvider } from "@/context/ThemeProvider";
-import { ClerkProvider } from "@clerk/nextjs";
+import { SessionProvider } from "next-auth/react";
 
 export const metadata = {
-  title: "CodeFramer",
-  description: "Online Code Editor - HTML, CSS & JS.",
-  verification: {
-    google: "v6jtGEEF0E0XMHMdaK06gyxXy9mpQfE0-3yuSLik4iw",
-  },
+  title: "CodeFramer: Online IDE & Compiler for Web Development, Python, C, C++, Node.js",
+  description: "CodeFramer is an advanced online IDE and compiler supporting Python, C, C++, Node.js, and web environments (HTML, CSS, JS). Code, execute, and manage projects in real-time with AI assistance."
 };
 
 export default function RootLayout({
@@ -19,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
+    <SessionProvider>
       <html lang="en">
         <body className="overflow-x-hidden">
           <ReactQueryProvider>
@@ -35,6 +32,7 @@ export default function RootLayout({
           <Toaster />
         </body>
       </html>
-    </ClerkProvider>
+    </SessionProvider>
+
   );
 }

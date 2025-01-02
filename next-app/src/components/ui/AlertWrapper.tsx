@@ -43,7 +43,7 @@ const AlertWrapper = ({
       <AlertDialogTrigger asChild>
         <Button variant={variant}>{children}</Button>
       </AlertDialogTrigger>
-      <AlertDialogContent className="fixed top-0 left-0 w-full h-screen bg-[rgba(7,10,24,0.68)] backdrop-blur-lg flex items-center justify-center z-[999] overflow-hidden">
+      <AlertDialogContent className="fixed top-0 left-0 w-full h-screen backdrop-blur-lg flex items-center justify-center z-[999] overflow-hidden">
         <motion.div
           initial={{ scale: 0.5, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}

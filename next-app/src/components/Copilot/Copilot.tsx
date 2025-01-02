@@ -7,7 +7,7 @@ import { X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { IconSparkles } from '@tabler/icons-react'
 import { motion } from "framer-motion";
-import { useAuth } from "@clerk/nextjs";
+import { useSession } from "next-auth/react";
 
 interface CopilotProps {
     code: string;
@@ -27,7 +27,8 @@ const CopilotModal = memo(({ code, setCode, lang, isOpen, setIsOpen }: CopilotMo
     const modalRef = useRef<HTMLDivElement | null>(null);
     const { fetchData, loading, isError, error } = useSend();
     const [query, setQuery] = useState("");
-    const { isSignedIn: isAuth } = useAuth();
+    const { status } = useSession();
+    const isAuth = status === "authenticated";
     const { toast } = useToast();
 
     useEffect(() => {

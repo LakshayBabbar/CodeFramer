@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/config/db";
 import { ProjectType } from "@prisma/client";
 import template from "@/shared/template-web.json";
-import { auth } from "@clerk/nextjs/server";
+import { auth } from "@/auth";
 
 export async function POST(req: NextRequest) {
   try {
@@ -23,8 +23,8 @@ export async function POST(req: NextRequest) {
       languages = template;
     }
 
-    await auth.protect();
-    const { userId } = await auth();
+    const session = await auth();
+    const userId = session?.user?.id;
 
     const existingProject = await prisma.project.findFirst({
       where: {
@@ -64,7 +64,5 @@ export async function POST(req: NextRequest) {
       { error: "Internal Server Error" },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }

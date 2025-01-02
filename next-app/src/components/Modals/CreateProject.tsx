@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { createPortal } from "react-dom";
-import { useAuth } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import useSend from "@/hooks/useSend";
 import {
@@ -14,6 +13,7 @@ import {
 } from "@/components/ui/select";
 import { SUPPORTED_LANGUAGES } from "@/lib/lang";
 import { motion } from "framer-motion";
+import { useSession } from "next-auth/react";
 
 interface CreateProjectProps {
   isOpen: boolean;
@@ -25,7 +25,8 @@ const CreateProject: React.FC<CreateProjectProps> = ({ isOpen, setIsOpen }) => {
   const [name, setName] = useState<string>("");
   const [environment, setEnvironment] = useState<"WEB" | "COMPILER">("WEB");
   const [language, setLanguage] = useState("python");
-  const { isSignedIn: isAuth } = useAuth();
+  const { status } = useSession();
+  const isAuth = status === "authenticated";
   const router = useRouter();
   const { fetchData, isError, error, loading, setIsError } = useSend();
 
@@ -38,6 +39,13 @@ const CreateProject: React.FC<CreateProjectProps> = ({ isOpen, setIsOpen }) => {
     }
     if (!isOpen) setIsError(false);
   }, [isOpen, isAuth, router, setIsOpen, setIsError]);
+
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    }
+  }, [isOpen])
 
   const dataHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);

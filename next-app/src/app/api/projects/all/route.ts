@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 import prisma from "@/config/db";
-import { auth } from "@clerk/nextjs/server";
+import { auth } from "@/auth";
 
 export async function GET() {
   try {
-    await auth.protect();
-    const { userId } = await auth();
+    const session = await auth();
+    const userId = session?.user?.id;
     const projects = await prisma.project.findMany({
       where: {
         userId: userId || "",
@@ -22,7 +22,5 @@ export async function GET() {
       },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }

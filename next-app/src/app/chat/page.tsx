@@ -5,11 +5,12 @@ import { Button } from "@/components/ui/button";
 import useSend from "@/hooks/useSend";
 import Markdown from "markdown-to-jsx";
 import { useToast } from "@/hooks/use-toast";
-import { useSession } from "@clerk/nextjs";
+import { useSession } from "next-auth/react";
 
 const ChatBot = () => {
-  const { isSignedIn: isAuth, session } = useSession();
-  const username = session?.publicUserData?.firstName;
+  const { status, data } = useSession();
+  const username = data?.user?.name;
+  const isAuth = status === "authenticated";
   const [content, setContent] = useState("");
   const [promt, setPromt] = useState("");
   const { fetchData, loading } = useSend();

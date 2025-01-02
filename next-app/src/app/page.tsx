@@ -56,12 +56,12 @@ export default function Home() {
         />
       </section>
 
-      <section className="w-full py-20 h-fit relative overflow-hidden">
+      <section className="w-full py-10 sm:py-20 h-fit relative overflow-hidden">
         <FeaturesSection />
         <div className="absolute bottom-0 w-full h-[500px] bg-gradient-to-t from-neutral-300 dark:from-neutral-900 to-transparent blur-2xl"></div>
       </section>
 
-      <section className="px-5 py-20 flex gap-10 flex-col text-center items-center w-full border-y">
+      <section className="px-5 py-10 sm:py-20 flex gap-10 flex-col text-center items-center w-full border-y">
         <div>
           <h4 className="text-3xl lg:text-5xl lg:leading-tight max-w-5xl mx-auto text-center tracking-tight font-medium text-black dark:text-white">More Reasons to Choose CodeFramer</h4>
           <p className="text-sm lg:text-base  max-w-2xl  my-4 mx-auto text-neutral-500 text-center font-normal dark:text-neutral-300">Explore even more features designed to elevate your coding experience and make development faster, smarter, and more efficient.</p>

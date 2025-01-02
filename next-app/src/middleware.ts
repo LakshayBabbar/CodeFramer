@@ -1,30 +1,16 @@
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+import { auth } from "@/auth"
 
-const isPublicRoute = createRouteMatcher([
-  '/api/webhooks/(.*)',
-  '/web-editor',
-  '/compiler/(.*)',
-  '/',
-  '/sign-in',
-  '/sign-up',
-  '/chat',
-]);
-
-export default clerkMiddleware(async (auth, req) => {
-  if (!isPublicRoute(req)) {
-    await auth.protect();
+export default auth((req) => {
+  if (!req.auth && req.nextUrl.pathname !== "/sign-in") {
+    const newUrl = new URL("/sign-in", req.nextUrl.origin)
+    return Response.redirect(newUrl)
   }
-});
+  if (req.auth && req.nextUrl.pathname === "/sign-in") {
+    const newUrl = new URL("/dashboard", req.nextUrl.origin)
+    return Response.redirect(newUrl)
+  }
+})
 
 export const config = {
-  matcher: [
-    // Skip Next.js internals and all static files, unless found in search params
-    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
-    '/api/(.*)',
-    '/dashboard(.*)',
-    '/web-editor/(.*)',
-    '/api/webhooks/(.*)',
-    '/chat',
-    '/compiler/(.*)',
-  ],
-};
+  matcher: ["/api/projects/:path*", "/api/users/:path*", "/dashboard", "/api/copilot", "/sign-in"],
+}

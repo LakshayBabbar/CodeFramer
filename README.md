@@ -22,9 +22,9 @@ The architecture of CodeFramer is designed to ensure high performance, security,
 
 1. **Frontend:** Built with Next.js 14, the frontend provides a modern and responsive user interface. It communicates with the backend through API routes.
 2. **Backend:** The backend, also developed with Next.js 14 API Routes, Node.js, and Express, handles all the business logic and API requests.
-3. **Database:** MongoDB is used for data storage, offering flexibility and scalability.
+3. **Database:** Postgresql is used for data storage, offering flexibility and scalability.
 4. **Containerized Execution:** Docker is used to create isolated containers for code execution, ensuring security and resource efficiency.
-5. **Authentication:** JSON Web Tokens (JWT) are used for secure user authentication.
+5. **Authentication:** Auth.js is used for handling authentication, providing secure and efficient user login and registration processes.
 6. **Styling:** Tailwind CSS, ShadCN, and Aceternity UI are used for styling, providing a clean and consistent look.
 7. **Additional Libraries:** React Query for data fetching and state management, and Monaco Editor for an enhanced coding experience.
 
@@ -67,14 +67,13 @@ Ensure you have the following installed on your machine:
     - `BASE_URL`: Hosting address.
     - `CODE_AI_API`: Google AI Studio API key for editor in-built ai.
     - `GENERAL_AI_API`: Google AI Studio API key for chat.
-    - `COMPILER_URL`: Path to the compiler server.
-    - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
-    - `CLERK_SECRET_KEY`
-    - `NEXT_PUBLIC_CLERK_SIGN_IN_URL`
-    - `NEXT_PUBLIC_CLERK_SIGN_UP_URL`
-    - `CLERK_SIGN_IN_FORCE_REDIRECT_URL`
-    - `CLERK_SIGN_UP_FORCE_REDIRECT_URL`
-    - `SIGNING_SECRET`"
+    - `NEXT_PUBLIC_COMPILER_URL`: Path to the compiler server.
+    - `NEXT_PUBLIC_ACCESS_KEY`: Access key for compiler server
+    - `AUTH_SECRET`: Secret for generating jwt tokens
+    - `AUTH_GOOGLE_ID`
+    - `AUTH_GOOGLE_SECRET`
+    - `AUTH_GITHUB_ID`
+    - `AUTH_GITHUB_SECRET`
 
     Create a `.env` file in the compiler server and add the following variables:
 

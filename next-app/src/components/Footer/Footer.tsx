@@ -9,11 +9,11 @@ const Footer = () => {
       <hr className="border-neutral-600" />
       <div className="flex flex-col sm:flex-row gap-4 sm:justify-center">
         <Link href="/">Home</Link>
-        <Link href="/web-editor">Web-Editor</Link>
         <Link href="/compiler/python">Compilers</Link>
+        <Link href="/web-editor">Web</Link>
         <Link href="/dashboard">Dashboard</Link>
-        <Link href="/chat">AI Assistant</Link>
-        <Link href="/auth?mode=login">Login</Link>
+        <Link href="/chat">Aizen</Link>
+        <Link href="/sign-in">SignIn</Link>
       </div>
       <p className="font-semibold">
         © 2024 by CodeFramer. &nbsp;All rights reserved.

@@ -4,6 +4,7 @@ import { useState } from "react";
 import {
   Code2Icon,
   LogIn,
+  LogOut,
   HomeIcon,
   Laptop,
   LayoutDashboard,
@@ -21,11 +22,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useAuth, UserButton } from "@clerk/nextjs";
+import { useSession, signOut } from "next-auth/react";
 
 export default function Navbar() {
   const [active, setActive] = useState(false);
-  const { isSignedIn: isAuth, } = useAuth();
+  const { status } = useSession();
+  const isAuth = status === "authenticated";
   const pre = "-translate-x-[100vw]";
   const post = "-translate-x-0";
   const { setTheme } = useTheme()
@@ -35,7 +37,7 @@ export default function Navbar() {
   }
 
   const linkStyle =
-    "flex items-center text-md gap-2 dark:text-slate-300 text-slate-800";
+    "flex items-center text-md gap-2 dark:text-slate-300 text-slate-800 hover:no-underline font-normal";
 
   const iconStyle = "size-5 md:size-4";
   return (
@@ -68,35 +70,21 @@ export default function Navbar() {
           <IconSparkles size={20} />
           Aizen
         </Link>
-        {!isAuth && (
-          <>
-            <Link
-              href="/sign-in"
-              className={linkStyle}
-              onClick={linkHandler}
-            >
-              <LogIn className={iconStyle} />
-              Sign In
-            </Link>
-            <Link
-              href="/sign-up"
-              className={linkStyle}
-              onClick={linkHandler}
-            >
-              <LogIn className={iconStyle} />
-              Sign Up
-            </Link>
-          </>
-        )}
-        {isAuth && (
-          <>
-            <Link href="/dashboard" className={linkStyle} onClick={linkHandler}>
-              <LayoutDashboard className={iconStyle} />
-              Dashboard
-            </Link>
-            <UserButton />
-          </>
-        )}
+        {!isAuth ? (
+          <Link
+            href="/sign-in"
+            className={linkStyle}
+            onClick={linkHandler}
+          >
+            <LogIn className={iconStyle} />
+            Sign In
+          </Link>
+        ) : <>
+          <Link href="/dashboard" className={linkStyle} onClick={linkHandler}><LayoutDashboard className={iconStyle} /> Dashboard</Link>
+          <Button onClick={() => { signOut(); linkHandler() }} variant="link" className={`${linkStyle} px-0 w-fit`}>
+            <LogOut className={iconStyle} />
+            Sign Out
+          </Button></>}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="sm" className="rounded-full w-fit h-fit p-2">

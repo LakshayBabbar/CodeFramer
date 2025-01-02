@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/config/db";
-import { auth } from "@clerk/nextjs/server";
+import { auth } from "@/auth";
 
 export async function GET(
   req: NextRequest,
@@ -8,8 +8,8 @@ export async function GET(
 ) {
   try {
     const { pid } = params;
-    await auth.protect();
-    const { userId } = await auth();
+    const session = await auth();
+    const userId = session?.user?.id;
 
     const projectData = await prisma.project.findFirst({
       where: {
@@ -37,8 +37,6 @@ export async function GET(
       },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }
 
@@ -47,8 +45,8 @@ export async function DELETE(
   { params }: { params: { pid: string } }
 ) {
   const { pid } = params;
-  await auth.protect();
-  const { userId } = await auth();
+  const session = await auth();
+  const userId = session?.user?.id;
 
   try {
     const project = await prisma.project.delete({
@@ -76,8 +74,6 @@ export async function DELETE(
     return NextResponse.json({
       error: error.message,
     });
-  } finally {
-    await prisma.$disconnect();
   }
 }
 
@@ -99,8 +95,8 @@ export async function PUT(
       );
     }
 
-    await auth.protect();
-    const { userId } = await auth();
+    const session = await auth();
+    const userId = session?.user?.id;
 
     const existingProject = await prisma.project.findFirst({
       where: {
@@ -141,7 +137,5 @@ export async function PUT(
       },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }

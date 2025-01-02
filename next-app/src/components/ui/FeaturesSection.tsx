@@ -11,31 +11,35 @@ import ShineBorder from "./shine-border";
 export function FeaturesSection() {
     const features = [
         {
+            id: 1,
             title: "Multiple Language Support",
             description:
                 "Write and run code in various programming languages within a single environment.",
             skeleton: <SkeletonFour />,
             className:
-                "col-span-1 w-full h-fit lg:col-span-3 border-b lg:border-r dark:border-neutral-800 border-neutral-400",
+                "col-span-1 w-full h-fit lg:col-span-3 lg:border-b lg:border-r dark:border-neutral-800 border-neutral-300",
         },
 
         {
+            id: 2,
             skeleton: <SkeletonOne />,
             className:
-                "col-span-1  lg:col-span-3 border-b dark:border-neutral-800 border-neutral-400",
+                "col-span-1  lg:col-span-3 lg:border-b dark:border-neutral-800 border-neutral-300",
         },
         {
+            id: 3,
             title: "Secure Authentication",
             skeleton: <SkeletonTwo />,
             className:
-                "col-span-1 lg:col-span-2 dark:border-neutral-800 border-t border-neutral-400",
+                "col-span-1 lg:col-span-2 dark:border-neutral-800",
         },
         {
+            id: 4,
             title: "Experience CodeFramer in Action",
             description:
                 "Watch a quick demo of seamless coding and AI-powered assistance.",
             skeleton: <SkeletonThree />,
-            className: "border-l col-span-1 lg:col-span-4 dark:border-neutral-800  border-t border-neutral-400",
+            className: "border-l col-span-1 lg:col-span-4 dark:border-neutral-800 border-neutral-300 py-10",
         },
     ];
     return (
@@ -51,9 +55,9 @@ export function FeaturesSection() {
             </div>
 
             <div className="relative ">
-                <div className="grid grid-cols-1 lg:grid-cols-6 mt-12 xl:border border-neutral-400 rounded-md dark:border-neutral-800">
+                <div className="grid grid-cols-1 lg:grid-cols-6 mt-12 xl:border border-neutral-300 rounded-md dark:border-neutral-800">
                     {features.map((feature) => (
-                        <FeatureCard key={feature.title} className={feature.className}>
+                        <FeatureCard key={feature.id} className={feature.className}>
                             <FeatureTitle>{feature.title}</FeatureTitle>
                             <FeatureDescription>{feature.description}</FeatureDescription>
                             <div className=" h-full w-full">{feature.skeleton}</div>
@@ -104,7 +108,7 @@ const FeatureDescription = ({ children }: { children?: React.ReactNode }) => {
 export const SkeletonOne = () => {
     return (
         <div className="flex items-center justify-center h-96 md:h-full w-full">
-            <p className="text-2xl font-bold text-neutral-700 dark:text-neutral-400 text-center">Editor <br />Built-in AI</p>
+            <p className="text-2xl font-light text-neutral-700 dark:text-neutral-400 text-center mb-4">EDITOR <br />BUILD-IN AI</p>
             <Ripple />
         </div>
     );
@@ -116,7 +120,7 @@ export const SkeletonThree = () => {
             <HeroVideoDialog
                 animationStyle="top-in-bottom-out"
                 videoSrc="https://github.com/user-attachments/assets/918cfc40-e247-4faf-afd2-e854fb5bb10e"
-                thumbnailSrc="/editor.jpg"
+                thumbnailSrc="/editor.webp"
                 thumbnailAlt="Hero Video"
             />
         </div>
@@ -142,7 +146,7 @@ export const SkeletonTwo = () => {
                         containerClassName="rounded-full"
                         className="px-4 py-1"
                     >
-                        Powred by Clerk
+                        Powred by Auth.js
                     </HoverBorderGradient>
                 </div>
             </div>

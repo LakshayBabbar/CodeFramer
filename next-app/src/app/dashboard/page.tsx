@@ -3,20 +3,26 @@ import { useState } from "react";
 import CreateProject from "@/components/Modals/CreateProject";
 import ProjectCard, { ProjectCardProps } from "@/components/ui/ProjectCard";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import img from "@/../public/user.jpeg";
 import useFetch from "@/hooks/useFetch";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useSession } from "@clerk/nextjs";
+import { useSession } from "next-auth/react";
+import AlertWrapper from "@/components/ui/AlertWrapper";
+import { useToast } from "@/hooks/use-toast";
+import useSend from "@/hooks/useSend";
+import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
-  const { isSignedIn: isAuth, session } = useSession();
-  const username = session?.user?.fullName;
+  const { data: sessionData } = useSession();
+  const username = sessionData?.user?.name;
   const [isOpen, setIsOpen] = useState(false);
   const { data, error, isError, loading, refetch } = useFetch(
     "/api/projects/all",
     "All_Projects"
   );
+  const { toast } = useToast();
+  const router = useRouter();
+  const reqData = useSend();
 
   if (isError) {
     return (
@@ -26,11 +32,26 @@ const Page = () => {
     );
   }
 
+  const closeAccountHandler = async () => {
+    const res = await reqData.fetchData({
+      url: `/api/users/${sessionData?.user?.id}`,
+      method: "DELETE",
+    });
+    toast({
+      title: res.error || res.message,
+      description: new Date().toString(),
+    });
+    if (!res.error) {
+      signOut();
+      router.push("/");
+    }
+  };
+
   return (
     <main className="flex flex-col w-full justify-center items-center gap-10">
       <section className="h-60 flex flex-col w-full sm:w-3/4 bg-dot-black dark:bg-dot-white/[0.8] relative items-center">
-        <Image
-          src={img}
+        <img
+          src={sessionData?.user?.image || "/user.webp"}
           width={120}
           height={120}
           className="rounded-full absolute -bottom-10"
@@ -40,7 +61,7 @@ const Page = () => {
       <section className="w-4/5 xl:w-4/5 space-y-10 mt-5">
         <div className="flex flex-col items-center justify-center gap-2">
           <h1 className="text-xl font-bold text-center">
-            Welcome, @{username}
+            Welcome, {username}
           </h1>
           <p className="max-w-[35rem] text-sm text-center">
             Your centralized platform for efficient project management, seamless
@@ -89,6 +110,24 @@ const Page = () => {
               })}
             </>
           )}
+        </div>
+        <hr className="border w-full" />
+        <div className="flex flex-col items-center space-y-4 pb-10">
+          <AlertWrapper
+            handlerFn={closeAccountHandler}
+            conformText={`sudo userdel ${username}`}
+            disabled={reqData.loading}
+            variant="destructive"
+          >
+            Close Account
+          </AlertWrapper>
+          {reqData.isError && (
+            <p className="text-center text-red-600">{reqData.error}</p>
+          )}
+          <p className="text-center max-w-96 text-amber-700 font-[600]">
+            Note: Clicking this button will permanently close your account and
+            delete all associated data.
+          </p>
         </div>
       </section>
       <CreateProject isOpen={isOpen} setIsOpen={setIsOpen} />
