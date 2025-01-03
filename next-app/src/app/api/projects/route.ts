@@ -15,10 +15,11 @@ export async function GET() {
       }
     });
     return NextResponse.json(projects);
-  } catch (error: any) {
+  } catch (error) {
+    console.log(error)
     return NextResponse.json(
       {
-        error: error.message,
+        error: "An error occurred while fetching projects",
       },
       { status: 500 }
     );

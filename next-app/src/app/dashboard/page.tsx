@@ -17,7 +17,7 @@ const Page = () => {
   const username = sessionData?.user?.name;
   const [isOpen, setIsOpen] = useState(false);
   const { data, error, isError, loading, refetch } = useFetch(
-    "/api/projects/all",
+    "/api/projects",
     "All_Projects"
   );
   const { toast } = useToast();
@@ -27,7 +27,7 @@ const Page = () => {
   if (isError) {
     return (
       <main>
-        <p className="text-center mt-32">{error?.message}</p>
+        <p className="text-center mt-32">Something went wrong,&nbsp;Please try again later.</p>
       </main>
     );
   }
@@ -47,9 +47,9 @@ const Page = () => {
     }
   };
 
-  return (
+  return !isError && (
     <main className="flex flex-col w-full justify-center items-center gap-10">
-      <section className="h-60 flex flex-col w-full sm:w-3/4 bg-dot-black dark:bg-dot-white/[0.8] relative items-center">
+      <section className="h-44 flex flex-col w-full sm:w-3/4 bg-dot-black dark:bg-dot-white/[0.8] relative items-center">
         <img
           src={sessionData?.user?.image || "/user.webp"}
           width={120}
@@ -64,9 +64,7 @@ const Page = () => {
             Welcome, {username}
           </h1>
           <p className="max-w-[35rem] text-sm text-center">
-            Your centralized platform for efficient project management, seamless
-            collaboration, and real-time progress tracking. Empowering you to
-            achieve more with less effort.
+            Your centralized platform for efficient project management and real-time progress tracking, empowering you to achieve more with less effort.
           </p>
         </div>
         <hr className="border w-full" />
@@ -90,7 +88,6 @@ const Page = () => {
               ) : (
                 <p className="text-center w-full">No project found.</p>
               )}
-              <p className="text-center mb-36">{isError && error?.message}</p>
             </>
           ) : (
             <>

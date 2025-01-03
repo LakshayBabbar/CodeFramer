@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export const POST = async (req: NextRequest, { params }: { params: { lang: string } }) => {
+export const POST = async (req: NextRequest, props: { params: Promise<{ lang: string }> }) => {
+    const params = await props.params;
     try {
         const { lang } = params;
         const { code, inputs } = await req.json();

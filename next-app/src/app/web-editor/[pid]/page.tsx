@@ -1,10 +1,12 @@
-"use client";
+"use client";;
+import { use } from "react";
 import WebEditor from "@/components/Editor/WebEditor";
 import useFetch from "@/hooks/useFetch";
 import { MultiStepLoader } from "@/components/ui/multi-step-loader";
 import { useSession } from "next-auth/react";
 
-const Page = ({ params }: { params: { pid: string } }) => {
+const Page = (props: { params: Promise<{ pid: string }> }) => {
+  const params = use(props.params);
   const { pid } = params;
   const { data, isError, loading, error } = useFetch(
     `/api/projects/${pid}`,

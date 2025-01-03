@@ -2,10 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/config/db";
 import { auth } from "@/auth";
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { pid: string } }
-) {
+export async function GET(req: NextRequest, props: { params: Promise<{ pid: string }> }) {
+  const params = await props.params;
   try {
     const { pid } = params;
     const session = await auth();
@@ -40,10 +38,8 @@ export async function GET(
   }
 }
 
-export async function DELETE(
-  req: NextRequest,
-  { params }: { params: { pid: string } }
-) {
+export async function DELETE(req: NextRequest, props: { params: Promise<{ pid: string }> }) {
+  const params = await props.params;
   const { pid } = params;
   const session = await auth();
   const userId = session?.user?.id;
@@ -77,10 +73,8 @@ export async function DELETE(
   }
 }
 
-export async function PUT(
-  req: NextRequest,
-  { params }: { params: { pid: string } }
-) {
+export async function PUT(req: NextRequest, props: { params: Promise<{ pid: string }> }) {
+  const params = await props.params;
   try {
     const { pid } = params;
     const { languages } = await req.json();

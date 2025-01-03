@@ -57,6 +57,7 @@ const CopilotModal = memo(({ code, setCode, lang, isOpen, setIsOpen }: CopilotMo
             if (!response.error) {
                 setCode(response.data);
                 setIsOpen(false);
+                setQuery("");
             }
         },
         [fetchData, lang, code, query, setCode, setIsOpen, isAuth, toast]

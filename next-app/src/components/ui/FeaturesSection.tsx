@@ -108,7 +108,7 @@ const FeatureDescription = ({ children }: { children?: React.ReactNode }) => {
 export const SkeletonOne = () => {
     return (
         <div className="flex items-center justify-center h-96 md:h-full w-full">
-            <p className="text-2xl font-light text-neutral-700 dark:text-neutral-400 text-center mb-4">EDITOR <br />BUILD-IN AI</p>
+            <p className="text-2xl font-light text-neutral-700 dark:text-neutral-400 text-center mb-4">EDITOR <br />BUILT-IN AI</p>
             <Ripple />
         </div>
     );

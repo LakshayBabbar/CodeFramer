@@ -1,10 +1,9 @@
-export const revalidate = 0;
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/config/db";
 import { auth } from "@/auth";
-import { signOut } from "@/auth";
 
-export async function DELETE(req: NextRequest, { params }: { params: { uid: string } }) {
+export async function DELETE(req: NextRequest, props: { params: Promise<{ uid: string }> }) {
+    const params = await props.params;
     try {
         const { uid } = params;
         const session = await auth();

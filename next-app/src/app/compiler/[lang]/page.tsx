@@ -1,7 +1,8 @@
 import CompilerEditor from "@/components/Editor/Compiler";
 import { SUPPORTED_LANGUAGES } from "@/lib/lang";
 
-const Compiler = ({ params }: { params: { lang: string } }) => {
+const Compiler = async (props: { params: Promise<{ lang: string }> }) => {
+  const params = await props.params;
   const { lang } = params;
   const isValidLang = SUPPORTED_LANGUAGES.find((language) => language === lang);
 

@@ -1,11 +1,12 @@
 import React from 'react'
 
 
-export async function generateMetadata({
-    params,
-}: {
-    params: { lang: string };
-}) {
+export async function generateMetadata(
+    props: {
+        params: Promise<{ lang: string }>;
+    }
+) {
+    const params = await props.params;
     const { lang } = params;
     return {
         title: `Online ${lang} compiler`,
