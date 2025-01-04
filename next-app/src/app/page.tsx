@@ -1,4 +1,3 @@
-"use client";
 import { Button } from "@/components/ui/button";
 import Footer from "@/components/Footer/Footer";
 import {
@@ -10,11 +9,10 @@ import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { FeaturesSection } from "@/components/ui/FeaturesSection";
 import AnimatedGridPattern from "@/components/ui/animated-grid-pattern";
 import { cn } from "@/lib/utils";
-import { useRouter } from "next/navigation";
 import { Spotlight, SpotLightItem } from "@/components/ui/spotlight";
+import Link from "next/link";
 
 export default function Home() {
-  const router = useRouter();
   return (
     <main className="flex flex-col items-center justify-center">
       <section className="mt-14 relative flex flex-col gap-8 py-20 h-fit w-full items-center justify-center overflow-hidden rounded-lg">
@@ -32,17 +30,16 @@ export default function Home() {
           Build, Compile, and Create Effortlessly
         </h1>
         <p className="w-4/5 sm:w-[50%] text-center sm:text-xl text-neutral-800 dark:text-neutral-300">
-          CodeFramer is your all-in-one online IDE and compiler for Python, C, C++, Node.js, and web projects with real-time output and AI assistance.
+          CodeFramer is your all-in-one online IDE and compiler for Python, C, C++, Node.js and web projects with real-time output and AI assistance.
         </p>
         <div className="flex gap-4">
-          <Button
-            onClick={() => router.push("/compiler/python")}
+          <Link href="/compiler/python"><Button
           >
             Try Compilers
-          </Button>
-          <Button variant="outline" onClick={() => router.push("/web-editor")}>
+          </Button></Link>
+          <Link href="/web-editor"><Button variant="outline" >
             Try Web Editor
-          </Button>
+          </Button></Link>
         </div>
         <AnimatedGridPattern
           numSquares={30}

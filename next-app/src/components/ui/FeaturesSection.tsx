@@ -5,7 +5,6 @@ import { AnimatedBeamMultiple } from "./multiple-objects-beam";
 import Ripple from "./ripple";
 import HeroVideoDialog from "./hero-video-dialog";
 import { EvervaultCard, Icon } from "./evervault-card";
-import { HoverBorderGradient } from "./hover-border-gradient";
 import ShineBorder from "./shine-border";
 
 export function FeaturesSection() {
@@ -141,14 +140,6 @@ export const SkeletonTwo = () => {
                 <h2 className="dark:text-white text-black  font-light">
                     Experience secure authentication with our advanced encryption methods.
                 </h2>
-                <div className="mt-2">
-                    <HoverBorderGradient
-                        containerClassName="rounded-full"
-                        className="px-4 py-1"
-                    >
-                        Powred by Auth.js
-                    </HoverBorderGradient>
-                </div>
             </div>
         </div>
     );

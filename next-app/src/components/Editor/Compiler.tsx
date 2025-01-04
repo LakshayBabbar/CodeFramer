@@ -3,7 +3,7 @@ import Editor from "./index";
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import useSend from "@/hooks/useSend";
-import { SUPPORTED_LANGUAGES } from "@/lib/lang";
+import { capitalise, SUPPORTED_LANGUAGES } from "@/lib/helpers";
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 import {
@@ -14,6 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import templates from "@/shared/templates.json"
+import { execute } from "@/app/actions";
 
 
 interface CompilerEditorProps {
@@ -47,17 +48,10 @@ export default function CompilerEditor({
     }
   }, [data, language]);
 
-  const handleSubmit = async () => {
+  const handleCodeSubmit = async () => {
     setOutput("");
     setIsCodeRun(true);
-    const data = await fetchData({
-      url: `/api/execute/${language}`,
-      method: "POST",
-      body: {
-        code,
-        inputs: inputs
-      },
-    });
+    const data = await execute({ lang: language, code, inputs: inputs || "" });
     if (!data.error) {
       setOutput(data.output);
       setIsCodeErr(data.codeError);
@@ -67,10 +61,10 @@ export default function CompilerEditor({
         description: new Date().toString(),
       });
     }
+    setIsCodeRun(false);
   };
 
   const saveHandler = async () => {
-    setIsCodeRun(false);
     const res = await fetchData({
       url: `/api/projects/${data?.id}`,
       method: "PUT",
@@ -87,26 +81,25 @@ export default function CompilerEditor({
 
   return (
     <div className="mt-14 w-full h-[93.8vh] flex flex-col md:flex-row items-center justify-center">
-      <div className="w-full md:w-1/2 h-1/2 md:h-full bg-slate-950">
+      <div className="w-full md:w-1/2 h-1/2 md:h-full bg-background">
         <Editor file={{ name: language, value: code, language }} onValChange={(val) => setCode(val || "")}>
           {data ? (
             <Button
               variant="secondary"
               onClick={saveHandler}
-              disabled={loading && isCodeRun === false}
+              disabled={loading}
             >
               Save
             </Button>
           ) : (
             <Select onValueChange={(val) => redirect.push(val)}>
               <SelectTrigger className="w-fit">
-                <SelectValue placeholder={language} />
+                <SelectValue placeholder={capitalise(language)} />
               </SelectTrigger>
               <SelectContent>
                 {SUPPORTED_LANGUAGES.map((lang, index) => {
-                  const capitalize = lang.charAt(0).toUpperCase() + lang.slice(1);
                   return (
-                    <SelectItem key={index} value={lang}>{capitalize}</SelectItem>
+                    <SelectItem key={index} value={lang}>{capitalise(lang)}</SelectItem>
                   );
                 })}
               </SelectContent>
@@ -114,8 +107,8 @@ export default function CompilerEditor({
           )}
           <Button
             variant="secondary"
-            onClick={handleSubmit}
-            disabled={loading && isCodeRun === true}
+            onClick={handleCodeSubmit}
+            disabled={isCodeRun}
           >
             Run
           </Button>
@@ -128,11 +121,11 @@ export default function CompilerEditor({
         >
           {output}
         </pre>
-        <div className="w-full h-1/2 bg-slate-100 p-4 text-black border-t">
-          <h3 className="text-xl font-bold">Enter Your Inputs</h3>
+        <div className="w-full h-1/2 bg-muted p-6 border-t rounded-t-3xl">
           <textarea
             onChange={(e) => setInputs(e.target.value)}
-            className="bg-transparent w-full h-[80%] max-h-[80%] max-w-full border-none focus:outline-none pt-2"
+            placeholder="Enter inputs here..."
+            className="bg-transparent w-full h-full max-h-full max-w-full border-none focus:outline-none text-xl"
             value={inputs || ""}
           />
         </div>

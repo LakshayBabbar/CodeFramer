@@ -6,6 +6,7 @@ import { useTheme } from "next-themes";
 import { Clock } from "lucide-react";
 import { Trash } from "lucide-react";
 import Link from "next/link";
+import { capitalise } from "@/lib/helpers";
 
 export interface ProjectCardProps {
   id: string;
@@ -37,8 +38,7 @@ const ProjectCard = ({ data }: { data: ProjectCardProps }) => {
     }
   };
 
-  const languages = data?.languages?.map((lang) => lang.name.charAt(0).toUpperCase() + lang.name.slice(1)).join(", ");
-  const type = data?.type?.charAt(0) + data?.type?.slice(1).toLowerCase();
+  const languages = data?.languages?.map((lang) => capitalise(lang.name)).join(", ");
 
   return (
     <MagicCard
@@ -48,7 +48,7 @@ const ProjectCard = ({ data }: { data: ProjectCardProps }) => {
       <div className="flex flex-col gap-2 w-full">
         <p className="text-3xl line-clamp-1">{data?.name}</p>
         <p className="flex items-center gap-2"><Clock size={20} strokeWidth={2.5} />{data?.createdAt?.substring(0, 10)}</p>
-        <p><strong>Type: </strong>{type}</p>
+        <p><strong>Type: </strong>{capitalise(data?.type)}</p>
         <p><strong>Language: </strong>{languages}</p>
         <div className="flex w-full justify-between">
           <Link href={data?.type === "COMPILER" ? `/compiler/${data?.languages[0]?.name}/${data?.id}` : `/web-editor/${data?.id}`} className="underline">Open</Link>

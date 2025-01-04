@@ -12,7 +12,7 @@ const Footer = () => {
         <Link href="/compiler/python">Compilers</Link>
         <Link href="/web-editor">Web</Link>
         <Link href="/dashboard">Dashboard</Link>
-        <Link href="/chat">Aizen</Link>
+        <Link href="/chat-bot">Aizen</Link>
         <Link href="/sign-in">SignIn</Link>
       </div>
       <p className="font-semibold">

@@ -104,8 +104,8 @@ function WebEditor({ data }: { data: webEditorDataType }) {
   return (
     <div className="flex flex-col h-screen overflow-y-hidden bg-white">
       <div className="mt-14 flex flex-col h-full w-full">
-        <iframe title="output" srcDoc={srcDoc} width="100%" height="40%" />
-        <div className="w-full h-[60%] bg-card">
+        <iframe title="output" srcDoc={srcDoc} width="100%" height="45%" />
+        <div className="w-full h-[55%] bg-card">
           <Editor file={file} onValChange={handleEditorChange}>
             <Tabs defaultValue="index.html">
               <TabsList>

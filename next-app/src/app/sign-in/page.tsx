@@ -2,8 +2,9 @@ import { signIn } from "@/auth"
 import Image from "next/image"
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { IconBrandGithub, IconBrandGoogleFilled } from "@tabler/icons-react";
+import { Metadata } from "next";
 
-export const metadata = {
+export const metadata:Metadata = {
   title: "CodeFramer Sign-In: Access Your Online IDE & Project Dashboard",
   description: "Sign in to CodeFramer and access your personalized online IDE, project dashboard, and coding environments. Manage your projects, collaborate, and start coding right away.",
 }
@@ -16,7 +17,7 @@ export default function SignIn() {
     <div className="md:w-1/2 h-screen flex items-center justify-center md:justify-start md:items-start">
       <div className="space-y-4 md:w-4/5 md:mt-36 text-center md:text-left place-items-center md:place-items-start px-10">
         <h1 className="text-5xl font-bold">Welcome To CodeFramer</h1>
-        <p className="text-xl dark:text-neutral-300 text-neutral-700">CodeFramer is your all-in-one online IDE and compiler for Python, C, C++, Node.js, and web projects with real-time output and AI assistance.</p>
+        <p className="text-xl dark:text-neutral-300 text-neutral-700">CodeFramer is your all-in-one online IDE and compiler for Python, C, C++, Node.js and web projects with real-time output and AI assistance.</p>
         <div className="flex flex-wrap gap-4 justify-center md:justify-start">
           <form
             action={async () => {

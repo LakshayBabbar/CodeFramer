@@ -12,10 +12,10 @@ export function buildExecutionCommand(
   switch (language) {
     case "python":
       return `${baseCommand} /temp.py && python3 /temp.py < /inputs.txt`;
-    case "javascript":
-      return `${baseCommand} /temp.js && node /temp.js < /inputs.txt`;
     case "cpp":
       return `${baseCommand} /temp.cpp && g++ /temp.cpp -o temp.out && ./temp.out < /inputs.txt`;
+    case "javascript":
+      return `${baseCommand} /temp.js && node /temp.js < /inputs.txt`;
     case "c":
       return `${baseCommand} /temp.c && gcc /temp.c -o temp.out && ./temp.out < /inputs.txt`;
     default:

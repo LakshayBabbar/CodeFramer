@@ -1,37 +1,39 @@
-"use client";;
-import { use } from "react";
+"use client";
 import WebEditor from "@/components/Editor/WebEditor";
 import useFetch from "@/hooks/useFetch";
-import { MultiStepLoader } from "@/components/ui/multi-step-loader";
 import { useSession } from "next-auth/react";
+import { use } from "react";
 
-const Page = (props: { params: Promise<{ pid: string }> }) => {
-  const params = use(props.params);
-  const { pid } = params;
-  const { data, isError, loading, error } = useFetch(
-    `/api/projects/${pid}`,
-    pid
-  );
-
+const WebEditorPage = ({
+  params,
+}: {
+  params: Promise<{ pid: string }>
+}) => {
+  const { pid } = use(params);
   const { status } = useSession();
+  const { data, isError, error, loading } = useFetch(`/api/projects/${pid}`, "all_projects");
   const isAuth = status === "authenticated";
-
   if (!isAuth) {
-    return <main className="w-full text-center mt-36 px-10 text-3xl font-light">
+    return <main className="flex h-screen w-full items-center justify-center text-3xl font-light">
       <p>Unauthorized Access.</p>
     </main>
   }
 
-  if (isError) {
+  if (loading)
     return (
-      <div className="w-full text-center mt-36 px-10 font-xl font-thin">
-        {error?.message}
-      </div>
+      <main className="flex h-screen w-full items-center justify-center text-2xl font-light">
+        Loading...
+      </main>
     );
-  }
-  if (loading) return <MultiStepLoader />;
 
-  return isAuth ? <WebEditor data={data} /> : null;
+  if (isError)
+    return (
+      <main className="flex h-screen w-full items-center justify-center text-2xl font-light">
+        {error?.message}
+      </main>
+    );
+
+  return isAuth ? (<WebEditor data={data} />) : null;
 };
 
-export default Page;
+export default WebEditorPage;

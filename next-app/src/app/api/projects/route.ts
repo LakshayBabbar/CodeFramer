@@ -15,8 +15,8 @@ export async function GET() {
       }
     });
     return NextResponse.json(projects);
-  } catch (error) {
-    console.log(error)
+  } catch (error:any) {
+    console.log(error.message);
     return NextResponse.json(
       {
         error: "An error occurred while fetching projects",

@@ -4,7 +4,7 @@ import React, { forwardRef, useRef } from "react";
 
 import { cn } from "@/lib/utils";
 import { AnimatedBeam } from "@/components/ui/animated-beam";
-import { IconBrandNextjs, IconUser } from "@tabler/icons-react";
+import { IconCode, IconUser } from "@tabler/icons-react";
 
 const Circle = forwardRef<
     HTMLDivElement,
@@ -44,7 +44,8 @@ export function AnimatedBeamMultiple({
     const iconsList = [{
         icon: icons.python,
         ref: div1Ref,
-    }, {
+    },
+    {
         icon: icons.js,
         ref: div2Ref,
     }, {
@@ -78,7 +79,7 @@ export function AnimatedBeamMultiple({
                 </div>
                 <div className="flex flex-col justify-center">
                     <Circle ref={div6Ref} className="size-16 p-2">
-                        <IconBrandNextjs color="black" className="size-full" />
+                        <IconCode color="black" className="size-full" />
                     </Circle>
                 </div>
                 <div className="flex flex-col justify-center gap-2">

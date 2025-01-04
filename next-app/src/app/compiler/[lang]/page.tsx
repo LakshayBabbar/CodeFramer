@@ -1,5 +1,19 @@
 import CompilerEditor from "@/components/Editor/Compiler";
-import { SUPPORTED_LANGUAGES } from "@/lib/lang";
+import { SUPPORTED_LANGUAGES } from "@/lib/helpers";
+import { Metadata } from "next";
+
+export async function generateMetadata(
+  props: {
+    params: Promise<{ lang: string }>;
+  }
+) {
+  const params = await props.params;
+  const { lang } = params;
+  return {
+    title: `Online ${lang} compiler`,
+    description: `Compile and run Python code instantly with CodeFramer’s online ${lang} compiler. Get real-time output, debug your code, and enhance your skills with built-in AI assistance.`,
+  } as Metadata;
+}
 
 const Compiler = async (props: { params: Promise<{ lang: string }> }) => {
   const params = await props.params;

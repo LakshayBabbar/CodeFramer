@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { SUPPORTED_LANGUAGES } from "@/lib/lang";
+import { capitalise, SUPPORTED_LANGUAGES } from "@/lib/helpers";
 import { motion } from "framer-motion";
 import { useSession } from "next-auth/react";
 
@@ -120,7 +120,7 @@ const CreateProject: React.FC<CreateProjectProps> = ({ isOpen, setIsOpen }) => {
                     {SUPPORTED_LANGUAGES.map((lang, index) => {
                       return (
                         <SelectItem key={index} value={lang}>
-                          {lang}
+                          {capitalise(lang)}
                         </SelectItem>
                       );
                     })}

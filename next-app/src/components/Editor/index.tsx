@@ -10,6 +10,7 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { useTheme } from "next-themes";
+import { capitalise } from "@/lib/helpers";
 
 interface EditorComProps {
     file: {
@@ -65,12 +66,12 @@ const BaseEditor = ({ file, onValChange, children }: EditorComProps) => {
                     <CopilotButton code={file.value} setCode={setRes} lang={file.language} />
                     {theme === "dark" && <Select onValueChange={(val) => themeHandler(val)}>
                         <SelectTrigger className="w-fit">
-                            <SelectValue placeholder={editorTheme} />
+                            <SelectValue placeholder={capitalise(editorTheme)} />
                         </SelectTrigger>
                         <SelectContent>
                             {editorThemes.map((item, index) => {
                                 return (
-                                    <SelectItem key={index} value={item.name}>{item.name}</SelectItem>
+                                    <SelectItem key={index} value={item.name}>{capitalise(item.name)}</SelectItem>
                                 );
                             })}
                         </SelectContent>

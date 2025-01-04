@@ -41,7 +41,7 @@ export default function Navbar() {
 
   const iconStyle = "size-5 md:size-4";
   return (
-    <div className="h-14 w-full flex border-b justify-between px-5 md:px-0 md:justify-around items-center fixed top-0 left-0 bg-card backdrop-blur-xl z-[99]">
+    <div className="h-14 w-full flex border-b justify-between px-5 md:px-0 md:justify-around items-center fixed top-0 left-0 bg-[#ffffffb2] dark:bg-[#000000d7] backdrop-blur-xl z-[99]">
       <Link href="/" className={cn(linkStyle, "text-md font-bold font-mono items-start")}>
         <Code2Icon className="size-5" />
         CodeFramer
@@ -66,7 +66,7 @@ export default function Navbar() {
           <Laptop className={iconStyle} />
           Compilers
         </Link>
-        <Link href="/chat" className={linkStyle} onClick={linkHandler}>
+        <Link href="/chat-bot" className={linkStyle} onClick={linkHandler}>
           <IconSparkles size={20} />
           Aizen
         </Link>
