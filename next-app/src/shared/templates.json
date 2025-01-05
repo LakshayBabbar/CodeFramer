@@ -14,5 +14,9 @@
     {
         "name": "c",
         "code": "// Online C compiler to run C program online\n#include <stdio.h>\n\nint main() {\n    // Write C code here\n    printf(\"Hello from CodeFramer\\n\");\n    return 0;\n}"
+    },
+    {
+        "name": "typescript",
+        "code": "// Online TypeScript compiler to run TypeScript program online\n\n// Write TypeScript code here\nfunction main(): void {\n    console.log(\"Hello from CodeFramer\");\n}\n\nmain();"
     }
 ]

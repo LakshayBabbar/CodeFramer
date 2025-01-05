@@ -30,7 +30,7 @@ export default function Home() {
           Build, Compile, and Create Effortlessly
         </h1>
         <p className="w-4/5 sm:w-[50%] text-center sm:text-xl text-neutral-800 dark:text-neutral-300">
-          CodeFramer is your all-in-one online IDE and compiler for Python, C, C++, Node.js and web projects with real-time output and AI assistance.
+          CodeFramer is your all-in-one online IDE and compiler for Python, C, C++, Node.js, Typescript and web projects with real-time output and AI assistance.
         </p>
         <div className="flex gap-4">
           <Link href="/compiler/python"><Button

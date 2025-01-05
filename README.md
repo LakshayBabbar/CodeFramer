@@ -20,7 +20,7 @@ CodeFramer is a versatile code editor designed to enhance your coding experience
 
 The architecture of CodeFramer is designed to ensure high performance, security, and scalability. The system is divided into several key components:
 
-1. **Frontend:** Built with Next.js 14, the frontend provides a modern and responsive user interface. It communicates with the backend through API routes.
+1. **Frontend:** Built with Next.js, the frontend provides a modern and responsive user interface. It communicates with the backend through API routes.
 2. **Backend:** The backend, also developed with Next.js 14 API Routes, Node.js, and Express, handles all the business logic and API requests.
 3. **Database:** PostgreSQL is used for data storage, offering flexibility and scalability.
 4. **Containerized Execution:** Docker is used to create isolated containers for code execution, ensuring security and resource efficiency.
@@ -69,7 +69,7 @@ Ensure you have the following installed on your machine:
 
     Create a `.env.local` file in the Next.js application and add the following variables:
 
-    - `DATABASE_URL`: MongoDB URI address.
+    - `DATABASE_URL`: Postgresql URI address.
     - `BASE_URL`: Hosting address.
     - `CODE_AI_API`: Google AI Studio API key for editor in-built AI.
     - `GENERAL_AI_API`: Google AI Studio API key for chat.

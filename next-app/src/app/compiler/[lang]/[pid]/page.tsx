@@ -1,35 +1,26 @@
-"use client";
 import CompilerEditor from "@/components/Editor/Compiler";
-import useFetch from "@/hooks/useFetch";
-import { useSession } from "next-auth/react";
-import { use } from "react";
+import { auth } from "@/auth";
+import { getData } from "@/app/actions";
 
-const Compiler = (props: { params: Promise<{ pid: string }> }) => {
-  const { pid } = use(props.params);
-  const { status } = useSession();
-  const { data, isError, error, loading } = useFetch(`/api/projects/${pid}`, "all_projects");
-  const isAuth = status === "authenticated";
-  if (!isAuth) {
+const Compiler = async (props: { params: Promise<{ pid: string }> }) => {
+  const { pid } = await (props.params);
+  const session = await auth();
+  const data = await getData({ url: `/api/projects/${pid}` });
+
+  if (!session?.user) {
     return <main className="flex h-screen w-full items-center justify-center text-3xl font-light">
       <p>Unauthorized Access.</p>
     </main>
   }
 
-  if (loading)
+  if (data?.error)
     return (
       <main className="flex h-screen w-full items-center justify-center text-2xl font-light">
-        Loading...
+        {data?.error}
       </main>
     );
 
-  if (isError)
-    return (
-      <main className="flex h-screen w-full items-center justify-center text-2xl font-light">
-        {error?.message}
-      </main>
-    );
-
-  return isAuth ? (
+  return session.user ? (
     <CompilerEditor language={data?.languages[0]?.name} data={data} />
   ) : null;
 }

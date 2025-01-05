@@ -6,13 +6,14 @@ import { ExecutionRequest, SupportedLanguage } from "../types/types.js";
 config();
 
 const docker = new Docker();
-const EXECUTION_TIMEOUT_MS = 10000;
+const EXECUTION_TIMEOUT_MS = 15000;
 
 const imageMap: Record<SupportedLanguage, string> = {
   python: "python:3.10-slim",
-  javascript: "node:18-alpine",
+  javascript: "lakshaybabbar/node:02",
   cpp: "lakshaybabbar/custom-gcc:latest",
   c: "lakshaybabbar/custom-gcc:latest",
+  typescript: "lakshaybabbar/node:02",
 };
 
 export async function executionHandler(req: ExecutionRequest, res: Response) {
@@ -92,9 +93,20 @@ export async function executionHandler(req: ExecutionRequest, res: Response) {
     stdoutStream.on("end", async () => {
       if (!isTimedOut) {
         clearTimeout(timeout);
+        let codeError = false;
+        let output = stdout || stderr;
+
+        if (stderr) {
+          if (language === "typescript" && stderr.toLowerCase().includes("error")) {
+            codeError = true;
+          } else if (language !== "typescript") {
+            codeError = true;
+          }
+        }
+
         res.json({
-          output: stdout || stderr,
-          codeError: !!stderr,
+          output,
+          codeError,
         });
         await cleanUpContainer(container);
       }
