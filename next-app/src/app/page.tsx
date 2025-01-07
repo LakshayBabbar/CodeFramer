@@ -3,6 +3,7 @@ import Footer from "@/components/Footer/Footer";
 import {
   Code2Icon,
   Layers,
+  Layers2,
   Monitor,
 } from "lucide-react";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
@@ -23,7 +24,7 @@ export default function Home() {
             className="px-4 py-1 flex items-center justify-center space-x-2"
           >
             <Code2Icon className="size-5" />
-            <span className="font-mono">CodeFramer</span>
+            <span>CodeFramer</span>
           </HoverBorderGradient>
         </div>
         <h1 className="px-4 text-5xl md:text-7xl font-bold md:w-[60%] text-center text-transparent bg-clip-text bg-gradient-to-b from-neutral-800 to-neutral-600 dark:from-neutral-300 dark:to-neutral-500">
@@ -66,7 +67,7 @@ export default function Home() {
         <Spotlight className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full xl:w-3/4">
           {features.map((feature, idx) => {
             return <SpotLightItem key={idx} className="dark:text-neutral-300 text-neutral-700 drop-shadow-xl">
-              <div className="relative z-10 rounded-lg p-4 bg-gradient-to-b from-neutral-50 to-neutral-200 dark:from-[#0c0c0c] dark:to-[#252525] w-full h-full mx-auto flex flex-col items-center justify-center text-center">
+              <div className="relative z-10 rounded-lg p-4 bg-gradient-to-b from-neutral-50 to-neutral-200 dark:from-[#0c0c0c] dark:to-[#252525] w-full min-h-80 h-full mx-auto flex flex-col items-center justify-center text-center">
                 <feature.icon size={140} strokeWidth={1.4} />
                 <p className="text-2xl font-bold mt-4">{feature.title}</p>
                 <p>{feature.description}</p>
@@ -92,7 +93,7 @@ const features = [
     title: "Project Management",
     description:
       "Manage multiple projects of different languages and environments through the user dashboard.",
-    icon: Layers,
+    icon: Layers2,
   },
   {
     title: "Live Preview",

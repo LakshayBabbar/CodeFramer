@@ -2,14 +2,15 @@
 import Link from "next/link";
 import { useState } from "react";
 import {
-  Code2Icon,
   LogIn,
   LogOut,
   HomeIcon,
-  Laptop,
   LayoutDashboard,
   AlignRight,
   X,
+  Monitor,
+  Package,
+  PanelsTopLeft
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { IconSparkles } from "@tabler/icons-react";
@@ -23,6 +24,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useSession, signOut } from "next-auth/react";
+import Image from "next/image";
 
 export default function Navbar() {
   const [active, setActive] = useState(false);
@@ -30,20 +32,20 @@ export default function Navbar() {
   const isAuth = status === "authenticated";
   const pre = "-translate-x-[100vw]";
   const post = "-translate-x-0";
-  const { setTheme } = useTheme()
+  const { setTheme, resolvedTheme, theme } = useTheme()
 
   function linkHandler() {
     setActive(false);
   }
 
   const linkStyle =
-    "flex items-center text-md gap-2 dark:text-slate-300 text-slate-800 hover:no-underline font-normal";
+    "flex items-center text-md gap-2 dark:text-neutral-300 text-neutral-800 hover:no-underline font-normal";
 
   const iconStyle = "size-5 md:size-4";
   return (
     <div className="h-14 w-full flex border-b justify-between px-5 md:px-0 md:justify-around items-center fixed top-0 left-0 bg-[#ffffffb2] dark:bg-[#000000d7] backdrop-blur-xl z-[99]">
-      <Link href="/" className={cn(linkStyle, "text-md font-bold font-mono items-start")}>
-        <Code2Icon className="size-5" />
+      <Link href="/" className={cn(linkStyle, "text-md font-bold")}>
+        <Image src={resolvedTheme === "dark" ? "/logo-dark.webp" : "/logo.webp"} alt="codeframer logo" width={20} height={20} />
         CodeFramer
       </Link>
       <div
@@ -55,7 +57,7 @@ export default function Navbar() {
           Home
         </Link>
         <Link href="/web-editor" className={linkStyle} onClick={linkHandler}>
-          <Laptop className={iconStyle} />
+          <PanelsTopLeft className={iconStyle} />
           Web Editor
         </Link>
         <Link
@@ -63,7 +65,7 @@ export default function Navbar() {
           className={linkStyle}
           onClick={linkHandler}
         >
-          <Laptop className={iconStyle} />
+          <Package className={iconStyle} />
           Compilers
         </Link>
         <Link href="/chat-bot" className={linkStyle} onClick={linkHandler}>
@@ -87,9 +89,9 @@ export default function Navbar() {
           </Button></>}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="sm" className="rounded-full w-fit h-fit p-2">
-              <Sun className="h-[1.4rem] w-[1.4rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute h-[1.4rem] w-[1.4rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            <Button variant="outline" size="sm" className="top-3 right-16 absolute md:relative md:top-0 md:right-0 rounded-full w-fit h-fit p-2">
+              {theme === "light" ? < Sun /> :
+                (theme === "dark" ? <Moon /> : <Monitor />)}
               <span className="sr-only">Toggle theme</span>
             </Button>
           </DropdownMenuTrigger>
@@ -110,7 +112,7 @@ export default function Navbar() {
         {!active ? (
           <AlignRight onClick={() => setActive(true)} />
         ) : (
-          <X onClick={() => setActive(false)} />
+          <X className="size-7" onClick={() => setActive(false)} />
         )}
       </div>
     </div>

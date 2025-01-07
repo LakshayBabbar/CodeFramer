@@ -1,11 +1,16 @@
+"use client";
+import Image from "next/image";
 import Link from "next/link";
+import { useTheme } from "next-themes";
 
 const Footer = () => {
+  const { resolvedTheme } = useTheme();
   return (
-    <footer className="py-10 space-y-5 dark:text-neutral-400 text-neutral-700 px-10 sm:px-0 w-full sm:w-fit sm:text-center">
-      <h2 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-b from bg-neutral-700 to-neutral-400 dark:from-neutral-200 dark:to-neutral-600">
-        CodeFramer
-      </h2>
+    <footer className="py-10 space-y-5 px-10 sm:px-0 w-full sm:w-fit sm:text-center">
+      <div className="flex items-center justify-center gap-4 w-fit sm:w-full">
+        <Image src={resolvedTheme === "dark" ? "/logo-dark.webp" : "/logo.webp"} alt="codeframer logo" width={30} height={30} />
+        <p className="text-3xl sm:text-4xl font-bold ">CodeFramer</p>
+      </div>
       <hr className="border-neutral-600" />
       <div className="flex flex-col sm:flex-row gap-4 sm:justify-center">
         <Link href="/">Home</Link>
