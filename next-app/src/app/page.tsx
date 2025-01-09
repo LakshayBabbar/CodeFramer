@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import Footer from "@/components/Footer/Footer";
 import {
   Code2Icon,
-  Layers,
   Layers2,
   Monitor,
 } from "lucide-react";

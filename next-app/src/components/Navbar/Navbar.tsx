@@ -10,7 +10,8 @@ import {
   X,
   Monitor,
   Package,
-  PanelsTopLeft
+  PanelsTopLeft,
+  MessageCircle
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { IconSparkles } from "@tabler/icons-react";
@@ -71,6 +72,10 @@ export default function Navbar() {
         <Link href="/chat-bot" className={linkStyle} onClick={linkHandler}>
           <IconSparkles size={20} />
           Aizen
+        </Link>
+        <Link href="/contact" className={linkStyle} onClick={linkHandler}>
+          <MessageCircle className={iconStyle} />
+          Contact
         </Link>
         {!isAuth ? (
           <Link

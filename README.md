@@ -80,6 +80,7 @@ Ensure you have the following installed on your machine:
     - `AUTH_GOOGLE_SECRET`: Your Google OAuth client secret.
     - `AUTH_GITHUB_ID`: Your GitHub OAuth client ID.
     - `AUTH_GITHUB_SECRET`: Your GitHub OAuth client secret.
+    - `RESEND_API_KEY`: Your Resend API key for emails.
 
     Create a `.env` file in the compiler server and add the following variables:
 

@@ -1,5 +1,6 @@
 "use server";
 import { cookies } from "next/headers";
+import { Resend } from "resend";
 
 export async function execute(body: { lang: string, code: string, inputs?: string }) {
     try {
@@ -43,4 +44,24 @@ export async function getToken() {
     const cookie = (await cookies()).getAll();
     const token = cookie.find((c: any) => c.name.includes('authjs.session-token'));
     return token;
+}
+
+export async function newSupportRequest(data: { name: string, email: string, message: string }) {
+    try {
+        const resend = new Resend(process.env.RESEND_API_KEY);
+        const { error } = await resend.emails.send({
+            from: 'CodeFramer <onboarding@resend.dev>',
+            to: ['lakshaybabbar0118@gmail.com'],
+            subject: 'New support request from your codeframer',
+            html: `Name: ${data.name}<br>Email: ${data.email}<br>Message: ${data.message}`,
+        });
+
+        if (error) {
+            throw new Error(error.message || "Unknown error occurred while sending the support request.");
+        }
+
+        return { message: "Support request sent successfully." };
+    } catch (error: any) {
+        return { error: error.message };
+    }
 }

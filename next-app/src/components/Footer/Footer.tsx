@@ -1,28 +1,90 @@
-"use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useTheme } from "next-themes";
+
+const Links = {
+  Codeframer: [
+    { name: "Home", href: "/" },
+    { name: "Sign In", href: "/sign-in" },
+    { name: "Privacy Policy", href: "/privacy-policy" },
+    { name: "Terms of Service", href: "/terms" },
+  ],
+  Services: [
+    { name: "Web Editor", href: "/web-editor" },
+    { name: "Python Compiler", href: "/compiler/python" },
+    { name: "JavaScript Compiler", href: "/compiler/javascript" },
+    { name: "C Compiler", href: "/compiler/c" },
+    { name: "C++ Compiler", href: "/compiler/cpp" },
+    { name: "Typescript Compiler", href: "/compiler/typescript" },
+  ],
+  Others: [
+    { name: "Dashboard", href: "/dashboard" },
+    { name: "AI Assistance", href: "/chat-bot" },
+    { name: "Contact Us", href: "/contact" },
+  ]
+};
 
 const Footer = () => {
-  const { resolvedTheme } = useTheme();
   return (
-    <footer className="py-10 space-y-5 px-10 sm:px-0 w-full sm:w-fit sm:text-center">
-      <div className="flex items-center justify-center gap-4 w-fit sm:w-full">
-        <Image src={resolvedTheme === "dark" ? "/logo-dark.webp" : "/logo.webp"} alt="codeframer logo" width={30} height={30} />
-        <p className="text-3xl sm:text-4xl font-bold ">CodeFramer</p>
+    <footer className="bg-card border-t py-8 px-6 md:px-0 w-full place-items-center space-y-8">
+      <div className="md:flex justify-around w-full space-y-8 md:space-y-0">
+        <div className="flex items-center justify-center gap-4 w-fit h-fit">
+          <Image
+            src="/logo.webp"
+            alt="CodeFramer Logo"
+            width={40}
+            height={40}
+            className="block dark:hidden"
+          />
+          <Image
+            src="/logo-dark.webp"
+            alt="CodeFramer Logo"
+            width={40}
+            height={40}
+            className="hidden dark:block"
+          />
+          <span className="text-2xl sm:text-3xl font-semibold">
+            CodeFramer
+          </span>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 sm:gap-12 xl:gap-20">
+          <div className="flex flex-col gap-2">
+            <p className="text-xl font-bold">CodeFramer</p>
+            {Links.Codeframer.map((link) => {
+              return (
+                <Link key={link.name} href={link.href} className="hover:underline">
+                  {link.name}
+                </Link>
+              )
+            })}
+          </div>
+          <div className="flex flex-col gap-2">
+            <p className="text-xl font-bold">Services</p>
+            {Links.Services.map((link) => {
+              return (
+                <Link key={link.name} href={link.href} className="hover:underline">
+                  {link.name}
+                </Link>
+              )
+            })}
+          </div>
+          <div className="flex flex-col gap-2">
+            <p className="text-xl font-bold">Others</p>
+            {Links.Others.map((link) => {
+              return (
+                <Link key={link.name} href={link.href} className="hover:underline">
+                  {link.name}
+                </Link>
+              )
+            })}
+          </div>
+        </div>
       </div>
-      <hr className="border-neutral-600" />
-      <div className="flex flex-col sm:flex-row gap-4 sm:justify-center">
-        <Link href="/">Home</Link>
-        <Link href="/compiler/python">Compilers</Link>
-        <Link href="/web-editor">Web</Link>
-        <Link href="/dashboard">Dashboard</Link>
-        <Link href="/chat-bot">Aizen</Link>
-        <Link href="/sign-in">SignIn</Link>
+      <hr className="w-full" />
+      <div>
+        <p className="text-sm sm:text-base">
+          © 2025 CodeFramer. All rights reserved.
+        </p>
       </div>
-      <p className="font-semibold">
-        © 2024 by CodeFramer. &nbsp;All rights reserved.
-      </p>
     </footer>
   );
 };

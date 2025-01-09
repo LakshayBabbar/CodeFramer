@@ -11,6 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import useSend from "@/hooks/useSend";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Footer from "@/components/Footer/Footer";
 
 const Page = () => {
   const { data: sessionData } = useSession();
@@ -127,6 +128,7 @@ const Page = () => {
           </p>
         </div>
       </section>
+      <Footer />
       <CreateProject isOpen={isOpen} setIsOpen={setIsOpen} />
     </main>
   );
