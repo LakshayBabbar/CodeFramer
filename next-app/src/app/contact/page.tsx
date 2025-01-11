@@ -19,9 +19,10 @@ const Contact = () => {
     const res = await newSupportRequest(data);
     toast({
       title: res.message || res.error,
-      description: new Date().toLocaleTimeString(),
+      description: new Date().toString(),
     })
     setLoading(false);
+    setData({ name: "", email: "", message: "" });
   };
 
   const valHandler = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -40,13 +41,13 @@ const Contact = () => {
             <h1 className='text-4xl font-bold my-2'>Contact Us</h1>
             <p>Get in touch with the CodeFramer for support or inquiries.</p>
           </div>
-          <Input name="name" onChange={valHandler} placeholder='Fullname' className='h-12 text-md' required />
-          <Input name="email" onChange={valHandler} type='email' placeholder='Email' className='h-12 text-md' required />
-          <Textarea name="message" onChange={valHandler} placeholder='Message' className='min-h-32 max-h-60 text-md' required />
+          <Input name="name" value={data.name} onChange={valHandler} placeholder='Fullname' className='h-12 text-md' required />
+          <Input name="email" value={data.email} onChange={valHandler} type='email' placeholder='Email' className='h-12 text-md' required />
+          <Textarea name="message" value={data.message} onChange={valHandler} placeholder='Message' className='min-h-32 max-h-60 text-md' required />
           <Button size="lg" className='text-md' type='submit' disabled={loading}>Submit</Button>
         </motion.form>
-          <div className='fixed -z-10 w-2/6 sm:opacity-75 h-32 -rotate-12 -bottom-10 -right-10 bg-gradient-to-br from-blue-700 to-purple-700 blur-[150px]' />
-          <div className='fixed -z-10 w-2/6 h-32 sm:opacity-75 -rotate-12 -top-10 -left-10 bg-gradient-to-br from-blue-700 to-purple-700 blur-[150px]' />
+        <div className='fixed -z-10 w-2/6 sm:opacity-75 h-32 -rotate-12 -bottom-10 -right-10 bg-gradient-to-br from-blue-700 to-purple-700 blur-[150px]' />
+        <div className='fixed -z-10 w-2/6 h-32 sm:opacity-75 -rotate-12 -top-10 -left-10 bg-gradient-to-br from-blue-700 to-purple-700 blur-[150px]' />
       </main>
       <Footer />
     </>

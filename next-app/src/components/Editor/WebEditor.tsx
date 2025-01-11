@@ -12,7 +12,7 @@ export interface webEditorDataType {
 }
 type FILES = "index.html" | "style.css" | "script.js"
 function WebEditor({ data }: { data: webEditorDataType }) {
-  const [values, setValues] = useState({ html: "", css: "", javascript: "" });
+  const [values, setValues] = useState({ html: "", css: "", js: "" });
   const { toast } = useToast();
   const { fetchData, loading } = useSend();
   const editorRef = React.useRef<any>(null);
@@ -28,7 +28,7 @@ function WebEditor({ data }: { data: webEditorDataType }) {
     setValues({
       html: extractLanguages?.html || "",
       css: extractLanguages?.css || "",
-      javascript: extractLanguages?.javascript || "",
+      js: extractLanguages?.js || "",
     });
   }, [data]);
 
@@ -40,7 +40,7 @@ function WebEditor({ data }: { data: webEditorDataType }) {
         languages: [
           { name: "html", code: values.html },
           { name: "css", code: values.css },
-          { name: "javascript", code: values.javascript },
+          { name: "js", code: values.js },
         ],
       },
     });
@@ -54,7 +54,7 @@ function WebEditor({ data }: { data: webEditorDataType }) {
   const srcDoc = `
     ${values?.html}
     <style>${values?.css}</style>
-    <script>${values?.javascript}</script>
+    <script>${values?.js}</script>
   `;
 
   const fileNames = [
@@ -67,7 +67,7 @@ function WebEditor({ data }: { data: webEditorDataType }) {
     "script.js": {
       name: "script.js",
       language: "javascript",
-      value: values?.javascript || "",
+      value: values?.js || "",
     },
     "style.css": {
       name: "style.css",
@@ -85,8 +85,7 @@ function WebEditor({ data }: { data: webEditorDataType }) {
 
 
   const handleEditorChange = (value: string | undefined) => {
-    const lang =
-      file.name.split(".")[1] === "js" ? "javascript" : file.name.split(".")[1];
+    const lang = file.name.split(".")[1];
     if (value !== undefined) {
       setValues((values) => ({
         ...values,

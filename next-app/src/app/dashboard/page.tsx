@@ -17,7 +17,7 @@ const Page = () => {
   const { data: sessionData } = useSession();
   const username = sessionData?.user?.name;
   const [isOpen, setIsOpen] = useState(false);
-  const { data, error, isError, loading, refetch } = useFetch(
+  const { data, isError, loading, refetch } = useFetch(
     "/api/projects",
     "All_Projects"
   );

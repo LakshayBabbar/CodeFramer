@@ -9,11 +9,11 @@ generator client {
 
 model User {
   id            String    @id @default(cuid())
-  name          String?
+  name          String
   email         String    @unique
   emailVerified DateTime?
   image         String?
-  roles         Role      @default(USER)
+  role          Role      @default(USER)
   accounts      Account[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt

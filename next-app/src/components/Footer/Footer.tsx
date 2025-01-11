@@ -23,6 +23,8 @@ const Links = {
   ]
 };
 
+const linkStyle = "hover:underline text-neutral-700 dark:text-neutral-300";
+
 const Footer = () => {
   return (
     <footer className="bg-card border-t py-8 px-6 md:px-0 w-full place-items-center space-y-8">
@@ -48,30 +50,30 @@ const Footer = () => {
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 sm:gap-12 xl:gap-20">
           <div className="flex flex-col gap-2">
-            <p className="text-xl font-bold">CodeFramer</p>
+            <p className="text-2xl font-bold">CodeFramer</p>
             {Links.Codeframer.map((link) => {
               return (
-                <Link key={link.name} href={link.href} className="hover:underline">
+                <Link key={link.name} href={link.href} className={linkStyle}>
                   {link.name}
                 </Link>
               )
             })}
           </div>
           <div className="flex flex-col gap-2">
-            <p className="text-xl font-bold">Services</p>
+            <p className="text-2xl font-bold">Services</p>
             {Links.Services.map((link) => {
               return (
-                <Link key={link.name} href={link.href} className="hover:underline">
+                <Link key={link.name} href={link.href} className={linkStyle}>
                   {link.name}
                 </Link>
               )
             })}
           </div>
           <div className="flex flex-col gap-2">
-            <p className="text-xl font-bold">Others</p>
+            <p className="text-2xl font-bold">Others</p>
             {Links.Others.map((link) => {
               return (
-                <Link key={link.name} href={link.href} className="hover:underline">
+                <Link key={link.name} href={link.href} className={linkStyle}>
                   {link.name}
                 </Link>
               )

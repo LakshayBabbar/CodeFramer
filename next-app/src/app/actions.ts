@@ -1,4 +1,5 @@
 "use server";
+import { auth } from "@/auth";
 import { cookies } from "next/headers";
 import { Resend } from "resend";
 
@@ -48,6 +49,10 @@ export async function getToken() {
 
 export async function newSupportRequest(data: { name: string, email: string, message: string }) {
     try {
+        const session = await auth();
+        if (!session) {
+            throw new Error("You need to login to send a support request.");
+        }
         const resend = new Resend(process.env.RESEND_API_KEY);
         const { error } = await resend.emails.send({
             from: 'CodeFramer <onboarding@resend.dev>',

@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /dashboard/
+Disallow: /unauthorized
+Disallow: /admin
 Allow: /sign-in

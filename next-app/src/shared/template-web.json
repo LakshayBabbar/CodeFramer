@@ -8,7 +8,7 @@
         "code": "h1 {\n    color: cornflowerblue;\n}"
     },
     {
-        "name": "javascript",
+        "name": "js",
         "code": "console.log('Hello World')"
     }
 ]
