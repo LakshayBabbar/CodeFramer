@@ -3,59 +3,65 @@ import prisma from "@/config/db";
 
 export async function GET() {
     try {
-        // Total users
-        const totalUsers = await prisma.user.count();
+        const [
+            totalUsers,
+            totalOpenedInquiries,
+            totalClosedInquiries,
+            providerStats,
+            totalProjects,
+            projectStats,
+            langStats,
+        ] = await Promise.all([
+            prisma.user.count(),
+            prisma.inquiries.count({
+                where: { closed: false },
+            }),
+            prisma.inquiries.count({
+                where: { closed: true },
+            }),
+            prisma.account.groupBy({
+                by: ["provider"],
+                _count: { provider: true },
+            }),
+            prisma.project.count(),
+            prisma.project.groupBy({
+                by: ["type"],
+                _count: { type: true },
+            }),
+            prisma.language.groupBy({
+                by: ["name"],
+                _count: { name: true },
+                where: {
+                    project: {
+                        type: "COMPILER",
+                    },
+                },
+            }),
+        ]);
 
-        // Provider statistics
-        const providerStats = await prisma.account.groupBy({
-            by: ["provider"],
-            _count: {
-                provider: true,
-            },
-        });
+        // Formatting the response
         const providers = providerStats.map((p) => ({
             name: p.provider,
             count: p._count.provider,
         }));
 
-        // Total projects and project type stats
-        const totalProjects = await prisma.project.count();
-        const projectStats = await prisma.project.groupBy({
-            by: ["type"],
-            _count: {
-                type: true,
-            },
-        });
         const projectTypes = projectStats.map((proj) => ({
             name: proj.type,
             count: proj._count.type,
         }));
 
-        // Language statistics for COMPILER projects
-        const langStats = await prisma.language.groupBy({
-            by: ["name"],
-            _count: {
-                name: true,
-            },
-            where: {
-                project: {
-                    type: {
-                        equals: "COMPILER",
-                    },
-                },
-            },
-        });
         const languages = langStats.map((lang) => ({
             name: lang.name,
             count: lang._count.name,
         }));
 
-        // Final response
         return NextResponse.json({
             success: true,
             data: {
                 totalUsers,
                 totalProjects,
+                totalOpenedInquiries,
+                totalClosedInquiries,
                 providers,
                 projectTypes,
                 languages,

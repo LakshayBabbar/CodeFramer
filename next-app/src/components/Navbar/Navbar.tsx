@@ -11,6 +11,8 @@ import {
   Monitor,
   Package,
   PanelsTopLeft,
+  User,
+  MessageSquare
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { IconSparkles } from "@tabler/icons-react";
@@ -28,7 +30,7 @@ import Image from "next/image";
 
 export default function Navbar() {
   const [active, setActive] = useState(false);
-  const { status } = useSession();
+  const { status, data } = useSession();
   const isAuth = status === "authenticated";
   const pre = "-translate-x-[100vw]";
   const post = "-translate-x-0";
@@ -41,16 +43,16 @@ export default function Navbar() {
   const linkStyle =
     "flex items-center text-md gap-2 dark:text-neutral-300 text-neutral-800 hover:no-underline font-normal";
 
-  const iconStyle = "size-5 md:size-4";
+  const iconStyle = "size-5 lg:size-4";
   return (
-    <div className="h-14 w-full flex border-b justify-between px-5 md:px-0 md:justify-around items-center fixed top-0 left-0 bg-[#ffffffb2] dark:bg-[#000000d7] backdrop-blur-xl z-[99]">
+    <div className="h-14 w-full flex sm:border-b justify-between px-5 lg:px-0 lg:justify-around items-center fixed top-0 left-0 bg-[#ffffffb2] dark:bg-[#000000d7] backdrop-blur-xl z-[99]">
       <Link href="/" className={cn(linkStyle, "text-md font-bold")}>
         <Image src={resolvedTheme === "dark" ? "/logo-dark.webp" : "/logo.webp"} alt="codeframer logo" width={20} height={20} />
         CodeFramer
       </Link>
       <div
         className={`${active ? post : pre
-          } md:translate-x-0 top-0 left-0 h-screen w-full p-14 md:p-0 bg-card md:bg-transparent  md:h-auto md:w-auto flex md:bg-auto absolute md:relative flex-col md:flex-row gap-5 md:items-center transition-all duration-400`}
+          } lg:translate-x-0 top-0 left-0 h-screen w-full p-14 lg:p-0 bg-card lg:bg-transparent  lg:h-auto lg:w-auto flex lg:bg-auto absolute lg:relative flex-col lg:flex-row gap-5 lg:items-center transition-all duration-400`}
       >
         <Link href="/" className={linkStyle} onClick={linkHandler}>
           <HomeIcon className={iconStyle} />
@@ -72,6 +74,10 @@ export default function Navbar() {
           <IconSparkles size={20} />
           Aizen
         </Link>
+        <Link href="/contact" className={linkStyle} onClick={linkHandler}>
+          <MessageSquare className={iconStyle} />
+          Contact
+        </Link>
         {!isAuth ? (
           <Link
             href="/sign-in"
@@ -83,19 +89,20 @@ export default function Navbar() {
           </Link>
         ) : <>
           <Link href="/dashboard" className={linkStyle} onClick={linkHandler}><LayoutDashboard className={iconStyle} /> Dashboard</Link>
-          <Button onClick={() => { signOut(); linkHandler() }} variant="link" className={`${linkStyle} px-0 w-fit`}>
+          {data?.user?.role === "ADMIN" && <Link href="/admin/stats" className={linkStyle} onClick={linkHandler}><User className={iconStyle} />Admin</Link>}
+          <Button onClick={() => { signOut(); linkHandler() }} variant="link" className={`h-fit p-0 w-fit ${linkStyle}`}>
             <LogOut className={iconStyle} />
             Sign Out
           </Button></>}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="sm" className="top-3 right-16 absolute md:relative md:top-0 md:right-0 rounded-full w-fit h-fit p-2">
+            <Button variant="outline" size="sm" className="top-3 right-16 absolute lg:relative lg:top-0 lg:right-0 rounded-full w-fit h-fit p-2">
               {theme === "light" ? < Sun /> :
                 (theme === "dark" ? <Moon /> : <Monitor />)}
               <span className="sr-only">Toggle theme</span>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="z-[100] ml-24 md:ml-0">
+          <DropdownMenuContent align="end" className="z-[100] ml-24 lg:ml-0">
             <DropdownMenuItem onClick={() => setTheme("light")}>
               Light
             </DropdownMenuItem>
@@ -108,7 +115,7 @@ export default function Navbar() {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="md:hidden flex z-[1000] text-2xl">
+      <div className="lg:hidden flex z-[1000] text-2xl">
         {!active ? (
           <AlignRight onClick={() => setActive(true)} />
         ) : (

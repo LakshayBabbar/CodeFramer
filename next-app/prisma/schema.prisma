@@ -64,6 +64,16 @@ model Language {
   @@index([projectId])
 }
 
+model Inquiries {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  message   String
+  closed    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 enum ProjectType {
   WEB
   COMPILER

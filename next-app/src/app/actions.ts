@@ -1,5 +1,6 @@
 "use server";
 import { auth } from "@/auth";
+import prisma from "@/config/db";
 import { cookies } from "next/headers";
 import { Resend } from "resend";
 
@@ -53,6 +54,16 @@ export async function newSupportRequest(data: { name: string, email: string, mes
         if (!session) {
             throw new Error("You need to login to send a support request.");
         }
+        if (!data.name || !data.email || !data.message) {
+            throw new Error("All fields are required.");
+        }
+        await prisma.inquiries.create({
+            data: {
+                name: data.name,
+                email: data.email,
+                message: data.message
+            }
+        });
         const resend = new Resend(process.env.RESEND_API_KEY);
         const { error } = await resend.emails.send({
             from: 'CodeFramer <onboarding@resend.dev>',
@@ -70,3 +81,31 @@ export async function newSupportRequest(data: { name: string, email: string, mes
         return { error: error.message };
     }
 }
+
+export const updateSupportRequest = async (id: string, type?: string) => {
+    try {
+        const session = await auth();
+        if (session?.user?.role !== "ADMIN" || !session) {
+            throw new Error("You need to login to update a support request.");
+        }
+        const inquiry = await prisma.inquiries.findUnique({
+            where: { id }
+        });
+        if (!inquiry) {
+            throw new Error("Support request not found.");
+        }
+        if (type === "close") {
+            await prisma.inquiries.update({
+                where: { id },
+                data: { closed: true }
+            });
+            return { message: "Support request closed successfully." };
+        }
+        await prisma.inquiries.delete({
+            where: { id }
+        });
+        return { message: "Support request deleted successfully." };
+    } catch (error: any) {
+        return { error: error.message };
+    }
+};

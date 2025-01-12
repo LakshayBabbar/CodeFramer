@@ -12,6 +12,7 @@ import useSend from "@/hooks/useSend";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Footer from "@/components/Footer/Footer";
+import Image from "next/image";
 
 const Page = () => {
   const { data: sessionData } = useSession();
@@ -51,7 +52,7 @@ const Page = () => {
   return !isError && (
     <main className="flex flex-col w-full justify-center items-center gap-10">
       <section className="h-44 flex flex-col w-full sm:w-3/4 bg-dot-black dark:bg-dot-white/[0.8] relative items-center">
-        <img
+        <Image
           src={sessionData?.user?.image || "/user.webp"}
           width={120}
           height={120}

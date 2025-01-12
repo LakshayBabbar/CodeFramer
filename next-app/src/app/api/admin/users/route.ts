@@ -4,40 +4,8 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
     const searchParams = new URL(req.url).searchParams;
     const search = searchParams.get("search") || "";
-    const provider = searchParams.get("provider");
 
     try {
-        let whereClause: any = {
-            OR: [
-                {
-                    name: {
-                        contains: search,
-                        mode: "insensitive",
-                    },
-                },
-                {
-                    email: {
-                        contains: search,
-                        mode: "insensitive",
-                    },
-                },
-            ]
-        };
-        if (provider) {
-            whereClause = {
-                AND: [
-                    whereClause,
-                    {
-                        accounts: {
-                            some: {
-                                provider: provider,
-                            },
-                        },
-                    },
-                ],
-            };
-        }
-
         const users = await prisma.user.findMany({
             select: {
                 id: true,
@@ -52,7 +20,22 @@ export async function GET(req: NextRequest) {
                     },
                 },
             },
-            where: whereClause,
+            where: {
+                OR: [
+                    {
+                        name: {
+                            contains: search,
+                            mode: "insensitive",
+                        },
+                    },
+                    {
+                        email: {
+                            contains: search,
+                            mode: "insensitive",
+                        },
+                    },
+                ]
+            },
             orderBy: {
                 createdAt: "asc",
             },

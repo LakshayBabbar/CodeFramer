@@ -1,23 +1,17 @@
 "use client";
 import React from "react";
 import useFetch from "@/hooks/useFetch";
-import { TrendingUp } from "lucide-react";
 import {
   Bar,
   BarChart,
   CartesianGrid,
   XAxis,
-  Tooltip as RechartsTooltip,
-  Rectangle,
   Pie,
   PieChart,
-  Sector,
 } from "recharts";
-import { PieSectorDataItem } from "recharts/types/polar/Pie";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -27,6 +21,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const LangConfig = {
   types: {
@@ -46,19 +41,41 @@ const provConfig = {
   },
 };
 
-const typeConfig = {
-  types: {
-    label: "types",
-    color: "hsl(var(--chart-2))",
-  },
-};
-
-
 const Page = () => {
-  const { data: res } = useFetch("/api/admin/stats", "stats");
+  const { data: res, isError, error, loading } = useFetch("/api/admin/stats", "stats");
   const languages = res?.data?.languages || [];
   const providers = res?.data?.providers || [];
   const types = res?.data?.projectTypes || [];
+
+  if (isError) {
+    return <div className="text-center text-3xl font-light">{error?.message}</div>
+  }
+
+  if (loading) {
+    return (
+      <div className="space-y-10">
+        <div className="flex gap-4">
+          {Array.from({ length: 4 }).map((_, idx) => {
+            return (
+              <Skeleton key={idx} className="size-32 rounded-xl flex-grow" />
+            );
+          })}
+        </div>
+        <div className="flex flex-wrap gap-5 w-full">
+          {Array.from({ length: 2 }).map((_, idx) => {
+            return (
+              <div key={idx} className="w-full sm:w-auto flex-grow flex flex-col p-5 gap-5 items-center justify-between h-[30rem] border rounded-xl">
+                <Skeleton className="h-8 w-2/3" />
+                <Skeleton className="size-3/4" />
+                <Skeleton className="h-5 w-2/3" />
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    );
+  }
+
 
   const languageChartData = languages.map(
     (lang: { name: string; count: number }, index: number) => ({
@@ -84,18 +101,33 @@ const Page = () => {
     })
   );
 
+  const counts = [{
+    name: 'Total Users',
+    count: res.data.totalUsers,
+    color: 'bg-chart-1',
+  }, {
+    name: 'Total Projects',
+    count: res.data.totalProjects,
+    color: 'bg-chart-2',
+  }, {
+    name: 'Open Inquiries',
+    count: res.data.totalOpenedInquiries,
+    color: 'bg-chart-3',
+  }, {
+    name: 'Closed Inquiries',
+    count: res.data.totalClosedInquiries,
+    color: 'bg-chart-4',
+  }]
+
   return (
-    <div className="mt-10 sm:mt-20 w-full space-y-10">
-      {/* Total Users and Total Projects */}
-      <div className="flex gap-4">
-        <div className="size-32 rounded-xl bg-chart-1 flex flex-col items-center justify-center">
-          <span className="text-4xl">{res?.data?.totalUsers}</span>
-          <span>Total Users</span>
-        </div>
-        <div className="size-32 rounded-xl bg-chart-2 flex flex-col items-center justify-center">
-          <span className="text-4xl">{res?.data?.totalProjects}</span>
-          <span>Total Projects</span>
-        </div>
+    <div className="space-y-10">
+      <div className="flex gap-2 sm:gap-4 justify-center items-center">
+        {counts.map((item, idx) => {
+          return (<div key={idx} className={`p-2 h-24 sm:h-32 rounded-xl ${item.color} flex flex-col items-center justify-center text-center flex-grow`}>
+            <span className="text-2xl sm:text-4xl font-bold">{item.count}</span>
+            <span className="text-sm sm:text-base">{item.name}</span>
+          </div>)
+        })}
       </div>
 
       <div className="grid md:grid-cols-2 gap-4">
@@ -106,7 +138,7 @@ const Page = () => {
           <CardContent className="flex-1">
             <ChartContainer
               config={LangConfig}
-              className="mx-auto aspect-square max-h-[300px]"
+              className="mx-auto aspect-square max-h-[400px]"
             >
               <PieChart>
                 <ChartTooltip
@@ -131,7 +163,7 @@ const Page = () => {
         </Card>
 
         <Card>
-          <CardHeader>
+          <CardHeader className="text-center">
             <CardTitle>Providers Usage</CardTitle>
           </CardHeader>
           <CardContent>
@@ -152,7 +184,7 @@ const Page = () => {
               </BarChart>
             </ChartContainer>
           </CardContent>
-          <CardFooter className="flex-col items-start gap-2 text-sm">
+          <CardFooter className="flex-col gap-2 text-sm">
             <div className="leading-none text-muted-foreground">
               Showing account count by providers
             </div>
