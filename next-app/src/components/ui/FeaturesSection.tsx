@@ -117,9 +117,17 @@ export const SkeletonThree = () => {
     return (
         <div className="relative">
             <HeroVideoDialog
+                className="dark:hidden block"
                 animationStyle="top-in-bottom-out"
-                videoSrc="https://github.com/user-attachments/assets/918cfc40-e247-4faf-afd2-e854fb5bb10e"
-                thumbnailSrc="/editor.webp"
+                videoSrc="https://video.gumlet.io/67874608a0795ccd0d9ce474/67874673a0795ccd0d9ce60e/download.mp4"
+                thumbnailSrc="/codeframer-light.webp"
+                thumbnailAlt="Hero Video"
+            />
+            <HeroVideoDialog
+                className="hidden dark:block"
+                animationStyle="top-in-bottom-out"
+                videoSrc="https://video.gumlet.io/67874608a0795ccd0d9ce474/67874673a0795ccd0d9ce60e/download.mp4"
+                thumbnailSrc="/codeframer.webp"
                 thumbnailAlt="Hero Video"
             />
         </div>

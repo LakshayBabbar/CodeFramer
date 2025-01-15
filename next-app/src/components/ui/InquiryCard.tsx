@@ -39,7 +39,7 @@ const InquiryCard = ({
         setLoading(false);
     };
 
-    const btnStyle = "border text-white py-1 px-4 rounded disabled:cursor-not-allowed disabled:opacity-50";
+    const btnStyle = "border text-white py-2 px-4 rounded disabled:cursor-not-allowed disabled:opacity-50";
 
     const truncatedMessage =
         message.length > 120 && !expand
