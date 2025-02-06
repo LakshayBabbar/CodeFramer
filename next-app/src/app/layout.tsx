@@ -5,6 +5,7 @@ import ReactQueryProvider from "@/context/ReactQueryProvider";
 import { ThemeProvider } from "@/context/ThemeProvider";
 import { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.BASE_URL || ""),
@@ -20,6 +21,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  console.log(process.env.NODE_ENV)
   return (
     <SessionProvider>
       <html lang="en" className="dark">
@@ -36,6 +38,32 @@ export default function RootLayout({
             </ThemeProvider>
           </ReactQueryProvider>
           <Toaster />
+          {process.env.NODE_ENV === "production" && (
+            <>
+              <Script
+                src={`https://www.googletagmanager.com/gtag/js?id=G-VZHGHTEHRW`}
+                strategy="afterInteractive"
+              />
+
+              <Script
+                id="google-analytics"
+                strategy="afterInteractive"
+                dangerouslySetInnerHTML={{
+                  __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-VZHGHTEHRW');
+                `,
+                }}
+              />
+              <Script
+                async
+                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7436170435436020"
+                crossOrigin="anonymous"
+              ></Script>
+            </>
+          )}
         </body>
       </html>
     </SessionProvider>

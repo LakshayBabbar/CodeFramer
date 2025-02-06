@@ -123,7 +123,7 @@ const Page = () => {
     <div className="space-y-10">
       <div className="flex gap-2 sm:gap-4 justify-center items-center">
         {counts.map((item, idx) => {
-          return (<div key={idx} className={`p-2 h-24 sm:h-32 rounded-xl ${item.color} flex flex-col items-center justify-center text-center flex-grow`}>
+          return (<div key={idx} className={`p-2 h-24 sm:h-32 rounded-xl text-white ${item.color} flex flex-col items-center justify-center text-center flex-grow`}>
             <span className="text-2xl sm:text-4xl font-bold">{item.count}</span>
             <span className="text-sm sm:text-base">{item.name}</span>
           </div>)
