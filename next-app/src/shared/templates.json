@@ -1,22 +1,30 @@
 [
     {
         "name": "python",
-        "code": "# Online Python compiler to run Python program online\n\n# Write Python code here\ndef main():\n    print(\"Hello from CodeFramer\")\n\nmain()"
+        "code": "import pandas as pd\n\ndata = {'Name': ['Alice', 'Bob', 'Charlie'], 'Age': [25, 30, 35]}\ndf = pd.DataFrame(data)\nprint(df)"
     },
     {
         "name": "javascript",
-        "code": "// Online JavaScript compiler to run JavaScript program online\n\n// Write JavaScript code here\nfunction main() {\n    console.log(\"Hello from CodeFramer\");\n}\n\nmain();"
+        "code": "class Person {\n    constructor(name, age) {\n        this.name = name;\n        this.age = age;\n    }\n\n    greet() {\n        console.log(`Hello, my name is ${this.name} and I am ${this.age} years old.`);\n    }\n}\n\nconst person = new Person('Alice', 25);\nperson.greet();"
     },
     {
         "name": "cpp",
-        "code": "// Online C++ compiler to run C++ program online\n#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write C++ code here\n    cout << \"Hello from CodeFramer\" << endl;\n    return 0;\n}"
+        "code": "#include <iostream>\n#include <vector>\n\nclass Person {\npublic:\n    std::string name;\n    int age;\n    Person(std::string n, int a) : name(n), age(a) {}\n    void introduce() {\n        std::cout << \"Hello, my name is \" << name << \" and I am \" << age << \" years old.\" << std::endl;\n    }\n};\n\nint main() {\n    Person p(\"Alice\", 25);\n    p.introduce();\n    return 0;\n}"
     },
     {
         "name": "c",
-        "code": "// Online C compiler to run C program online\n#include <stdio.h>\n\nint main() {\n    // Write C code here\n    printf(\"Hello from CodeFramer\\n\");\n    return 0;\n}"
+        "code": "#include <stdio.h>\n#include <string.h>\n\nstruct Person {\n    char name[50];\n    int age;\n};\n\nvoid introduce(struct Person p) {\n    printf(\"Hello, my name is %s and I am %d years old.\\n\", p.name, p.age);\n}\n\nint main() {\n    struct Person p;\n    strcpy(p.name, \"Alice\");\n    p.age = 25;\n    introduce(p);\n    return 0;\n}"
     },
     {
         "name": "typescript",
-        "code": "// Online TypeScript compiler to run TypeScript program online\n\n// Write TypeScript code here\nfunction main(): void {\n    console.log(\"Hello from CodeFramer\");\n}\n\nmain();"
+        "code": "interface Person {\n    name: string;\n    age: number;\n}\n\nconst person: Person = { name: 'Alice', age: 25 };\nconsole.log(`Hello, my name is ${person.name} and I am ${person.age} years old.`);"
+    },
+    {
+        "name": "shell",
+        "code": "#!/bin/sh\n\nusers=\"Alice Bob Charlie\"\nfor user in $users; do\n    echo \"Hello, my name is $user.\"\ndone"
+    },
+    {
+        "name": "sql",
+        "code": "CREATE TABLE users (\n    id INTEGER PRIMARY KEY AUTOINCREMENT,\n    name TEXT NOT NULL,\n    email TEXT UNIQUE NOT NULL,\n    age INTEGER\n);\n\nINSERT INTO users (name, email, age) VALUES \n('Alice', 'alice@example.com', 25),\n('Bob', 'bob@example.com', 30),\n('Charlie', 'charlie@example.com', 35);\n\nSELECT * FROM users;"
     }
 ]

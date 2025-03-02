@@ -20,6 +20,10 @@ export function buildExecutionCommand(
       return `${baseCommand} /temp.c && gcc /temp.c -o temp.out && ./temp.out < /inputs.txt`;
     case "typescript":
       return `${baseCommand} /temp.ts && npx esbuild /temp.ts --outfile=/temp.js --format=cjs && node /temp.js < /inputs.txt`;
+    case "sql":
+      return `${baseCommand} /temp.sql && sqlite3 /temp.db < /temp.sql`;
+    case "shell":
+      return `${baseCommand} /temp.sh && chmod +x /temp.sh && sh /temp.sh < /inputs.txt`;
     default:
       throw new Error("Unsupported language");
   }

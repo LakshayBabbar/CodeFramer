@@ -4,16 +4,24 @@ dockerd-entrypoint.sh &
 
 sleep 5
 
-if ! docker image inspect python:3.10-slim >/dev/null 2>&1; then
-    docker pull python:3.10-slim
+if ! docker image inspect lakshaybabbar/python >/dev/null 2>&1; then
+    docker pull lakshaybabbar/python
 fi
 
-if ! docker image inspect lakshaybabbar/custom-gcc:latest >/dev/null 2>&1; then
-    docker pull lakshaybabbar/custom-gcc:latest
+if ! docker image inspect lakshaybabbar/cpp >/dev/null 2>&1; then
+    docker pull lakshaybabbar/cpp
 fi
 
-if ! docker image inspect lakshaybabbar/node:02 >/dev/null 2>&1; then
-    docker pull lakshaybabbar/node:02
+if ! docker image inspect lakshaybabbar/node >/dev/null 2>&1; then
+    docker pull lakshaybabbar/node
+fi
+
+if ! docker image inspect lakshaybabbar/shell >/dev/null 2>&1; then
+    docker pull lakshaybabbar/shell
+fi
+
+if ! docker image inspect lakshaybabbar/sqlite >/dev/null 2>&1; then
+    docker pull lakshaybabbar/sqlite
 fi
 
 npm start
