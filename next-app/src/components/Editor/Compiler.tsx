@@ -16,7 +16,6 @@ import {
 import templates from "@/shared/templates.json"
 import { execute } from "@/app/actions";
 
-
 interface CompilerEditorProps {
   language: string;
   data?: {
@@ -52,12 +51,12 @@ export default function CompilerEditor({
     setOutput("");
     setIsCodeRun(true);
     const data = await execute({ lang: language, code, inputs: inputs || "" });
-    if (!data.error) {
+    if (data.output) {
       setOutput(data.output);
       setIsCodeErr(data.codeError);
     } else {
       toast({
-        title: data.error || "Failed to compile.",
+        title: data.error || "Compilation failed. Possible causes: server timeout or infinite loop in code.",
         description: new Date().toString(),
       });
     }

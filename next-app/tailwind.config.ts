@@ -71,7 +71,8 @@ const config: Config = {
 			animation: {
 				ripple: 'ripple var(--duration,2s) ease calc(var(--i, 0)*.2s) infinite',
 				shine: 'shine var(--duration) infinite linear',
-				rotationBack: 'rotationBack 1s ease-in-out infinite'
+				rotationBack: 'rotationBack 1s ease-in-out infinite',
+				shimmer: "shimmer 2s linear infinite"
 			},
 			keyframes: {
 				ripple: {
@@ -99,6 +100,14 @@ const config: Config = {
 					},
 					"100%": {
 						transform: "rotate(360deg)"
+					}
+				},
+				shimmer: {
+					from: {
+						"backgroundPosition": "0 0"
+					},
+					to: {
+						"backgroundPosition": "-200% 0"
 					}
 				}
 			}

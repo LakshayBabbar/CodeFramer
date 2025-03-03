@@ -11,6 +11,16 @@ import AnimatedGridPattern from "@/components/ui/animated-grid-pattern";
 import { cn } from "@/lib/utils";
 import { Spotlight, SpotLightItem } from "@/components/ui/spotlight";
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  openGraph: {
+    type: "website",
+    siteName: "CodeFramer",
+    videos: "https://video.gumlet.io/67874608a0795ccd0d9ce474/67874673a0795ccd0d9ce60e/download.mp4",
+    images: "/codeframer.webp",
+  }
+};
 
 export default function Home() {
   return (
@@ -26,11 +36,11 @@ export default function Home() {
             <span>CodeFramer</span>
           </HoverBorderGradient>
         </div>
-        <h1 className="px-4 text-5xl md:text-7xl font-bold md:w-[60%] text-center text-transparent bg-clip-text bg-gradient-to-b from-neutral-800 to-neutral-600 dark:from-neutral-300 dark:to-neutral-500">
+        <h1 className="px-4 text-5xl md:text-7xl font-bold md:w-[60%] text-center text-transparent bg-clip-text bg-gradient-to-b from-neutral-600 to-neutral-400 dark:from-neutral-300 dark:to-neutral-500">
           Build, Compile, and Create Effortlessly
         </h1>
-        <p className="w-4/5 sm:w-[50%] text-center sm:text-xl text-neutral-800 dark:text-neutral-300">
-          CodeFramer is your all-in-one online IDE and compiler for Python, C, C++, Node.js, Typescript and web projects with real-time output and AI assistance.
+        <p className="w-4/5 sm:w-[50%] text-center sm:text-xl text-neutral-600 dark:text-neutral-300">
+          CodeFramer is your all-in-one online IDE and compiler for Python, C, C++, Node.js, Sql and web projects with real-time output and AI assistance.
         </p>
         <div className="flex gap-4">
           <Link href="/compiler/python"><Button
