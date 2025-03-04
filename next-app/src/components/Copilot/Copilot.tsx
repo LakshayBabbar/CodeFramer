@@ -1,11 +1,10 @@
 import React, { useEffect, useRef, useState, useCallback, memo } from "react";
-import { SendHorizonal } from "lucide-react";
+import { SendHorizonal, X } from "lucide-react";
 import { createPortal } from "react-dom";
 import useSend from "@/hooks/useSend";
 import { cn } from "@/lib/utils";
-import { X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { IconSparkles } from '@tabler/icons-react'
+import { IconSparkles } from "@tabler/icons-react";
 import { motion } from "framer-motion";
 import { useSession } from "next-auth/react";
 
@@ -25,7 +24,7 @@ type Context = "FIX" | "EXPLAIN" | "IMPROVE" | "QUERY";
 const CopilotModal = memo(({ code, setCode, lang, isOpen, setIsOpen }: CopilotModalProps) => {
     CopilotModal.displayName = "CopilotModal";
     const modalRef = useRef<HTMLDivElement | null>(null);
-    const { fetchData, loading, isError, error } = useSend();
+    const { fetchData, loading, isError, error, setIsError } = useSend();
     const [query, setQuery] = useState("");
     const { status } = useSession();
     const isAuth = status === "authenticated";
@@ -42,20 +41,19 @@ const CopilotModal = memo(({ code, setCode, lang, isOpen, setIsOpen }: CopilotMo
                 toast({
                     title: "Not authenticated",
                     description: "Please login to use this feature",
-                })
+                });
                 return setIsOpen(false);
-            };
+            }
+
             const prompt = getPrompt(context, lang, code, query);
             const response = await fetchData({
                 url: "/api/copilot",
                 method: "POST",
-                body: {
-                    prompt,
-                    type: "CODE"
-                },
+                body: { prompt },
             });
+
             if (!response.error) {
-                setCode(response.data);
+                setCode(response?.code);
                 setIsOpen(false);
                 setQuery("");
             }
@@ -63,11 +61,15 @@ const CopilotModal = memo(({ code, setCode, lang, isOpen, setIsOpen }: CopilotMo
         [fetchData, lang, code, query, setCode, setIsOpen, isAuth, toast]
     );
 
-
-
     if (!isOpen || !modalRef.current) return null;
 
     const buttonClass = "py-2 w-40 bg-gradient-to-tr from-indigo-700 to-purple-500 rounded-2xl hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed text-white";
+
+    function modalCloseHandler() {
+        setIsOpen(false);
+        setIsError(false);
+        setQuery("");
+    }
 
     return createPortal(
         <div
@@ -80,44 +82,41 @@ const CopilotModal = memo(({ code, setCode, lang, isOpen, setIsOpen }: CopilotMo
                 initial={{ scale: 0.5, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ type: "spring", stiffness: 240, damping: 20 }}
-                className="w-11/12 sm:w-[30rem] relative p-6 bg-card dark:border rounded-xl space-y-4 shadow-2xl">
-                <button className="absolute top-2 right-2" aria-label="Close" onClick={() => setIsOpen(false)}><X /></button>
-                <div>
+                className="w-11/12 sm:w-[30rem] relative p-6 bg-card dark:border rounded-xl space-y-6 shadow-2xl"
+            >
+                <button className="absolute top-2 right-2" aria-label="Close" onClick={modalCloseHandler}>
+                    <X />
+                </button>
+                <div className="space-y-2">
                     <h1 id="copilot-modal-title" className="text-2xl gap-1 text-center flex justify-center font-semibold bg-gradient-to-tr from-violet-700 to-violet-400 bg-clip-text text-transparent">
                         Aizen<IconSparkles size={25} className="text-violet-400" />
                     </h1>
-                    <p className="text-center text-slate-800 dark:text-slate-300">Enhance Your Code with AI Assistance from Aizen</p>
+                    <p className="text-center text-slate-600 dark:text-slate-300">Enhance Your Code with AI Assistance from Aizen</p>
                 </div>
                 <div className="flex flex-wrap justify-center gap-4">
                     {(["FIX", "EXPLAIN", "IMPROVE"] as Context[]).map((ctx) => (
-                        <button
-                            key={ctx}
-                            className={buttonClass}
-                            onClick={() => submitHandler(ctx)}
-                            disabled={loading}
-                        >
+                        <button key={ctx} onClick={() => submitHandler(ctx)} disabled={loading} className="inline-flex h-12 dark:animate-shimmer items-center justify-center rounded-2xl border border-slate-800 drop-shadow-md dark:bg-[linear-gradient(110deg,#000103,25%,#1e2631,60%,#000103)] bg-[length:200%_100%] px-6 font-medium dark:text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 min-w-32">
                             {ctx}
                         </button>
                     ))}
                 </div>
                 <div className="flex gap-2 items-end">
                     <textarea
-                        className="flex-grow min-h-10 h-fit p-2 max-h-56 bg-secondary rounded-md text-white"
+                        className="flex-grow min-h-20 h-fit px-4 rounded-2xl p-2 max-h-56 border dark:bg-[#181818e7] bg-[#f8f8f8b6]"
                         placeholder="How can I help you?"
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                     />
-                    <button
-                        className={cn(buttonClass, "w-fit p-2 h-fit")}
-                        onClick={() => submitHandler("QUERY")}
-                        disabled={loading}
-                    >
-                        <SendHorizonal />
+                    <button className={cn(buttonClass, "w-fit p-3 h-fit")} onClick={() => submitHandler("QUERY")} disabled={loading}>
+                        <SendHorizonal size={20} />
                     </button>
                 </div>
-                {isError && <p className="text-red-500  ">{error}</p>}
-                {loading && <div className="w-full flex justify-center">
-                    <div className="size-10 rounded-full border-t-2 border-b-2 border-indigo-600 animate-spin" /></div>}
+                {isError && <p className="text-red-500">{error}</p>}
+                {loading && (
+                    <div className="w-full flex justify-center">
+                        <div className="size-10 rounded-full border-t-2 border-b-2 border-indigo-600 animate-spin" />
+                    </div>
+                )}
             </motion.div>
         </div>,
         modalRef.current
@@ -149,13 +148,12 @@ const CopilotButton = memo((props: CopilotProps) => {
 
 export { CopilotButton };
 
-
 const getPrompt = (context: Context, lang: string, code: string, query: string): string => {
     const prompts: Record<Context, string> = {
-        FIX: `Fix the following ${lang} code and provide the fixed code. Include any explanations as comments within the code: \n\n${code}\n\nPlease return the response in code format only.`,
-        EXPLAIN: `Explain the following ${lang} code. Include explanations as comments directly above the relevant code sections: \n\n${code}\n\nPlease return the response in code format only.`,
-        IMPROVE: `Improve the following ${lang} code and include comments explaining the improvements inline: \n\n${code}\n\nPlease return the response in code format only.`,
-        QUERY: `Answer the query related to this ${lang} code. Include the explanation as comments and provide the code below: \n\nQuery: ${query} \n\nCode: ${code}\n\nPlease return the response in code format only.`,
+        FIX: `Fix the following ${lang} code and return only the corrected code. Also, explain any changes or fixes within comments:\n\n${code}\n\nEnsure that all explanations are within comments.`,
+        EXPLAIN: `Explain the following ${lang} code within comments and return only the updated code with explanations as comments:\n\n${code}\n\nEnsure that all explanations are within comments.`,
+        IMPROVE: `Improve the following ${lang} code and return only the improved code:\n\n${code}`,
+        QUERY: `Answer the following query related to ${lang} code and return only the relevant ${lang} code. If an explanation is needed, include it within comments:\n\nQuery: ${query}\n\nCode: ${code}\n\nEnsure all explanations are within comments.`,
     };
     return prompts[context];
 };

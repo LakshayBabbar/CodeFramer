@@ -2,8 +2,6 @@
 
 CodeFramer is a versatile code editor designed to enhance your coding experience with its intuitive interface and powerful features. Built with a focus on performance and resource efficiency, CodeFramer is perfect for developers looking for a reliable coding platform.
 
-<video src="https://github.com/user-attachments/assets/918cfc40-e247-4faf-afd2-e854fb5bb10e" width="900px" alt="Intro Video" controls></video>
-
 ## Features
 
 - **Isolated Execution Environment:** Each code execution request creates a new isolated container. This ensures that code runs securely and independently, providing an output while maintaining system integrity. Containers are deleted automatically after execution to optimize resource usage.
@@ -72,7 +70,6 @@ Ensure you have the following installed on your machine:
     - `DATABASE_URL`: Postgresql URI address.
     - `BASE_URL`: Hosting address.
     - `CODE_AI_API`: Google AI Studio API key for editor in-built AI.
-    - `GENERAL_AI_API`: Google AI Studio API key for chat.
     - `COMPILER_API`: Path to the compiler server.
     - `COMPILER_SECRET`: Access key for compiler server.
     - `AUTH_SECRET`: Secret for generating JWT tokens.

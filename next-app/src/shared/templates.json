@@ -1,7 +1,7 @@
 [
     {
         "name": "python",
-        "code": "import pandas as pd\n\ndata = {'Name': ['Alice', 'Bob', 'Charlie'], 'Age': [25, 30, 35]}\ndf = pd.DataFrame(data)\nprint(df)"
+        "code": "def main():\n    print(\"Hello, World!\")\n\nif __name__ == \"__main__\":\n    main()"
     },
     {
         "name": "javascript",
@@ -14,10 +14,6 @@
     {
         "name": "c",
         "code": "#include <stdio.h>\n#include <string.h>\n\nstruct Person {\n    char name[50];\n    int age;\n};\n\nvoid introduce(struct Person p) {\n    printf(\"Hello, my name is %s and I am %d years old.\\n\", p.name, p.age);\n}\n\nint main() {\n    struct Person p;\n    strcpy(p.name, \"Alice\");\n    p.age = 25;\n    introduce(p);\n    return 0;\n}"
-    },
-    {
-        "name": "typescript",
-        "code": "interface Person {\n    name: string;\n    age: number;\n}\n\nconst person: Person = { name: 'Alice', age: 25 };\nconsole.log(`Hello, my name is ${person.name} and I am ${person.age} years old.`);"
     },
     {
         "name": "shell",

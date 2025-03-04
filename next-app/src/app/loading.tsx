@@ -1,3 +1,9 @@
+import { Metadata } from "next";
+
+export const metadata:Metadata = {
+  title: "Loading...",
+  description: "Please wait until the page loads."
+}
 const Loading = () => {
   return (
     <div className='h-screen w-full place-items-center place-content-center'>

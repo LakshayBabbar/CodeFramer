@@ -1,6 +1,6 @@
 import { Request } from "express";
 
-export type SupportedLanguage = "python" | "javascript" | "cpp" | "c" | "typescript" | "shell" | "sql";
+export type SupportedLanguage = "python" | "javascript" | "cpp" | "c" | "shell" | "sql";
 
 export interface ExecutionRequest extends Request {
   body: {

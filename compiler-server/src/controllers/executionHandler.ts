@@ -9,11 +9,10 @@ const docker = new Docker();
 const EXECUTION_TIMEOUT_MS = 15000;
 
 const imageMap: Record<SupportedLanguage, string> = {
-  python: "lakshaybabbar/python",
+  python: "python:3.10-alpine",
   cpp: "lakshaybabbar/cpp",
   c: "lakshaybabbar/cpp",
-  javascript: "lakshaybabbar/node",
-  typescript: "lakshaybabbar/node",
+  javascript: "node:18-alpine",
   shell: "lakshaybabbar/shell",
   sql: "lakshaybabbar/sqlite"
 };
@@ -73,17 +72,14 @@ export async function executionHandler(req: ExecutionRequest, res: Response) {
         let codeError = false;
         let output = stdout || stderr;
 
-        if (stderr.trim()) {
-          if (language === "typescript" && stderr.toLowerCase().includes("error")) {
-            codeError = true;
-          } else if (language !== "typescript" && !stdout.trim()) {
-            codeError = true;
-          }
+        if (stderr.trim() && !stdout.trim()) {
+          codeError = true;
         }
 
         res.json({ output, codeError });
       }
     });
+
 
   } catch (error: any) {
     console.error("Execution Error:", error.message);

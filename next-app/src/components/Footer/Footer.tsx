@@ -18,7 +18,6 @@ const Links = {
   ],
   Others: [
     { name: "Dashboard", href: "/dashboard" },
-    { name: "AI Assistance", href: "/chat-bot" },
     { name: "Contact Us", href: "/contact" },
   ]
 };
