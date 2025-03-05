@@ -36,17 +36,17 @@ const Contact = () => {
           initial={{ opacity: 0, y: 120 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          onSubmit={handelSubmit} className='w-11/12 sm:w-[30rem] h-fit flex flex-col gap-3 sm:p-8 rounded-xl'>
+          onSubmit={handelSubmit} className='w-11/12 sm:w-[30rem]  h-fit flex flex-col gap-5 sm:p-8 rounded-xl'>
           <div className='space-y-1'>
             <h1 className='text-4xl font-bold my-2'>Contact Us</h1>
-            <p>Get in touch with the CodeFramer for support or inquiries.</p>
+            <p className='dark:text-neutral-300 text-neutral-700'>Get in touch with the CodeFramer for inquiries.</p>
           </div>
-          <Input name="name" value={data.name} onChange={valHandler} placeholder='Fullname' className='h-12 text-md' required />
-          <Input name="email" value={data.email} onChange={valHandler} type='email' placeholder='Email' className='h-12 text-md' required />
-          <Textarea name="message" value={data.message} onChange={valHandler} placeholder='Message' className='min-h-32 max-h-60 text-md' required />
-          <Button size="lg" className='text-md' type='submit' disabled={loading}>Submit</Button>
+          <Input name="name" value={data.name} onChange={valHandler} placeholder='Fullname' className='border-2 border-neutral-600 dark:border-neutral-400 px-6 h-12 text-md rounded-2xl' required />
+          <Input name="email" value={data.email} onChange={valHandler} type='email' placeholder='Email' className='border-2 border-neutral-600 dark:border-neutral-400 px-6 h-12 text-md rounded-2xl' required />
+          <Textarea name="message" value={data.message} onChange={valHandler} placeholder='Message' className='border-2 border-neutral-600 dark:border-neutral-400 px-6 min-h-28 max-h-60 text-md rounded-2xl' required />
+          <Button size="lg" className='text-md w-52 rounded-2xl' type='submit' disabled={loading}>Submit</Button>
         </motion.form>
-        <div className='fixed -z-10 w-2/6 h-32 sm:opacity-75 -rotate-12 -top-10 -left-10 bg-gradient-to-br from-blue-700 to-purple-700 blur-[150px]' />
+        <div className='fixed -z-10 w-2/4 h-48 rotate-12 -bottom-5 -left-5 bg-gradient-to-br from-blue-600 to-blue-700 blur-[200px]' />
       </div>
       <Footer />
     </>

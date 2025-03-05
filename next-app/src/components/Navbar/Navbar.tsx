@@ -15,7 +15,6 @@ import {
   MessageSquare
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { IconSparkles } from "@tabler/icons-react";
 import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 import { Button } from "@/components/ui/button"
@@ -69,10 +68,6 @@ export default function Navbar() {
         >
           <Package className={iconStyle} />
           Compilers
-        </Link>
-        <Link href="/chat-bot" className={linkStyle} onClick={linkHandler}>
-          <IconSparkles size={20} />
-          Aizen
         </Link>
         <Link href="/contact" className={linkStyle} onClick={linkHandler}>
           <MessageSquare className={iconStyle} />

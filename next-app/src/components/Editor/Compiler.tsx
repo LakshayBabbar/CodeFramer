@@ -16,7 +16,6 @@ import {
 import templates from "@/shared/templates.json"
 import { execute } from "@/app/actions";
 
-
 interface CompilerEditorProps {
   language: string;
   data?: {
@@ -51,17 +50,21 @@ export default function CompilerEditor({
   const handleCodeSubmit = async () => {
     setOutput("");
     setIsCodeRun(true);
-    const data = await execute({ lang: language, code, inputs: inputs || "" });
-    if (!data.error) {
+    try {
+      const data = await execute({ lang: language, code, inputs: inputs || "" });
+      if (data.error) {
+        throw new Error(data.error)
+      }
       setOutput(data.output);
       setIsCodeErr(data.codeError);
-    } else {
+    } catch (error: any) {
       toast({
-        title: data.error || "Failed to compile.",
-        description: new Date().toString(),
+        title: "Execution Error",
+        description: error.message || "Compilation failed. Possible causes: server timeout or infinite loop in code.",
       });
+    } finally {
+      setIsCodeRun(false);
     }
-    setIsCodeRun(false);
   };
 
   const saveHandler = async () => {
@@ -116,19 +119,19 @@ export default function CompilerEditor({
       </div>
       <div className="w-full md:w-1/2 h-1/2 md:h-full mt-7 md:mt-0 flex flex-col-reverse md:flex-col">
         <pre
-          className={`w-full h-1/2 p-4 overflow-auto ${isCodeErr && "text-red-400"
+          className={`w-full ${language !== "sql" && "h-1/2"} p-4 overflow-auto ${isCodeErr && "text-red-400"
             }`}
         >
           {output}
         </pre>
-        <div className="w-full h-1/2 bg-muted p-6 border-t rounded-t-3xl">
+        {language !== "sql" && <div className="w-full h-1/2 bg-muted p-6 border-t rounded-t-3xl">
           <textarea
             onChange={(e) => setInputs(e.target.value)}
             placeholder="Enter inputs here..."
             className="bg-transparent w-full h-full max-h-full max-w-full border-none focus:outline-none text-xl"
             value={inputs || ""}
           />
-        </div>
+        </div>}
       </div>
     </div>
   );
