@@ -14,7 +14,8 @@ const Links = {
     { name: "JavaScript Compiler", href: "/compiler/javascript" },
     { name: "C Compiler", href: "/compiler/c" },
     { name: "C++ Compiler", href: "/compiler/cpp" },
-    { name: "Typescript Compiler", href: "/compiler/typescript" },
+    { name: "Sql Editor", href: "/compiler/sql" },
+    { name: "Shell Compiler", href: "/compiler/shell" },
   ],
   Others: [
     { name: "Dashboard", href: "/dashboard" },

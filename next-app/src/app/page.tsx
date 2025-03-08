@@ -19,7 +19,8 @@ export const metadata: Metadata = {
     siteName: "CodeFramer",
     videos: "https://video.gumlet.io/67874608a0795ccd0d9ce474/67874673a0795ccd0d9ce60e/download.mp4",
     images: "/codeframer.webp",
-  }
+  },
+  keywords: ["python compiler", "javascript compiler", "shell compiler", "bash compiler", "sql editor", "html editor", "css editor", "codeframer", "c compiler", "c++ compiler", "node.js compiler", "web editor", "online compiler", "online editor", "code editor", "code compiler", "codeframer compiler", "codeframer editor", "codeframer web editor", "codeframer online compiler"],
 };
 
 export default function Home() {

@@ -12,6 +12,7 @@ export async function generateMetadata(
   return {
     title: `Online ${lang} compiler`,
     description: `Compile and run ${lang} code instantly with CodeFramer’s online ${lang} compiler. Get real-time output, debug your code, and enhance your skills with built-in AI assistance.`,
+    keywords: `${lang}, online compiler, code compiler, ${lang} compiler, compile ${lang} code, run ${lang} code, codeframer`,
   } as Metadata;
 }
 

@@ -109,3 +109,16 @@ export const updateSupportRequest = async (id: string, type?: string) => {
         return { error: error.message };
     }
 };
+
+export const getServerState = async () => {
+    try {
+        const req = await fetch(`${process.env.COMPILER_API}/status`);
+        if (!req.ok) {
+            throw new Error("Something went wrong.");
+        }
+        const res = await req.json();
+        return res;
+    } catch (error: any) {
+        return { error: error.message };
+    }
+};

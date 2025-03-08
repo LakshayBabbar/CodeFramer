@@ -81,6 +81,7 @@ export default function CompilerEditor({
     });
   };
 
+  const nonInputLang = ["sql"].includes(language);
 
   return (
     <div className="mt-14 w-full h-[93.8vh] flex flex-col md:flex-row items-center justify-center">
@@ -119,12 +120,12 @@ export default function CompilerEditor({
       </div>
       <div className="w-full md:w-1/2 h-1/2 md:h-full mt-7 md:mt-0 flex flex-col-reverse md:flex-col">
         <pre
-          className={`w-full ${language !== "sql" && "h-1/2"} p-4 overflow-auto ${isCodeErr && "text-red-400"
+          className={`w-full ${!nonInputLang ? "h-1/2" : "h-full"} p-4 overflow-auto ${isCodeErr && "text-red-400"
             }`}
         >
           {output}
         </pre>
-        {language !== "sql" && <div className="w-full h-1/2 bg-muted p-6 border-t rounded-t-3xl">
+        {!nonInputLang && <div className="w-full h-1/2 bg-muted p-6 border-t rounded-t-3xl">
           <textarea
             onChange={(e) => setInputs(e.target.value)}
             placeholder="Enter inputs here..."
