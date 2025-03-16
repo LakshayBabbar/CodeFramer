@@ -44,7 +44,6 @@ export default function RootLayout({
                 src={`https://www.googletagmanager.com/gtag/js?id=G-VZHGHTEHRW`}
                 strategy="afterInteractive"
               />
-
               <Script
                 id="google-analytics"
                 strategy="afterInteractive"
@@ -59,6 +58,12 @@ export default function RootLayout({
               />
               <Script
                 async
+                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7436170435436020"
+                crossOrigin="anonymous"
+              ></Script>
+              <Script
+                async
+
                 src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7436170435436020"
                 crossOrigin="anonymous"
               ></Script>

@@ -7,11 +7,10 @@ import {
 } from "lucide-react";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { FeaturesSection } from "@/components/ui/FeaturesSection";
-import AnimatedGridPattern from "@/components/ui/animated-grid-pattern";
-import { cn } from "@/lib/utils";
 import { Spotlight, SpotLightItem } from "@/components/ui/spotlight";
 import Link from "next/link";
 import { Metadata } from "next";
+import { Meteors } from "@/components/ui/meteors";
 
 export const metadata: Metadata = {
   openGraph: {
@@ -37,7 +36,7 @@ export default function Home() {
             <span>CodeFramer</span>
           </HoverBorderGradient>
         </div>
-        <h1 className="px-4 text-5xl md:text-7xl font-bold md:w-[60%] text-center text-transparent bg-clip-text bg-gradient-to-b from-neutral-600 to-neutral-400 dark:from-neutral-300 dark:to-neutral-500">
+        <h1 className="px-4 text-5xl md:text-7xl font-bold md:w-[60%] text-center text-neutral-800 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-b dark:from-neutral-300 dark:to-neutral-500">
           Build, Compile, and Create Effortlessly
         </h1>
         <p className="w-4/5 sm:w-[50%] text-center sm:text-xl text-neutral-600 dark:text-neutral-300">
@@ -52,16 +51,7 @@ export default function Home() {
             Try Web Editor
           </Button></Link>
         </div>
-        <AnimatedGridPattern
-          numSquares={30}
-          maxOpacity={0.1}
-          duration={0.5}
-          repeatDelay={1}
-          className={cn(
-            "[mask-image:radial-gradient(400px_circle_at_center,white,transparent)] sm:[mask-image:radial-gradient(500px_circle_at_center,white,transparent)]",
-            "inset-x-0 inset-y-[-30%] h-[200%] skew-y-12 -z-10",
-          )}
-        />
+        <Meteors />
       </section>
 
       <section className="w-full py-10 sm:py-20 h-fit relative overflow-hidden">
@@ -85,6 +75,7 @@ export default function Home() {
             </SpotLightItem>
           })}
         </Spotlight>
+        <div className="absolute top-0 left-0 bg-gradient-to-r from-purple-600 to-blue-600 blur-[100px] dark:bg-none w-3/4 h-20" />
       </section>
       <Footer />
     </main>
