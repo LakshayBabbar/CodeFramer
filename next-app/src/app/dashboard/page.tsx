@@ -16,7 +16,7 @@ import Image from "next/image";
 
 const Page = () => {
   const { data: sessionData } = useSession();
-  const username = sessionData?.user?.name;
+  const username = sessionData?.user?.username;
   const [isOpen, setIsOpen] = useState(false);
   const { data, isError, loading, refetch } = useFetch(
     "/api/projects",

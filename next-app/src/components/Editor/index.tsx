@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/select"
 import { useTheme } from "next-themes";
 import { capitalise } from "@/lib/helpers";
+import { Link } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 interface EditorComProps {
     file: {
@@ -20,8 +22,9 @@ interface EditorComProps {
     },
     onValChange: (val: string | undefined) => void;
     children?: React.ReactNode;
+    isPublic?: boolean;
 }
-const BaseEditor = ({ file, onValChange, children }: EditorComProps) => {
+const BaseEditor = ({ file, onValChange, isPublic, children }: EditorComProps) => {
     const editorRef = React.useRef<any>(null);
     const { resolvedTheme: theme } = useTheme();
     const handleEditorDidMount = (monaco: Monaco) => {
@@ -29,6 +32,7 @@ const BaseEditor = ({ file, onValChange, children }: EditorComProps) => {
             monaco.editor.defineTheme(theme.name, theme.data as any);
         });
     };
+    const { toast } = useToast();
 
     const handleEditorMount: OnMount = (editor) => {
         editorRef.current = editor;
@@ -58,10 +62,17 @@ const BaseEditor = ({ file, onValChange, children }: EditorComProps) => {
         }
     }, [res]);
 
+    const shareProjectLink = () => {
+        navigator.clipboard.writeText(window.location.href);
+        toast({
+            title: "Copied to clipboard",
+            description: "Project link copied to clipboard",
+        });
+    }
 
     return (
         <div className="w-full h-full">
-            <div className="w-full py-2 h-fit flex flex-wrap gap-2 items-center justify-between border bg-card px-5">
+            <div className="w-full py-2 h-fit flex flex-wrap gap-2 items-center justify-between border bg-card px-2 sm:px-5">
                 <div className="flex items-center gap-2">
                     <CopilotButton code={file.value} setCode={setRes} lang={file.language} />
                     {theme === "dark" && <Select onValueChange={(val) => themeHandler(val)}>
@@ -77,8 +88,9 @@ const BaseEditor = ({ file, onValChange, children }: EditorComProps) => {
                         </SelectContent>
                     </Select>}
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-2 items-center">
                     {children}
+                    {isPublic && <Link className="cursor-pointer ml-2" aria-label="Share via link" onClick={shareProjectLink} />}
                 </div>
             </div>
             <Editor

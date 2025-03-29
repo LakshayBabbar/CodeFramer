@@ -3,4 +3,5 @@ Allow: /
 Disallow: /dashboard/
 Disallow: /unauthorized
 Disallow: /admin
+Disallow: /user/
 Allow: /sign-in

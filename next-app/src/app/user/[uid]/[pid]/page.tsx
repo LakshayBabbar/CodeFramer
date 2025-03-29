@@ -1,16 +1,17 @@
 import CompilerEditor from "@/components/Editor/Compiler";
-import { auth } from "@/auth";
+import WebEditor from "@/components/Editor/WebEditor";
 import { getData } from "@/app/actions";
 
 const Compiler = async (props: { params: Promise<{ pid: string }> }) => {
   const { pid } = await (props.params);
-  const session = await auth();
   const data = await getData({ url: `/api/projects/${pid}` });
 
-  if (!session?.user) {
-    return <main className="flex h-screen w-full items-center justify-center text-3xl font-light">
-      <p>Unauthorized Access.</p>
-    </main>
+  if (!data.isPublic && !data.isOwner) {
+    return (
+      <main className="flex h-screen w-full items-center justify-center text-3xl font-light">
+        <p>Unauthorized Access.</p>
+      </main>
+    );
   }
 
   if (data?.error)
@@ -20,9 +21,7 @@ const Compiler = async (props: { params: Promise<{ pid: string }> }) => {
       </main>
     );
 
-  return session.user ? (
-    <CompilerEditor language={data?.languages[0]?.name} data={data} />
-  ) : null;
+  return data.type === "WEB" ? < WebEditor data={data} /> : <CompilerEditor language={data?.languages[0]?.name} data={data} />;
 }
 
 export default Compiler;

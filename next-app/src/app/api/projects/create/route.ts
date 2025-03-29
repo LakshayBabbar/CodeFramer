@@ -7,7 +7,17 @@ import { auth } from "@/auth";
 export async function POST(req: NextRequest) {
   try {
     const reqBody = await req.json();
-    const { name, type, language } = reqBody;
+    const { name, type, language, isPublic } = reqBody;
+
+    const session = await auth();
+    const userId = session?.user?.id;
+
+    if (!session) {
+      return NextResponse.json(
+        { error: "Unauthorized" },
+        { status: 401 }
+      );
+    }
 
     if (!name || !type || (type === "COMPILER" && !language)) {
       return NextResponse.json(
@@ -23,8 +33,6 @@ export async function POST(req: NextRequest) {
       languages = template;
     }
 
-    const session = await auth();
-    const userId = session?.user?.id;
 
     const existingProject = await prisma.project.findFirst({
       where: {
@@ -48,6 +56,7 @@ export async function POST(req: NextRequest) {
         languages: {
           create: languages,
         },
+        isPublic: isPublic || false,
       },
     });
 

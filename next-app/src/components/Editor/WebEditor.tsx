@@ -9,6 +9,8 @@ import { Button } from "../ui/button";
 export interface webEditorDataType {
   languages: { name: string; code: string }[];
   id?: string;
+  isOwner?: boolean;
+  isPublic?: boolean;
 }
 type FILES = "index.html" | "style.css" | "script.js"
 function WebEditor({ data }: { data: webEditorDataType }) {
@@ -105,7 +107,7 @@ function WebEditor({ data }: { data: webEditorDataType }) {
       <div className="mt-14 flex flex-col h-full w-full">
         <iframe title="output" srcDoc={srcDoc} width="100%" height="45%" />
         <div className="w-full h-[55%] bg-card">
-          <Editor file={file} onValChange={handleEditorChange}>
+          <Editor file={file} onValChange={handleEditorChange} isPublic={data?.isPublic}>
             <Tabs defaultValue="index.html">
               <TabsList>
                 {fileNames.map((item, index) => (
@@ -115,7 +117,7 @@ function WebEditor({ data }: { data: webEditorDataType }) {
                 ))}
               </TabsList>
             </Tabs>
-            {data.id && (
+            {data?.isOwner && (
               <Button
                 onClick={updateHandler}
                 variant="secondary"

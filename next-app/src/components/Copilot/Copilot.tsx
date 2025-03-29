@@ -63,7 +63,7 @@ const CopilotModal = memo(({ code, setCode, lang, isOpen, setIsOpen }: CopilotMo
 
     if (!isOpen || !modalRef.current) return null;
 
-    const buttonClass = "py-2 w-40 bg-gradient-to-tr from-indigo-700 to-purple-500 rounded-2xl hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed text-white";
+    const buttonClass = "py-2 w-40 bg-gradient-to-r from-blue-900 to-sky-700 rounded-2xl hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed text-white";
 
     function modalCloseHandler() {
         setIsOpen(false);
@@ -88,8 +88,8 @@ const CopilotModal = memo(({ code, setCode, lang, isOpen, setIsOpen }: CopilotMo
                     <X />
                 </button>
                 <div className="space-y-2">
-                    <h1 id="copilot-modal-title" className="text-2xl gap-1 text-center flex justify-center font-semibold bg-gradient-to-tr from-violet-700 to-violet-400 bg-clip-text text-transparent">
-                        Aizen<IconSparkles size={25} className="text-violet-400" />
+                    <h1 id="copilot-modal-title" className="text-3xl gap-1 text-center flex justify-center font-semibold bg-gradient-to-r from-blue-700 to-sky-500 bg-clip-text text-transparent">
+                        Aizen<IconSparkles size={25} className="text-blue-500" />
                     </h1>
                     <p className="text-center text-slate-600 dark:text-slate-300">Enhance Your Code with AI Assistance from Aizen</p>
                 </div>
@@ -134,12 +134,11 @@ const CopilotButton = memo((props: CopilotProps) => {
     return (
         <div>
             <button
-                className="p-1 pr-6 rounded-full hover:opacity-90 relative text-slate-700 dark:text-white"
+                className="p-1 rounded-full hover:opacity-90 relative text-slate-700 dark:text-white"
                 onClick={toggleModal}
                 aria-label="Get help from AI"
             >
                 <IconSparkles size={30} stroke={1.4} />
-                <sup className="absolute top-2 right-0">New</sup>
             </button>
             <CopilotModal {...props} isOpen={isOpen} setIsOpen={setIsOpen} />
         </div>

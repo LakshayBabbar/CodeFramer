@@ -9,16 +9,14 @@ export async function GET(req: NextRequest, props: { params: Promise<{ pid: stri
     const session = await auth();
     const userId = session?.user?.id;
 
-    const projectData = await prisma.project.findFirst({
+    const projectData = await prisma.project.findUnique({
       where: {
         id: pid,
-        userId: userId || "",
       },
       include: {
         languages: true,
       }
     });
-
     if (!projectData) {
       return NextResponse.json(
         {
@@ -27,7 +25,10 @@ export async function GET(req: NextRequest, props: { params: Promise<{ pid: stri
         { status: 404 }
       );
     }
-    return NextResponse.json(projectData, { status: 200 });
+    if (!projectData?.isPublic && projectData?.userId !== userId) {
+      throw new Error("You do not have permission to view this project.");
+    }
+    return NextResponse.json({ ...projectData, isOwner: userId === projectData.userId }, { status: 200 });
   } catch (error: any) {
     return NextResponse.json(
       {
@@ -77,22 +78,11 @@ export async function PUT(req: NextRequest, props: { params: Promise<{ pid: stri
   const params = await props.params;
   try {
     const { pid } = params;
-    const { languages } = await req.json();
-
-    if (
-      !Array.isArray(languages) ||
-      languages.some((lang) => typeof lang.name !== "string" || typeof lang.code !== "string")
-    ) {
-      return NextResponse.json(
-        { error: "Invalid languages data. Each language must have 'name' and 'code' fields." },
-        { status: 400 }
-      );
-    }
-
+    const body = await req.json();
     const session = await auth();
     const userId = session?.user?.id;
 
-    const existingProject = await prisma.project.findFirst({
+    const existingProject = await prisma.project.findUnique({
       where: {
         id: pid,
         userId: userId || "",
@@ -106,31 +96,49 @@ export async function PUT(req: NextRequest, props: { params: Promise<{ pid: stri
       );
     }
 
-    for (const lang of languages) {
-      await prisma.language.updateMany({
-        where: {
-          name: lang.name,
-          projectId: pid,
-        },
-        data: {
-          code: lang.code || null,
-          inputs: lang.inputs || null,
-        },
+    if (body.languages) {
+      if (
+        !Array.isArray(body.languages) ||
+        body.languages.some((lang: Language) => typeof lang.name !== "string" || typeof lang.code !== "string")
+      ) {
+        return NextResponse.json(
+          { error: "Invalid languages data. Each language must have 'name' and 'code' fields." },
+          { status: 400 }
+        );
+      }
+      for (const lang of body.languages) {
+        await prisma.language.updateMany({
+          where: {
+            name: lang.name,
+            projectId: pid,
+          },
+          data: {
+            code: lang.code || null,
+            inputs: lang.inputs || null,
+          },
+        });
+      }
+    }
+    else if (body.visibility !== undefined) {
+      await prisma.project.update({
+        where: { id: pid },
+        data: { isPublic: body.visibility },
       });
     }
 
     return NextResponse.json(
-      {
-        message: "Project updated successfully",
-      },
+      { message: "Project updated successfully" },
       { status: 202 }
     );
   } catch (error: any) {
     return NextResponse.json(
-      {
-        error: error.message || "An unexpected error occurred.",
-      },
+      { error: error.message || "An unexpected error occurred." },
       { status: 500 }
     );
   }
+}
+interface Language {
+  name: string;
+  code?: string;
+  inputs?: string;
 }

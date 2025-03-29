@@ -8,6 +8,7 @@ import Footer from "@/components/Footer/Footer";
 export const metadata: Metadata = {
   title: "CodeFramer Sign-In: Access Your Online IDE & Project Dashboard",
   description: "Sign in to CodeFramer and access your personalized online IDE, project dashboard, and coding environments. Manage your projects, collaborate, and start coding right away.",
+  keywords: "CodeFramer, sign in, online IDE, project dashboard, coding environments, code collaboration",
 }
 
 export default function SignIn() {

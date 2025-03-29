@@ -14,6 +14,7 @@ import {
 import { capitalise, SUPPORTED_LANGUAGES } from "@/lib/helpers";
 import { motion } from "framer-motion";
 import { useSession } from "next-auth/react";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface CreateProjectProps {
   isOpen: boolean;
@@ -25,7 +26,8 @@ const CreateProject: React.FC<CreateProjectProps> = ({ isOpen, setIsOpen }) => {
   const [name, setName] = useState<string>("");
   const [environment, setEnvironment] = useState<"WEB" | "COMPILER">("WEB");
   const [language, setLanguage] = useState("python");
-  const { status } = useSession();
+  const [isPublic, setIsPublic] = useState(true);
+  const { status, data } = useSession();
   const isAuth = status === "authenticated";
   const router = useRouter();
   const { fetchData, isError, error, loading, setIsError } = useSend();
@@ -40,14 +42,9 @@ const CreateProject: React.FC<CreateProjectProps> = ({ isOpen, setIsOpen }) => {
     if (!isOpen) setIsError(false);
   }, [isOpen, isAuth, router, setIsOpen, setIsError]);
 
-
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflowY = "scroll";
-    }
-  }, [isOpen])
+    document.body.style.overflow = isOpen ? "hidden" : "scroll";
+  }, [isOpen]);
 
   const dataHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -63,15 +60,12 @@ const CreateProject: React.FC<CreateProjectProps> = ({ isOpen, setIsOpen }) => {
         name,
         type: environment,
         language,
+        isPublic,
       },
     });
     if (!res.error) {
       setIsOpen(false);
-      router.push(
-        environment === "WEB"
-          ? `/web-editor/${res.pid}`
-          : `/compiler/${language}/${res.pid}`
-      );
+      router.push(`/user/${data?.user.username}/${res.pid}`);
     }
   };
 
@@ -95,9 +89,7 @@ const CreateProject: React.FC<CreateProjectProps> = ({ isOpen, setIsOpen }) => {
             />
             <div className="flex justify-between gap-4">
               <Select
-                onValueChange={(val) =>
-                  setEnvironment(val as "WEB" | "COMPILER")
-                }
+                onValueChange={(val) => setEnvironment(val as "WEB" | "COMPILER")}
                 required
               >
                 <SelectTrigger className="flex-grow">
@@ -117,20 +109,24 @@ const CreateProject: React.FC<CreateProjectProps> = ({ isOpen, setIsOpen }) => {
                     <SelectValue placeholder="Language" />
                   </SelectTrigger>
                   <SelectContent>
-                    {SUPPORTED_LANGUAGES.map((lang, index) => {
-                      return (
-                        <SelectItem key={index} value={lang}>
-                          {capitalise(lang)}
-                        </SelectItem>
-                      );
-                    })}
+                    {SUPPORTED_LANGUAGES.map((lang, index) => (
+                      <SelectItem key={index} value={lang}>
+                        {capitalise(lang)}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               )}
             </div>
-
+            <div className="flex gap-2 items-center">
+              <Checkbox
+                id="checkbox"
+                checked={isPublic}
+                onCheckedChange={(checked) => setIsPublic(checked === true)}
+              />
+              <label htmlFor="checkbox">Public</label>
+            </div>
             {isError && <p className="text-sm text-red-500">{error}</p>}
-
             <div className="flex gap-4 justify-end">
               <Button variant="outline" onClick={() => setIsOpen(false)}>
                 Cancel

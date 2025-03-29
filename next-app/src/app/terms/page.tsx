@@ -4,6 +4,7 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
     title: "Terms of Service - CodeFramer",
     description: "Read the Terms of Service for CodeFramer to understand the rules and conditions for using our platform.",
+    keywords: ["terms of service", "CodeFramer", "terms", "service", "agreement"],
 }
 
 const TermsOfService = () => {

@@ -9,6 +9,7 @@ generator client {
 
 model User {
   id            String    @id @default(cuid())
+  username      String?   @unique
   name          String
   email         String    @unique
   emailVerified DateTime?
@@ -44,6 +45,7 @@ model Project {
   type      ProjectType
   user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
+  isPublic  Boolean     @default(false)
   languages Language[]
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt

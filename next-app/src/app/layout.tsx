@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.BASE_URL || ""),
   title: "CodeFramer: Online IDE & Compiler for Web Development, Python, C, C++, Node.js",
   description: "CodeFramer is an advanced online IDE and compiler supporting Python, C, C++, Node.js, and web environments (HTML, CSS, JS). Code, execute, and manage projects in real-time with AI assistance.",
+  keywords: ["python compiler", "javascript compiler", "shell compiler", "bash compiler", "sql editor", "html editor", "css editor", "codeframer", "c compiler", "c++ compiler", "node.js compiler", "web editor", "online compiler", "online editor", "code editor", "code compiler", "codeframer compiler", "codeframer editor", "codeframer web editor", "codeframer online compiler"],
   alternates: {
     canonical: './',
   }

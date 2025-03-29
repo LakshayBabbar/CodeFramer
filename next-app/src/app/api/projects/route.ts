@@ -10,12 +10,29 @@ export async function GET() {
       where: {
         userId: userId || "",
       },
-      include: {
-        languages: true,
+      select: {
+        id: true,
+        createdAt: true,
+        name: true,
+        type: true,
+        user: {
+          select: {
+            username: true,
+          },
+        },
+        isPublic: true,
+        languages: {
+          select: {
+            name: true,
+          }
+        }
       }
     });
-    return NextResponse.json(projects);
-  } catch (error:any) {
+    const filteredProjects = projects.map((project) => {
+      return { ...project, isOwner: true }
+    });
+    return NextResponse.json(filteredProjects, { status: 200 });
+  } catch (error: any) {
     console.log(error.message);
     return NextResponse.json(
       {

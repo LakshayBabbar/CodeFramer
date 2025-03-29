@@ -4,6 +4,7 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
     title: "Privacy Policy - CodeFramer",
     description: "Learn about how CodeFramer collects, uses, and protects your personal information. View our comprehensive Privacy Policy for details.",
+    keywords: ["privacy policy", "data protection", "user information", "CodeFramer"],
 }
 
 const PrivacyPolicy = () => {

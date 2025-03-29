@@ -21,6 +21,8 @@ interface CompilerEditorProps {
   data?: {
     id: string;
     languages: { name: string; code: string, inputs?: string; }[];
+    isOwner: boolean;
+    isPublic: boolean;
   };
 }
 
@@ -86,8 +88,8 @@ export default function CompilerEditor({
   return (
     <div className="mt-14 w-full h-[93.8vh] flex flex-col md:flex-row items-center justify-center">
       <div className="w-full md:w-1/2 h-1/2 md:h-full bg-background">
-        <Editor file={{ name: language, value: code, language }} onValChange={(val) => setCode(val || "")}>
-          {data ? (
+        <Editor file={{ name: language, value: code, language }} onValChange={(val) => setCode(val || "")} isPublic={data?.isPublic}>
+          {data?.isOwner ? (
             <Button
               variant="secondary"
               onClick={saveHandler}
@@ -95,7 +97,7 @@ export default function CompilerEditor({
             >
               Save
             </Button>
-          ) : (
+          ) : !data && (
             <Select onValueChange={(val) => redirect.push(val)}>
               <SelectTrigger className="w-fit">
                 <SelectValue placeholder={capitalise(language)} />
