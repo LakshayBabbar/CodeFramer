@@ -1,7 +1,6 @@
 import { Editor, OnMount, type Monaco } from "@monaco-editor/react";
 import React, { useEffect } from "react";
 import editorThemes from "@/shared/themes.json";
-import { CopilotButton } from "../Copilot/Copilot";
 import {
     Select,
     SelectContent,
@@ -74,7 +73,6 @@ const BaseEditor = ({ file, onValChange, isPublic, children }: EditorComProps) =
         <div className="w-full h-full">
             <div className="w-full py-2 h-fit flex flex-wrap gap-2 items-center justify-between border bg-card px-2 sm:px-5">
                 <div className="flex items-center gap-2">
-                    <CopilotButton code={file.value} setCode={setRes} lang={file.language} />
                     {theme === "dark" && <Select onValueChange={(val) => themeHandler(val)}>
                         <SelectTrigger className="w-fit">
                             <SelectValue placeholder={capitalise(editorTheme)} />

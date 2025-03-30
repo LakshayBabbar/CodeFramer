@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/select"
 import templates from "@/shared/templates.json"
 import { execute } from "@/app/actions";
+import Warning from "../ui/warning";
+import { CopilotButton } from "../Copilot/Copilot";
 
 interface CompilerEditorProps {
   language: string;
@@ -89,6 +91,7 @@ export default function CompilerEditor({
     <div className="mt-14 w-full h-[93.8vh] flex flex-col md:flex-row items-center justify-center">
       <div className="w-full md:w-1/2 h-1/2 md:h-full bg-background">
         <Editor file={{ name: language, value: code, language }} onValChange={(val) => setCode(val || "")} isPublic={data?.isPublic}>
+          <CopilotButton lang={language} code={code} setCode={setCode} />
           {data?.isOwner ? (
             <Button
               variant="secondary"
@@ -136,6 +139,7 @@ export default function CompilerEditor({
           />
         </div>}
       </div>
+      <Warning message='Server might be in sleep mode. If execution is slow, please refresh the page.' />
     </div>
   );
 }

@@ -149,10 +149,10 @@ export { CopilotButton };
 
 const getPrompt = (context: Context, lang: string, code: string, query: string): string => {
     const prompts: Record<Context, string> = {
-        FIX: `Fix the following ${lang} code and return only the corrected code. Also, explain any changes or fixes within comments:\n\n${code}\n\nEnsure that all explanations are within comments.`,
-        EXPLAIN: `Explain the following ${lang} code within comments and return only the updated code with explanations as comments:\n\n${code}\n\nEnsure that all explanations are within comments.`,
-        IMPROVE: `Improve the following ${lang} code and return only the improved code:\n\n${code}`,
-        QUERY: `Answer the following query related to ${lang} code and return only the relevant ${lang} code. If an explanation is needed, include it within comments:\n\nQuery: ${query}\n\nCode: ${code}\n\nEnsure all explanations are within comments.`,
+        FIX: `Fix the following ${lang} code and return only the corrected code as the same format if i provided you. Also, explain any changes or fixes within comments:\n\n${code}\n\nEnsure that all explanations are within comments.`,
+        EXPLAIN: `Explain the following ${lang} code as the same format if i provided you within comments and return only the updated code with explanations as comments:\n\n${code}\n\nEnsure that all explanations are within comments.`,
+        IMPROVE: `Improve the following ${lang} code as the same format if i provided you and return only the improved code:\n\n${code}`,
+        QUERY: `Answer the following query related to ${lang} code as the same format if i provided you and return only the relevant ${lang} code. If an explanation is needed, include it within comments:\n\nQuery: ${query}\n\nCode: ${code}\n\nEnsure all explanations are within comments.`,
     };
     return prompts[context];
 };

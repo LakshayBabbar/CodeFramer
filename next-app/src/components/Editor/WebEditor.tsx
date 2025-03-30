@@ -5,6 +5,7 @@ import { useToast } from "@/hooks/use-toast";
 import useSend from "@/hooks/useSend";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "../ui/button";
+import { CopilotButton } from "../Copilot/Copilot";
 
 export interface webEditorDataType {
   languages: { name: string; code: string }[];
@@ -17,7 +18,6 @@ function WebEditor({ data }: { data: webEditorDataType }) {
   const [values, setValues] = useState({ html: "", css: "", js: "" });
   const { toast } = useToast();
   const { fetchData, loading } = useSend();
-  const editorRef = React.useRef<any>(null);
   const [code, setCode] = useState<string>("");
   const [fileName, setFileName] = useState<FILES>("index.html");
 
@@ -98,7 +98,21 @@ function WebEditor({ data }: { data: webEditorDataType }) {
 
   useEffect(() => {
     if (code) {
-      editorRef.current.setValue(code);
+      try {
+        const parsedCode = JSON.parse(code);
+        // Only update if it has the expected properties
+        if (parsedCode.html !== undefined ||
+          parsedCode.css !== undefined ||
+          parsedCode.js !== undefined) {
+          setValues((prev) => ({
+            html: parsedCode.html !== undefined ? parsedCode.html : prev.html,
+            css: parsedCode.css !== undefined ? parsedCode.css : prev.css,
+            js: parsedCode.js !== undefined ? parsedCode.js : prev.js,
+          }));
+        }
+      } catch (e) {
+        console.error("Failed to parse code from Copilot:", e);
+      }
     }
   }, [code]);
 
@@ -108,6 +122,7 @@ function WebEditor({ data }: { data: webEditorDataType }) {
         <iframe title="output" srcDoc={srcDoc} width="100%" height="45%" />
         <div className="w-full h-[55%] bg-card">
           <Editor file={file} onValChange={handleEditorChange} isPublic={data?.isPublic}>
+            <CopilotButton lang="html, css and js" code={JSON.stringify(values)} setCode={setCode} />
             <Tabs defaultValue="index.html">
               <TabsList>
                 {fileNames.map((item, index) => (
