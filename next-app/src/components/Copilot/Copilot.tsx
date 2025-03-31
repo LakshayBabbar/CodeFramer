@@ -9,9 +9,8 @@ import { motion } from "framer-motion";
 import { useSession } from "next-auth/react";
 
 interface CopilotProps {
-    code: string;
-    setCode: React.Dispatch<React.SetStateAction<string>>;
-    lang: string;
+    editorData: { name: string; code: string; }[];
+    setEditorData: React.Dispatch<React.SetStateAction<CopilotProps["editorData"]>>;
 }
 
 interface CopilotModalProps extends CopilotProps {
@@ -21,7 +20,7 @@ interface CopilotModalProps extends CopilotProps {
 
 type Context = "FIX" | "EXPLAIN" | "IMPROVE" | "QUERY";
 
-const CopilotModal = memo(({ code, setCode, lang, isOpen, setIsOpen }: CopilotModalProps) => {
+const CopilotModal = memo(({ isOpen, setIsOpen, editorData, setEditorData }: CopilotModalProps) => {
     CopilotModal.displayName = "CopilotModal";
     const modalRef = useRef<HTMLDivElement | null>(null);
     const { fetchData, loading, isError, error, setIsError } = useSend();
@@ -29,6 +28,11 @@ const CopilotModal = memo(({ code, setCode, lang, isOpen, setIsOpen }: CopilotMo
     const { status } = useSession();
     const isAuth = status === "authenticated";
     const { toast } = useToast();
+    let lang = '';
+    editorData.forEach((editor) => {
+        lang += editor.name + ' ';
+    })
+    lang.includes("sql") && lang.replace("sql", "sqlite");
 
     useEffect(() => {
         modalRef.current = document.getElementById("modal") as HTMLDivElement;
@@ -44,8 +48,7 @@ const CopilotModal = memo(({ code, setCode, lang, isOpen, setIsOpen }: CopilotMo
                 });
                 return setIsOpen(false);
             }
-
-            const prompt = getPrompt(context, lang, code, query);
+            const prompt = getPrompt(context, lang, editorData, query);
             const response = await fetchData({
                 url: "/api/copilot",
                 method: "POST",
@@ -53,12 +56,15 @@ const CopilotModal = memo(({ code, setCode, lang, isOpen, setIsOpen }: CopilotMo
             });
 
             if (!response.error) {
-                setCode(response?.code);
+                setEditorData(response.map((item: { languageName: string; updatedCode: string; }) => ({
+                    name: item.languageName,
+                    code: item.updatedCode,
+                })));
                 setIsOpen(false);
                 setQuery("");
             }
         },
-        [fetchData, lang, code, query, setCode, setIsOpen, isAuth, toast]
+        [fetchData, lang, editorData, query, setEditorData, setIsOpen, isAuth, toast]
     );
 
     if (!isOpen || !modalRef.current) return null;
@@ -114,7 +120,7 @@ const CopilotModal = memo(({ code, setCode, lang, isOpen, setIsOpen }: CopilotMo
                 {isError && <p className="text-red-500">{error}</p>}
                 {loading && (
                     <div className="w-full flex justify-center">
-                        <div className="size-10 rounded-full border-t-2 border-b-2 border-indigo-600 animate-spin" />
+                        <div className="size-10 rounded-full border-t-2 border-b-2 border-blue-600 animate-spin" />
                     </div>
                 )}
             </motion.div>
@@ -147,12 +153,21 @@ const CopilotButton = memo((props: CopilotProps) => {
 
 export { CopilotButton };
 
-const getPrompt = (context: Context, lang: string, code: string, query: string): string => {
+const getPrompt = (context: Context, lang: string, code: CopilotModalProps["editorData"], query: string): string => {
+
+    const structuredCode = JSON.stringify(code.map((editor) => ({
+        languageName: editor.name,
+        code: editor.code,
+    })));
+
     const prompts: Record<Context, string> = {
-        FIX: `Fix the following ${lang} code and return only the corrected code as the same format if i provided you. Also, explain any changes or fixes within comments:\n\n${code}\n\nEnsure that all explanations are within comments.`,
-        EXPLAIN: `Explain the following ${lang} code as the same format if i provided you within comments and return only the updated code with explanations as comments:\n\n${code}\n\nEnsure that all explanations are within comments.`,
-        IMPROVE: `Improve the following ${lang} code as the same format if i provided you and return only the improved code:\n\n${code}`,
-        QUERY: `Answer the following query related to ${lang} code as the same format if i provided you and return only the relevant ${lang} code. If an explanation is needed, include it within comments:\n\nQuery: ${query}\n\nCode: ${code}\n\nEnsure all explanations are within comments.`,
+        FIX: `Fix the following ${lang} code and return the corrected code in the exact same format:\n\n${structuredCode}\n\nEnsure that all explanations are provided within comments inside the code.`,
+
+        EXPLAIN: `Explain the following ${lang} code by adding comments and return it in the exact same format:\n\n${structuredCode}\n\nEnsure that all explanations are within comments inside the code.`,
+
+        IMPROVE: `Improve the following ${lang} code and return it in the exact same format:\n\n${structuredCode}`,
+
+        QUERY: `Answer the following query related to ${lang} code while maintaining the exact same format:\n\nQuery: ${query}\n\n${structuredCode}\n\nEnsure all explanations are within comments inside the code.`,
     };
     return prompts[context];
 };

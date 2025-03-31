@@ -32,7 +32,7 @@ export default function CompilerEditor({
   data,
   language,
 }: CompilerEditorProps) {
-  const [code, setCode] = useState("");
+  const [editorValues, setEditorValues] = useState([{ name: language || "", code: "" }]);
   const [output, setOutput] = useState("");
   const [isCodeErr, setIsCodeErr] = useState(false);
   const [inputs, setInputs] = useState<string | null>(null);
@@ -44,9 +44,9 @@ export default function CompilerEditor({
   useEffect(() => {
     if (!data) {
       const sampleCode = templates.find((t) => t.name === language)?.code;
-      setCode(sampleCode || "");
+      setEditorValues([{ name: language, code: sampleCode || "" }]);
     } else {
-      setCode(data?.languages[0]?.code || "");
+      setEditorValues([{ name: data.languages[0].name, code: data.languages[0].code }]);
       setInputs(data.languages[0]?.inputs || null);
     }
   }, [data, language]);
@@ -55,7 +55,7 @@ export default function CompilerEditor({
     setOutput("");
     setIsCodeRun(true);
     try {
-      const data = await execute({ lang: language, code, inputs: inputs || "" });
+      const data = await execute({ lang: language, code: editorValues[0]?.code, inputs: inputs || "" });
       if (data.error) {
         throw new Error(data.error)
       }
@@ -76,7 +76,7 @@ export default function CompilerEditor({
       url: `/api/projects/${data?.id}`,
       method: "PUT",
       body: {
-        languages: [{ name: data?.languages[0].name, code, inputs }],
+        languages: [{ ...editorValues[0], inputs }],
       },
     });
     toast({
@@ -90,8 +90,8 @@ export default function CompilerEditor({
   return (
     <div className="mt-14 w-full h-[93.8vh] flex flex-col md:flex-row items-center justify-center">
       <div className="w-full md:w-1/2 h-1/2 md:h-full bg-background">
-        <Editor file={{ name: language, value: code, language }} onValChange={(val) => setCode(val || "")} isPublic={data?.isPublic}>
-          <CopilotButton lang={language} code={code} setCode={setCode} />
+        <Editor file={{ name: language, value: editorValues[0].code, language }} onValChange={(val) => setEditorValues([{ name: language, code: val || "" }])} isPublic={data?.isPublic}>
+          <CopilotButton editorData={editorValues} setEditorData={setEditorValues} />
           {data?.isOwner ? (
             <Button
               variant="secondary"

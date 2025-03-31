@@ -13,19 +13,24 @@ export async function POST(req: NextRequest) {
                 generationConfig: {
                     response_mime_type: "application/json",
                     response_schema: {
-                        type: "OBJECT",
-                        properties: { code: { type: "STRING" } },
+                        type: "array",
+                        items: {
+                            type: "object",
+                            properties: {
+                                languageName: { type: "string" },
+                                updatedCode: { type: "string" }
+                            },
+                        },
                     },
                 },
             }),
         });
-
         if (!response.ok) {
             throw new Error("Failed to fetch AI response");
         }
 
         const data = await response.json();
-        const result = JSON.parse(data.candidates?.[0]?.content?.parts?.[0]?.text || "");
+        const result = JSON.parse(data.candidates?.[0]?.content?.parts?.[0]?.text || []);
         return NextResponse.json(result, { status: 200 });
     } catch (error: any) {
         return NextResponse.json({ error: error.message }, { status: 500 });

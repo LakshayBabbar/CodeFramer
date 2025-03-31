@@ -5,8 +5,8 @@ import { OrbitingCircles } from "./orbiting-circles";
 import { IconSql } from "@tabler/icons-react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Stars, Layers2 } from "lucide-react";
-import { IconUsersGroup } from "@tabler/icons-react";
+import { Layers2 } from "lucide-react";
+import { IconLocationCode, IconDeviceLaptop } from "@tabler/icons-react";
 
 export function FeaturesSection() {
     const features = [
@@ -171,7 +171,7 @@ const SkeletonFour = () => {
             <div
                 className="sm:-rotate-6 hover:rotate-0 transition-all duration-200 h-full sm:w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center"
             >
-                <Stars className="size-20" />
+                <Layers2 className="size-20" />
                 <p className="text-center font-semibold text-neutral-500 mt-4">
                     Seamless Multi-Project Management
                 </p>
@@ -180,7 +180,7 @@ const SkeletonFour = () => {
                 </p>
             </div>
             <div className="h-full relative z-20 sm:w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center">
-                <Layers2 className="size-20" />
+                <IconLocationCode className="size-20" />
                 <p className="text-center font-semibold text-neutral-500 mt-4">
                     Effortless Code Sharing
                 </p>
@@ -191,7 +191,7 @@ const SkeletonFour = () => {
             <div
                 className="sm:rotate-6 hover:rotate-0 transition-all duration-200 h-full sm:w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center"
             >
-                <IconUsersGroup className="size-20" />
+                <IconDeviceLaptop className="size-20" />
                 <p className="text-center font-semibold text-neutral-500 mt-4">
                     Real-Time Web Preview
                 </p>

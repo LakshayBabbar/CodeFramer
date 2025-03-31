@@ -15,23 +15,20 @@ export interface webEditorDataType {
 }
 type FILES = "index.html" | "style.css" | "script.js"
 function WebEditor({ data }: { data: webEditorDataType }) {
-  const [values, setValues] = useState({ html: "", css: "", js: "" });
+  const [values, setValues] = useState([{ name: "html", code: "" }, { name: "css", code: "" }, { name: "js", code: "" }]);
   const { toast } = useToast();
   const { fetchData, loading } = useSend();
-  const [code, setCode] = useState<string>("");
   const [fileName, setFileName] = useState<FILES>("index.html");
 
   useEffect(() => {
-    let extractLanguages = {} as any;
-    data?.languages.forEach((lang) => {
-      extractLanguages[lang?.name] = lang.code || "";
-    });
-
-    setValues({
-      html: extractLanguages?.html || "",
-      css: extractLanguages?.css || "",
-      js: extractLanguages?.js || "",
-    });
+    if (data) {
+      setValues(data?.languages.map((item) => {
+        return {
+          name: item.name,
+          code: item.code
+        }
+      }));
+    }
   }, [data]);
 
   const updateHandler = async () => {
@@ -39,11 +36,7 @@ function WebEditor({ data }: { data: webEditorDataType }) {
       url: `/api/projects/${data.id}`,
       method: "PUT",
       body: {
-        languages: [
-          { name: "html", code: values.html },
-          { name: "css", code: values.css },
-          { name: "js", code: values.js },
-        ],
+        languages: values
       },
     });
     const date = new Date().toString();
@@ -54,9 +47,9 @@ function WebEditor({ data }: { data: webEditorDataType }) {
   };
 
   const srcDoc = `
-    ${values?.html}
-    <style>${values?.css}</style>
-    <script>${values?.js}</script>
+    ${values[0]?.code}
+    <style>${values[1]?.code}</style>
+    <script>${values[2]?.code}</script>
   `;
 
   const fileNames = [
@@ -69,17 +62,17 @@ function WebEditor({ data }: { data: webEditorDataType }) {
     "script.js": {
       name: "script.js",
       language: "javascript",
-      value: values?.js || "",
+      value: values[2]?.code || "",
     },
     "style.css": {
       name: "style.css",
       language: "css",
-      value: values?.css || "",
+      value: values[1]?.code || "",
     },
     "index.html": {
       name: "index.html",
       language: "html",
-      value: values?.html || "",
+      value: values[0]?.code || "",
     },
   };
 
@@ -88,33 +81,13 @@ function WebEditor({ data }: { data: webEditorDataType }) {
 
   const handleEditorChange = (value: string | undefined) => {
     const lang = file.name.split(".")[1];
+    const idx = values.findIndex((item) => item.name === lang);
+    const updatedValues = [...values];
+    updatedValues[idx] = { name: lang, code: value || "" };
     if (value !== undefined) {
-      setValues((values) => ({
-        ...values,
-        [lang]: value,
-      }));
-    }
-  };
-
-  useEffect(() => {
-    if (code) {
-      try {
-        const parsedCode = JSON.parse(code);
-        // Only update if it has the expected properties
-        if (parsedCode.html !== undefined ||
-          parsedCode.css !== undefined ||
-          parsedCode.js !== undefined) {
-          setValues((prev) => ({
-            html: parsedCode.html !== undefined ? parsedCode.html : prev.html,
-            css: parsedCode.css !== undefined ? parsedCode.css : prev.css,
-            js: parsedCode.js !== undefined ? parsedCode.js : prev.js,
-          }));
-        }
-      } catch (e) {
-        console.error("Failed to parse code from Copilot:", e);
-      }
-    }
-  }, [code]);
+      setValues(updatedValues);
+    };
+  }
 
   return (
     <div className="flex flex-col h-screen overflow-y-hidden bg-white">
@@ -122,7 +95,7 @@ function WebEditor({ data }: { data: webEditorDataType }) {
         <iframe title="output" srcDoc={srcDoc} width="100%" height="45%" />
         <div className="w-full h-[55%] bg-card">
           <Editor file={file} onValChange={handleEditorChange} isPublic={data?.isPublic}>
-            <CopilotButton lang="html, css and js" code={JSON.stringify(values)} setCode={setCode} />
+            <CopilotButton editorData={values} setEditorData={setValues} />
             <Tabs defaultValue="index.html">
               <TabsList>
                 {fileNames.map((item, index) => (
