@@ -6,6 +6,7 @@ import useSend from "@/hooks/useSend";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "../ui/button";
 import { CopilotButton } from "../Copilot/Copilot";
+import { Fullscreen, Minimize, X } from "lucide-react";
 
 export interface webEditorDataType {
   languages: { name: string; code: string }[];
@@ -19,6 +20,16 @@ function WebEditor({ data }: { data: webEditorDataType }) {
   const { toast } = useToast();
   const { fetchData, loading } = useSend();
   const [fileName, setFileName] = useState<FILES>("index.html");
+  const [isFullPreview, setFullPreview] = useState(false);
+
+  useEffect(() => {
+    isFullPreview && document.documentElement.requestFullscreen();
+    return () => {
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      }
+    };
+  }, [isFullPreview])
 
   useEffect(() => {
     if (data) {
@@ -92,9 +103,10 @@ function WebEditor({ data }: { data: webEditorDataType }) {
   return (
     <div className="flex flex-col h-screen overflow-y-hidden bg-white">
       <div className="mt-14 flex flex-col h-full w-full">
-        <iframe title="output" srcDoc={srcDoc} width="100%" height="45%" />
-        <div className="w-full h-[55%] bg-card">
+        <iframe id="web-preview" title="output" srcDoc={srcDoc} width="100%" height={isFullPreview ? "100%" : "50%"} />
+        <div className={`w-full ${!isFullPreview ? "h-1/2" : "hidden"} bg-card`}>
           <Editor file={file} onValChange={handleEditorChange} isPublic={data?.isPublic}>
+            <button aria-label="Switch to full screen" onClick={() => { setFullPreview(true) }}><Fullscreen className="size-50 hover:scale-105 transition-all" /></button>
             <CopilotButton editorData={values} setEditorData={setValues} />
             <Tabs defaultValue="index.html">
               <TabsList>
@@ -116,6 +128,7 @@ function WebEditor({ data }: { data: webEditorDataType }) {
             )}
           </Editor>
         </div>
+        {isFullPreview && <button className="fixed bottom-10 right-10 rounded-full p-2 bg-gradient-to-r from-blue-500 to-blue-800 hover:scale-105 transition-all" aria-label="Exit full screen" onClick={() => { setFullPreview(false) }}><Minimize className="size-25" /></button>}
       </div>
     </div>
   );
