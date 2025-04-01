@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Moon, Sun } from "lucide-react"
+import { IconLayout, IconUser, IconUserCircle } from "@tabler/icons-react";
 import { useTheme } from "next-themes"
 import { Button } from "@/components/ui/button"
 import {
@@ -83,7 +84,27 @@ export default function Navbar() {
             Sign In
           </Link>
         ) : <>
-          <Link href="/dashboard" className={linkStyle} onClick={linkHandler}><LayoutDashboard className={iconStyle} /> Dashboard</Link>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className={linkStyle + " h-fit p-0 w-fit"}>
+                <IconUser className={iconStyle} />Account
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="z-[100] absolute left-4 -top-4 lg:relative lg:left-0 lg:top-0">
+              <DropdownMenuItem>
+                <Link href="/dashboard" className={linkStyle} onClick={linkHandler}>
+                  <IconLayout className={iconStyle} />
+                  Dashboard
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href="/profile" className={linkStyle} onClick={linkHandler}>
+                  <IconUserCircle className={iconStyle} />
+                  Profile
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           {data?.user?.role === "ADMIN" && <Link href="/admin/stats" className={linkStyle} onClick={linkHandler}><User className={iconStyle} />Admin</Link>}
           <Button onClick={() => { signOut(); linkHandler() }} variant="link" className={`h-fit p-0 w-fit ${linkStyle}`}>
             <LogOut className={iconStyle} />

@@ -9,16 +9,21 @@ export async function GET(req: NextRequest) {
         const users = await prisma.user.findMany({
             select: {
                 id: true,
+                username: true,
                 name: true,
                 email: true,
                 image: true,
-                role: true,
                 createdAt: true,
                 accounts: {
                     select: {
                         provider: true,
                     },
                 },
+                _count: {
+                    select: {
+                        Project: true,
+                    }
+                }
             },
             where: {
                 OR: [

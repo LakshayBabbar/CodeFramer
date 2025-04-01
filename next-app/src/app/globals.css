@@ -110,6 +110,8 @@ input:-webkit-autofill:active {
   }
 
   *::-webkit-scrollbar-thumb {
+    background: transparent;
     background-color: #3b3b3b;
+    border-radius: 250px;
   }
 }

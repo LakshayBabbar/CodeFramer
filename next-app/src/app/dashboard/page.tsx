@@ -6,11 +6,6 @@ import { Button } from "@/components/ui/button";
 import useFetch from "@/hooks/useFetch";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSession } from "next-auth/react";
-import AlertWrapper from "@/components/ui/AlertWrapper";
-import { useToast } from "@/hooks/use-toast";
-import useSend from "@/hooks/useSend";
-import { signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import Footer from "@/components/Footer/Footer";
 import Image from "next/image";
 
@@ -22,9 +17,6 @@ const Page = () => {
     "/api/projects",
     "All_Projects"
   );
-  const { toast } = useToast();
-  const router = useRouter();
-  const reqData = useSend();
 
   if (isError) {
     return (
@@ -33,21 +25,6 @@ const Page = () => {
       </main>
     );
   }
-
-  const closeAccountHandler = async () => {
-    const res = await reqData.fetchData({
-      url: `/api/users/${sessionData?.user?.id}`,
-      method: "DELETE",
-    });
-    toast({
-      title: res.error || res.message,
-      description: new Date().toString(),
-    });
-    if (!res.error) {
-      signOut();
-      router.push("/");
-    }
-  };
 
   return !isError && (
     <main className="flex flex-col w-full justify-center items-center gap-10">
@@ -109,24 +86,6 @@ const Page = () => {
               })}
             </>
           )}
-        </div>
-        <hr className="border w-full" />
-        <div className="flex flex-col items-center space-y-4 pb-10">
-          <AlertWrapper
-            handlerFn={closeAccountHandler}
-            conformText={`sudo userdel ${username}`}
-            disabled={reqData.loading}
-            variant="destructive"
-          >
-            Close Account
-          </AlertWrapper>
-          {reqData.isError && (
-            <p className="text-center text-red-600">{reqData.error}</p>
-          )}
-          <p className="text-center max-w-96 text-amber-700 font-[600]">
-            Note: Clicking this button will permanently close your account and
-            delete all associated data.
-          </p>
         </div>
       </section>
       <Footer />

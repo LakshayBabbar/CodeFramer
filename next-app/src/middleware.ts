@@ -1,7 +1,6 @@
 import { auth } from "@/auth"
 
 export default auth((req) => {
-  req.auth?.user?.role?.includes("admin")
   if (!req.auth && req.nextUrl.pathname !== "/sign-in" && !req.nextUrl.pathname.startsWith("/api/auth/") && !req.nextUrl.pathname.startsWith("/api/projects")) {
     const newUrl = new URL("/sign-in", req.nextUrl.origin)
     return Response.redirect(newUrl)
@@ -17,5 +16,5 @@ export default auth((req) => {
 })
 
 export const config = {
-  matcher: ["/api/:path*", "/dashboard", "/sign-in", "/admin/:path*"],
+  matcher: ["/api/:path*", "/dashboard", "/sign-in", "/admin/:path*", "/profile"],
 }
