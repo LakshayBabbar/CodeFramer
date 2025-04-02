@@ -22,7 +22,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  console.log(process.env.NODE_ENV)
   return (
     <SessionProvider>
       <html lang="en" className="dark">
@@ -68,6 +67,8 @@ export default function RootLayout({
                 src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7436170435436020"
                 crossOrigin="anonymous"
               ></Script>
+              <Script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid={process.env.COOKIE_BOT} data-blockingmode="auto" type="text/javascript" />
+              <Script id="usercentrics-cmp" src="https://app.usercentrics.eu/browser-ui/latest/loader.js" data-settings-id="QJ0jBf4LIuN2r4" async />
             </>
           )}
         </body>

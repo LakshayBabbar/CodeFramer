@@ -72,7 +72,7 @@ const Page = () => {
             <>
               {Array.from({ length: 6 }).map((_, i) => {
                 return (
-                  <div key={i} className="w-full sm:max-w-80 p-8 rounded-xl space-y-4 dark:bg-neutral-950 drop-shadow-xl bg-neutral-400">
+                  <div key={i} className="w-full sm:max-w-80 p-8 rounded-xl space-y-4">
                     <Skeleton className="h-10 w-[200px]" />
                     <Skeleton className="h-4 w-[120px]" />
                     <Skeleton className="h-4 w-[120px]" />

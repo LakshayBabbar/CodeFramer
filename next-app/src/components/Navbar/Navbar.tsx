@@ -45,7 +45,7 @@ export default function Navbar() {
 
   const iconStyle = "size-5 lg:size-4";
   return (
-    <div className="h-14 w-full flex sm:border-b justify-between px-5 lg:px-0 lg:justify-around items-center fixed top-0 left-0 bg-[#ffffffb2] dark:bg-[#000000d7] backdrop-blur-xl z-[99]">
+    <div className="h-14 w-full flex sm:border-b justify-between px-5 lg:px-0 lg:justify-around items-center fixed top-0 left-0 bg-[#ffffff69] dark:bg-[#000000a1] backdrop-blur-xl z-[99]">
       <Link href="/" className={cn(linkStyle, "text-md font-bold")}>
         <Image src={resolvedTheme === "dark" ? "/logo-dark.webp" : "/logo.webp"} alt="codeframer logo" width={20} height={20} />
         CodeFramer
@@ -84,7 +84,7 @@ export default function Navbar() {
             Sign In
           </Link>
         ) : <>
-          <DropdownMenu>
+          <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
               <button className={linkStyle + " h-fit p-0 w-fit"}>
                 <IconUser className={iconStyle} />Account
@@ -92,13 +92,13 @@ export default function Navbar() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="z-[100] absolute left-4 -top-4 lg:relative lg:left-0 lg:top-0">
               <DropdownMenuItem>
-                <Link href="/dashboard" className={linkStyle} onClick={linkHandler}>
+                <Link href="/dashboard" className={linkStyle + " w-full"} onClick={linkHandler}>
                   <IconLayout className={iconStyle} />
                   Dashboard
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link href="/profile" className={linkStyle} onClick={linkHandler}>
+                <Link href="/profile" className={linkStyle + " w-full"} onClick={linkHandler}>
                   <IconUserCircle className={iconStyle} />
                   Profile
                 </Link>
@@ -110,7 +110,7 @@ export default function Navbar() {
             <LogOut className={iconStyle} />
             Sign Out
           </Button></>}
-        <DropdownMenu>
+        <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="sm" className="top-3 right-16 absolute lg:relative lg:top-0 lg:right-0 rounded-full w-fit h-fit p-2">
               {theme === "light" ? < Sun /> :

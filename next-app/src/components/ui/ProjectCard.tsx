@@ -60,8 +60,8 @@ const ProjectCard = ({ data }: { data: ProjectCardProps }) => {
   const Icon = data.isPublic ? Eye : EyeClosed;
   return (
     <MagicCard
-      className="p-8 shadow-2xl w-full sm:w-80 dark:text-neutral-300 text-neutral-800"
-      gradientColor={theme === "dark" ? "#262626" : "#D9D9D955"}
+      className="p-8 drop-shadow-xl w-full sm:w-80 dark:text-neutral-300 text-neutral-800"
+      gradientColor={theme === "dark" ? "#262626" : "#e5e7eb"}
     >
       <div className="flex flex-col gap-2 w-full items-start">
         <p className="text-3xl line-clamp-1">{data?.name}</p>

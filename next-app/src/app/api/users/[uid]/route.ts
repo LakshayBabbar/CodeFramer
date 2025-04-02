@@ -17,7 +17,9 @@ export async function PUT(req: NextRequest, props: { params: Promise<{ uid: stri
                 id: userId,
             },
             data: {
-                ...reqBody,
+                username: reqBody.username.trim().toLowerCase(),
+                email: reqBody.email.trim().toLowerCase(),
+                name: reqBody.name,
             }
         });
         if (!user) {

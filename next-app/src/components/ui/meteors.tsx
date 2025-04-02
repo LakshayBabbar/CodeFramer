@@ -19,7 +19,7 @@ export const Meteors = ({
   maxDelay = 1.2,
   minDuration = 2,
   maxDuration = 10,
-  angle = 215,
+  angle = 210,
   className,
 }: MeteorsProps) => {
   const [meteorStyles, setMeteorStyles] = useState<Array<React.CSSProperties>>(
@@ -52,7 +52,7 @@ export const Meteors = ({
           )}
         >
           {/* Meteor Tail */}
-          <div className="pointer-events-none absolute top-1/2 -z-10 h-px w-[50px] -translate-y-1/2 bg-gradient-to-r from-zinc-500 to-transparent" />
+          <div className="pointer-events-none absolute top-1/2 -z-10 h-px w-[50px] -translate-y-1/2 bg-gradient-to-r from-purple-600 to-transparent" />
         </span>
       ))}
     </>
