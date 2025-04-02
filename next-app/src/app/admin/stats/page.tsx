@@ -64,10 +64,10 @@ const Page = () => {
         <div className="flex flex-wrap gap-5 w-full">
           {Array.from({ length: 2 }).map((_, idx) => {
             return (
-              <div key={idx} className="w-full sm:w-auto flex-grow flex flex-col p-5 gap-5 items-center justify-between h-[30rem] border rounded-xl">
-                <Skeleton className="h-8 w-2/3" />
-                <Skeleton className="size-3/4" />
-                <Skeleton className="h-5 w-2/3" />
+              <div key={idx} className="w-full sm:w-auto flex-grow flex flex-col p-5 gap-8 items-center justify-between h-fit sm:h-[30rem] border rounded-xl">
+                <Skeleton className="h-10 w-11/12" />
+                <Skeleton className="h-56 sm:h-3/4 w-11/12" />
+                <Skeleton className="h-5 w-3/4" />
               </div>
             )
           })}

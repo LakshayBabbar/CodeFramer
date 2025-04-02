@@ -128,7 +128,7 @@ function WebEditor({ data }: { data: webEditorDataType }) {
             )}
           </Editor>
         </div>
-        {isFullPreview && <button className="fixed bottom-10 right-10 rounded-full p-2 bg-gradient-to-r from-blue-500 to-blue-800 hover:scale-105 transition-all" aria-label="Exit full screen" onClick={() => { setFullPreview(false) }}><Minimize className="size-25" /></button>}
+        {isFullPreview && <button className="fixed bottom-10 right-10 rounded-full p-2 bg-gradient-to-r from-blue-500 to-blue-800 hover:scale-105 text-white transition-all" aria-label="Exit full screen" onClick={() => { setFullPreview(false) }}><Minimize className="size-25" /></button>}
       </div>
     </div>
   );
