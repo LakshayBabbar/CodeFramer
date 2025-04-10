@@ -28,16 +28,16 @@ const Page = () => {
 
   return !isError && (
     <main className="flex flex-col w-full justify-center items-center gap-10">
-      <section className="h-44 flex flex-col w-full sm:w-3/4 bg-dot-black dark:bg-dot-white/[0.8] relative items-center">
-        <Image
-          src={sessionData?.user?.image || "/user.webp"}
-          width={120}
-          height={120}
-          className="rounded-full absolute -bottom-10"
-          alt="user image"
-        />
-      </section>
-      <section className="w-4/5 xl:w-4/5 space-y-10 mt-5">
+      <section className="w-4/5 lg:w-fit space-y-10 mb-10 mt-5">
+        <div className="h-44 flex flex-col w-full bg-dot-black dark:bg-dot-white/[0.8] relative items-center">
+          <Image
+            src={sessionData?.user?.image || "/user.webp"}
+            width={120}
+            height={120}
+            className="rounded-full absolute -bottom-10"
+            alt="user image"
+          />
+        </div>
         <div className="flex flex-col items-center justify-center gap-2">
           <h1 className="text-xl font-bold text-center">
             Welcome, {username}
@@ -55,7 +55,7 @@ const Page = () => {
             Create New
           </Button>
         </div>
-        <div className="w-full flex flex-wrap gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-items-center gap-4 relative">
           {!loading ? (
             <>
               {data?.length > 0 ? (
@@ -65,7 +65,9 @@ const Page = () => {
                   );
                 })
               ) : (
-                <p className="text-center w-full">No project found.</p>
+                <div className="w-full md:w-80">
+                  <p className="absolute text-center w-full">No project found.</p>
+                </div>
               )}
             </>
           ) : (

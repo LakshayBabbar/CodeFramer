@@ -45,7 +45,7 @@ export default function Navbar() {
 
   const iconStyle = "size-5 lg:size-4";
   return (
-    <div className="h-14 w-full flex sm:border-b justify-between px-5 lg:px-0 lg:justify-around items-center fixed top-0 left-0 bg-[#ffffff69] dark:bg-[#000000a1] backdrop-blur-xl z-[99]">
+    <div className="h-14 w-full flex justify-between px-5 lg:px-0 lg:justify-around items-center fixed top-0 left-0 bg-[#ffffffad] dark:bg-[#000000a1] backdrop-blur-xl z-[99]">
       <Link href="/" className={cn(linkStyle, "text-md font-bold")}>
         <Image src={resolvedTheme === "dark" ? "/logo-dark.webp" : "/logo.webp"} alt="codeframer logo" width={20} height={20} />
         CodeFramer

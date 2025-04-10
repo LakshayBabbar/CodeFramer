@@ -1,9 +1,8 @@
 import { signIn } from "@/auth"
-import Image from "next/image"
-import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { IconBrandGithub, IconBrandGoogleFilled } from "@tabler/icons-react";
 import { Metadata } from "next";
-import Footer from "@/components/Footer/Footer";
+import { Button } from "@/components/ui/button";
+import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
 
 export const metadata: Metadata = {
   title: "CodeFramer Sign-In: Access Your Online IDE & Project Dashboard",
@@ -13,22 +12,19 @@ export const metadata: Metadata = {
 
 export default function SignIn() {
   return <>
-    <main className="flex items-center justify-between h-screen w-full">
-      <div className="w-1/2 h-full hidden md:block">
-        <Image src="/sign-in.webp" width={1000} height={1000} alt="Sign in to codeframer" className="size-full object-cover aspect-square" />
-      </div>
-      <div className="md:w-1/2 h-screen flex items-center justify-center md:justify-start md:items-start">
-        <div className="space-y-4 md:w-4/5 md:mt-36 text-center md:text-left place-items-center md:place-items-start px-10">
-          <h1 className="text-5xl font-bold">Welcome To CodeFramer</h1>
-          <p className="text-xl dark:text-neutral-300 text-neutral-700">CodeFramer is your all-in-one online IDE and compiler for Python, C, C++, Node.js, Sql and web projects with real-time output and AI assistance.</p>
-          <div className="flex flex-wrap gap-4 justify-center md:justify-start">
+    <main className="flex items-center justify-between h-screen w-full overflow-hidden">
+      <div className="w-full md:w-1/2 xl:w-2/5 h-screen px-5 flex items-center justify-center">
+        <div className="space-y-4 max-w-96">
+          <h1 className="text-5xl font-light">Your Dev Space in the Cloud.</h1>
+          <p>Log in to start coding, compiling, and creating—all from your browser.</p>
+          <div className="flex flex-wrap gap-4">
             <form
               action={async () => {
                 "use server"
                 await signIn("github", { redirectTo: "/dashboard" })
               }}
             >
-              <HoverBorderGradient className="flex gap-2 py-2"><IconBrandGithub />Continue with Github</HoverBorderGradient>
+              <Button variant="outline" size="lg" className="rounded-2xl"><IconBrandGithub />Github</Button>
             </form>
             <form
               action={async () => {
@@ -36,13 +32,21 @@ export default function SignIn() {
                 await signIn("google", { redirectTo: "/dashboard" })
               }}
             >
-              <HoverBorderGradient className="bg-neutral-100 text-black flex gap-2 py-2"><IconBrandGoogleFilled />Continue with Google</HoverBorderGradient>
+              <Button size="lg" className="rounded-2xl"><IconBrandGoogleFilled />Google</Button>
             </form>
           </div>
-          <div className="-z-10 w-1/2 h-1/3 md:w-1/3 fixed rounded-full md:h-1/4 -rotate-12 -right-10 bottom-0 bg-gradient-to-br from-purple-600 to-blue-800 dark:blur-[200px] blur-[150px]" />
         </div>
       </div>
+      <div className="w-1/2 xl:w-3/5 h-screen hidden md:block">
+        <BackgroundGradientAnimation>
+          <div className="absolute z-50 inset-0 flex flex-col items-center justify-center">
+            <p className="bg-clip-text text-transparent drop-shadow-2xl bg-gradient-to-b from-white/80 to-white/20 font-bold px-4 pointer-events-none text-3xl text-center md:text-6xl lg:text-7xl">
+              CodeFramer
+            </p>
+            <p className="text-xl mt-2 bg-clip-text font-semibold text-transparent drop-shadow-2xl bg-gradient-to-b from-white/80 to-white/20">Write Code Anywhere, Anytime.</p>
+          </div>
+        </BackgroundGradientAnimation>
+      </div>
     </main>
-    <Footer />
   </>
 } 

@@ -6,7 +6,6 @@ import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { IconSparkles } from "@tabler/icons-react";
 import { motion } from "framer-motion";
-import { useSession } from "next-auth/react";
 
 interface CopilotProps {
     editorData: { name: string; code: string; }[];
@@ -25,8 +24,6 @@ const CopilotModal = memo(({ isOpen, setIsOpen, editorData, setEditorData }: Cop
     const modalRef = useRef<HTMLDivElement | null>(null);
     const { fetchData, loading, isError, error, setIsError } = useSend();
     const [query, setQuery] = useState("");
-    const { status } = useSession();
-    const isAuth = status === "authenticated";
     const { toast } = useToast();
     let lang = '';
     editorData.forEach((editor) => {
@@ -41,13 +38,6 @@ const CopilotModal = memo(({ isOpen, setIsOpen, editorData, setEditorData }: Cop
     const submitHandler = useCallback(
         async (context?: Context) => {
             if (!context) return;
-            if (!isAuth) {
-                toast({
-                    title: "Not authenticated",
-                    description: "Please login to use this feature",
-                });
-                return setIsOpen(false);
-            }
             const prompt = getPrompt(context, lang, editorData, query);
             const response = await fetchData({
                 url: "/api/copilot",
@@ -64,7 +54,7 @@ const CopilotModal = memo(({ isOpen, setIsOpen, editorData, setEditorData }: Cop
                 setQuery("");
             }
         },
-        [fetchData, lang, editorData, query, setEditorData, setIsOpen, isAuth, toast]
+        [fetchData, lang, editorData, query, setEditorData, setIsOpen, toast]
     );
 
     if (!isOpen || !modalRef.current) return null;

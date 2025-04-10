@@ -71,7 +71,7 @@ export default function Home() {
         </div>
       </section>
       <Footer />
-      <div className="absolute -top-10 -left-10 w-3/5 sm:w-1/2 h-1/3 bg-gradient-to-r from-blue-700 to-purple-800 blur-[120px] -z-10 -rotate-12" />
+      <div className="absolute -top-10 -left-10 w-3/5 sm:w-1/2 h-1/3 bg-gradient-to-r from-blue-400 to-purple-400 dark:from-blue-700 dark:to-purple-800 blur-[120px] -z-10 -rotate-12" />
     </main>
   );
 }
