@@ -11,7 +11,7 @@ interface SearchBarProps {
 
 const SearchBar = ({ url, placeholder, setSearchResults }: SearchBarProps) => {
     const [searchTerm, setSearchTerm] = React.useState('');
-    const debouncedSearchTerm = useDebounce(searchTerm, 1000);
+    const debouncedSearchTerm = useDebounce(searchTerm, 500);
     const { data, isError, loading, error, refetch } = useFetch(`${url}${debouncedSearchTerm}`, placeholder);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

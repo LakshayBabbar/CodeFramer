@@ -15,7 +15,7 @@ export async function GET(req: NextRequest, props: { params: Promise<{ pid: stri
       },
       include: {
         languages: true,
-      }
+      },
     });
     if (!projectData) {
       return NextResponse.json(

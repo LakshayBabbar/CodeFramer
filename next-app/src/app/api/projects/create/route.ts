@@ -19,7 +19,14 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    if (!name || !type || (type === "COMPILER" && !language)) {
+    if (!name || name.length < 5 || name.length > 30) {
+      return NextResponse.json(
+        { error: "Project name must be between 5 and 30 characters long." },
+        { status: 400 }
+      );
+    }
+
+    if (!type || (type === "COMPILER" && !language)) {
       return NextResponse.json(
         { error: "Missing required fields: name, type, or language (for COMPILER)" },
         { status: 400 }

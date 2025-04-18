@@ -24,9 +24,10 @@ interface CreateProjectProps {
 const CreateProject: React.FC<CreateProjectProps> = ({ isOpen, setIsOpen }) => {
   const modalRef = useRef<HTMLDivElement | null>(null);
   const [name, setName] = useState<string>("");
-  const [environment, setEnvironment] = useState<"WEB" | "COMPILER">("WEB");
+  const [environment, setEnvironment] = useState<"WEB" | "COMPILER">("COMPILER");
   const [language, setLanguage] = useState("python");
-  const [isPublic, setIsPublic] = useState(true);
+  const [isPublic, setIsPublic] = useState(false);
+  const [validated, setValidated] = useState(true);
   const { status, data } = useSession();
   const isAuth = status === "authenticated";
   const router = useRouter();
@@ -35,7 +36,7 @@ const CreateProject: React.FC<CreateProjectProps> = ({ isOpen, setIsOpen }) => {
   useEffect(() => {
     if (!isAuth && isOpen) {
       setIsOpen(false);
-      router.push("/auth?mode=login");
+      router.push("/sign-in");
     } else {
       modalRef.current = document.getElementById("modal") as HTMLDivElement;
     }
@@ -43,8 +44,15 @@ const CreateProject: React.FC<CreateProjectProps> = ({ isOpen, setIsOpen }) => {
   }, [isOpen, isAuth, router, setIsOpen, setIsError]);
 
   useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "scroll";
+    document.body.style.overflow = isOpen ? "hidden" : "auto";
   }, [isOpen]);
+
+  useEffect(() => {
+    if (name && name.length < 5 || name.length > 30) {
+      setValidated(false);
+    } else
+      setValidated(true);
+  }, [name]);
 
   const dataHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -69,6 +77,13 @@ const CreateProject: React.FC<CreateProjectProps> = ({ isOpen, setIsOpen }) => {
     }
   };
 
+  const modalCloseHandler = () => {
+    setIsOpen(false);
+    setName("");
+    setIsPublic(false);
+    setIsError(false);
+  }
+
   return isOpen && isAuth && modalRef.current
     ? createPortal(
       <div className="fixed top-0 left-0 w-full h-screen flex items-center justify-center backdrop-blur-xl z-[50]">
@@ -82,8 +97,8 @@ const CreateProject: React.FC<CreateProjectProps> = ({ isOpen, setIsOpen }) => {
             <Input
               name="name"
               value={name}
-              className="bg-transparent"
-              placeholder="Name"
+              className="dark:bg-neutral-900 bg-neutral-100"
+              placeholder="Project Name"
               onChange={dataHandler}
               required
             />
@@ -92,7 +107,7 @@ const CreateProject: React.FC<CreateProjectProps> = ({ isOpen, setIsOpen }) => {
                 onValueChange={(val) => setEnvironment(val as "WEB" | "COMPILER")}
                 required
               >
-                <SelectTrigger className="flex-grow">
+                <SelectTrigger className="flex-grow dark:bg-neutral-900 bg-neutral-100">
                   <SelectValue placeholder="Environment" />
                 </SelectTrigger>
                 <SelectContent>
@@ -105,7 +120,7 @@ const CreateProject: React.FC<CreateProjectProps> = ({ isOpen, setIsOpen }) => {
                   onValueChange={(val: string) => setLanguage(val)}
                   required
                 >
-                  <SelectTrigger className="flex-grow">
+                  <SelectTrigger className="flex-grow dark:bg-neutral-900 bg-neutral-100">
                     <SelectValue placeholder="Language" />
                   </SelectTrigger>
                   <SelectContent>
@@ -121,14 +136,18 @@ const CreateProject: React.FC<CreateProjectProps> = ({ isOpen, setIsOpen }) => {
             <div className="flex gap-2 items-center">
               <Checkbox
                 id="checkbox"
+                name="checkbox"
                 checked={isPublic}
                 onCheckedChange={(checked) => setIsPublic(checked === true)}
               />
-              <label htmlFor="checkbox">Public</label>
+              <label htmlFor="checkbox">Public Visibility </label>
             </div>
             {isError && <p className="text-sm text-red-500">{error}</p>}
+            {!validated && <p className="text-sm text-red-500">
+              Project name must be between 5 to 20 characters long. Please provide a more descriptive name.
+            </p>}
             <div className="flex gap-4 justify-end">
-              <Button variant="outline" onClick={() => setIsOpen(false)}>
+              <Button variant="outline" onClick={modalCloseHandler}>
                 Cancel
               </Button>
               <Button type="submit" disabled={loading}>

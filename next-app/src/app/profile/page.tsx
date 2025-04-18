@@ -154,9 +154,6 @@ const Profile = () => {
                     >
                         Close Account
                     </AlertWrapper>
-                    <p className="text-sm text-red-600 mt-2">
-                        Warning: Closing your account is permanent and cannot be undone.
-                    </p>
                 </div>
             </div>
         </div>
