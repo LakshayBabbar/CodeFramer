@@ -22,6 +22,7 @@ interface CompilerEditorProps {
   language: string;
   data?: {
     id: string;
+    name: string;
     languages: { name: string; code: string, inputs?: string; }[];
     isOwner: boolean;
     isPublic: boolean;
@@ -90,11 +91,17 @@ export default function CompilerEditor({
   return (
     <div className="mt-14 w-full h-[93.8vh] flex flex-col md:flex-row items-center justify-center">
       <div className="w-full md:w-1/2 h-1/2 md:h-full bg-background">
-        <Editor file={{ name: language, value: editorValues[0].code, language }} onValChange={(val) => setEditorValues([{ name: language, code: val || "" }])} isPublic={data?.isPublic}>
+        <Editor
+          file={{ name: language, value: editorValues[0].code, language }}
+          onValChange={(val) => setEditorValues([{ name: language, code: val || "" }])}
+          isPublic={data?.isPublic}
+          projectName={data?.name}
+        >
           <CopilotButton editorData={editorValues} setEditorData={setEditorValues} />
           {data?.isOwner ? (
             <Button
               variant="secondary"
+              size="sm"
               onClick={saveHandler}
               disabled={loading}
             >
@@ -116,6 +123,7 @@ export default function CompilerEditor({
           )}
           <Button
             variant="secondary"
+            size="sm"
             onClick={handleCodeSubmit}
             disabled={isCodeRun}
           >

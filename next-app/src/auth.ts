@@ -17,7 +17,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         id: profile.sub,
         username
       }
-    }
+    },
+    allowDangerousEmailAccountLinking: true
   }), Github({
     async profile(profile) {
       const username = await generateUniqueUsername(profile.login);
@@ -28,7 +29,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         image: profile.avatar_url,
         username
       }
-    }
+    },
+    allowDangerousEmailAccountLinking: true
   })],
 
   session: {

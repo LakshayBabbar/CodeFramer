@@ -5,7 +5,6 @@ import {
   LogIn,
   LogOut,
   HomeIcon,
-  LayoutDashboard,
   AlignRight,
   X,
   Monitor,
@@ -32,28 +31,26 @@ export default function Navbar() {
   const [active, setActive] = useState(false);
   const { status, data } = useSession();
   const isAuth = status === "authenticated";
-  const pre = "-translate-x-[100vw]";
-  const post = "-translate-x-0";
-  const { setTheme, resolvedTheme, theme } = useTheme()
+  const pre = "-translate-y-[40rem] lg:translate-y-0 opacity-0 lg:opacity-100";
+  const post = "translate-y-0 opacity-100";
+  const { setTheme, resolvedTheme, theme } = useTheme();
 
   function linkHandler() {
     setActive(false);
   }
 
-  const linkStyle =
-    "flex items-center text-md gap-2 dark:text-neutral-300 text-neutral-800 hover:no-underline font-normal";
+  const linkStyle = "flex items-center text-md gap-2 text-sm dark:text-neutral-200 text-neutral-700 hover:no-underline font-normal";
+  const iconStyle = "size-4";
 
-  const iconStyle = "size-5 lg:size-4";
   return (
     <div className="h-14 w-full flex justify-between px-5 lg:px-0 lg:justify-around items-center fixed top-0 left-0 bg-[#ffffffad] dark:bg-[#000000a1] backdrop-blur-xl z-[99]">
+
       <Link href="/" className={cn(linkStyle, "text-md font-bold")}>
-        <Image src={resolvedTheme === "dark" ? "/logo-dark.webp" : "/logo.webp"} alt="codeframer logo" width={20} height={20} />
+        <Image src={resolvedTheme === "light" ? "/logo.webp" : "/logo-dark.webp"} alt="codeframer logo" width={20} height={20} />
         CodeFramer
       </Link>
-      <div
-        className={`${active ? post : pre
-          } lg:translate-x-0 top-0 left-0 h-screen w-full p-14 lg:p-0 bg-card lg:bg-transparent  lg:h-auto lg:w-auto flex lg:bg-auto absolute lg:relative flex-col lg:flex-row gap-5 lg:items-center transition-all duration-400`}
-      >
+
+      <div className={`${active ? post : pre} rounded-xl drop-shadow-xl lg:drop-shadow-none p-6 lg:p-0 top-20 lg:top-0 right-5 lg:right-0 h-fit w-44 lg:h-auto lg:w-auto bg-card lg:bg-transparent border lg:border-none absolute lg:relative flex flex-col lg:flex-row gap-5 lg:items-center transition-all duration-200`}>
         <Link href="/" className={linkStyle} onClick={linkHandler}>
           <HomeIcon className={iconStyle} />
           Home
@@ -90,19 +87,19 @@ export default function Navbar() {
                 <IconUser className={iconStyle} />Account
               </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="z-[100] absolute left-4 -top-4 lg:relative lg:left-0 lg:top-0">
-              <DropdownMenuItem>
-                <Link href="/dashboard" className={linkStyle + " w-full"} onClick={linkHandler}>
+            <DropdownMenuContent align="end" className="z-[100]">
+              <Link href="/dashboard">
+                <DropdownMenuItem onClick={linkHandler} className={linkStyle + "w-full"}>
                   <IconLayout className={iconStyle} />
                   Dashboard
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link href="/profile" className={linkStyle + " w-full"} onClick={linkHandler}>
+                </DropdownMenuItem>
+              </Link>
+              <Link href="/profile">
+                <DropdownMenuItem onClick={linkHandler} className={linkStyle + "w-full"}>
                   <IconUserCircle className={iconStyle} />
                   Profile
-                </Link>
-              </DropdownMenuItem>
+                </DropdownMenuItem>
+              </Link>
             </DropdownMenuContent>
           </DropdownMenu>
           {data?.user?.role === "ADMIN" && <Link href="/admin/stats" className={linkStyle} onClick={linkHandler}><User className={iconStyle} />Admin</Link>}
@@ -112,13 +109,13 @@ export default function Navbar() {
           </Button></>}
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="sm" className="top-3 right-16 absolute lg:relative lg:top-0 lg:right-0 rounded-full w-fit h-fit p-2">
+            <Button variant="ghost" className="border lg:border-none" size="sm">
               {theme === "light" ? < Sun /> :
                 (theme === "dark" ? <Moon /> : <Monitor />)}
               <span className="sr-only">Toggle theme</span>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="z-[100] ml-24 lg:ml-0">
+          <DropdownMenuContent align="end" className="z-[100]">
             <DropdownMenuItem onClick={() => setTheme("light")}>
               Light
             </DropdownMenuItem>
@@ -131,6 +128,7 @@ export default function Navbar() {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
+
       <div className="lg:hidden flex z-[1000] text-2xl">
         {!active ? (
           <AlignRight onClick={() => setActive(true)} />

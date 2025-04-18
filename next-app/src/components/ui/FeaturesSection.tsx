@@ -228,7 +228,7 @@ export const SkeletonTwo = () => {
     return (
         <div className="h-[25rem]">
             <div className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden">
-                <OrbitingCircles iconSize={45} radius={170}>
+                <OrbitingCircles iconSize={45}>
                     <Icons.python />
                     <Icons.node />
                     <Icons.cpp />
