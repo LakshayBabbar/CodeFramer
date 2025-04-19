@@ -74,7 +74,6 @@ const BaseEditor = ({ file, onValChange, isPublic, children, projectName }: Edit
         <div className="w-full h-full">
             <div className="w-full py-2 h-fit flex flex-wrap gap-2 items-center justify-between border bg-card px-2 sm:px-5">
                 <div className="flex items-center gap-2">
-                    {projectName && <span className="text-sm text-neutral-400">{capitalise(projectName || "")}</span>}
                     {theme === "dark" && <Select onValueChange={(val) => themeHandler(val)}>
                         <SelectTrigger className="w-fit">
                             <SelectValue placeholder={capitalise(editorTheme)} />
