@@ -45,7 +45,6 @@ export default function Navbar() {
 
   return (
     <div className="h-14 w-full flex border-b justify-between px-5 lg:px-0 lg:justify-around items-center fixed top-0 left-0 bg-[#ffffffad] dark:bg-[#000000a1] backdrop-blur-xl z-[99]">
-
       <Link href="/" className={cn(linkStyle, "text-md font-bold")}>
         <Image src={resolvedTheme === "light" ? "/logo.webp" : "/logo-dark.webp"} alt="codeframer logo" width={20} height={20} />
         CodeFramer

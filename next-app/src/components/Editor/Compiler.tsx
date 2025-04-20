@@ -23,6 +23,7 @@ interface CompilerEditorProps {
   language: string;
   data?: {
     id: string;
+    name: string;
     languages: { name: string; code: string, inputs?: string; }[];
     isOwner: boolean;
     isPublic: boolean;
