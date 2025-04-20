@@ -24,7 +24,7 @@ export default function RootLayout({
 }) {
   return (
     <SessionProvider>
-      <html lang="en" className="dark">
+      <html lang="en" className="dark" suppressHydrationWarning>
         <body className="overflow-x-hidden antialiased">
           <ReactQueryProvider>
             <ThemeProvider attribute="class"

@@ -26,7 +26,7 @@ const useSend = () => {
           "Content-Type": "application/json",
         },
       };
-      if (method === "POST" || method === "PUT") {
+      if (method === "POST" || method === "PUT" || method === "DELETE" && body) {
         options.body = JSON.stringify(body);
       }
 

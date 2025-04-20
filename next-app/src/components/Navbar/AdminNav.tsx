@@ -1,6 +1,6 @@
 "use client";
 import React from 'react'
-import { ChartArea, User } from 'lucide-react';
+import { ChartArea, User, TextCursorInput } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger } from '../ui/tabs';
 import { usePathname, useRouter } from 'next/navigation';
 
@@ -12,7 +12,7 @@ const AdminNav = () => {
         <Tabs defaultValue={defaultTab} className='w-full'>
             <TabsList className="flex flex-wrap rounded-none">
                 {navLinks.map((link, index) => {
-                    return <TabsTrigger value={link.name} key={index} className='sm:w-40 flex gap-2 h-full' onClick={() => push(link.href)}><link.icon size={20} />{link.name}</TabsTrigger>
+                    return <TabsTrigger value={link.name} key={index} className='sm:w-32 flex gap-1 h-full text-xs' onClick={() => push(link.href)}><link.icon size={16} />{link.name}</TabsTrigger>
                 })}
             </TabsList>
         </Tabs>
@@ -31,6 +31,11 @@ const navLinks = [
         name: 'Stats',
         href: '/admin/stats',
         icon: ChartArea
+    },
+    {
+        name: 'New Blog',
+        href: '/admin/blog',
+        icon: TextCursorInput
     },
     {
         name: 'Inquiries',

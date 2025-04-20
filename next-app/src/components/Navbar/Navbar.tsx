@@ -11,7 +11,8 @@ import {
   Package,
   PanelsTopLeft,
   User,
-  MessageSquare
+  MessageSquare,
+  Newspaper
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Moon, Sun } from "lucide-react"
@@ -43,8 +44,7 @@ export default function Navbar() {
   const iconStyle = "size-4";
 
   return (
-    <div className="h-14 w-full flex justify-between px-5 lg:px-0 lg:justify-around items-center fixed top-0 left-0 bg-[#ffffffad] dark:bg-[#000000a1] backdrop-blur-xl z-[99]">
-
+    <div className="h-14 w-full flex border-b justify-between px-5 lg:px-0 lg:justify-around items-center fixed top-0 left-0 bg-[#ffffffad] dark:bg-[#000000a1] backdrop-blur-xl z-[99]">
       <Link href="/" className={cn(linkStyle, "text-md font-bold")}>
         <Image src={resolvedTheme === "light" ? "/logo.webp" : "/logo-dark.webp"} alt="codeframer logo" width={20} height={20} />
         CodeFramer
@@ -66,6 +66,10 @@ export default function Navbar() {
         >
           <Package className={iconStyle} />
           Compilers
+        </Link>
+        <Link href="/blogs" className={linkStyle} onClick={linkHandler}>
+          <Newspaper className={iconStyle} />
+          Blog
         </Link>
         <Link href="/contact" className={linkStyle} onClick={linkHandler}>
           <MessageSquare className={iconStyle} />

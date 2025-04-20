@@ -17,6 +17,7 @@ import templates from "@/shared/templates.json"
 import { execute } from "@/app/actions";
 import Warning from "../ui/warning";
 import { CopilotButton } from "../Copilot/Copilot";
+import { useSearchParams } from "next/navigation";
 
 interface CompilerEditorProps {
   language: string;
@@ -40,17 +41,23 @@ export default function CompilerEditor({
   const { toast } = useToast();
   const { fetchData, loading } = useSend();
   const [isCodeRun, setIsCodeRun] = useState(false);
-  const redirect = useRouter();
+  const { push } = useRouter();
+  const searchParams = useSearchParams();
+  const playgroundCode = searchParams.get("from") === "embedded";
 
   useEffect(() => {
-    if (!data) {
+    if (playgroundCode) {
+      const playgroundCode = localStorage.getItem("playground-code");
+      setEditorValues([{ name: language, code: playgroundCode || "" }]);
+    }
+    else if (!data) {
       const sampleCode = templates.find((t) => t.name === language)?.code;
       setEditorValues([{ name: language, code: sampleCode || "" }]);
     } else {
       setEditorValues([{ name: data.languages[0].name, code: data.languages[0].code }]);
       setInputs(data.languages[0]?.inputs || null);
     }
-  }, [data, language]);
+  }, [data, language, playgroundCode]);
 
   const handleCodeSubmit = async () => {
     setOutput("");
@@ -95,7 +102,6 @@ export default function CompilerEditor({
           file={{ name: language, value: editorValues[0].code, language }}
           onValChange={(val) => setEditorValues([{ name: language, code: val || "" }])}
           isPublic={data?.isPublic}
-          projectName={data?.name}
         >
           <CopilotButton editorData={editorValues} setEditorData={setEditorValues} />
           {data?.isOwner ? (
@@ -108,7 +114,7 @@ export default function CompilerEditor({
               Save
             </Button>
           ) : !data && (
-            <Select onValueChange={(val) => redirect.push(val)}>
+            <Select onValueChange={(val) => push(val)}>
               <SelectTrigger className="w-fit">
                 <SelectValue placeholder={capitalise(language)} />
               </SelectTrigger>
