@@ -18,6 +18,7 @@ export const GET = async (req: NextRequest, { params }: { params: Promise<{ slug
                 tags: true,
                 User: {
                     select: {
+                        id: true,
                         username: true,
                         name: true,
                     }

@@ -11,7 +11,8 @@ import {
   Package,
   PanelsTopLeft,
   User,
-  MessageSquare
+  MessageSquare,
+  Newspaper
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Moon, Sun } from "lucide-react"
@@ -66,6 +67,10 @@ export default function Navbar() {
         >
           <Package className={iconStyle} />
           Compilers
+        </Link>
+        <Link href="/blogs" className={linkStyle} onClick={linkHandler}>
+          <Newspaper className={iconStyle} />
+          Blog
         </Link>
         <Link href="/contact" className={linkStyle} onClick={linkHandler}>
           <MessageSquare className={iconStyle} />

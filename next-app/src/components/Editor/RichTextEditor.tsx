@@ -4,12 +4,13 @@ import StarterKit from "@tiptap/starter-kit";
 import React from "react";
 import TextAlign from "@tiptap/extension-text-align";
 import Highlight from "@tiptap/extension-highlight";
+import CodeBlock from '@tiptap/extension-code-block'
+import Blockquote from "@tiptap/extension-blockquote";
 import {
     AlignCenter,
     AlignLeft,
     AlignRight,
     Bold,
-    Heading1,
     Heading2,
     Heading3,
     Highlighter,
@@ -17,9 +18,11 @@ import {
     List,
     ListOrdered,
     Strikethrough,
+    Code
 } from "lucide-react";
 import { Toggle } from "../ui/toggle";
 import { cn } from "@/lib/utils";
+import { IconBlockquote } from "@tabler/icons-react";
 
 interface RichTextEditorProps {
     content: string;
@@ -49,6 +52,10 @@ export default function RichTextEditor({
                 types: ["heading", "paragraph"],
             }),
             Highlight,
+            CodeBlock.configure({
+                exitOnArrowDown: true,
+            }),
+            Blockquote
         ],
         content: content,
         editorProps: {
@@ -113,15 +120,25 @@ export default function RichTextEditor({
             preesed: editor?.isActive("orderedList"),
         },
         {
+            icon: <IconBlockquote className="size-4" />,
+            onClick: () => editor?.chain().focus().toggleBlockquote().run(),
+            preesed: editor?.isActive("blockQuote"),
+        },
+        {
             icon: <Highlighter className="size-4" />,
             onClick: () => editor?.chain().focus().toggleHighlight().run(),
             preesed: editor?.isActive("highlight"),
+        },
+        {
+            icon: <Code className="size-4" />,
+            onClick: () => editor?.chain().focus().toggleCodeBlock().run(),
+            preesed: editor?.isActive("codeBlock"),
         },
     ];
 
     return (
         <div className={cn("space-y-2", className)}>
-            <div className="border rounded-md p-1 mb-1 dark:bg-neutral-900 bg-neutral-100 space-x-2 z-50">
+            <div className="border rounded-md p-1 mb-1 dark:bg-neutral-900 bg-neutral-100 space-x-2 z-50 sticky top-16">
                 {Options.map((option, index) => (
                     <Toggle
                         key={index}

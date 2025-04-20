@@ -85,7 +85,6 @@ model Blog {
   thumbnail   String?
   tags        String[]
   featured    Boolean  @default(false)
-  views       Int      @default(0)
   User        User     @relation(fields: [authorId], references: [id])
   authorId    String
   slug        String   @unique

@@ -23,15 +23,18 @@ export async function execute(body: { lang: string, code: string, inputs?: strin
     }
 }
 
-export async function getData({ url }: { url: string }) {
+export async function getData({ url, cache = false }: { url: string; cache?: boolean }) {
     try {
         const token = await getToken();
+
         const res = await fetch(process.env.BASE_URL + url, {
             headers: {
                 "Content-Type": "application/json",
                 Cookie: `${token?.name}=${token?.value}`
-            }
+            },
+            cache: cache ? "force-cache" : "no-store",
         });
+
         const result = await res.json();
         if (!res.ok || result?.error) {
             throw new Error(result.error || "Unknown error occurred while fetching data.");
