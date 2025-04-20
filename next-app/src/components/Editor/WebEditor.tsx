@@ -11,7 +11,6 @@ import { Fullscreen, Minimize, X } from "lucide-react";
 export interface webEditorDataType {
   languages: { name: string; code: string }[];
   id?: string;
-  name?: string;
   isOwner?: boolean;
   isPublic?: boolean;
 }
@@ -107,7 +106,7 @@ function WebEditor({ data }: { data: webEditorDataType }) {
       <div className="mt-14 flex flex-col h-full w-full">
         <iframe id="web-preview" title="output" srcDoc={srcDoc} width="100%" height={isFullPreview ? "100%" : "50%"} />
         <div className={`w-full ${!isFullPreview ? "h-1/2" : "hidden"} bg-card`}>
-          <Editor file={file} onValChange={handleEditorChange} isPublic={data?.isPublic} projectName={data?.name}>
+          <Editor file={file} onValChange={handleEditorChange} isPublic={data?.isPublic}>
             <button aria-label="Switch to full screen" onClick={() => { setFullPreview(true) }}><Fullscreen className="size-50 hover:scale-105 transition-all" /></button>
             <CopilotButton editorData={values} setEditorData={setValues} />
             <Tabs defaultValue="index.html">

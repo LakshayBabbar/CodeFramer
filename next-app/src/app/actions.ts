@@ -33,7 +33,7 @@ export async function getData({ url }: { url: string }) {
             }
         });
         const result = await res.json();
-        if (!res.ok) {
+        if (!res.ok || result?.error) {
             throw new Error(result.error || "Unknown error occurred while fetching data.");
         }
         return result;
@@ -43,8 +43,7 @@ export async function getData({ url }: { url: string }) {
 }
 
 export async function getToken() {
-    const cookie = (await cookies()).getAll();
-    const token = cookie.find((c: any) => c.name.includes('authjs.session-token'));
+    const token = (await cookies()).get("authjs.session-token");
     return token;
 }
 

@@ -22,7 +22,6 @@ interface CompilerEditorProps {
   language: string;
   data?: {
     id: string;
-    name: string;
     languages: { name: string; code: string, inputs?: string; }[];
     isOwner: boolean;
     isPublic: boolean;
@@ -95,7 +94,6 @@ export default function CompilerEditor({
           file={{ name: language, value: editorValues[0].code, language }}
           onValChange={(val) => setEditorValues([{ name: language, code: val || "" }])}
           isPublic={data?.isPublic}
-          projectName={data?.name}
         >
           <CopilotButton editorData={editorValues} setEditorData={setEditorValues} />
           {data?.isOwner ? (

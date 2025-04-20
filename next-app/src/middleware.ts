@@ -9,7 +9,7 @@ export default auth((req) => {
     const newUrl = new URL("/dashboard", req.nextUrl.origin)
     return Response.redirect(newUrl)
   }
-  if (req.auth?.user?.role !== "ADMIN" && (req.nextUrl.pathname.startsWith("/admin") || req.nextUrl.pathname.startsWith("/api/admin"))) {
+  if (req.auth?.user?.role !== "ADMIN" && (req.nextUrl.pathname.startsWith("/admin") || req.nextUrl.pathname.startsWith("/api/admin") || req.nextUrl.pathname.startsWith("/api/admin/blog"))) {
     const newUrl = new URL("/unauthorized", req.nextUrl.origin);
     return Response.redirect(newUrl);
   }
