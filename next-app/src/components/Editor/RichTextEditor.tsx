@@ -149,7 +149,7 @@ export default function RichTextEditor({
                     </Toggle>
                 ))}
             </div>
-            <EditorContent editor={editor} className="h-5/6 w-full" />
+            <EditorContent editor={editor} className="h-full w-full" />
         </div>
     );
 }

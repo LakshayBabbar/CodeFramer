@@ -4,12 +4,31 @@ import Footer from '@/components/Footer/Footer';
 import BlogCard, { BlogCardProps } from '@/components/ui/BlogCard';
 import { Metadata } from 'next';
 
+export const metadata: Metadata = {
+  title: "CodeFramer Blog | Developer Tips, Updates & Tutorials",
+  description: "Stay updated with the latest developer tutorials, platform updates, and coding insights from the team behind CodeFramer - your go-to online IDE and compiler for modern web development.",
+  keywords: "CodeFramer blog, developer tutorials, coding tips, online IDE updates, web development, compiler platform, programming insights, CodeFramer news",
+  openGraph: {
+    title: "CodeFramer Blog | Developer Tips, Updates & Tutorials",
+    description: "Stay updated with the latest developer tutorials, platform updates, and coding insights from the team behind CodeFramer - your go-to online IDE and compiler for modern web development.",
+    url: process.env.BASE_URL + "/blogs",
+    siteName: "CodeFramer",
+    images: [
+      {
+        url: "/codeframer.webp",
+        width: 800,
+        height: 600,
+      },
+    ],
+  }
+}
+
 const Blogs = async () => {
   const data = await getData({ url: "/api/blogs" });
   if (data.error) {
     return (
       <div className='place-items-center place-content-center h-screen'>
-        <h1 className='text-3xl font-bold text-center'>{data?.error}</h1>
+        <h1 className='text-3xl font-light text-center'>{data?.error}</h1>
       </div>
     )
   }
@@ -32,22 +51,3 @@ const Blogs = async () => {
 }
 
 export default Blogs;
-
-export const metadata: Metadata = {
-  title: "CodeFramer Blog | Developer Tips, Updates & Tutorials",
-  description: "Stay updated with the latest developer tutorials, platform updates, and coding insights from the team behind CodeFramer - your go-to online IDE and compiler for modern web development.",
-  keywords: "CodeFramer blog, developer tutorials, coding tips, online IDE updates, web development, compiler platform, programming insights, CodeFramer news",
-  openGraph: {
-    title: "CodeFramer Blog | Developer Tips, Updates & Tutorials",
-    description: "Stay updated with the latest developer tutorials, platform updates, and coding insights from the team behind CodeFramer - your go-to online IDE and compiler for modern web development.",
-    url: process.env.BASE_URL + "/blogs",
-    siteName: "CodeFramer",
-    images: [
-      {
-        url: "/codeframer.webp",
-        width: 800,
-        height: 600,
-      },
-    ],
-  }
-}

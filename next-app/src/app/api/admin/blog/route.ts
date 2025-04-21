@@ -65,7 +65,7 @@ export const PUT = async (req: NextRequest) => {
             },
             data: body
         })
-        revalidatePath(`/blog/${blog.slug}`);
+        revalidatePath(`/blogs/${blog.slug}`);
         return NextResponse.json({ message: "Blog updated." }, { status: 200 });
     } catch (error: any) {
         return NextResponse.json({ error: error.message }, { status: 500 });
@@ -92,7 +92,7 @@ export const DELETE = async (req: NextRequest) => {
             }
         });
 
-        revalidatePath(`/blog/${blog?.slug}`);
+        revalidatePath(`/blogs/${blog?.slug}`);
         return NextResponse.json({ message: "Blog deleted successfully" }, { status: 200 });
     } catch (error: any) {
         return NextResponse.json({ error: error.message }, { status: 500 });

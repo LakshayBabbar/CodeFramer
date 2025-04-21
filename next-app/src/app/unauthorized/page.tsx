@@ -1,4 +1,14 @@
+import { Metadata } from 'next'
 import React from 'react'
+
+export const metadata: Metadata = {
+  title: '401 | Unauthorized',
+  description: 'Unauthorized Access',
+  robots: {
+    index: false,
+    follow: false
+  }
+}
 
 const page = () => {
   return (

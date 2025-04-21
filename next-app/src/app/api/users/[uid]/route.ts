@@ -8,7 +8,7 @@ export async function PUT(req: NextRequest, props: { params: Promise<{ uid: stri
         const { uid } = params;
         const session = await auth();
         const userId = session?.user?.id;
-        if (!userId || userId !== uid) {
+        if (!userId && userId !== uid) {
             return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
         }
         const reqBody = await req.json();
@@ -40,7 +40,7 @@ export async function DELETE(req: NextRequest, props: { params: Promise<{ uid: s
         const { uid } = params;
         const session = await auth();
         const userId = session?.user?.id;
-        if (!userId || userId !== uid) {
+        if (!userId && userId !== uid) {
             return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
         }
         const user = await prisma.user.findUnique({

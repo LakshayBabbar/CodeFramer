@@ -88,7 +88,7 @@ export async function GET(req: NextRequest) {
                 ]
             },
             orderBy: {
-                createdAt: 'desc'
+                views: "desc"
             },
             take: limitValue,
             skip: skip,

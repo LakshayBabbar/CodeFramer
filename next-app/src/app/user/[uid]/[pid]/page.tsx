@@ -1,6 +1,14 @@
 import CompilerEditor from "@/components/Editor/Compiler";
 import WebEditor from "@/components/Editor/WebEditor";
 import { getData } from "@/app/actions";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false
+  }
+}
 
 const Compiler = async (props: { params: Promise<{ pid: string }> }) => {
   const { pid } = await (props.params);

@@ -1,5 +1,5 @@
 import prisma from "@/config/db";
-import { NextRequest, NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (req: NextRequest, { params }: { params: Promise<{ slug: string | undefined }> }) => {
     try {
@@ -14,6 +14,7 @@ export const GET = async (req: NextRequest, { params }: { params: Promise<{ slug
                 description: true,
                 content: true,
                 createdAt: true,
+                updatedAt: true,
                 slug: true,
                 tags: true,
                 User: {

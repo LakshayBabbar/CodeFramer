@@ -28,6 +28,18 @@ export async function GET(req: NextRequest, props: { params: Promise<{ pid: stri
     if (!projectData?.isPublic && projectData?.userId !== userId) {
       throw new Error("You do not have permission to view this project.");
     }
+
+    if (projectData.isPublic && userId && projectData.userId !== userId) {
+      await prisma.project.update({
+        where: { id: pid },
+        data: {
+          views: {
+            increment: 1,
+          }
+        },
+      })
+    }
+
     return NextResponse.json({ ...projectData, isOwner: userId === projectData.userId }, { status: 200 });
   } catch (error: any) {
     return NextResponse.json(
@@ -45,11 +57,19 @@ export async function DELETE(req: NextRequest, props: { params: Promise<{ pid: s
   const session = await auth();
   const userId = session?.user?.id;
 
+  if (!session) {
+    return NextResponse.json(
+      {
+        error: "Unauthorized",
+      },
+      { status: 401 }
+    );
+  }
+
   try {
-    const project = await prisma.project.delete({
+    const project = await prisma.project.findUnique({
       where: {
         id: pid,
-        userId: userId || "",
       },
     });
 
@@ -61,6 +81,23 @@ export async function DELETE(req: NextRequest, props: { params: Promise<{ pid: s
         { status: 404 }
       );
     }
+
+    if (project.userId !== userId) {
+      return NextResponse.json(
+        {
+          error: "You do not have permission to delete this project.",
+        },
+        { status: 403 }
+      );
+    }
+
+    await prisma.project.delete({
+      where: {
+        id: pid,
+        userId: userId || "",
+      },
+    });
+
     return NextResponse.json(
       {
         message: "Project is deleted successfully",
@@ -70,7 +107,7 @@ export async function DELETE(req: NextRequest, props: { params: Promise<{ pid: s
   } catch (error: any) {
     return NextResponse.json({
       error: error.message,
-    });
+    }, { status: 500 });
   }
 }
 
@@ -81,6 +118,15 @@ export async function PUT(req: NextRequest, props: { params: Promise<{ pid: stri
     const body = await req.json();
     const session = await auth();
     const userId = session?.user?.id;
+
+    if (!session) {
+      return NextResponse.json(
+        {
+          error: "Unauthorized",
+        },
+        { status: 401 }
+      );
+    }
 
     const existingProject = await prisma.project.findUnique({
       where: {
@@ -137,6 +183,7 @@ export async function PUT(req: NextRequest, props: { params: Promise<{ pid: stri
     );
   }
 }
+
 interface Language {
   name: string;
   code?: string;

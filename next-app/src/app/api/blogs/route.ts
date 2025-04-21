@@ -17,6 +17,9 @@ export const GET = async () => {
                     }
                 },
                 createdAt: true,
+            },
+            orderBy: {
+                createdAt: "desc"
             }
         });
         if (!blogs) {
@@ -26,6 +29,7 @@ export const GET = async () => {
         }
         return NextResponse.json(blogs, { status: 200 });
     } catch (error: any) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        console.log(error.message)
+        return NextResponse.json({ error: "Internal server error." }, { status: 500 });
     }
 }
