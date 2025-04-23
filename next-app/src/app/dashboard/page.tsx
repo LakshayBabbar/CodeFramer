@@ -1,10 +1,9 @@
 "use client";
 import { useState } from "react";
 import CreateProject from "@/components/Modals/CreateProject";
-import ProjectCard, { ProjectCardProps } from "@/components/ui/ProjectCard";
+import ProjectCard, { ProjectCardProps, ProjectCardSkeleton } from "@/components/ui/ProjectCard";
 import { Button } from "@/components/ui/button";
 import useFetch from "@/hooks/useFetch";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useSession } from "next-auth/react";
 import Footer from "@/components/Footer/Footer";
 import Image from "next/image";
@@ -28,8 +27,8 @@ const Page = () => {
 
   return !isError && (
     <main className="flex flex-col w-full justify-center items-center gap-10">
-      <div className="px-5 w-fit space-y-10 mb-10 mt-5">
-        <div className="h-44 flex flex-col w-full bg-dot-black dark:bg-dot-white/[0.8] relative items-center">
+      <div className="px-5 w-fit space-y-10 mb-10">
+        <div className="h-44 flex flex-col w-full relative items-center">
           <Image
             src={sessionData?.user?.image || "/user.webp"}
             width={120}
@@ -69,16 +68,7 @@ const Page = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 justify-items-center gap-4">
             {Array.from({ length: 6 }).map((_, i) => {
               return (
-                <div key={i} className="w-full sm:max-w-80 p-8 rounded-xl space-y-4">
-                  <Skeleton className="h-10 w-[200px]" />
-                  <Skeleton className="h-4 w-[120px]" />
-                  <Skeleton className="h-4 w-[120px]" />
-                  <Skeleton className="h-4 w-[120px]" />
-                  <div className="flex items-center justify-between">
-                    <Skeleton className="h-6 w-[60px]" />
-                    <Skeleton className="h-6 w-[20px]" />
-                  </div>
-                </div>
+                <ProjectCardSkeleton key={i} />
               );
             })}
           </div>

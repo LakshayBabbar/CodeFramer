@@ -46,7 +46,7 @@ export async function getData({ url, cache = false }: { url: string; cache?: boo
 }
 
 export async function getToken() {
-    const token = (await cookies()).get("authjs.session-token");
+    const token = (await cookies()).getAll().find((cookie) => cookie.name.includes("authjs.session-token"));
     return token;
 }
 
@@ -83,34 +83,6 @@ export async function newSupportRequest(data: { name: string, email: string, mes
         return { error: error.message };
     }
 }
-
-export const updateSupportRequest = async (id: string, type?: string) => {
-    try {
-        const session = await auth();
-        if (session?.user?.role !== "ADMIN" || !session) {
-            throw new Error("You need to login to update a support request.");
-        }
-        const inquiry = await prisma.inquiries.findUnique({
-            where: { id }
-        });
-        if (!inquiry) {
-            throw new Error("Support request not found.");
-        }
-        if (type === "close") {
-            await prisma.inquiries.update({
-                where: { id },
-                data: { closed: true }
-            });
-            return { message: "Support request closed successfully." };
-        }
-        await prisma.inquiries.delete({
-            where: { id }
-        });
-        return { message: "Support request deleted successfully." };
-    } catch (error: any) {
-        return { error: error.message };
-    }
-};
 
 export const getServerState = async () => {
     try {

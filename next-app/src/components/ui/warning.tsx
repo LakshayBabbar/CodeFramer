@@ -1,7 +1,7 @@
 "use client";
 import React from 'react'
 import { X } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { getServerState } from '@/app/actions';
 
 const Warning = ({ message }: { message: string }) => {
@@ -18,7 +18,8 @@ const Warning = ({ message }: { message: string }) => {
                     clearInterval(interval);
                     setShow(false);
                 }
-            } catch (error) {
+            } catch (error: any) {
+                console.log(error?.message)
                 setShow(true);
             }
         };

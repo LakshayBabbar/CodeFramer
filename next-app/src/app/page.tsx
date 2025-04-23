@@ -7,6 +7,7 @@ import ProjectCard, { ProjectCardProps } from "@/components/ui/ProjectCard";
 import SearchBar from "@/components/Search/SearchBar";
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 export default function Home() {
   const [data, setData] = useState({ searchResults: { projects: [], totalPages: 1 }, loading: false, error: "" });
@@ -15,22 +16,30 @@ export default function Home() {
 
   return (
     <main className="flex flex-col items-center justify-center">
-      <section className="mt-16 flex flex-col gap-8 py-24 h-fit w-full items-center justify-center overflow-hidden rounded-lg bg-grid-black/[0.04] dark:bg-grid-white/[0.06]">
-        <h1 className="px-4 text-5xl sm:text-6xl xl:text-7xl font-bold md:w-[60%] text-center text-stone-800 drop-shadow-xl dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-b dark:from-neutral-300 dark:to-neutral-500">
+      <section className="relative bg-white dark:bg-black mt-16 flex flex-col gap-8 py-24 h-fit w-full items-center justify-center overflow-hidden rounded-lg">
+        <div
+          className={cn(
+            "absolute inset-0",
+            "[background-size:40px_40px]",
+            "[background-image:linear-gradient(to_right,#e4e4e7b9_0.6px,transparent_0.6px),linear-gradient(to_bottom,#e4e4e7_0.6px,transparent_0.6px)]",
+            "dark:[background-image:linear-gradient(to_right,#262626dc_0.6px,transparent_0.6px),linear-gradient(to_bottom,#262626_0.6px,transparent_0.6px)]",
+          )}
+        />
+        <h1 className="z-1 px-4 text-5xl sm:text-6xl xl:text-7xl font-bold md:w-[60%] text-center text-stone-800 drop-shadow-xl dark:text-transparent dark:bg-clip-text dark:bg-linear-to-b dark:from-neutral-300 dark:to-neutral-500">
           Build, Compile, and Create Effortlessly
         </h1>
-        <p className="w-4/5 sm:w-[50%] text-center sm:text-xl text-neutral-600 dark:text-neutral-300">
+        <p className="w-4/5 sm:w-[50%] text-center sm:text-xl text-neutral-600 dark:text-neutral-300 z-1">
           CodeFramer is your all-in-one online IDE and compiler for Python, C, C++, Node.js, Sql and web projects with real-time output and AI assistance.
         </p>
-        <div className="flex gap-4">
-          <Link href="/compiler/python"><Button
-          >
+        <div className="flex gap-4 z-1">
+          <Link href="/compiler/python"><Button size="lg">
             Try Compilers
           </Button></Link>
-          <Link href="/web-editor"><Button variant="outline" >
+          <Link href="/web-editor"><Button variant="secondary" className="border" size="lg" >
             Try Web Editor
           </Button></Link>
         </div>
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-black"></div>
       </section>
 
       <section className="w-full py-10 h-fit relative overflow-hidden">
@@ -53,7 +62,7 @@ export default function Home() {
         </div>
       </section>
       <Footer />
-      <div className="absolute -top-10 -left-10 w-3/5 sm:w-[20rem] bg-gradient-to-r dark:from-blue-700 dark:to-purple-800 blur-[120px] -z-10 -rotate-12" />
+      <div className="absolute -top-10 -left-10 w-3/5 sm:w-[20rem] bg-linear-to-r dark:from-blue-700 dark:to-purple-800 blur-[120px] -z-10 -rotate-12" />
     </main>
   );
 }

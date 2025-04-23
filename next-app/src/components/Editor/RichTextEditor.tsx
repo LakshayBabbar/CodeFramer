@@ -137,8 +137,8 @@ export default function RichTextEditor({
     ];
 
     return (
-        <div className={cn("space-y-2", className)}>
-            <div className="border rounded-md p-1 mb-1 dark:bg-neutral-900 bg-neutral-100 space-x-2 z-50 sticky top-16">
+        <div className={cn("space-y-2=", className)}>
+            <div className="border rounded-md p-1 mb-2 dark:bg-neutral-900 bg-neutral-100 space-x-2 z-50 sticky top-16">
                 {Options.map((option, index) => (
                     <Toggle
                         key={index}

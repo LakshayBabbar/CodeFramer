@@ -3,9 +3,8 @@ import { SendHorizonal, X } from "lucide-react";
 import { createPortal } from "react-dom";
 import useSend from "@/hooks/useSend";
 import { cn } from "@/lib/utils";
-import { useToast } from "@/hooks/use-toast";
 import { IconSparkles } from "@tabler/icons-react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 
 interface CopilotProps {
     editorData: { name: string; code: string; }[];
@@ -24,7 +23,6 @@ const CopilotModal = memo(({ isOpen, setIsOpen, editorData, setEditorData }: Cop
     const modalRef = useRef<HTMLDivElement | null>(null);
     const { fetchData, loading, isError, error, setIsError } = useSend();
     const [query, setQuery] = useState("");
-    const { toast } = useToast();
     let lang = '';
     editorData.forEach((editor) => {
         lang += editor.name + ' ';
@@ -54,12 +52,12 @@ const CopilotModal = memo(({ isOpen, setIsOpen, editorData, setEditorData }: Cop
                 setQuery("");
             }
         },
-        [fetchData, lang, editorData, query, setEditorData, setIsOpen, toast]
+        [fetchData, lang, editorData, query, setEditorData, setIsOpen]
     );
 
     if (!isOpen || !modalRef.current) return null;
 
-    const buttonClass = "py-2 w-40 bg-gradient-to-r from-blue-900 to-sky-700 rounded-2xl hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed text-white";
+    const buttonClass = "py-2 w-40 bg-linear-to-r from-blue-900 to-sky-700 rounded-2xl hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed text-white";
 
     function modalCloseHandler() {
         setIsOpen(false);
@@ -78,27 +76,27 @@ const CopilotModal = memo(({ isOpen, setIsOpen, editorData, setEditorData }: Cop
                 initial={{ scale: 0.5, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ type: "spring", stiffness: 240, damping: 20 }}
-                className="w-11/12 sm:w-[30rem] relative p-6 bg-card dark:border rounded-xl space-y-6 shadow-2xl"
+                className="w-11/12 sm:w-[30rem] relative p-8 bg-card dark:bg-neutral-950 dark:border rounded-xl space-y-6 shadow-2xl"
             >
-                <button className="absolute top-2 right-2" aria-label="Close" onClick={modalCloseHandler}>
+                <button className="absolute top-4 right-4 cursor-pointer" aria-label="Close" onClick={modalCloseHandler}>
                     <X />
                 </button>
                 <div className="space-y-2">
-                    <h1 id="copilot-modal-title" className="text-3xl gap-1 text-center flex justify-center font-semibold bg-gradient-to-r from-blue-700 to-sky-500 bg-clip-text text-transparent">
+                    <h1 id="copilot-modal-title" className="text-3xl gap-1 text-center flex justify-center font-semibold bg-linear-to-r from-blue-700 to-sky-500 bg-clip-text text-transparent">
                         Aizen<IconSparkles size={25} className="text-blue-500" />
                     </h1>
                     <p className="text-center text-slate-600 dark:text-slate-300">Enhance Your Code with AI Assistance from Aizen</p>
                 </div>
                 <div className="flex flex-wrap justify-center gap-4">
                     {(["FIX", "EXPLAIN", "IMPROVE"] as Context[]).map((ctx) => (
-                        <button key={ctx} onClick={() => submitHandler(ctx)} disabled={loading} className="inline-flex h-12 dark:animate-shimmer items-center justify-center rounded-2xl border border-slate-800 drop-shadow-md dark:bg-[linear-gradient(110deg,#000103,25%,#1e2631,60%,#000103)] bg-[length:200%_100%] px-6 font-medium dark:text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 min-w-32">
+                        <button key={ctx} onClick={() => submitHandler(ctx)} disabled={loading} className="inline-flex h-12 dark:animate-shimmer items-center justify-center rounded-2xl border border-slate-800 drop-shadow-md dark:bg-[linear-gradient(110deg,#000103,25%,#1e2631,60%,#000103)] bg-[length:200%_100%] px-6 font-medium dark:text-slate-400 transition-colors focus:outline-hidden focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 min-w-32">
                             {ctx}
                         </button>
                     ))}
                 </div>
                 <div className="flex gap-2 items-end">
                     <textarea
-                        className="flex-grow min-h-20 h-fit px-4 rounded-2xl p-2 max-h-56 border dark:bg-[#181818e7] bg-[#f8f8f8b6]"
+                        className="grow min-h-20 h-fit px-4 rounded-2xl p-2 max-h-56 border dark:bg-[#181818e7] bg-[#f8f8f8b6]"
                         placeholder="How can I help you?"
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}

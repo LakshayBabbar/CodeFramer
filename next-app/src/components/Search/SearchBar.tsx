@@ -22,7 +22,7 @@ const SearchBar = ({ url, placeholder, setSearchResults }: SearchBarProps) => {
         setSearchResults((prevState: any) => {
             return { ...prevState, loading: loading };
         });
-    }, [loading]);
+    }, [loading, setSearchResults]);
 
     React.useEffect(() => {
         refetch();
@@ -32,7 +32,7 @@ const SearchBar = ({ url, placeholder, setSearchResults }: SearchBarProps) => {
         if (data) {
             setSearchResults({ searchResults: data, loading: loading, error: isError ? error : null });
         }
-    }, [data, setSearchResults]);
+    }, [data, setSearchResults, error, isError, loading]);
 
     return (
         <Input
@@ -40,7 +40,7 @@ const SearchBar = ({ url, placeholder, setSearchResults }: SearchBarProps) => {
             type='search'
             value={searchTerm}
             onChange={handleChange}
-            className='h-12 text-md md:w-[30rem]'
+            className='h-12 text-md w-full md:w-[30rem]'
         />
     );
 }

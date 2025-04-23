@@ -6,7 +6,6 @@ import React from 'react'
 import useSend from '@/hooks/useSend';
 import { useToast } from '@/hooks/use-toast';
 import { Textarea } from '@/components/ui/textarea';
-import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 
 const Blog = () => {
@@ -41,15 +40,13 @@ const Blog = () => {
     }
   }
 
-  const inputStyle = "bg-neutral-100 dark:bg-neutral-900 h-11"
-
   return (
     <div className='flex justify-center'>
-      <form onSubmit={submitHandler} className='w-full sm:w-4/5 lg:w-1/2 space-y-6'>
+      <form onSubmit={submitHandler} className='w-full sm:w-4/5 lg:w-1/2 space-y-4'>
         <h1 className='text-3xl font-bold'>What&apos;s on your mind?</h1>
-        <Input name='title' placeholder='Title' onChange={onVlaueChange} className={inputStyle} required />
-        <Textarea name='description' placeholder='Meta Description' onChange={onVlaueChange} className={cn(inputStyle, "h-16 max-h-32")} required />
-        <Input name='tags' placeholder='Tags (Seprated by commas).' onChange={onVlaueChange} className={inputStyle} required />
+        <Input name='title' placeholder='Title' onChange={onVlaueChange} className='h-11' required />
+        <Input name='tags' placeholder='Tags (Seprated by commas).' onChange={onVlaueChange} className='h-11' required />
+        <Textarea name='description' placeholder='Meta Description' onChange={onVlaueChange} className="h-20 max-h-32" required />
         <RichTextEditor onChange={onEditorChange} content='' className='h-fit w-full' />
         <Button size="lg" type='submit' disabled={loading}>Create</Button>
       </form>

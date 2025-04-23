@@ -6,7 +6,7 @@ import useSend from "@/hooks/useSend";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "../ui/button";
 import { CopilotButton } from "../Copilot/Copilot";
-import { Fullscreen, Minimize, X } from "lucide-react";
+import { Fullscreen, Minimize } from "lucide-react";
 
 export interface webEditorDataType {
   languages: { name: string; code: string }[];
@@ -108,7 +108,7 @@ function WebEditor({ data }: { data: webEditorDataType }) {
         <iframe id="web-preview" title="output" srcDoc={srcDoc} width="100%" height={isFullPreview ? "100%" : "50%"} />
         <div className={`w-full ${!isFullPreview ? "h-1/2" : "hidden"} bg-card`}>
           <Editor file={file} onValChange={handleEditorChange} isPublic={data?.isPublic} projectName={data?.name}>
-            <button aria-label="Switch to full screen" onClick={() => { setFullPreview(true) }}><Fullscreen className="size-50 hover:scale-105 transition-all" /></button>
+            <button aria-label="Switch to full screen" onClick={() => { setFullPreview(true) }}><Fullscreen className="hover:scale-105 transition-all" /></button>
             <CopilotButton editorData={values} setEditorData={setValues} />
             <Tabs defaultValue="index.html">
               <TabsList>
@@ -130,7 +130,7 @@ function WebEditor({ data }: { data: webEditorDataType }) {
             )}
           </Editor>
         </div>
-        {isFullPreview && <button className="fixed bottom-10 right-10 rounded-full p-2 bg-gradient-to-r from-blue-500 to-blue-800 hover:scale-105 text-white transition-all" aria-label="Exit full screen" onClick={() => { setFullPreview(false) }}><Minimize className="size-25" /></button>}
+        {isFullPreview && <button className="fixed bottom-10 right-10 rounded-full p-2 bg-linear-to-r from-blue-500 to-blue-800 hover:scale-105 text-white transition-all" aria-label="Exit full screen" onClick={() => { setFullPreview(false) }}><Minimize className="size-8" /></button>}
       </div>
     </div>
   );

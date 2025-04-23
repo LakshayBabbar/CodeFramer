@@ -6,6 +6,9 @@ import { NextRequest, NextResponse } from "next/server";
 export const POST = async (req: NextRequest) => {
     const body = await req.json();
     const session = await auth();
+    if (!session || session.user.role !== "ADMIN") {
+        return NextResponse.json({ error: "Unauthorized access." }, { status: 401 })
+    }
     try {
         const { title, content, tags, description } = body;
         const slug = title
@@ -45,6 +48,9 @@ export const POST = async (req: NextRequest) => {
 export const PUT = async (req: NextRequest) => {
     const body = await req.json();
     const session = await auth();
+    if (!session || session.user.role !== "ADMIN") {
+        return NextResponse.json({ error: "Unauthorized access." }, { status: 401 })
+    }
     try {
         const blog = await prisma.blog.findUnique({
             where: {
@@ -74,6 +80,10 @@ export const PUT = async (req: NextRequest) => {
 
 export const DELETE = async (req: NextRequest) => {
     const body = await req.json();
+    const session = await auth();
+    if (!session || session.user.role !== "ADMIN") {
+        return NextResponse.json({ error: "Unauthorized access." }, { status: 401 })
+    }
     try {
         const session = await auth();
         const blog = await prisma.blog.findUnique({

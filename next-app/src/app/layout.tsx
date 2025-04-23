@@ -24,7 +24,7 @@ export default function RootLayout({
 }) {
   return (
     <SessionProvider>
-      <html lang="en" className="dark" suppressHydrationWarning>
+      <html lang="en" className="dark scroll-smooth" suppressHydrationWarning>
         <body className="overflow-x-hidden antialiased">
           <ReactQueryProvider>
             <ThemeProvider attribute="class"
@@ -41,7 +41,7 @@ export default function RootLayout({
           {process.env.NODE_ENV === "production" && (
             <>
               <Script
-                src={`https://www.googletagmanager.com/gtag/js?id=G-VZHGHTEHRW`}
+                src={process.env.GOOGLE_ANALYTICS}
                 strategy="afterInteractive"
               />
               <Script
@@ -58,22 +58,13 @@ export default function RootLayout({
               />
               <Script
                 async
-                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7436170435436020"
+                src={process.env.GOOGLE_ADS}
                 crossOrigin="anonymous"
               ></Script>
-              <Script
-                async
-
-                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7436170435436020"
-                crossOrigin="anonymous"
-              ></Script>
-              <Script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid={process.env.COOKIE_BOT} data-blockingmode="auto" type="text/javascript" />
-              <Script id="usercentrics-cmp" src="https://app.usercentrics.eu/browser-ui/latest/loader.js" data-settings-id="QJ0jBf4LIuN2r4" async />
             </>
           )}
         </body>
       </html>
     </SessionProvider>
-
   );
 }

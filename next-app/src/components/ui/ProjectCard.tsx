@@ -11,6 +11,7 @@ import AlertWrapper from "./AlertWrapper";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./dropdown-menu";
 import { IconDots } from "@tabler/icons-react";
 import { Button } from "./button";
+import { Skeleton } from "./skeleton";
 
 export interface ProjectCardProps {
   data: {
@@ -107,3 +108,19 @@ const ProjectCard = ({ data, controls = false }: ProjectCardProps) => {
 };
 
 export default ProjectCard;
+
+
+export const ProjectCardSkeleton = () => {
+  return (
+    <div className="w-full md:w-80 p-6 rounded-xl space-y-4 border bg-card">
+      <div className="flex items-center justify-between">
+        <Skeleton className="h-7 w-[200px]" />
+        <Skeleton className="h-7 w-[40px]" />
+      </div>
+      <Skeleton className="h-4 w-[80px]" />
+      <Skeleton className="h-4 w-[160px]" />
+      <Skeleton className="h-4 w-[160px]" />
+      <Skeleton className="h-4 w-[160px]" />
+    </div>
+  )
+}

@@ -133,15 +133,15 @@ const Profile = () => {
                 <form className="space-y-5 mt-5" onSubmit={updateHandler}>
                     <div>
                         <label htmlFor="username" className="block text-neutral-600 dark:text-neutral-300 text-sm">Username</label>
-                        <Input name="username" value={formData.username} onChange={valChangeHandler} className="mt-1 dark:bg-neutral-800 bg-neutral-100" required />
+                        <Input name="username" value={formData.username} onChange={valChangeHandler} className="mt-1" required />
                     </div>
                     <div>
                         <label htmlFor="name" className="block text-neutral-600 dark:text-neutral-300 text-sm">Full Name</label>
-                        <Input name="name" value={formData.name} onChange={valChangeHandler} className="mt-1 dark:bg-neutral-800 bg-neutral-100" required />
+                        <Input name="name" value={formData.name} onChange={valChangeHandler} className="mt-1" required />
                     </div>
                     <div>
                         <label htmlFor="email" className="block text-neutral-600 dark:text-neutral-300 text-sm">Email</label>
-                        <Input name="email" value={formData.email} type="email" onChange={valChangeHandler} className="mt-1 dark:bg-neutral-800 bg-neutral-100" required />
+                        <Input name="email" value={formData.email} type="email" onChange={valChangeHandler} className="mt-1" required />
                     </div>
                     <Button type="submit" disabled={!isAccDel && reqData.loading} className="w-full mt-4">Update Profile</Button>
                 </form>

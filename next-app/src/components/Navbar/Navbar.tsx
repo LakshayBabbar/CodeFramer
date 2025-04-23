@@ -34,7 +34,7 @@ export default function Navbar() {
   const isAuth = status === "authenticated";
   const pre = "-translate-y-[40rem] lg:translate-y-0 opacity-0 lg:opacity-100";
   const post = "translate-y-0 opacity-100";
-  const { setTheme, resolvedTheme, theme } = useTheme();
+  const { setTheme, theme } = useTheme();
 
   function linkHandler() {
     setActive(false);
@@ -44,9 +44,9 @@ export default function Navbar() {
   const iconStyle = "size-4";
 
   return (
-    <div className="h-14 w-full flex border-b justify-between px-5 lg:px-0 lg:justify-around items-center fixed top-0 left-0 bg-[#ffffffad] dark:bg-[#000000a1] backdrop-blur-xl z-[99]">
+    <div className="h-14 w-full flex border-b justify-between px-5 lg:px-0 lg:justify-around items-center fixed top-0 left-0 bg-[#ffffffad] dark:bg-[#000000a1] backdrop-blur-xl z-99">
       <Link href="/" className={cn(linkStyle, "text-md font-bold")}>
-        <Image src={resolvedTheme === "light" ? "/logo.webp" : "/logo-dark.webp"} alt="codeframer logo" width={20} height={20} />
+        <Image src="/logo.webp" alt="codeframer logo" width={30} height={30} />
         CodeFramer
       </Link>
 
@@ -91,7 +91,7 @@ export default function Navbar() {
                 <IconUser className={iconStyle} />Account
               </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="z-[100]">
+            <DropdownMenuContent align="end" className="z-100">
               <Link href="/dashboard">
                 <DropdownMenuItem onClick={linkHandler} className={linkStyle + "w-full"}>
                   <IconLayout className={iconStyle} />
@@ -107,7 +107,7 @@ export default function Navbar() {
             </DropdownMenuContent>
           </DropdownMenu>
           {data?.user?.role === "ADMIN" && <Link href="/admin/stats" className={linkStyle} onClick={linkHandler}><User className={iconStyle} />Admin</Link>}
-          <Button onClick={() => { signOut(); linkHandler() }} variant="link" className={`h-fit p-0 w-fit ${linkStyle}`}>
+          <Button onClick={() => { signOut(); linkHandler() }} variant="link" className={`h-fit p-0 has-[>svg]:px-0 m-0 w-fit cursor-pointer ${linkStyle}`}>
             <LogOut className={iconStyle} />
             Sign Out
           </Button></>}
@@ -119,7 +119,7 @@ export default function Navbar() {
               <span className="sr-only">Toggle theme</span>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="z-[100]">
+          <DropdownMenuContent align="end" className="z-100">
             <DropdownMenuItem onClick={() => setTheme("light")}>
               Light
             </DropdownMenuItem>
@@ -133,7 +133,7 @@ export default function Navbar() {
         </DropdownMenu>
       </div>
 
-      <div className="lg:hidden flex z-[1000] text-2xl">
+      <div className="lg:hidden flex z-1000 text-2xl">
         {!active ? (
           <AlignRight onClick={() => setActive(true)} />
         ) : (

@@ -26,18 +26,18 @@ import { Skeleton } from "@/components/ui/skeleton";
 const LangConfig = {
   types: {
     label: "Types",
-    color: "hsl(var(--chart-1))",
+    color: "var(--chart-1)",
   },
   languages: {
     label: "Languages",
-    color: "hsl(var(--chart-1))",
+    color: "var(--chart-1)",
   },
 };
 
 const provConfig = {
   providers: {
     label: "Providers",
-    color: "hsl(var(--chart-2))",
+    color: "var(--chart-2)",
   },
 };
 
@@ -57,14 +57,14 @@ const Page = () => {
         <div className="flex gap-4">
           {Array.from({ length: 4 }).map((_, idx) => {
             return (
-              <Skeleton key={idx} className="size-32 rounded-xl flex-grow" />
+              <Skeleton key={idx} className="size-32 rounded-xl grow" />
             );
           })}
         </div>
         <div className="flex flex-wrap gap-5 w-full">
           {Array.from({ length: 2 }).map((_, idx) => {
             return (
-              <div key={idx} className="w-full sm:w-auto flex-grow flex flex-col p-5 gap-8 items-center justify-between h-fit sm:h-[30rem] border rounded-xl">
+              <div key={idx} className="w-full sm:w-auto grow flex flex-col p-5 gap-8 items-center justify-between h-fit sm:h-[30rem] border rounded-xl">
                 <Skeleton className="h-10 w-11/12" />
                 <Skeleton className="h-56 sm:h-3/4 w-11/12" />
                 <Skeleton className="h-5 w-3/4" />
@@ -81,7 +81,7 @@ const Page = () => {
     (lang: { name: string; count: number }, index: number) => ({
       name: lang.name,
       count: lang.count,
-      fill: `hsl(var(--chart-${(index % 5) + 1}))`,
+      fill: `var(--chart-${(index % 5) + 1})`,
     })
   );
 
@@ -89,7 +89,7 @@ const Page = () => {
     (provider: { name: string; count: number }, index: number) => ({
       name: provider.name,
       count: provider.count,
-      fill: `hsl(var(--chart-${(index % 5) + 1}))`,
+      fill: `var(--chart-${(index % 5) + 1})`,
     })
   );
 
@@ -97,7 +97,7 @@ const Page = () => {
     (type: { name: string; count: number }, index: number) => ({
       name: type.name,
       count: type.count,
-      fill: `hsl(var(--chart-${(index % 5) + 1}))`,
+      fill: `var(--chart-${(index % 5) + 1})`,
     })
   );
 
@@ -110,23 +110,24 @@ const Page = () => {
     count: res.data.totalProjects,
     color: 'bg-chart-2',
   }, {
-    name: 'Open Inquiries',
-    count: res.data.totalOpenedInquiries,
+    name: 'Total Inquiries',
+    count: res.data.totalInquiries,
     color: 'bg-chart-3',
   }, {
-    name: 'Closed Inquiries',
-    count: res.data.totalClosedInquiries,
+    name: 'Total Blogs',
+    count: res.data.totalBlogs,
     color: 'bg-chart-4',
   }]
 
   return (
     <div className="space-y-10">
-      <div className="flex gap-2 sm:gap-4 justify-center items-center">
+      <div className="grid grid-cols-4 gap-2 sm:gap-4">
         {counts.map((item, idx) => {
-          return (<div key={idx} className={`p-2 h-24 sm:h-32 rounded-xl text-white ${item.color} flex flex-col items-center justify-center text-center flex-grow`}>
-            <span className="text-2xl sm:text-4xl font-bold">{item.count}</span>
-            <span className="text-sm sm:text-base">{item.name}</span>
-          </div>)
+          return (
+            <div key={idx} className={`p-2 h-24 sm:h-32 rounded-xl text-white ${item.color} flex flex-col text-center items-center sm:justify-center`}>
+              <span className="text-2xl sm:text-4xl font-bold">{item.count}</span>
+              <span className="text-sm sm:text-base">{item.name}</span>
+            </div>)
         })}
       </div>
 

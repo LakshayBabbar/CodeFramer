@@ -4,7 +4,7 @@ import HeroVideoDialog from "./hero-video-dialog";
 import { OrbitingCircles } from "./orbiting-circles";
 import { IconSql } from "@tabler/icons-react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { Layers2 } from "lucide-react";
 import { IconLocationCode, IconDeviceLaptop } from "@tabler/icons-react";
 
@@ -136,13 +136,13 @@ const SkeletonThree = () => {
         <motion.div
             initial="initial"
             whileHover="animate"
-            className="flex flex-1 w-full h-full min-h-[6rem] dark:bg-dot-white/[0.2] bg-dot-black/[0.2] flex-col space-y-2"
+            className="flex flex-1 w-full h-full min-h-[6rem] flex-col space-y-2"
         >
             <motion.div
                 variants={variants}
                 className="flex flex-row rounded-full border border-neutral-100 dark:border-white/[0.2] p-2  items-center space-x-2 bg-white dark:bg-black"
             >
-                <div className="h-6 w-6 rounded-full bg-gradient-to-r from-pink-500 to-violet-500 shrink-0" />
+                <div className="h-6 w-6 rounded-full bg-linear-to-r from-pink-500 to-violet-500 shrink-0" />
                 <div className="w-full bg-gray-100 h-4 rounded-full dark:bg-neutral-900" />
             </motion.div>
             <motion.div
@@ -150,13 +150,13 @@ const SkeletonThree = () => {
                 className="flex flex-row rounded-full border border-neutral-100 dark:border-white/[0.2] p-2 items-center space-x-2 w-3/4 ml-auto bg-white dark:bg-black"
             >
                 <div className="w-full bg-gray-100 h-4 rounded-full dark:bg-neutral-900" />
-                <div className="h-6 w-6 rounded-full bg-gradient-to-r from-pink-500 to-violet-500 shrink-0" />
+                <div className="h-6 w-6 rounded-full bg-linear-to-r from-pink-500 to-violet-500 shrink-0" />
             </motion.div>
             <motion.div
                 variants={variants}
                 className="flex flex-row rounded-full border border-neutral-100 dark:border-white/[0.2] p-2 items-center space-x-2 bg-white dark:bg-black"
             >
-                <div className="h-6 w-6 rounded-full bg-gradient-to-r from-pink-500 to-violet-500 shrink-0" />
+                <div className="h-6 w-6 rounded-full bg-linear-to-r from-pink-500 to-violet-500 shrink-0" />
                 <div className="w-full bg-gray-100 h-4 rounded-full dark:bg-neutral-900" />
             </motion.div>
         </motion.div>
@@ -166,7 +166,7 @@ const SkeletonThree = () => {
 const SkeletonFour = () => {
     return (
         <div
-            className="flex flex-1 w-full h-full min-h-[6rem] dark:bg-dot-white/[0.2] bg-dot-black/[0.2] flex-col sm:flex-row space-x-2 space-y-8 sm:space-y-0"
+            className="flex flex-1 w-full h-full min-h-[6rem] flex-col sm:flex-row space-x-2 space-y-8 sm:space-y-0"
         >
             <div
                 className="sm:-rotate-6 hover:rotate-0 transition-all duration-200 h-full sm:w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center"
@@ -241,9 +241,7 @@ export const SkeletonTwo = () => {
                     <Icons.html />
                     <Icons.css />
                 </OrbitingCircles>
-                <div className="bg-white w-fit p-4 rounded-full">
-                    <Image src="/logo.webp" alt="codeframer" width={40} height={40} />
-                </div>
+                <Image src="/logo.webp" alt="codeframer" width={80} height={80} />
             </div>
         </div>
     );

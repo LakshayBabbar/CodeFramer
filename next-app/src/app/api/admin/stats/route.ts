@@ -1,24 +1,25 @@
 import { NextResponse } from "next/server";
 import prisma from "@/config/db";
+import { auth } from "@/auth";
 
 export async function GET() {
+    const session = await auth();
+    if (!session || session.user.role !== "ADMIN") {
+        return NextResponse.json({ error: "Unauthorized access." }, { status: 401 })
+    }
     try {
         const [
             totalUsers,
-            totalOpenedInquiries,
-            totalClosedInquiries,
+            totalInquiries,
+            totalBlogs,
             providerStats,
             totalProjects,
             projectStats,
             langStats,
         ] = await Promise.all([
             prisma.user.count(),
-            prisma.inquiries.count({
-                where: { closed: false },
-            }),
-            prisma.inquiries.count({
-                where: { closed: true },
-            }),
+            prisma.inquiries.count({}),
+            prisma.blog.count({}),
             prisma.account.groupBy({
                 by: ["provider"],
                 _count: { provider: true },
@@ -60,8 +61,8 @@ export async function GET() {
             data: {
                 totalUsers,
                 totalProjects,
-                totalOpenedInquiries,
-                totalClosedInquiries,
+                totalInquiries,
+                totalBlogs,
                 providers,
                 projectTypes,
                 languages,

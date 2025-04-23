@@ -39,8 +39,6 @@ const BaseEditor = ({ file, onValChange, isPublic, children, projectName }: Edit
         editor.focus();
     };
     const [editorTheme, setEditorTheme] = React.useState("merbivore");
-    const [res, setRes] = React.useState<string>("");
-
 
     const themeHandler = (theme: string) => {
         setEditorTheme(theme);
@@ -55,12 +53,6 @@ const BaseEditor = ({ file, onValChange, isPublic, children, projectName }: Edit
             setEditorTheme("vs-light");
         }
     }, [theme]);
-
-    useEffect(() => {
-        if (res) {
-            editorRef.current.setValue(res);
-        }
-    }, [res]);
 
     const shareProjectLink = () => {
         navigator.clipboard.writeText(window.location.href);

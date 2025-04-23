@@ -1,21 +1,35 @@
-import { auth } from "@/auth"
+import NextAuth from "next-auth"
+import authConfig from "./auth.config"
 
-export default auth((req) => {
-  const pathname = req.nextUrl.pathname;
-  if (!req.auth && pathname !== "/sign-in" && !pathname.startsWith("/api/auth/") && !pathname.startsWith("/api/projects") && !pathname.startsWith("/api/copilot") && !pathname.startsWith("/api/blogs")) {
-    const newUrl = new URL("/sign-in", req.nextUrl.origin)
-    return Response.redirect(newUrl)
+export const { auth } = NextAuth(authConfig)
+
+export default auth(async function middleware(req) {
+  const { pathname, origin } = req.nextUrl
+  const isSignedIn = !!req.auth
+
+  const isPublicApi =
+    pathname.startsWith("/api/auth/") ||
+    pathname.startsWith("/api/projects") ||
+    pathname.startsWith("/api/copilot") ||
+    pathname.startsWith("/api/blogs")
+
+  const isSignInPage = pathname === "/sign-in"
+
+  if (!isSignedIn && !isSignInPage && !isPublicApi) {
+    return Response.redirect(new URL("/sign-in", origin))
   }
-  if (req.auth && pathname === "/sign-in") {
-    const newUrl = new URL("/dashboard", req.nextUrl.origin)
-    return Response.redirect(newUrl)
-  }
-  if (req.auth?.user?.role !== "ADMIN" && (pathname.startsWith("/admin") || pathname.startsWith("/api/admin"))) {
-    const newUrl = new URL("/unauthorized", req.nextUrl.origin);
-    return Response.redirect(newUrl);
+
+  if (isSignedIn && isSignInPage) {
+    return Response.redirect(new URL("/dashboard", origin))
   }
 })
 
 export const config = {
-  matcher: ["/api/:path*", "/dashboard", "/sign-in", "/admin/:path*", "/profile"],
+  matcher: [
+    "/api/:path*",
+    "/dashboard",
+    "/sign-in",
+    "/admin/:path*",
+    "/profile"
+  ],
 }

@@ -84,7 +84,7 @@ export default async function Blog({
             name: "CodeFramer",
             logo: {
                 "@type": "ImageObject",
-                url: '/logo-dark.webp',
+                url: '/logo.webp',
             },
         },
         datePublished: data?.createdAt,
@@ -96,23 +96,20 @@ export default async function Blog({
     }
 
     return (
-        <div className="place-items-center">
+        <div className="flex flex-col items-center">
             <section className='my-28 space-y-10 px-5'>
                 <div className='flex justify-between text-sm text-neutral-600 hover:text-black'>
-                    <Link href={"/blogs"} className='flex no-underline items-center gap-2 dark:text-neutral-300 hover:dark:text-white'>
+                    <Link href={"/blogs"} className='flex no-underline items-center gap-2 dark:text-neutral-300 dark:hover:text-white'>
                         <ArrowLeft size={15} /> Back to Blog
                     </Link>
-                    {isAuthor && <Link href={`/blogs/${slug}/edit`} aria-label='Edit Blog' className='flex items-center gap-2 dark:text-neutral-300 hover:dark:text-white'><PenLine size={15} />Edit </Link>}
+                    {isAuthor && <Link href={`/blogs/${slug}/edit`} aria-label='Edit Blog' className='flex items-center gap-2 dark:text-neutral-300 dark:hover:text-white'><PenLine size={15} />Edit </Link>}
                 </div>
                 <article className='prose prose-stone lg:prose-lg dark:prose-invert prose-h1:leading-tight'>
                     <div className='my-6 text-sm'>
                         <time>{new Date(data.createdAt || "").toDateString()}</time>
                     </div>
                     <h1 className='text-3xl font-bold'>{data?.title}</h1>
-                    <div className='space-y-2'>
-                        <span className='text-sm'>{`Posted by: ${data.User.name} | @${data.User.username}`}</span>
-                        <hr />
-                    </div>
+                    <span className='text-sm'>{`Posted by: ${data.User.name} | @${data.User.username}`}</span>
                     {parse(data?.content, {
                         replace: (domNode: DOMNode) => {
                             if (

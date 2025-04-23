@@ -88,7 +88,7 @@ export default function EditBlog() {
         !res.error && push("/blogs");
     }
 
-    return isAuth ? (
+    return (isAuth) ? (
         <div className='place-items-center place-content-center h-screen'>
             <form onSubmit={submitHandler} className='flex flex-col gap-4 my-24 w-11/12 sm:w-4/5'>
                 <Input name='title' value={formData.title} onChange={valHandler} />
@@ -96,8 +96,8 @@ export default function EditBlog() {
                 <Textarea name='description' value={formData.description} onChange={valHandler} className='min-h-28 max-h-48' />
                 <RichTextEditor content={data?.content} onChange={onEditorChange} />
                 <div className='w-full flex gap-2 mb-10'>
-                    <Button onClick={deleteHandler} disabled={req.loading && isDeleted} variant="destructive" size="lg" className='flex-grow'>Delete</Button>
-                    <Button type='submit' disabled={req.loading && !isDeleted} size="lg" className='flex-grow'>Update</Button>
+                    <Button onClick={deleteHandler} disabled={req.loading && isDeleted} variant="destructive" size="lg" className='grow'>Delete</Button>
+                    <Button type='submit' disabled={req.loading && !isDeleted} size="lg" className='grow'>Update</Button>
                 </div>
             </form>
         </div>

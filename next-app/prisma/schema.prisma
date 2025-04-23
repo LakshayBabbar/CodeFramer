@@ -73,7 +73,6 @@ model Inquiries {
   name      String
   email     String
   message   String
-  closed    Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

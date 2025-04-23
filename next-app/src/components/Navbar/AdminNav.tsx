@@ -9,7 +9,7 @@ const AdminNav = () => {
     const path = usePathname();
     const defaultTab = navLinks.find(link => link.href === path)?.name || 'Stats';
     return (
-        <Tabs defaultValue={defaultTab} className='w-full'>
+        <Tabs defaultValue={defaultTab} className='w-full items-center bg-muted'>
             <TabsList className="flex flex-wrap rounded-none">
                 {navLinks.map((link, index) => {
                     return <TabsTrigger value={link.name} key={index} className='sm:w-32 flex gap-1 h-full text-xs' onClick={() => push(link.href)}><link.icon size={16} />{link.name}</TabsTrigger>

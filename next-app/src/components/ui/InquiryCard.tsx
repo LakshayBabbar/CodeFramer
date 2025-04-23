@@ -1,16 +1,17 @@
 import React, { useState } from "react";
-import { Card } from "./card";
-import { updateSupportRequest } from "@/app/actions";
 import { useToast } from "@/hooks/use-toast";
+import { Skeleton } from "./skeleton";
+import { Button } from "./button";
+import useSend from "@/hooks/useSend";
+import { motion } from "motion/react";
+import { Calendar, Info, Mail, User } from "lucide-react";
 
 export interface InquiryCardProps {
     id: string;
     name: string;
     email: string;
     message: string;
-    closed: boolean;
     createdAt: string;
-    updatedAt?: string;
     refetch: () => void;
 }
 
@@ -19,52 +20,45 @@ const InquiryCard = ({
     name,
     email,
     message,
-    closed,
     createdAt,
-    updatedAt,
     refetch,
 }: InquiryCardProps) => {
     const { toast } = useToast();
     const [expand, setExpand] = useState(false);
-    const [loading, setLoading] = useState(false)
+    const { fetchData, loading } = useSend();
 
     const inquiryHandler = async () => {
-        setLoading(true);
-        const res = await updateSupportRequest(id, closed ? "delete" : "close");
-        if (!res.error) {
-            refetch();
-        } else {
-            toast({ title: "Error", description: res.error });
-        }
-        setLoading(false);
+        const res = await fetchData({
+            url: `/api/admin/inquiries`,
+            method: "DELETE",
+            body: { id },
+        });
+        toast({
+            title: res?.message || res?.error
+        })
+        !res.error && refetch();
     };
-
-    const btnStyle = "border text-white py-2 px-4 rounded disabled:cursor-not-allowed disabled:opacity-50";
 
     const truncatedMessage =
         message.length > 120 && !expand
             ? message.substring(0, 120) + "..."
             : message;
 
+    const listStyle = "flex items-center gap-2 line-clamp-1";
+
     return (
-        <Card className="p-5 gap-4 w-11/12 md:w-96 min-h-72 max-h-fit flex flex-col justify-between flex-grow md:flex-grow-0">
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="p-5 gap-6 w-full md:w-[22rem] flex flex-col justify-between bg-card border rounded-xl">
             <div className="space-y-2">
-                <p>
-                    <strong>Name:</strong> {name}
-                </p>
-                <p>
-                    <strong>Email:</strong> {email}
-                </p>
-                <p>
-                    <strong>Created on:</strong> {new Date(createdAt).toLocaleDateString()}
-                </p>
-                {closed && updatedAt && (
-                    <p>
-                        <strong>Closed on:</strong> {new Date(updatedAt).toLocaleDateString()}
-                    </p>
-                )}
-                <p>
-                    <strong>Message:</strong> {truncatedMessage}
+                <p className={listStyle}><User size={20} />{name}</p>
+                <p className={listStyle}><Mail size={20} /> {email}</p>
+                <p className={listStyle}><Calendar size={20} /> {new Date(createdAt).toLocaleDateString()}</p>
+                <p className={listStyle}><Info size={20} />Message: </p>
+                <p> {truncatedMessage}
                     {message.length > 120 && (
                         <span
                             className="font-bold cursor-pointer text-blue-500 hover:underline"
@@ -74,17 +68,24 @@ const InquiryCard = ({
                         </span>
                     )}
                 </p>
+
             </div>
-            <button
-                className={btnStyle}
-                onClick={inquiryHandler}
-                disabled={loading}
-                aria-label={closed ? "Delete inquiry" : "Close inquiry"}
-            >
-                {closed ? "Delete" : "Close"}
-            </button>
-        </Card>
+            <Button onClick={inquiryHandler} variant="outline" disabled={loading}>Delete</Button>
+        </motion.div>
     );
 };
 
 export default InquiryCard;
+
+
+export const InquiryCardSkeleton = () => {
+    return (
+        <div className="w-full md:w-[22rem] space-y-2 border rounded-xl bg-card p-5 gap-4">
+            <Skeleton className="w-2/3 h-6" />
+            <Skeleton className="w-11/12 h-6" />
+            <Skeleton className="w-2/3 h-6" />
+            <Skeleton className="w-full h-20" />
+            <Skeleton className="w-full h-10" />
+        </div>
+    )
+}

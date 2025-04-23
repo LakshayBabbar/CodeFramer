@@ -12,7 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { capitalise, SUPPORTED_LANGUAGES } from "@/lib/helpers";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { useSession } from "next-auth/react";
 import { Checkbox } from "@/components/ui/checkbox";
 
@@ -86,18 +86,17 @@ const CreateProject: React.FC<CreateProjectProps> = ({ isOpen, setIsOpen }) => {
 
   return isOpen && isAuth && modalRef.current
     ? createPortal(
-      <div className="fixed top-0 left-0 w-full h-screen flex items-center justify-center backdrop-blur-xl z-[50]">
+      <div className="fixed top-0 left-0 w-full h-screen flex items-center justify-center backdrop-blur-xl z-50">
         <motion.div
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.2, type: "spring", stiffness: 200, damping: 20 }}
-          className="w-11/12 sm:w-[30rem] p-6 dark:border bg-card rounded-xl space-y-2 shadow-2xl">
+          className="w-11/12 sm:w-[30rem] p-6 dark:border bg-card dark:bg-neutral-950 rounded-xl space-y-2 shadow-2xl">
           <h1 className="font-bold text-xl my-2">Create New</h1>
           <form onSubmit={projectHandler} className="space-y-4">
             <Input
               name="name"
               value={name}
-              className="dark:bg-neutral-900 bg-neutral-100"
               placeholder="Project Name"
               onChange={dataHandler}
               required
@@ -107,7 +106,7 @@ const CreateProject: React.FC<CreateProjectProps> = ({ isOpen, setIsOpen }) => {
                 onValueChange={(val) => setEnvironment(val as "WEB" | "COMPILER")}
                 required
               >
-                <SelectTrigger className="flex-grow dark:bg-neutral-900 bg-neutral-100">
+                <SelectTrigger className="grow ">
                   <SelectValue placeholder="Environment" />
                 </SelectTrigger>
                 <SelectContent>
@@ -120,7 +119,7 @@ const CreateProject: React.FC<CreateProjectProps> = ({ isOpen, setIsOpen }) => {
                   onValueChange={(val: string) => setLanguage(val)}
                   required
                 >
-                  <SelectTrigger className="flex-grow dark:bg-neutral-900 bg-neutral-100">
+                  <SelectTrigger className="grow">
                     <SelectValue placeholder="Language" />
                   </SelectTrigger>
                   <SelectContent>

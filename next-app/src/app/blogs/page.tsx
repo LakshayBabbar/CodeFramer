@@ -37,7 +37,7 @@ const Blogs = async () => {
     <div className='place-items-center'>
       <section className='my-28 space-y-10 w-fit px-5'>
         <div className='w-full'>
-          <h1 className='text-3xl font-bold'>CodeFramer Dev Blog</h1>
+          {data.length > 0 ? <h1 className='text-3xl font-bold'>CodeFramer Dev Blog</h1> : <h1 className='text-center py-4 text-3xl font-light'>No blog found.</h1>}
         </div>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
           {data?.map((blog: BlogCardProps) => (

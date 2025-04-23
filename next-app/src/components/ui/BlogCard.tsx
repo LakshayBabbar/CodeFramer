@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import React from 'react'
 import { Button } from './button';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 
 export interface BlogCardProps {
     id: string;

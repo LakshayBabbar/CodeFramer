@@ -148,7 +148,7 @@ export default function CompilerEditor({
           <textarea
             onChange={(e) => setInputs(e.target.value)}
             placeholder="Enter inputs here..."
-            className="bg-transparent w-full h-full max-h-full max-w-full border-none focus:outline-none text-xl"
+            className="bg-transparent w-full h-full max-h-full max-w-full border-none focus:outline-hidden text-xl"
             value={inputs || ""}
           />
         </div>}
