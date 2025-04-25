@@ -89,20 +89,20 @@ export default function EditBlog() {
     }
 
     return (isAuth) ? (
-        <div className='place-items-center place-content-center h-screen'>
+        <div className='w-full flex justify-center'>
             <form onSubmit={submitHandler} className='flex flex-col gap-4 my-24 w-11/12 sm:w-4/5'>
                 <Input name='title' value={formData.title} onChange={valHandler} />
                 <Input name='tags' value={formData.tags} onChange={valHandler} />
                 <Textarea name='description' value={formData.description} onChange={valHandler} className='min-h-28 max-h-48' />
                 <RichTextEditor content={data?.content} onChange={onEditorChange} />
-                <div className='w-full flex gap-2 mb-10'>
+                <div className='w-full flex gap-2'>
                     <Button onClick={deleteHandler} disabled={req.loading && isDeleted} variant="destructive" size="lg" className='grow'>Delete</Button>
                     <Button type='submit' disabled={req.loading && !isDeleted} size="lg" className='grow'>Update</Button>
                 </div>
             </form>
         </div>
     ) : (
-        <div className='place-items-center place-content-center h-screen'>
+        <div className='text-center h-screen'>
             <p className='text-3xl font-light'>Unauthorized Access</p>
         </div>
     )

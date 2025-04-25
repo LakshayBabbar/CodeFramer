@@ -46,9 +46,9 @@ export function FeaturesSection() {
     return (
         <div className="relative z-20 max-w-7xl mx-auto bg-white dark:bg-black">
             <div className="px-8">
-                <h4 className="text-3xl lg:text-5xl lg:leading-tight max-w-5xl mx-auto text-center tracking-tight font-medium text-black dark:text-white">
+                <h2 className="text-3xl lg:text-5xl lg:leading-tight max-w-5xl mx-auto text-center tracking-tight font-medium text-black dark:text-white">
                     Packed with lots of features
-                </h4>
+                </h2>
 
                 <p className="text-sm lg:text-base  max-w-2xl  my-4 mx-auto text-neutral-500 text-center font-normal dark:text-neutral-300">
                     From code execution to real-time debugging, CodeFramer has tools for everything. It can even help you write, improve, and debug your code seamlessly within the editor.
@@ -172,7 +172,7 @@ const SkeletonFour = () => {
                 className="sm:-rotate-6 hover:rotate-0 transition-all duration-200 h-full sm:w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center"
             >
                 <Layers2 className="size-20" />
-                <p className="text-center font-semibold text-neutral-500 mt-4">
+                <p className="text-center font-semibold dark:text-neutral-300 text-neutral-700 mt-4">
                     Seamless Multi-Project Management
                 </p>
                 <p className="text-center text-xs rounded-full px-2 py-0.5 mt-4">
@@ -181,7 +181,7 @@ const SkeletonFour = () => {
             </div>
             <div className="h-full relative z-20 sm:w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center">
                 <IconLocationCode className="size-20" />
-                <p className="text-center font-semibold text-neutral-500 mt-4">
+                <p className="text-center font-semibold dark:text-neutral-300 text-neutral-700 mt-4">
                     Effortless Code Sharing
                 </p>
                 <p className="text-center text-xs rounded-full px-2 py-0.5 mt-4">
@@ -192,7 +192,7 @@ const SkeletonFour = () => {
                 className="sm:rotate-6 hover:rotate-0 transition-all duration-200 h-full sm:w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center"
             >
                 <IconDeviceLaptop className="size-20" />
-                <p className="text-center font-semibold text-neutral-500 mt-4">
+                <p className="text-center font-semibold dark:text-neutral-300 text-neutral-700 mt-4">
                     Real-Time Web Preview
                 </p>
                 <p className="text-center text-xs rounded-full px-2 py-0.5 mt-4">

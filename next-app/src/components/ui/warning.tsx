@@ -31,16 +31,17 @@ const Warning = ({ message }: { message: string }) => {
 
 
     return show ? (
-        <div className='fixed bottom-0 left-0 w-full h-fit flex justify-center px-5'>
+        <div className='fixed bottom-0 z-[1000] left-0 w-full h-fit flex justify-center px-5'>
             <motion.div
                 initial={{ opacity: 0, y: 100 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, type: 'spring', stiffness: 150 }}
-                className='relative rounded-lg sm:rounded-full text-center mb-4 p-4 sm:py-2 bg-amber-700 text-white w-fit flex gap-2'>
+                className='relative rounded-lg sm:rounded-full text-sm text-center mb-2 p-4 sm:py-2 bg-amber-700 text-white w-fit flex gap-2'>
                 <p>{message}</p>
                 <button
                     onClick={() => setShow(false)}
                     className='absolute sm:relative right-0 top-0 p-1 sm:p-0'
+                    aria-label="close warning"
                 >
                     <X size={20} />
                 </button>

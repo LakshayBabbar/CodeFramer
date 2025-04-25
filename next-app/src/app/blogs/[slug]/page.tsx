@@ -62,7 +62,7 @@ export default async function Blog({
 
     if (data?.error) {
         return (
-            <div className="place-items-center place-content-center w-full h-screen">
+            <div className="w-full h-screen text-center">
                 <h1 className='text-2xl font-bold'>{data.error}</h1>
             </div>
         );

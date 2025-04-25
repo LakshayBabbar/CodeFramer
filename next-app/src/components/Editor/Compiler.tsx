@@ -115,7 +115,7 @@ export default function CompilerEditor({
             </Button>
           ) : !data && (
             <Select onValueChange={(val) => push(val)}>
-              <SelectTrigger className="w-fit">
+              <SelectTrigger className="w-fit" aria-label="Select Language">
                 <SelectValue placeholder={capitalise(language)} />
               </SelectTrigger>
               <SelectContent>

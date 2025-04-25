@@ -65,7 +65,7 @@ const Profile = () => {
                         <Skeleton className="h-10 w-full" />
                     </div>
                 </div>
-                <div className="place-items-center w-full mt-8">
+                <div className="flex items-center w-full mt-8">
                     <Skeleton className="h-10 w-1/2" />
                 </div>
             </div>

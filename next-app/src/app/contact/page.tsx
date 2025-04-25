@@ -31,12 +31,12 @@ const Contact = () => {
 
   return (
     <>
-      <div className='h-screen place-items-center place-content-center relative'>
+      <div className='w-full h-screen flex items-center justify-center   relative'>
         <motion.form
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          onSubmit={handelSubmit} className='w-11/12 sm:w-[30rem]  h-fit flex flex-col gap-5 sm:p-8 rounded-xl'>
+          onSubmit={handelSubmit} className='w-11/12 sm:w-[30rem] h-fit flex flex-col gap-5 sm:p-8 rounded-xl'>
           <div className='space-y-1'>
             <h1 className='text-4xl font-bold my-2'>Contact Us</h1>
             <p className='dark:text-neutral-300 text-neutral-700'>Get in touch with the CodeFramer for inquiries.</p>

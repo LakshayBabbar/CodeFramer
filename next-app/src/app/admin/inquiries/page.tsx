@@ -10,7 +10,7 @@ const InquiryPage = () => {
         return <div className='text-center text-2xl font-light'>{error?.message}</div>
     }
     return (
-        <div className='space-y-5 place-items-center my-10'>
+        <div className='space-y-5 flex flex-col items-center my-10'>
             <div className='w-full md:w-fit grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4'>
                 {loading ? Array.from({ length: 12 }).map((_, i) => {
                     return <InquiryCardSkeleton key={i} />

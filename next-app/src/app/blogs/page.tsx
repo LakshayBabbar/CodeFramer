@@ -27,14 +27,14 @@ const Blogs = async () => {
   const data = await getData({ url: "/api/blogs" });
   if (data.error) {
     return (
-      <div className='place-items-center place-content-center h-screen'>
+      <div className='flex items-center justify-center h-screen'>
         <h1 className='text-3xl font-light text-center'>{data?.error}</h1>
       </div>
     )
   }
 
   return (
-    <div className='place-items-center'>
+    <div className='flex flex-col items-center'>
       <section className='my-28 space-y-10 w-fit px-5'>
         <div className='w-full'>
           {data.length > 0 ? <h1 className='text-3xl font-bold'>CodeFramer Dev Blog</h1> : <h1 className='text-center py-4 text-3xl font-light'>No blog found.</h1>}

@@ -6,6 +6,7 @@ import TextAlign from "@tiptap/extension-text-align";
 import Highlight from "@tiptap/extension-highlight";
 import CodeBlock from '@tiptap/extension-code-block'
 import Blockquote from "@tiptap/extension-blockquote";
+import Link from "@tiptap/extension-link";
 import {
     AlignCenter,
     AlignLeft,
@@ -18,7 +19,8 @@ import {
     List,
     ListOrdered,
     Strikethrough,
-    Code
+    Code,
+    Link2Icon,
 } from "lucide-react";
 import { Toggle } from "../ui/toggle";
 import { cn } from "@/lib/utils";
@@ -55,7 +57,15 @@ export default function RichTextEditor({
             CodeBlock.configure({
                 exitOnArrowDown: true,
             }),
-            Blockquote
+            Blockquote,
+            Link.configure({
+                defaultProtocol: 'https',
+                linkOnPaste: true,
+                autolink: true,
+                HTMLAttributes: {
+                    className: "text-blue-500 hover:text-blue-700",
+                }
+            }),
         ],
         content: content,
         editorProps: {
@@ -134,11 +144,16 @@ export default function RichTextEditor({
             onClick: () => editor?.chain().focus().toggleCodeBlock().run(),
             preesed: editor?.isActive("codeBlock"),
         },
+        {
+            icon: <Link2Icon className="size-4" />,
+            onClick: () => editor?.chain().focus().toggleLink({ href: "https://" }).run(),
+            preesed: editor?.isActive("link"),
+        }
     ];
 
     return (
-        <div className={cn("space-y-2=", className)}>
-            <div className="border rounded-md p-1 mb-2 dark:bg-neutral-900 bg-neutral-100 space-x-2 z-50 sticky top-16">
+        <div className={cn("space-y-2", className)}>
+            <div className="border rounded-md p-1 dark:bg-neutral-900 bg-neutral-100 space-x-2 z-50 sticky top-16">
                 {Options.map((option, index) => (
                     <Toggle
                         key={index}
@@ -149,7 +164,7 @@ export default function RichTextEditor({
                     </Toggle>
                 ))}
             </div>
-            <EditorContent editor={editor} className="h-full w-full" />
+            <EditorContent editor={editor} className="w-full" />
         </div>
     );
 }

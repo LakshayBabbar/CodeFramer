@@ -11,7 +11,7 @@ const PrivacyPolicy = () => {
     const email = "lakshaybabbar0118@outlook.com";
     const siteUrl = process.env.BASE_URL || "";
     return (
-        <main className="place-items-center space-y-10">
+        <main className="flex flex-col items-center space-y-10">
             <div className="mt-16 prose md:prose-xl px-4 py-8 dark:prose-headings:text-neutral-200 dark:text-neutral-300 dark:prose-a:text-white">
                 <h1>Privacy Policy</h1>
                 <p>

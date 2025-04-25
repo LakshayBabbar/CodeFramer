@@ -68,7 +68,7 @@ const BaseEditor = ({ file, onValChange, isPublic, children, projectName }: Edit
                 <div className="flex items-center gap-2">
                     {projectName && <span className="text-sm text-neutral-400">{capitalise(projectName || "")}</span>}
                     {theme === "dark" && <Select onValueChange={(val) => themeHandler(val)}>
-                        <SelectTrigger className="w-fit">
+                        <SelectTrigger className="w-fit" aria-label="Select Editor Theme">
                             <SelectValue placeholder={capitalise(editorTheme)} />
                         </SelectTrigger>
                         <SelectContent>
@@ -99,7 +99,6 @@ const BaseEditor = ({ file, onValChange, isPublic, children, projectName }: Edit
                     fontSize: 14,
                     padding: { top: 10 },
                     minimap: { enabled: false },
-                    formatOnPaste: true,
                     formatOnType: true,
                     autoIndent: "advanced",
                     autoClosingBrackets: "always",

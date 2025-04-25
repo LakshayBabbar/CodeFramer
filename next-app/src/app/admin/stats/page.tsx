@@ -124,7 +124,7 @@ const Page = () => {
       <div className="grid grid-cols-4 gap-2 sm:gap-4">
         {counts.map((item, idx) => {
           return (
-            <div key={idx} className={`p-2 h-24 sm:h-32 rounded-xl text-white ${item.color} flex flex-col text-center items-center sm:justify-center`}>
+            <div key={idx} className={`p-2 h-24 sm:h-32 rounded-xl text-white ${item.color} flex flex-col text-center items-center justify-center`}>
               <span className="text-2xl sm:text-4xl font-bold">{item.count}</span>
               <span className="text-sm sm:text-base">{item.name}</span>
             </div>)

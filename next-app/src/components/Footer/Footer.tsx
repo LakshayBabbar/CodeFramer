@@ -28,7 +28,7 @@ const linkStyle = "hover:underline text-sm text-neutral-700 dark:text-neutral-30
 
 const Footer = () => {
   return (
-    <footer className="bg-card dark:bg-neutral-950 border-t py-6 px-6 md:px-0 w-full place-items-center space-y-8">
+    <footer className="bg-card dark:bg-neutral-950 border-t py-6 px-6 md:px-0 w-full flex flex-col items-center space-y-8">
       <div className="md:flex justify-around w-full space-y-8 md:space-y-0">
         <div className="flex items-center justify-center gap-2 w-fit h-fit">
           <Image
