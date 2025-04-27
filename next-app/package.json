@@ -10,7 +10,7 @@
     "build": "npx prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
-    "studio": "npx prisma studio"
+    "studio": "pnpm dlx prisma studio"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.9.0",
@@ -49,7 +49,6 @@
     "react-syntax-highlighter": "^15.6.1",
     "recharts": "^2.15.3",
     "resend": "^4.4.0",
-    "sharp": "^0.33.5",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7"
   },

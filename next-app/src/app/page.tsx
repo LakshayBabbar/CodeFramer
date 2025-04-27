@@ -7,7 +7,6 @@ import ProjectCard, { ProjectCardProps, ProjectCardSkeleton } from "@/components
 import SearchBar from "@/components/Search/SearchBar";
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { cn } from "@/lib/utils";
 
 export default function Home() {
   const [data, setData] = useState({ searchResults: { projects: [], totalPages: 1 }, loading: false, error: "" });
@@ -16,36 +15,30 @@ export default function Home() {
 
   return (
     <main className="flex flex-col items-center justify-center">
-      <section className="relative bg-white dark:bg-black mt-16 flex flex-col gap-8 py-24 h-fit w-full items-center justify-center overflow-hidden rounded-lg">
-        <div
-          className={cn(
-            "absolute inset-0",
-            "[background-size:40px_40px]",
-            "[background-image:linear-gradient(to_right,#e4e4e7b9_0.6px,transparent_0.6px),linear-gradient(to_bottom,#e4e4e7_0.6px,transparent_0.6px)]",
-            "dark:[background-image:linear-gradient(to_right,#262626dc_0.6px,transparent_0.6px),linear-gradient(to_bottom,#262626_0.6px,transparent_0.6px)]",
-          )}
-        />
-        <h1 className="z-1 px-4 text-5xl sm:text-6xl xl:text-7xl font-bold md:w-[60%] text-center text-stone-800 drop-shadow-xl dark:text-transparent dark:bg-clip-text dark:bg-linear-to-b dark:from-neutral-300 dark:to-neutral-500">
-          Build, Compile, and Create Effortlessly
+      <div className="px-5 mt-36 my-10 flex flex-col items-center justify-center">
+        <h1 className="relative z-10 mx-auto lg:max-w-5xl text-center text-4xl font-bold text-neutral-700 md:text-5xl lg:text-7xl dark:text-neutral-300">
+          Compile, Create, and Launch Instantly
         </h1>
-        <p className="w-4/5 sm:w-[50%] text-center sm:text-xl text-neutral-600 dark:text-neutral-300 z-1">
-          CodeFramer is your all-in-one online IDE and compiler for Python, C, C++, Node.js, Sql and web projects with real-time output and AI assistance.
+        <p className="relative z-10 mx-auto max-w-xl py-4 text-center text-lg font-normal text-neutral-600 dark:text-neutral-400">
+          CodeFramer empowers you to build, compile, and launch without friction.
+          Focus on creating — we&apos;ll handle the rest.
         </p>
-        <div className="flex gap-4 z-1">
-          <Link href="/compiler/python"><Button size="lg">
+        <div className="relative z-10 mt-8 flex flex-wrap items-center justify-center gap-4">
+          <Link href="/compiler/python"><Button size="lg" className="px-6 w-60">
             Try Compilers
           </Button></Link>
-          <Link href="/web-editor"><Button variant="secondary" className="border" size="lg" >
+          <Link href="/web-editor"><Button variant="outline" className="px-6 w-60" size="lg" >
             Try Web Editor
           </Button></Link>
         </div>
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-black"></div>
-      </section>
+      </div>
 
       <section className="w-full py-10 h-fit relative overflow-hidden">
         <FeaturesSection />
       </section>
-      <section id="snippets" className="px-5 py-10 flex gap-10 flex-col text-center items-center w-full">
+      <section
+        id="snippets"
+        className="px-5 py-10 flex gap-10 flex-col text-center items-center w-full">
         <div>
           <h2 className="text-3xl lg:text-5xl lg:leading-tight max-w-5xl mx-auto text-center tracking-tight font-medium text-black dark:text-white">Explore Code Snippets & Web Projects</h2>
           <p className="text-sm lg:text-base  max-w-2xl  my-4 mx-auto text-neutral-500 text-center font-normal dark:text-neutral-300">Browse a collection of publicly shared code snippets and web projects. Share your work, explore innovative solutions, and collaborate with the developer community.</p>

@@ -104,7 +104,7 @@ export default async function Blog({
                     </Link>
                     {isAuthor && <Link href={`/blogs/${slug}/edit`} aria-label='Edit Blog' className='flex items-center gap-2 dark:text-neutral-300 dark:hover:text-white'><PenLine size={15} />Edit </Link>}
                 </div>
-                <article className='prose prose-stone lg:prose-lg dark:prose-invert prose-h1:leading-tight'>
+                <article className='prose prose-stone lg:prose-lg lg:min-w-3xl dark:prose-invert prose-h1:leading-tight'>
                     <div className='my-6 text-sm'>
                         <time>{new Date(data.createdAt || "").toDateString()}</time>
                     </div>

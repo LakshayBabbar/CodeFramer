@@ -22,7 +22,6 @@ function WebEditor({ data }: { data: webEditorDataType }) {
   const { fetchData, loading } = useSend();
   const [fileName, setFileName] = useState<FILES>("index.html");
   const [isFullPreview, setFullPreview] = useState(false);
-  console.log(data)
 
   useEffect(() => {
     isFullPreview && document.documentElement.requestFullscreen();

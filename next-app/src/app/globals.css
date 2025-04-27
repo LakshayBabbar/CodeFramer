@@ -4,6 +4,8 @@
 @plugin "@tailwindcss/typography";
 
 @theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -244,21 +246,24 @@
   }
 
   body {
-    @apply bg-background text-foreground;
-  }
-
-  .prose pre {
-    @apply p-0 bg-transparent;
+    @apply bg-background text-foreground antialiased;
   }
 }
 
-pre {
+.prose pre {
   padding: 0 !important;
+}
+.prose .code-block {
+  padding: 0 1rem !important;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 @media (min-width: 980px) {
   *::-webkit-scrollbar {
-    width: 5px !important;
+    width: 4px !important;
     height: 4px !important;
   }
 
@@ -267,8 +272,7 @@ pre {
   }
 
   *::-webkit-scrollbar-thumb {
-    background: transparent;
-    background-color: #3b3b3b;
+    background: #70707054;
     border-radius: 250px;
   }
 }

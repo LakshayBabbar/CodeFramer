@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import { cn } from "@/lib/utils";
 import HeroVideoDialog from "./hero-video-dialog";
@@ -7,6 +8,8 @@ import Image from "next/image";
 import { motion } from "motion/react";
 import { Layers2 } from "lucide-react";
 import { IconLocationCode, IconDeviceLaptop } from "@tabler/icons-react";
+import cf from "@/../public/codeframer.webp";
+import cfLight from "@/../public/codeframer-light.webp";
 
 export function FeaturesSection() {
     const features = [
@@ -210,14 +213,14 @@ export const SkeletonOne = () => {
                 className="dark:hidden block"
                 animationStyle="top-in-bottom-out"
                 videoSrc="https://video.gumlet.io/67874608a0795ccd0d9ce474/67874673a0795ccd0d9ce60e/download.mp4"
-                thumbnailSrc="/codeframer-light.webp"
+                staticThumnailImage={cfLight}
                 thumbnailAlt="Hero Video"
             />
             <HeroVideoDialog
                 className="hidden dark:block"
                 animationStyle="top-in-bottom-out"
                 videoSrc="https://video.gumlet.io/67874608a0795ccd0d9ce474/67874673a0795ccd0d9ce60e/download.mp4"
-                thumbnailSrc="/codeframer.webp"
+                staticThumnailImage={cf}
                 thumbnailAlt="Hero Video"
             />
         </div>
