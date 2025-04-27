@@ -13,7 +13,7 @@ import { useToast } from '@/hooks/use-toast';
 export default function EditBlog() {
     const { status, data: session } = useSession();
     const { slug } = useParams();
-    const { data } = useFetch(`/api/blogs/${slug}`, "edit_page");
+    const { data } = useFetch(`/api/blogs/${slug}`, "edit_page: " + slug);
     const [isDeleted, setIsDeleted] = React.useState(false);
     const req = useSend();
     const { push } = useRouter();

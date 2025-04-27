@@ -54,12 +54,12 @@ export default function RootLayout({
 
           {process.env.NODE_ENV === "production" && <Suspense fallback={null}>
             <GoogleAnalytics GA_MEASUREMENT_ID={process.env.GOOGLE_ANALYTICS!} />
-            <Script
+            {/* <Script
               async
               src={process.env.GOOGLE_ADS}
               crossOrigin="anonymous"
-            ></Script>
-            <CookieBanner />
+            ></Script> */}
+            {/* <CookieBanner /> */}
           </Suspense>}
 
         </body>

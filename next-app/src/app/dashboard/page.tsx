@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import CreateProject from "@/components/Modals/CreateProject";
 import ProjectCard, { ProjectCardProps, ProjectCardSkeleton } from "@/components/ui/ProjectCard";
 import { Button } from "@/components/ui/button";
@@ -7,11 +7,15 @@ import useFetch from "@/hooks/useFetch";
 import { useSession } from "next-auth/react";
 import Footer from "@/components/Footer/Footer";
 import Image from "next/image";
+import { useToast } from "@/hooks/use-toast";
+import useSend from "@/hooks/useSend";
 
 const Page = () => {
   const { data: sessionData } = useSession();
   const username = sessionData?.user?.username;
   const [isOpen, setIsOpen] = useState(false);
+  const { toast } = useToast();
+  const { fetchData } = useSend();
   const { data, isError, loading, refetch } = useFetch(
     "/api/projects",
     "All_Projects"
@@ -24,6 +28,35 @@ const Page = () => {
       </main>
     );
   }
+
+  const deleteProjectHandler = useCallback(async (pid: string) => {
+    const res = await fetchData({
+      url: `/api/projects/${pid}`,
+      method: "DELETE",
+    });
+    toast({
+      title: res.message || res.error,
+      description: new Date().toString(),
+    });
+    if (!res.error) {
+      await refetch();
+    }
+  }, []);
+
+  const updateProjectVisibility = useCallback(async (pid: string, isPublic: boolean) => {
+    const res = await fetchData({
+      url: `/api/projects/${pid}`,
+      method: "PUT",
+      body: { visibility: !isPublic },
+    });
+    toast({
+      title: res.error ? "Something went wrong" : "Visibility updated",
+      description: `Project is now ${isPublic ? "private" : "public"}`,
+    });
+    if (!res.error) {
+      await refetch();
+    }
+  }, []);
 
   return !isError && (
     <main className="flex flex-col w-full justify-center items-center gap-10">
@@ -47,7 +80,7 @@ const Page = () => {
         </div>
         <hr className="border w-full" />
         <div className="flex w-full justify-between items-center">
-          <h2 className="text-xl font-bold">Your Project&apos;s</h2>
+          <h2 className="text-xl font-bold">Your Projects</h2>
           <Button
             onClick={() => setIsOpen(true)}
           >
@@ -58,15 +91,21 @@ const Page = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 justify-items-center gap-4">
             {data?.map((item: ProjectCardProps['data']) => {
               return (
-                <ProjectCard key={item.id} data={{ ...item, refetch }} controls={true} />
+                <ProjectCard
+                  key={item.id}
+                  data={item}
+                  controls={true}
+                  updateHandler={updateProjectVisibility}
+                  delHandler={deleteProjectHandler} />
               );
             })}
           </div>
         ) : <div className="w-[80vw] text-center">
-          <p>No Project found.</p>
+          <p className="text-lg font-semibold">No Projects found.</p>
+          <p className="text-sm text-muted-foreground mt-2">Create your first project to get started!</p>
         </div> : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 justify-items-center gap-4">
-            {Array.from({ length: 6 }).map((_, i) => {
+            {Array.from({ length: 8 }).map((_, i) => {
               return (
                 <ProjectCardSkeleton key={i} />
               );

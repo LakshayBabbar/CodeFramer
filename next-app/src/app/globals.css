@@ -34,6 +34,7 @@
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
   --color-sidebar: var(--sidebar);
+  --color-snippet: var(--snippet);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
@@ -204,6 +205,7 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --snippet: #fafafa;
 }
 
 .dark {
@@ -238,6 +240,7 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+  --snippet: var(--color-background);
 }
 
 @layer base {
@@ -253,6 +256,7 @@
 .prose pre {
   padding: 0 !important;
 }
+
 .prose .code-block {
   padding: 0 1rem !important;
 }

@@ -1,17 +1,19 @@
 "use client"
-import React from 'react'
+import React from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import drakula from "react-syntax-highlighter/dist/esm/styles/prism/dracula";
 import { Button } from '../ui/button';
 import { Play, Copy } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { capitalise, SUPPORTED_LANGUAGES } from '@/lib/helpers';
 import { useRouter } from 'next/navigation';
+import { nightOwl, materialLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { useTheme } from 'next-themes';
 
 const CodeSnippet = ({ code, language }: any) => {
     const isCodeRunnable = SUPPORTED_LANGUAGES.includes(language) && !UNSUPPORTED_LANGUAGES.includes(language);
     const { push } = useRouter();
     const { toast } = useToast();
+    const { resolvedTheme } = useTheme();
 
     const handleRunCode = () => {
         localStorage.setItem("playground-code", code);
@@ -26,19 +28,19 @@ const CodeSnippet = ({ code, language }: any) => {
     };
 
     return (
-        <div className='w-[90vw] sm:w-full h-fit border rounded bg-background'>
-            <div className='flex items-center justify-between p-2 px-4 border-b'>
+        <div className='w-[90vw] sm:w-full h-fit border rounded bg-snippet'>
+            <div className='flex items-center justify-between p-2 px-4 border-b text-primary'>
                 <span className='text-sm'>{`>_ ${capitalise(language)}`}</span>
                 <div>
-                    {isCodeRunnable && <Button variant="ghost" size="sm" onClick={handleRunCode} className='text-neutral-300 dark:text-white' aria-label='Run Code'><Play /></Button>}
-                    <Button variant="ghost" size="sm" onClick={handleCopyCode} className='text-neutral-300 dark:text-white' aria-label='Copy Code'><Copy /></Button>
+                    {isCodeRunnable && <Button variant="ghost" size="sm" onClick={handleRunCode} aria-label='Run Code'><Play /></Button>}
+                    <Button variant="ghost" size="sm" onClick={handleCopyCode} aria-label='Copy Code'><Copy /></Button>
                 </div>
             </div>
             <div className='code-block'>
                 <SyntaxHighlighter
                     language={language}
-                    style={drakula}
-                    customStyle={{ fontSize: '14px', background: "var(--background)", overflowX: "auto", width: "100%", margin: "1rem 0" }}
+                    style={resolvedTheme === "dark" ? nightOwl : materialLight}
+                    customStyle={{ fontSize: '14px', background: "var(--snippet)", overflowX: "auto", width: "100%", margin: "1rem 0" }}
                     showLineNumbers={true}
                 >
                     {code}
@@ -50,4 +52,4 @@ const CodeSnippet = ({ code, language }: any) => {
 
 export default CodeSnippet;
 
-const UNSUPPORTED_LANGUAGES = ["shell", "html", "css", "js"];
+const UNSUPPORTED_LANGUAGES = ["html", "css", "js"];

@@ -46,7 +46,7 @@ export default function Home() {
         <SearchBar placeholder="Search Code Snippets and projects" setSearchResults={setData} url={`/api/projects/public?page=${page}&limit=8&search=`} />
         <div className="w-full md:w-auto grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 justify-items-center">
           {!data?.loading ? data?.searchResults.projects?.length !== 0 ? data.searchResults.projects?.map((project: ProjectCardProps["data"]) => {
-            return <ProjectCard key={project.id} data={project} />
+            return <ProjectCard key={project.id} data={project} controls={false} />
           }) : <p className="sm:col-span-2 lg:col-span-3 2xl:col-span-4 text-center">No Snippets founds.</p> : Array.from({ length: 8 }, (_, i) => <ProjectCardSkeleton key={i} />)}
         </div>
         <div className="space-x-4">
